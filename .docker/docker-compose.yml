@@ -1,0 +1,65 @@
+version: '3.3'
+services:
+  # PHP FPM Service
+  php:
+    build:
+      context: ..
+      dockerfile: .docker/Dockerfile
+    volumes:
+      - ../:/var/www
+      - ./php-fpm/php.ini:/etc/php/7.3/fpm/php.ini
+      - ./php-fpm/www.conf:/etc/php/7.3/fpm/pool.d/www.conf
+      - ./php-fpm/php-fpm.conf:/etc/php/7.3/fpm/php-fpm.conf
+    tty: true
+    expose:
+      - "9000"
+    networks:
+      - app-network
+  # PHP Worker
+  php-worker:
+    build:
+      context: ./php-worker
+    environment:
+      PHP_VERSION: 7.3
+    volumes:
+        - ../:/var/www
+        - ./php-worker/supervisord.d:/etc/supervisord.d
+    networks:
+      - app-network
+  # Nginx Service
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+      - "443:443"
+    volumes:
+      - ../:/var/www
+      - ./nginx/conf.d/:/etc/nginx/conf.d
+    depends_on:
+      - php
+      - db
+    networks:
+      - app-network
+  # MySQL Service
+  db:
+    image: mariadb:latest
+    ports:
+      - "33061:3306"
+    environment:
+      MYSQL_DATABASE: iseekplant_database
+      MYSQL_USER: iseekplant
+      MYSQL_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/my.cnf:/etc/mysql/my.cnf
+    networks:
+      - app-network
+# Docker Networks
+networks:
+  app-network:
+    driver: bridge
+# Volumes
+volumes:
+  data:
+    driver: local
