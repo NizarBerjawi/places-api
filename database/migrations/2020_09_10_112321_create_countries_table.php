@@ -19,6 +19,7 @@ class CreateCountriesTable extends Migration
             $table->string('code')->unique();
             $table->integer('population');
             $table->integer('area');
+            $table->string('flag');
             $table->timestamps();
         });
     }
