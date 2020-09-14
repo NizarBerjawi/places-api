@@ -4,10 +4,10 @@ namespace App\Exceptions;
 
 use Exception;
 
-class FileNotDownloadedException extends Exception
+class FileNotSavedException extends Exception
 {
     /**
-     * The location of the file
+     * The location to save the file
      * 
      * @var string
      */
@@ -16,19 +16,19 @@ class FileNotDownloadedException extends Exception
     /**
      * Instantiate the exception
      * 
-     * @param string $location
+     * @param string $filename
      * @return void
      */
     public function __construct(string $location = null)
     {
         $this->location = $location;  
 
-        $defaultMessage = 'Could not download file';
+        $defaultMessage = 'Could not save file to disk';
 
         if (! $location) {
             $this->message = $defaultMessage;
         } else {
-            $this->message = $defaultMessage . ' from: ' . $location;
+            $this->message = $defaultMessage . ': ' . $location;
         }
     }
 }

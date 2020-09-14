@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Exceptions\FileNotDownloadedException;
+use App\Exceptions\FileNotSavedException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -10,7 +11,6 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Collection;
 
 class DownloadCountriesFile implements ShouldQueue
 {
@@ -21,7 +21,7 @@ class DownloadCountriesFile implements ShouldQueue
      *
      * @var string
      */
-    const DISK = 'local';
+    const DISK = 'data';
 
     /**
      * The Geonames file containing all country information
@@ -29,13 +29,6 @@ class DownloadCountriesFile implements ShouldQueue
      * @var string
      */
     const COUNTRIES_FILE = 'countryInfo.txt';
-
-    /**
-     * The folder where the file should be stored
-     *
-     * @var string
-     */
-    const FOLDER_NAME = 'data';
 
     /**
      * An instance of the storage disk object
@@ -64,36 +57,34 @@ class DownloadCountriesFile implements ShouldQueue
         try {
             $response =  Http::withOptions([
                 'stream' => true
-            ])->get($this->url() . '/' . static::COUNTRIES_FILE);
+            ])->get($this->url());
 
 
             if ($response->failed()) {
-                throw new FileNotDownloadedException(static::COUNTRIES_FILE);
+                throw new FileNotDownloadedException($this->url());
             }
 
-            $this->disk->put($this->path(), $response->getBody());
+            $saved = $this->disk->put(
+                static::COUNTRIES_FILE, $response->getBody()
+            );
+
+            if (!$saved) {
+                throw new FileNotSavedException(
+                    $this->disk->path(static::COUNTRIES_FILE)
+                );
+            }
         } catch (\Exception $e) {
             logger($e->getMessage());
         }
     }
 
     /**
-     * The url
+     * The location of the file
      * 
      * @return string
      */
     private function url()
     {
-        return config('geonames.url');
-    }
-
-    /**
-     * The path where the downloaded file should be saved
-     * 
-     * @return string
-     */
-    private function path()
-    {
-        return static::FOLDER_NAME . '/' . static::COUNTRIES_FILE;
+        return config('geonames.url') . '/' . static::COUNTRIES_FILE;
     }
 }
