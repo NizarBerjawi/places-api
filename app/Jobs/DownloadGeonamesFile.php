@@ -14,7 +14,7 @@ use App\Country;
 use App\Exceptions\FileNotDownloadedException;
 use App\Exceptions\FileNotSavedException;
 
-class DownloadGeonamesCountryFile implements ShouldQueue
+class DownloadGeonamesFile implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -67,7 +67,7 @@ class DownloadGeonamesCountryFile implements ShouldQueue
     {
         $response =  Http::withOptions([
             'stream' => true
-        ])->get($this->url);
+        ])->get($this->url());
 
         if ($response->failed()) {
             throw new FileNotDownloadedException($this->url());
