@@ -104,27 +104,61 @@ class ImportCountriesFile implements ShouldQueue
      * Download a country's flag
      * 
      * @param string $code
+     * @return string
      */
     private function downloadFlag(string $code)
     {
-        $filepath = "$code/shiny/64.png";
-
         $response =  Http::withOptions([
             'stream' => true
-        ])->get(config('flags.url') . '/' . $filepath);
+        ])->get($this->flagUrl($code));
 
         if ($response->failed()) {
-            throw new FileNotDownloadedException($filepath);
+            throw new FileNotDownloadedException($this->flagUrl($code));
         }
 
-        $saved = $this->disk->put($filepath, $response->getBody());
+        $saved = $this->disk->put(
+            $this->flagFilepath($code), $response->getBody()
+        );
 
         if (!$saved) {
             throw new FileNotSavedException(
-                $this->disk->path($filepath)
+                $this->flagFilepath(($code))
             );
         }
         
-        return $this->disk->path($filepath);
+        return $this->flagFilepath($code);
+    }
+
+    /**
+     * Get the flag filename
+     * 
+     * @param string $code
+     * @return string
+     */
+    private function flagFilename(string $code)
+    {
+        return strtolower($code . '.gif');
+    }
+    
+    /**
+     * Get the flag filepath
+     * 
+     * @param string $code
+     * @return string
+     */
+    private function flagFilepath(string $code)
+    {
+        return $code . '/' . $this->flagFilename($code);
+    }
+
+    /**
+     * Get the url of the flag
+     * 
+     * @param string $code
+     * @return string
+     */
+    private function flagUrl (string $code)
+    {
+        return config('flags.url') . '/' . $this->flagFilename($code);
     }
 }
