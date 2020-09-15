@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Continent;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -11,6 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
+
 use App\Country;
 use App\Exceptions\FileNotDownloadedException;
 use App\Exceptions\FileNotSavedException;
