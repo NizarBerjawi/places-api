@@ -5,6 +5,7 @@ use App\Country;
 use App\Jobs\DownloadCountriesFile;
 use App\Jobs\DownloadGeonamesFile;
 use App\Jobs\ImportCountriesFile;
+use App\Jobs\UnzipGeonamesFile;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,8 +26,7 @@ class DatabaseSeeder extends Seeder
         $countries = Country::get();
         $countries->each(function(Country $country) {
             DownloadGeonamesFile::dispatch($country);
+            UnzipGeonamesFile::dispatch($country);
         });
-
-
     }
 }

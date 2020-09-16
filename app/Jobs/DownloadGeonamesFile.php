@@ -40,7 +40,7 @@ class DownloadGeonamesFile implements ShouldQueue
     public $url;
 
     /**
-     * A country to download cities for
+     * A country to download geonames for
      * 
      * @var Country
      */
