@@ -76,9 +76,7 @@ class DownloadGeonamesFile implements ShouldQueue
         $saved = $this->disk->put($this->path(), $response->getBody());
 
         if (!$saved) {
-            throw new FileNotSavedException(
-                $this->disk->path($this->path())
-            );
+            throw new FileNotSavedException($this->path());
         }
     }
 

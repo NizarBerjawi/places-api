@@ -3,6 +3,7 @@
 use Illuminate\Database\Seeder;
 use App\Country;
 use App\Jobs\DownloadCountriesFile;
+use App\Jobs\DownloadGeonamesFile;
 use App\Jobs\ImportCountriesFile;
 
 class DatabaseSeeder extends Seeder
@@ -23,7 +24,7 @@ class DatabaseSeeder extends Seeder
         // 3- Download the geonames files for every country
         $countries = Country::get();
         $countries->each(function(Country $country) {
-            //
+            DownloadGeonamesFile::dispatch($country);
         });
 
 

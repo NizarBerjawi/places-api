@@ -121,9 +121,7 @@ class ImportCountriesFile implements ShouldQueue
         );
 
         if (!$saved) {
-            throw new FileNotSavedException(
-                $this->flagFilepath(($code))
-            );
+            throw new FileNotSavedException($this->flagFilepath(($code)));
         }
         
         return $this->flagFilepath($code);
