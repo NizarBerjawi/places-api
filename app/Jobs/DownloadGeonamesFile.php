@@ -65,6 +65,20 @@ class DownloadGeonamesFile implements ShouldQueue
      */
     public function handle()
     {
+       try {
+           $this->downloadFile();
+       } catch (\Exception $e) {
+           logger($e->getMessage());
+       }
+    }
+
+    /**
+     * Downloads the Geoames file for a country
+     * 
+     * @return string
+     */
+    private function downloadFile()
+    {
         $response =  Http::withOptions([
             'stream' => true
         ])->get($this->url());
@@ -78,6 +92,8 @@ class DownloadGeonamesFile implements ShouldQueue
         if (!$saved) {
             throw new FileNotSavedException($this->path());
         }
+
+        return $this->path();
     }
 
     /**
@@ -103,7 +119,7 @@ class DownloadGeonamesFile implements ShouldQueue
     /**
      * The name of the file
      * 
-     * @return zip
+     * @return string
      */
     private function filename()
     {

@@ -56,27 +56,37 @@ class DownloadCountriesFile implements ShouldQueue
     public function handle()
     {
         try {
-            $response =  Http::withOptions([
-                'stream' => true
-            ])->get($this->url());
-
-
-            if ($response->failed()) {
-                throw new FileNotDownloadedException($this->url());
-            }
-
-            $saved = $this->disk->put(
-                static::COUNTRIES_FILE, $response->getBody()
-            );
-
-            if (!$saved) {
-                throw new FileNotSavedException(
-                    $this->disk->path(static::COUNTRIES_FILE)
-                );
-            }
+           $this->downloadFile();
         } catch (\Exception $e) {
             logger($e->getMessage());
         }
+    }
+
+    /**
+     * Downloads the countries file
+     * 
+     * @return string
+     */
+    private function downloadFile()
+    {
+        $response =  Http::withOptions([
+            'stream' => true
+        ])->get($this->url());
+
+
+        if ($response->failed()) {
+            throw new FileNotDownloadedException($this->url());
+        }
+
+        $saved = $this->disk->put(
+            static::COUNTRIES_FILE, $response->getBody()
+        );
+
+        if (!$saved) {
+            throw new FileNotSavedException($this->filePath());
+        }
+
+        return $this->filePath();
     }
 
     /**
@@ -87,5 +97,15 @@ class DownloadCountriesFile implements ShouldQueue
     private function url()
     {
         return config('geonames.url') . '/' . static::COUNTRIES_FILE;
+    }
+
+    /**
+     * The full path of the countries file
+     * 
+     * @return string
+     */
+    private function filePath()
+    {
+        return $this->disk->path(static::COUNTRIES_FILE);
     }
 }
