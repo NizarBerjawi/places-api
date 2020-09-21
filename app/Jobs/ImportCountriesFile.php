@@ -157,6 +157,6 @@ class ImportCountriesFile implements ShouldQueue
      */
     private function flagUrl (string $code)
     {
-        return config('flags.url') . '/' . $this->flagFilename($code);
+        return config('geonames.flags') . '/' . $this->flagFilename($code);
     }
 }

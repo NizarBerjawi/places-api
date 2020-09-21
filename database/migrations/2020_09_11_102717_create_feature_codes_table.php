@@ -16,8 +16,8 @@ class CreateFeatureCodesTable extends Migration
         Schema::create('feature_codes', function (Blueprint $table) {
             $table->id();
             $table->string('code')->unique();
-            $table->string('short_description');
-            $table->text('full_description');
+            $table->string('short_description')->nullable();
+            $table->text('full_description')->nullable();
             $table->unsignedBigInteger('feature_id');
             $table->timestamps();
         });
