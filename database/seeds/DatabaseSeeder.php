@@ -5,6 +5,7 @@ use App\Country;
 use App\Jobs\DownloadCountriesFile;
 use App\Jobs\DownloadGeonamesFile;
 use App\Jobs\ImportCountriesFile;
+use App\Jobs\LoadFeatureCodes;
 use App\Jobs\LoadFeatures;
 use App\Jobs\UnzipGeonamesFile;
 
@@ -30,7 +31,7 @@ class DatabaseSeeder extends Seeder
             UnzipGeonamesFile::dispatch($country);
         });
 
-        // 4- Load all Feature classes
-        LoadFeatures::dispatch();
+        // 4- Load all Feature classes and codes
+        LoadFeatureCodes::dispatch();
     }
 }
