@@ -30,6 +30,15 @@ return [
     | The URL of feature codes
     |
     */
-    'feature_codes' => env('FEATURE_CODE_URL', 'http://www.geonames.org/export/codes.html'),
+    'feature_codes' => env('FEATURE_CODES_URL', 'http://www.geonames.org/export/codes.html'),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Language codes base url
+    |--------------------------------------------------------------------------
+    |
+    | The URL of language codes
+    |
+    */
+    'language_codes' => env('LANGUAGE_CODES_URL', 'http://www.geonames.org/export/iso-languagecodes.txt'),
 ];
