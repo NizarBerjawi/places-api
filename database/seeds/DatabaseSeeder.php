@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Country;
 use App\Jobs\DownloadCountriesFile;
 use App\Jobs\DownloadGeonamesFile;
+use App\Jobs\DownloadLanguages;
 use App\Jobs\ImportCountriesFile;
 use App\Jobs\LoadFeatureCodes;
 use App\Jobs\LoadFeatures;
@@ -33,5 +34,8 @@ class DatabaseSeeder extends Seeder
 
         // 4- Load all Feature classes and codes
         LoadFeatureCodes::dispatch();
+
+        // 5- Download the iso-languagecodes.txt file
+        DownloadLanguages::dispatch();
     }
 }

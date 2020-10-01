@@ -13,7 +13,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 
-class LoadLanguages implements ShouldQueue
+class DownloadLanguages implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -96,7 +96,8 @@ class LoadLanguages implements ShouldQueue
      */
     private function url()
     {
-        return config('geonames.language_codes') . '/' . static::COUNTRIES_FILE;
+        
+        return config('geonames.language_codes');
     }
 
     /**
@@ -106,7 +107,7 @@ class LoadLanguages implements ShouldQueue
      */
     private function filePath()
     {
-        return $this->disk->path(static::COUNTRIES_FILE);
+        return $this->disk->path(static::LANGUAGES_FILE);
     }
 
 }
