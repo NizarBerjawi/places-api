@@ -6,6 +6,7 @@ use App\Jobs\DownloadCountriesFile;
 use App\Jobs\DownloadGeonamesFile;
 use App\Jobs\DownloadLanguages;
 use App\Jobs\ImportCountriesFile;
+use App\Jobs\ImportLanguagesFile;
 use App\Jobs\LoadFeatureCodes;
 use App\Jobs\LoadFeatures;
 use App\Jobs\UnzipGeonamesFile;
@@ -37,5 +38,8 @@ class DatabaseSeeder extends Seeder
 
         // 5- Download the iso-languagecodes.txt file
         DownloadLanguages::dispatch();
+        
+        // 6- Import the iso-languagecodes.txt file
+        ImportLanguagesFile::dispatch();
     }
 }

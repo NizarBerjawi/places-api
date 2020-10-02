@@ -15,10 +15,10 @@ class CreateLanguagesTable extends Migration
     {
         Schema::create('languages', function (Blueprint $table) {
             $table->id();
-            $table->string('iso639_1')->unique();
-            $table->string('iso639_2')->unique();
-            $table->string('name');
-            $table->string('native_name');
+            $table->string('iso639_1')->nullable()->unique();
+            $table->string('iso639_2')->nullable()->unique();
+            $table->string('iso639_3')->nullable()->unique();
+            $table->string('language_name');
             $table->timestamps();
         });
     }
