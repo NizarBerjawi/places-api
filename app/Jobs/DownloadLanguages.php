@@ -25,16 +25,9 @@ class DownloadLanguages implements ShouldQueue
     const DISK = 'data';
 
     /**
-     * The Geonames file containing all languages information
-     * 
-     * @var string
-     */
-    const LANGUAGES_FILE = 'iso-languagecodes.txt';
-
-    /**
      * An instance of the storage disk object
      *
-     * @var \Illuminate\Contracts\Filesystem\Filesystem
+     * @var \Illuminate\Filesystem\FilesystemAdapter
      */
     public $disk;
 
@@ -65,7 +58,7 @@ class DownloadLanguages implements ShouldQueue
     /**
      * Downloads the languages file
      * 
-     * @return string
+     * @return void
      */
     private function downloadFile()
     {
@@ -79,14 +72,12 @@ class DownloadLanguages implements ShouldQueue
         }
 
         $saved = $this->disk->put(
-            static::LANGUAGES_FILE, $response->getBody()
+            $this->filename(), $response->getBody()
         );
 
         if (!$saved) {
-            throw new FileNotSavedException($this->filePath());
+            throw new FileNotSavedException($this->filepath());
         }
-
-        return $this->filePath();
     }
 
     /**
@@ -96,18 +87,26 @@ class DownloadLanguages implements ShouldQueue
      */
     private function url()
     {
-        
-        return config('geonames.language_codes');
+        return config('geonames.language_codes_url');
     }
 
     /**
-     * The full path of the countries file
+     * The full path of the language codes file
      * 
      * @return string
      */
-    private function filePath()
+    private function filepath()
     {
-        return $this->disk->path(static::LANGUAGES_FILE);
+        return $this->disk->path($this->filename());
     }
 
+    /**
+     * The name of the language codes file
+     * 
+     * @return string
+     */
+    private function filename()
+    {
+        return config('geonames.language_codes_file');
+    }
 }

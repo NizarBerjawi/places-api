@@ -25,16 +25,9 @@ class DownloadCountriesFile implements ShouldQueue
     const DISK = 'data';
 
     /**
-     * The Geonames file containing all country information
-     * 
-     * @var string
-     */
-    const COUNTRIES_FILE = 'countryInfo.txt';
-
-    /**
      * An instance of the storage disk object
      *
-     * @var \Illuminate\Contracts\Filesystem\Filesystem
+     * @var \Illuminate\Filesystem\FilesystemAdapter
      */
     public $disk;
 
@@ -65,7 +58,7 @@ class DownloadCountriesFile implements ShouldQueue
     /**
      * Downloads the countries file
      * 
-     * @return string
+     * @return void
      */
     private function downloadFile()
     {
@@ -73,20 +66,27 @@ class DownloadCountriesFile implements ShouldQueue
             'stream' => true
         ])->get($this->url());
 
-
         if ($response->failed()) {
             throw new FileNotDownloadedException($this->url());
         }
 
         $saved = $this->disk->put(
-            static::COUNTRIES_FILE, $response->getBody()
+            $this->filename(), $response->getBody()
         );
 
         if (!$saved) {
-            throw new FileNotSavedException($this->filePath());
+            throw new FileNotSavedException($this->filepath());
         }
+    }
 
-        return $this->filePath();
+    /**
+     * The full path of the countries file
+     * 
+     * @return string
+     */
+    private function filepath()
+    {
+        return $this->disk->path($this->filename());
     }
 
     /**
@@ -96,16 +96,16 @@ class DownloadCountriesFile implements ShouldQueue
      */
     private function url()
     {
-        return config('geonames.url') . '/' . static::COUNTRIES_FILE;
+        return config('geonames.countries_url');
     }
 
     /**
-     * The full path of the countries file
+     * The name of the countries file
      * 
      * @return string
      */
-    private function filePath()
+    private function filename()
     {
-        return $this->disk->path(static::COUNTRIES_FILE);
+        return config('geonames.countries_file');
     }
 }

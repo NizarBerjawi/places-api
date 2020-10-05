@@ -27,13 +27,6 @@ class ImportCountriesFile implements ShouldQueue
     const DISK = 'data';
 
     /**
-     * The Geonames file containing all country information
-     * 
-     * @var string
-     */
-    const COUNTRIES_FILE = 'countryInfo.txt';
-
-    /**
      * The delimiter used to parse the file
      * 
      * @var string
@@ -43,7 +36,7 @@ class ImportCountriesFile implements ShouldQueue
     /**
      * An instance of the storage disk object
      *
-     * @var \Illuminate\Contracts\Filesystem\Filesystem
+     * @var \Illuminate\Filesystem\FilesystemAdapter
      */
     public $disk;
 
@@ -71,7 +64,7 @@ class ImportCountriesFile implements ShouldQueue
      */
     public function handle()
     {
-        $fh = fopen($this->disk->path(static::COUNTRIES_FILE), 'r');
+        $fh = fopen($this->disk->path($this->countriesFilename()), 'r');
 
         while ($line = fgets($fh, 2048)) {
             if (Str::startsWith($line, '#')) {
@@ -83,13 +76,16 @@ class ImportCountriesFile implements ShouldQueue
             if (in_array($data[0], $this->excluded)) {
                 continue;
             }
-            
+
             try {
                 $country = Country::create([
-                    'code' => $data[0],
                     'name' => $data[4],
-                    'area' => $data[6],
+                    'iso3166_alpha2' => $data[0],
+                    'iso3166_alpha3' => $data[1],
+                    'iso3166_numeric' => $data[2],
                     'population' => $data[7],
+                    'area' => $data[6],
+                    'phone_code' => $data[12],
                     'flag' => $this->downloadFlag($data[0])
                 ]);
             } catch (FileNotDownloadedException $e) {
@@ -103,7 +99,7 @@ class ImportCountriesFile implements ShouldQueue
     /**
      * Download a country's flag
      * 
-     * @param string $code
+     * @param string $code~
      * @return string
      */
     private function downloadFlag(string $code)
@@ -117,14 +113,25 @@ class ImportCountriesFile implements ShouldQueue
         }
 
         $saved = $this->disk->put(
-            $this->flagFilepath($code), $response->getBody()
+            $this->flagFilepath($code),
+            $response->getBody()
         );
 
         if (!$saved) {
             throw new FileNotSavedException($this->flagFilepath(($code)));
         }
-        
+
         return $this->flagFilepath($code);
+    }
+
+    /**
+     * The name of the countries file
+     * 
+     * @return string
+     */
+    private function countriesFilename()
+    {
+        return config('geonames.countries_file');
     }
 
     /**
@@ -137,7 +144,7 @@ class ImportCountriesFile implements ShouldQueue
     {
         return strtolower($code . '.gif');
     }
-    
+
     /**
      * Get the flag filepath
      * 
@@ -155,8 +162,8 @@ class ImportCountriesFile implements ShouldQueue
      * @param string $code
      * @return string
      */
-    private function flagUrl (string $code)
+    private function flagUrl(string $code)
     {
-        return config('geonames.flags') . '/' . $this->flagFilename($code);
+        return config('geonames.flags_url') . '/' . $this->flagFilename($code);
     }
 }
