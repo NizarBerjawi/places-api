@@ -65,17 +65,17 @@ class DownloadGeonamesFile implements ShouldQueue
      */
     public function handle()
     {
-       try {
-           $this->downloadFile();
-       } catch (\Exception $e) {
-           logger($e->getMessage());
-       }
+        try {
+            $this->downloadFile();
+        } catch (\Exception $e) {
+            logger($e->getMessage());
+        }
     }
 
     /**
      * Downloads the Geoames file for a country
      * 
-     * @return string
+     * @return void
      */
     private function downloadFile()
     {
@@ -92,18 +92,16 @@ class DownloadGeonamesFile implements ShouldQueue
         if (!$saved) {
             throw new FileNotSavedException($this->path());
         }
-
-        return $this->path();
     }
 
     /**
-     * The path where the downloaded file should be saved
+     * The path where the downloaded file should be stored
      * 
      * @return string
      */
     private function path()
     {
-        return $this->country->code . '/' . $this->fileName();
+        return $this->country->iso3166_alpha2 . '/' . $this->fileName();
     }
 
     /**
@@ -113,7 +111,7 @@ class DownloadGeonamesFile implements ShouldQueue
      */
     private function url()
     {
-        return config('geonames.url') . '/' . $this->filename();
+        return config('geonames.files_url') . '/' . $this->filename();
     }
 
     /**
@@ -123,6 +121,6 @@ class DownloadGeonamesFile implements ShouldQueue
      */
     private function filename()
     {
-        return $this->country->code . '.zip';
+        return $this->country->iso3166_alpha2 . '.zip';
     }
 }

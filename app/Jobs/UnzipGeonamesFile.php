@@ -25,7 +25,7 @@ class UnzipGeonamesFile implements ShouldQueue
     /**
      * An instance of the storage disk object
      *
-     * @var \Illuminate\Contracts\Filesystem\Filesystem
+     * @var \Illuminate\Filesystem\FilesystemAdapter
      */
     public $disk;
 
@@ -57,7 +57,7 @@ class UnzipGeonamesFile implements ShouldQueue
     {
         $zip = new \ZipArchive();
 
-        $res = $zip->open($this->filePath());
+        $res = $zip->open($this->filepath());
         
         if (!$res) {
             throw new \Exception("Could not unzip file: " . $this->fileName());
@@ -72,9 +72,9 @@ class UnzipGeonamesFile implements ShouldQueue
      * 
      * @return zip
      */
-    private function fileName()
+    private function filename()
     {
-        return $this->country->code . '.zip';
+        return $this->country->iso3166_alpha2 . '.zip';
     }
 
     /**
@@ -84,7 +84,7 @@ class UnzipGeonamesFile implements ShouldQueue
      */
     private function folderPath()
     {
-        return $this->disk->path($this->country->code);
+        return $this->disk->path($this->country->iso3166_alpha2);
     }
 
     /**
@@ -92,7 +92,7 @@ class UnzipGeonamesFile implements ShouldQueue
      * 
      * @return string
      */
-    private function filePath() 
+    private function filepath() 
     {
         return $this->folderPath() . '/' . $this->filename();
     }

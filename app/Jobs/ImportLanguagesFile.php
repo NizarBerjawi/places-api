@@ -25,13 +25,6 @@ class ImportLanguagesFile implements ShouldQueue
     const DISK = 'data';
 
     /**
-     * The Geonames file containing all languages information
-     * 
-     * @var string
-     */
-    const LANGUAGES_FILE = 'iso-languagecodes.txt';
-
-    /**
      * The delimiter used to parse the file
      * 
      * @var string
@@ -41,7 +34,7 @@ class ImportLanguagesFile implements ShouldQueue
     /**
      * An instance of the storage disk object
      *
-     * @var \Illuminate\Contracts\Filesystem\Filesystem
+     * @var \Illuminate\Filesystem\FilesystemAdapter
      */
     public $disk;
 
@@ -62,11 +55,10 @@ class ImportLanguagesFile implements ShouldQueue
      */
     public function handle()
     {
-        $fh = fopen($this->disk->path(static::LANGUAGES_FILE), 'r');
+        $fh = fopen($this->disk->path($this->filename()), 'r');
 
         $headerSkipped = false;
         while ($line = fgets($fh, 2048)) {
-            // skip comments
             if (Str::startsWith($line, '#')) {
                 continue;
             }
@@ -98,5 +90,15 @@ class ImportLanguagesFile implements ShouldQueue
         }
 
         fclose($fh);
+    }
+
+    /**
+     * The name of the language codes file
+     * 
+     * @return string
+     */
+    private function filename()
+    {
+        return config('geonames.language_codes_file');
     }
 }

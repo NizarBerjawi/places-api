@@ -12,6 +12,13 @@ class Country extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'code', 'population', 'area', 'flag'
+        'name', 
+        'iso3166_alpha2',
+        'iso3166_alpha3',
+        'iso3166_numeric', 
+        'population',
+        'area',
+        'phone_code',
+        'flag'
     ];
 }

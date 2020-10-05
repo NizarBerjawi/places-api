@@ -83,6 +83,6 @@ class LoadFeatureCodes implements ShouldQueue
      */
     private function url()
     {
-        return config('geonames.feature_codes');
+        return config('geonames.feature_codes_url');
     }
 }
