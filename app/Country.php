@@ -21,4 +21,14 @@ class Country extends Model
         'phone_code',
         'flag'
     ];
+
+    /**
+     * Get all the neihbouring countries of this country
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function neighbours() 
+    {
+        return $this->hasMany(Neighbour::class);
+    }
 }
