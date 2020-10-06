@@ -29,6 +29,6 @@ class Country extends Model
      */
     public function neighbours() 
     {
-        return $this->belongsToMany(Neighbour::class);
+        return $this->belongsToMany(Country::class, 'country_neighbour', 'neighbour_id', 'country_id');
     }
 }
