@@ -10,6 +10,7 @@ use App\Jobs\ImportLanguagesFile;
 use App\Jobs\LoadFeatureCodes;
 use App\Jobs\LoadFeatures;
 use App\Jobs\UnzipGeonamesFile;
+use App\Jobs\LoadNeighbourCountries;
 
 class DatabaseSeeder extends Seeder
 {
@@ -33,13 +34,16 @@ class DatabaseSeeder extends Seeder
             UnzipGeonamesFile::dispatch($country);
         });
 
-        // 4- Load all Feature classes and codes
+        // 4- Load all neighbouring countries
+        LoadNeighbourCountries::dispatch();
+        
+        // 5- Load all Feature classes and codes
         LoadFeatureCodes::dispatch();
 
-        // 5- Download the iso-languagecodes.txt file
+        // 6- Download the iso-languagecodes.txt file
         DownloadLanguages::dispatch();
         
-        // 6- Import the iso-languagecodes.txt file
+        // 7- Import the iso-languagecodes.txt file
         ImportLanguagesFile::dispatch();
     }
 }

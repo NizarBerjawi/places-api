@@ -23,12 +23,12 @@ class Country extends Model
     ];
 
     /**
-     * Get all the neihbouring countries of this country
+     * Get all the neighbouring countries of this country
      * 
-     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function neighbours() 
     {
-        return $this->hasMany(Neighbour::class);
+        return $this->belongsToMany(Country::class, 'country_neighbour', 'neighbour_id', 'country_id');
     }
 }
