@@ -11,5 +11,15 @@ class Neighbour extends Model
      *
      * @var string
      */
-    protected $table = 'country_neighbour';
+    protected $table = 'countries';
+
+    /**
+     * Returns the country this neighbour belongs to
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function country()
+    {
+        return $this->belongsToMany(Country::class);
+    }
 }

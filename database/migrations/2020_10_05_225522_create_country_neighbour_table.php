@@ -24,6 +24,7 @@ class CreateCountryNeighbourTable extends Migration
             $table->foreign('country_id')->references('id')->on('countries')->onCascade('delete');
             $table->foreign('neighbour_id')->references('id')->on('countries')->onCascade('delete');
         });
+
     }
 
     /**
