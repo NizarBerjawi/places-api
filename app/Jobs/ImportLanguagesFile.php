@@ -2,16 +2,16 @@
 
 namespace App\Jobs;
 
+use App\Exceptions\FileNotDownloadedException;
+use App\Language;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
-use App\Language;
-use App\Exceptions\FileNotDownloadedException;
 
 class ImportLanguagesFile implements ShouldQueue
 {
@@ -26,7 +26,7 @@ class ImportLanguagesFile implements ShouldQueue
 
     /**
      * The delimiter used to parse the file
-     * 
+     *
      * @var string
      */
     const DELIMITER = "\t";
@@ -69,7 +69,7 @@ class ImportLanguagesFile implements ShouldQueue
             }
 
             $data = collect(str_getcsv($line, static::DELIMITER))
-                ->map(function($item) {
+                ->map(function ($item) {
                     if (empty($item)) {
                         return null;
                     }
@@ -94,7 +94,7 @@ class ImportLanguagesFile implements ShouldQueue
 
     /**
      * The name of the language codes file
-     * 
+     *
      * @return string
      */
     private function filename()

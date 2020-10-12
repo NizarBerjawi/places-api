@@ -31,7 +31,7 @@ class UnzipGeonamesFile implements ShouldQueue
 
     /**
      * A country to unzip geonames for
-     * 
+     *
      * @var Country
      */
     public $country;
@@ -69,7 +69,7 @@ class UnzipGeonamesFile implements ShouldQueue
 
     /**
      * The name of the file
-     * 
+     *
      * @return zip
      */
     private function filename()
@@ -79,7 +79,7 @@ class UnzipGeonamesFile implements ShouldQueue
 
     /**
      * The folder path where the downloaded file should be saved
-     * 
+     *
      * @return string
      */
     private function folderPath()
@@ -89,10 +89,10 @@ class UnzipGeonamesFile implements ShouldQueue
 
     /**
      * The full path of the downloaded file
-     * 
+     *
      * @return string
      */
-    private function filepath() 
+    private function filepath()
     {
         return $this->folderPath() . '/' . $this->filename();
     }

@@ -49,7 +49,7 @@ class DownloadCountriesFile implements ShouldQueue
     public function handle()
     {
         try {
-           $this->downloadFile();
+            $this->downloadFile();
         } catch (\Exception $e) {
             logger($e->getMessage());
         }
@@ -57,7 +57,7 @@ class DownloadCountriesFile implements ShouldQueue
 
     /**
      * Downloads the countries file
-     * 
+     *
      * @return void
      */
     private function downloadFile()
@@ -71,7 +71,8 @@ class DownloadCountriesFile implements ShouldQueue
         }
 
         $saved = $this->disk->put(
-            $this->filename(), $response->getBody()
+            $this->filename(),
+            $response->getBody()
         );
 
         if (!$saved) {
@@ -81,7 +82,7 @@ class DownloadCountriesFile implements ShouldQueue
 
     /**
      * The full path of the countries file
-     * 
+     *
      * @return string
      */
     private function filepath()
@@ -91,7 +92,7 @@ class DownloadCountriesFile implements ShouldQueue
 
     /**
      * The location of the file
-     * 
+     *
      * @return string
      */
     private function url()
@@ -101,7 +102,7 @@ class DownloadCountriesFile implements ShouldQueue
 
     /**
      * The name of the countries file
-     * 
+     *
      * @return string
      */
     private function filename()

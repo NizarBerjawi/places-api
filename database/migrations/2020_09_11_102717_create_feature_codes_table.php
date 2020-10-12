@@ -34,7 +34,7 @@ class CreateFeatureCodesTable extends Migration
      */
     public function down()
     {
-        Schema::table('feature_codes', function(Blueprint $table) {
+        Schema::table('feature_codes', function (Blueprint $table) {
             $table->dropForeign(['feature_id']);
         });
 

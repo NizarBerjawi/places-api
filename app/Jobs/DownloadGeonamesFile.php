@@ -2,17 +2,17 @@
 
 namespace App\Jobs;
 
+use App\Country;
+use App\Exceptions\FileNotDownloadedException;
+use App\Exceptions\FileNotSavedException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
+
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
-
-use App\Country;
-use App\Exceptions\FileNotDownloadedException;
-use App\Exceptions\FileNotSavedException;
 
 class DownloadGeonamesFile implements ShouldQueue
 {
@@ -34,14 +34,14 @@ class DownloadGeonamesFile implements ShouldQueue
 
     /**
      * The base url to download the cities data from
-     * 
+     *
      * @var string
      */
     public $url;
 
     /**
      * A country to download geonames for
-     * 
+     *
      * @var Country
      */
     public $country;
@@ -74,7 +74,7 @@ class DownloadGeonamesFile implements ShouldQueue
 
     /**
      * Downloads the Geoames file for a country
-     * 
+     *
      * @return void
      */
     private function downloadFile()
@@ -96,7 +96,7 @@ class DownloadGeonamesFile implements ShouldQueue
 
     /**
      * The path where the downloaded file should be stored
-     * 
+     *
      * @return string
      */
     private function path()
@@ -106,7 +106,7 @@ class DownloadGeonamesFile implements ShouldQueue
 
     /**
      * The location of the file
-     * 
+     *
      * @return string
      */
     private function url()
@@ -116,7 +116,7 @@ class DownloadGeonamesFile implements ShouldQueue
 
     /**
      * The name of the file
-     * 
+     *
      * @return string
      */
     private function filename()

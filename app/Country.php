@@ -12,10 +12,10 @@ class Country extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 
+        'name',
         'iso3166_alpha2',
         'iso3166_alpha3',
-        'iso3166_numeric', 
+        'iso3166_numeric',
         'population',
         'area',
         'phone_code',
@@ -24,10 +24,10 @@ class Country extends Model
 
     /**
      * Get all the neighbouring countries of this country
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-    public function neighbours() 
+    public function neighbours()
     {
         return $this->belongsToMany(Country::class, 'country_neighbour', 'neighbour_id', 'country_id');
     }

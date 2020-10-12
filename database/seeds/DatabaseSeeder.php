@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Database\Seeder;
 use App\Country;
 use App\Jobs\DownloadCountriesFile;
 use App\Jobs\DownloadGeonamesFile;
@@ -8,9 +7,9 @@ use App\Jobs\DownloadLanguages;
 use App\Jobs\ImportCountriesFile;
 use App\Jobs\ImportLanguagesFile;
 use App\Jobs\LoadFeatureCodes;
-use App\Jobs\LoadFeatures;
-use App\Jobs\UnzipGeonamesFile;
 use App\Jobs\LoadNeighbourCountries;
+use App\Jobs\UnzipGeonamesFile;
+use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -29,7 +28,7 @@ class DatabaseSeeder extends Seeder
         
         // 3- Download the geonames files for every country
         $countries = Country::get();
-        $countries->each(function(Country $country) {
+        $countries->each(function (Country $country) {
             DownloadGeonamesFile::dispatch($country);
             UnzipGeonamesFile::dispatch($country);
         });
