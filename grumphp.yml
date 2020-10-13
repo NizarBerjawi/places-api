@@ -1,5 +1,8 @@
 --- 
 grumphp: 
+  fixer:
+    enabled: true
+    fix_by_default: true
   tasks: 
     phpcsfixer: 
       allow_risky: false
