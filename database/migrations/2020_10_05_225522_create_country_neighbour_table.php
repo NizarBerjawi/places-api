@@ -24,7 +24,6 @@ class CreateCountryNeighbourTable extends Migration
             $table->foreign('country_id')->references('id')->on('countries')->onCascade('delete');
             $table->foreign('neighbour_id')->references('id')->on('countries')->onCascade('delete');
         });
-
     }
 
     /**
@@ -34,7 +33,7 @@ class CreateCountryNeighbourTable extends Migration
      */
     public function down()
     {
-        Schema::table('country_neighbour', function(Blueprint $table) {
+        Schema::table('country_neighbour', function (Blueprint $table) {
             $table->dropForeign(['country_id']);
             $table->dropForeign(['neighbour_id']);
         });

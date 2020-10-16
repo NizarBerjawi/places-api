@@ -2,18 +2,17 @@
 
 namespace App\Jobs;
 
+use App\Country;
+use App\Exceptions\FileNotDownloadedException;
+use App\Exceptions\FileNotSavedException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
-use App\Country;
-use App\Exceptions\FileNotDownloadedException;
-use App\Exceptions\FileNotSavedException;
 
 class ImportCountriesFile implements ShouldQueue
 {
@@ -28,7 +27,7 @@ class ImportCountriesFile implements ShouldQueue
 
     /**
      * The delimiter used to parse the file
-     * 
+     *
      * @var string
      */
     const DELIMITER = "\t";
@@ -42,8 +41,8 @@ class ImportCountriesFile implements ShouldQueue
 
     /**
      * Dissolved countries that don't exist any more.
-     * 
-     * @var array 
+     *
+     * @var array
      */
     public $excluded = ['CS', 'AN'];
 
@@ -98,7 +97,7 @@ class ImportCountriesFile implements ShouldQueue
 
     /**
      * Download a country's flag
-     * 
+     *
      * @param string $code~
      * @return string
      */
@@ -126,7 +125,7 @@ class ImportCountriesFile implements ShouldQueue
 
     /**
      * The name of the countries file
-     * 
+     *
      * @return string
      */
     private function countriesFilename()
@@ -136,7 +135,7 @@ class ImportCountriesFile implements ShouldQueue
 
     /**
      * Get the flag filename
-     * 
+     *
      * @param string $code
      * @return string
      */
@@ -147,7 +146,7 @@ class ImportCountriesFile implements ShouldQueue
 
     /**
      * Get the flag filepath
-     * 
+     *
      * @param string $code
      * @return string
      */
@@ -158,7 +157,7 @@ class ImportCountriesFile implements ShouldQueue
 
     /**
      * Get the url of the flag
-     * 
+     *
      * @param string $code
      * @return string
      */

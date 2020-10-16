@@ -19,7 +19,7 @@ class FeatureCode extends Model
     
     /**
      * Get the feature that this feature code belongs to
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function feature()

@@ -18,10 +18,10 @@ class Feature extends Model
 
     /**
      * Get the feature codes for this feature.
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function featureCodes() 
+    public function featureCodes()
     {
         return $this->hasMany(FeatureCode::class);
     }

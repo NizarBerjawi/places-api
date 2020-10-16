@@ -2,19 +2,14 @@
 
 namespace App\Jobs;
 
+use App\Country;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
-
-use App\Country;
-use App\Exceptions\FileNotDownloadedException;
-use App\Exceptions\FileNotSavedException;
-use App\Neighbour;
 
 class LoadNeighbourCountries implements ShouldQueue
 {
@@ -29,7 +24,7 @@ class LoadNeighbourCountries implements ShouldQueue
 
     /**
      * The delimiter used to parse the file
-     * 
+     *
      * @var string
      */
     const DELIMITER = "\t";
@@ -83,7 +78,7 @@ class LoadNeighbourCountries implements ShouldQueue
             }
 
             $neighbours->explode(',')
-                ->each(function($code) use ($country) {
+                ->each(function ($code) use ($country) {
                     $neighbour = Country::query()
                         ->where('iso3166_alpha2', $code)
                         ->first();
@@ -101,7 +96,7 @@ class LoadNeighbourCountries implements ShouldQueue
 
     /**
      * The name of the countries file
-     * 
+     *
      * @return string
      */
     private function countriesFilename()

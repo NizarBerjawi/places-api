@@ -11,7 +11,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
-
 use Symfony\Component\DomCrawler\Crawler;
 
 class LoadFeatureCodes implements ShouldQueue
@@ -37,7 +36,7 @@ class LoadFeatureCodes implements ShouldQueue
         $rows = $crawler->filter('table.restable tr');
 
         $feature = null;
-        foreach($rows as $row) {
+        foreach ($rows as $row) {
             $rowEl = new Crawler($row);
 
             $content = $rowEl->children();
@@ -56,17 +55,17 @@ class LoadFeatureCodes implements ShouldQueue
 
             $featureCode = new FeatureCode();
 
-            $content->each(function($item, $key) use (&$featureCode) {
+            $content->each(function ($item, $key) use (&$featureCode) {
                 $value = $item->text();
 
-                switch($key) {
+                switch ($key) {
                     case 0:
                         $featureCode->fill(['code' => $value]);
                         break;
                     case 1:
                         $featureCode->fill(['short_description' => ucfirst($value)]);
                         break;
-                    case 2: 
+                    case 2:
                         $featureCode->fill(['full_description' => ucfirst($value)]);
                         break;
                 };
@@ -78,7 +77,7 @@ class LoadFeatureCodes implements ShouldQueue
 
     /**
      * Get the url of the feature codes html page
-     * 
+     *
      * @return string
      */
     private function url()

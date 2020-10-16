@@ -8,20 +8,20 @@ class FileNotDownloadedException extends Exception
 {
     /**
      * The location of the file
-     * 
+     *
      * @var string
      */
     public $location;
 
     /**
      * Instantiate the exception
-     * 
+     *
      * @param string $location
      * @return void
      */
     public function __construct(string $location = null)
     {
-        $this->location = $location;  
+        $this->location = $location;
 
         $defaultMessage = 'Could not download file';
 

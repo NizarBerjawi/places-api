@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Exceptions\FileNotDownloadedException;
 use App\Exceptions\FileNotSavedException;
-
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -49,7 +48,7 @@ class DownloadLanguages implements ShouldQueue
     public function handle()
     {
         try {
-           $this->downloadFile();
+            $this->downloadFile();
         } catch (\Exception $e) {
             logger($e->getMessage());
         }
@@ -57,7 +56,7 @@ class DownloadLanguages implements ShouldQueue
 
     /**
      * Downloads the languages file
-     * 
+     *
      * @return void
      */
     private function downloadFile()
@@ -72,7 +71,8 @@ class DownloadLanguages implements ShouldQueue
         }
 
         $saved = $this->disk->put(
-            $this->filename(), $response->getBody()
+            $this->filename(),
+            $response->getBody()
         );
 
         if (!$saved) {
@@ -82,7 +82,7 @@ class DownloadLanguages implements ShouldQueue
 
     /**
      * The location of the file
-     * 
+     *
      * @return string
      */
     private function url()
@@ -92,7 +92,7 @@ class DownloadLanguages implements ShouldQueue
 
     /**
      * The full path of the language codes file
-     * 
+     *
      * @return string
      */
     private function filepath()
@@ -102,7 +102,7 @@ class DownloadLanguages implements ShouldQueue
 
     /**
      * The name of the language codes file
-     * 
+     *
      * @return string
      */
     private function filename()
