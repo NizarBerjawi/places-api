@@ -60,7 +60,7 @@ return [
     | The URL of the file containing all countries information
     |
     */
-    'countries_url' => env('GEONAMES_COUNTRIES_URL', 'https://download.geonames.orgb/export/dump/countryInfo.txt'),
+    'countries_url' => env('GEONAMES_COUNTRIES_URL', 'https://download.geonames.org/export/dump/countryInfo.txt'),
 
     /*
     |--------------------------------------------------------------------------
@@ -70,7 +70,7 @@ return [
     | The URL of feature codes page
     |
     */
-    'feature_codes_url' => env('GEONAMES_FEATURE_CODES_URL', 'http://www.geonames.org/export/codes.html'),
+    'feature_codes_url' => env('GEONAMES_FEATURE_CODES_URL', 'https://www.geonames.org/export/codes.html'),
 
     /*
     |--------------------------------------------------------------------------
@@ -80,5 +80,5 @@ return [
     | The URL of language codes
     |
     */
-    'language_codes_url' => env('GEONAMES_LANGUAGE_CODES_URL', 'http://www.geonames.org/export/iso-languagecodes.txt'),
+    'language_codes_url' => env('GEONAMES_LANGUAGE_CODES_URL', 'https://www.geonames.org/export/iso-languagecodes.txt'),
 ];
