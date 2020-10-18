@@ -19,7 +19,6 @@ class Country extends Model
         'population',
         'area',
         'phone_code',
-        'flag'
     ];
 
     /**
