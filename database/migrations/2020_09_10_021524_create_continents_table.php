@@ -17,6 +17,7 @@ class CreateContinentsTable extends Migration
             $table->id();
             $table->string('code')->unique();
             $table->string('name')->unique();
+            $table->morphs('continentable');
             $table->timestamps();
         });
     }

@@ -22,6 +22,16 @@ class Country extends Model
     ];
 
     /**
+     * Get the continent this country belongs to
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
+    public function continent()
+    {
+        return $this->morphOne(Continent::class, 'continentable');
+    }
+    
+    /**
      * Get all the neighbouring countries of this country
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

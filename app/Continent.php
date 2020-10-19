@@ -14,4 +14,14 @@ class Continent extends Model
     protected $fillable = [
         'code', 'name'
     ];
+
+    /**
+     * Get the owning continentable model
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphTo
+     */
+    public function continentable()
+    {
+        return $this->morphTo();
+    }
 }
