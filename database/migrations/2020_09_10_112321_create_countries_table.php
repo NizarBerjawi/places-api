@@ -21,8 +21,7 @@ class CreateCountriesTable extends Migration
             $table->string('iso3166_numeric')->unique();
             $table->integer('population');
             $table->integer('area');
-            $table->string('phone_code');
-            $table->string('flag')->nullable();
+            $table->string('phone_code')->nullable();
             $table->timestamps();
         });
     }

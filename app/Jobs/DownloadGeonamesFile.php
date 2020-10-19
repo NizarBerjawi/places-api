@@ -86,10 +86,10 @@ class DownloadGeonamesFile implements ShouldQueue
             throw new FileNotDownloadedException($this->url());
         }
 
-        $saved = $this->disk->put($this->path(), $response->getBody());
+        $saved = $this->disk->put($this->filepath(), $response->getBody());
 
         if (!$saved) {
-            throw new FileNotSavedException($this->path());
+            throw new FileNotSavedException($this->filepath());
         }
     }
 
@@ -98,7 +98,7 @@ class DownloadGeonamesFile implements ShouldQueue
      *
      * @return string
      */
-    private function path()
+    private function filepath()
     {
         return $this->country->iso3166_alpha2 . '/' . $this->fileName();
     }
