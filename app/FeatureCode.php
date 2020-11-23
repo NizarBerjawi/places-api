@@ -22,8 +22,8 @@ class FeatureCode extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function feature()
+    public function featureClass()
     {
-        return $this->belongsTo(Feature::class);
+        return $this->belongsTo(FeatureClass::class);
     }
 }

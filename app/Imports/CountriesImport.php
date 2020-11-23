@@ -2,42 +2,39 @@
 
 namespace App\Imports;
 
+use App\Continent;
 use App\Country;
-use Illuminate\Support\Str;
-use Maatwebsite\Excel\Concerns\ToModel;
+use App\Imports\Concerns\GeonamesImportable;
+use App\Imports\Iterators\CountriesFileIterator;
 
-class CountriesImport implements ToModel
+class CountriesImport extends CountriesFileIterator implements GeonamesImportable
 {
     /**
-     * Dissolved countries that don't exist any more.
+     * Import the required data into the database
      *
-     * @var array
+     * @return void
      */
-    public $excluded = ['CS', 'AN'];
-
-    /**
-     * @param array $row
-     *
-     * @return Country|null
-     */
-    public function model(array $row)
+    public function import()
     {
-        if (Str::startsWith($row[0], '#')) {
-            return;
-        }
+        $continents = Continent::get();
 
-        if (in_array($row[0], $this->excluded)) {
-            return;
-        }
+        $data = $this
+            ->iterable()
+            ->map(function (array $data) use ($continents) {
+                $continent = $continents->where('code', $data[8])->first();
 
-        return new Country([
-            'name' => $row[4],
-            'iso3166_alpha2' => $row[0],
-            'iso3166_alpha3' => $row[1],
-            'iso3166_numeric' => $row[2],
-            'population' => $row[7],
-            'area' => $row[6],
-            'phone_code' => $row[12],
-        ]);
+                return [
+                    'name' => $data[4],
+                    'iso3166_alpha2' => $data[0],
+                    'iso3166_alpha3' => $data[1],
+                    'iso3166_numeric' => $data[2],
+                    'population' => $data[7],
+                    'area' => $data[6],
+                    'phone_code' => $data[12],
+                    'continent_id' => $continent->id
+                ];
+            });
+
+        Country::insert($data->all());
     }
 }

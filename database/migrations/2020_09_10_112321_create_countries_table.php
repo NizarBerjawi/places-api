@@ -19,10 +19,15 @@ class CreateCountriesTable extends Migration
             $table->string('iso3166_alpha2')->unique();
             $table->string('iso3166_alpha3')->unique();
             $table->string('iso3166_numeric')->unique();
+            $table->unsignedBigInteger('continent_id');
             $table->integer('population');
             $table->integer('area');
             $table->string('phone_code')->nullable();
             $table->timestamps();
+        });
+
+        Schema::table('countries', function (Blueprint $table) {
+            $table->foreign('continent_id')->references('id')->on('continents')->onCascade('delete');
         });
     }
 
@@ -33,6 +38,10 @@ class CreateCountriesTable extends Migration
      */
     public function down()
     {
+        Schema::table('countries', function (Blueprint $table) {
+            $table->dropForeign(['continent_id']);
+        });
+
         Schema::dropIfExists('countries');
     }
 }

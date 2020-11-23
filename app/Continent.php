@@ -14,4 +14,14 @@ class Continent extends Model
     protected $fillable = [
         'code', 'name'
     ];
+
+    /**
+     * Get the countries that belong to this continent
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function countries()
+    {
+        return $this->hasMany(Continent::class);
+    }
 }

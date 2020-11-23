@@ -12,7 +12,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 
-class DownloadCountriesFile implements ShouldQueue
+class DownloadFeatureCodesFile implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -35,9 +35,7 @@ class DownloadCountriesFile implements ShouldQueue
             $saved = $disk->put($this->filename(), $response->getBody());
     
             if (!$saved) {
-                throw new FileNotSavedException(
-                    $disk->path($this->filename())
-                );
+                throw new FileNotSavedException($disk->path($this->filename()));
             }
         } catch (\Exception $e) {
             logger($e->getMessage());
@@ -51,7 +49,7 @@ class DownloadCountriesFile implements ShouldQueue
      */
     private function url()
     {
-        return config('geonames.countries_url');
+        return config('geonames.feature_codes_url');
     }
 
     /**
@@ -61,6 +59,6 @@ class DownloadCountriesFile implements ShouldQueue
      */
     private function filename()
     {
-        return config('geonames.countries_file');
+        return config('geonames.feature_codes_file');
     }
 }

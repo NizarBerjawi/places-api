@@ -23,7 +23,7 @@ class CreateFeatureCodesTable extends Migration
         });
 
         Schema::table('feature_codes', function (Blueprint $table) {
-            $table->foreign('feature_id')->references('id')->on('features')->onCascade('delete');
+            $table->foreign('feature_id')->references('id')->on('feature_classes')->onCascade('delete');
         });
     }
 

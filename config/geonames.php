@@ -24,6 +24,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Readme information file
+    |--------------------------------------------------------------------------
+    |
+    | The .txt file containing all important information
+    |
+    */
+    'readme_file' => env('GEONAMES_INFO_FILE', 'readme.txt'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Countries information file
     |--------------------------------------------------------------------------
     |
@@ -31,16 +41,6 @@ return [
     |
     */
     'countries_file' => env('GEONAMES_COUNTRIES_FILE', 'countryInfo.txt'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Feature codes page
-    |--------------------------------------------------------------------------
-    |
-    | The page with all the Geonames feature codes
-    |
-    */
-    'feature_codes_page' => env('GEONAMES_FEATURE_CODES_PAGE', 'codes.html'),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,6 +54,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Language codes file
+    |--------------------------------------------------------------------------
+    |
+    | The name of the file with all language codes
+    |
+    */
+    'feature_codes_file' => env('GEONAMES_FEATURE_CODES_FILE', 'featureCodes_en.txt'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Countries information file url
     |--------------------------------------------------------------------------
     |
@@ -64,16 +74,6 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Feature codes base url
-    |--------------------------------------------------------------------------
-    |
-    | The URL of feature codes page
-    |
-    */
-    'feature_codes_url' => env('GEONAMES_FEATURE_CODES_URL', 'https://www.geonames.org/export/codes.html'),
-
-    /*
-    |--------------------------------------------------------------------------
     | Language codes base url
     |--------------------------------------------------------------------------
     |
@@ -81,4 +81,26 @@ return [
     |
     */
     'language_codes_url' => env('GEONAMES_LANGUAGE_CODES_URL', 'https://www.geonames.org/export/iso-languagecodes.txt'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Readme file base url
+    |--------------------------------------------------------------------------
+    |
+    | The URL of readme text file
+    |
+    */
+    'readme_url' => env('GEONAMES_README_URL', 'https://download.geonames.org/export/dump/readme.txt'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Feature Codes file base url
+    |--------------------------------------------------------------------------
+    |
+    | The URL of feature codes file
+    |
+    */
+    'feature_codes_url' => env('GEONAMES_FEATURE_CODES_URL', 'https://download.geonames.org/export/dump/featureCodes_en.txt'),
+
+
 ];

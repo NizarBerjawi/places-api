@@ -2,24 +2,16 @@
 
 namespace App\Jobs;
 
-use App\Country;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Storage;
 
 class UnzipGeonamesFile implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
-    /**
-     * The storage disk name
-     *
-     * @var string
-     */
-    const DISK = 'data';
 
     /**
      * An instance of the storage disk object
@@ -29,22 +21,22 @@ class UnzipGeonamesFile implements ShouldQueue
     public $disk;
 
     /**
-     * A country to unzip geonames for
+     * A country code to unzip geonames for
      *
-     * @var Country
+     * @var string
      */
-    public $country;
+    public $code;
 
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Country $country)
+    public function __construct(string $code)
     {
-        $this->country = $country;
+        $this->code = $code;
         
-        $this->disk = Storage::disk(static::DISK);
+        $this->disk = resolve(FilesystemAdapter::class);
     }
 
     /**
@@ -57,7 +49,7 @@ class UnzipGeonamesFile implements ShouldQueue
         $zip = new \ZipArchive();
 
         $res = $zip->open($this->filepath());
-        
+
         if (!$res) {
             throw new \Exception("Could not unzip file: " . $this->fileName());
         }
@@ -73,7 +65,7 @@ class UnzipGeonamesFile implements ShouldQueue
      */
     private function filename()
     {
-        return $this->country->iso3166_alpha2 . '.zip';
+        return $this->code . '.zip';
     }
 
     /**
@@ -83,7 +75,7 @@ class UnzipGeonamesFile implements ShouldQueue
      */
     private function folderPath()
     {
-        return $this->disk->path($this->country->iso3166_alpha2);
+        return $this->disk->path($this->code);
     }
 
     /**

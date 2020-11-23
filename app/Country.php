@@ -19,7 +19,18 @@ class Country extends Model
         'population',
         'area',
         'phone_code',
+        'continent_id'
     ];
+
+    /**
+     * Get the continent that owns this country
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function continent()
+    {
+        return $this->belongsTo(Continent::class);
+    }
 
     /**
      * Get all the neighbouring countries of this country

@@ -6,77 +6,40 @@ use App\Exceptions\FileNotDownloadedException;
 use App\Exceptions\FileNotSavedException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Storage;
 
 class DownloadLanguages implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * The storage disk name
-     *
-     * @var string
-     */
-    const DISK = 'data';
-
-    /**
-     * An instance of the storage disk object
-     *
-     * @var \Illuminate\Filesystem\FilesystemAdapter
-     */
-    public $disk;
-
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->disk = Storage::disk(static::DISK);
-    }
-
-    /**
      * Execute the job.
      *
      * @return void
      */
-    public function handle()
+    public function handle(FilesystemAdapter $disk)
     {
         try {
-            $this->downloadFile();
+            $response =  Http::withOptions([
+                'stream' => true
+            ])->get($this->url());
+    
+    
+            if ($response->failed()) {
+                throw new FileNotDownloadedException($this->url());
+            }
+    
+            $saved = $disk->put($this->filename(), $response->getBody());
+    
+            if (!$saved) {
+                throw new FileNotSavedException($disk->path($this->filename()));
+            }
         } catch (\Exception $e) {
             logger($e->getMessage());
-        }
-    }
-
-    /**
-     * Downloads the languages file
-     *
-     * @return void
-     */
-    private function downloadFile()
-    {
-        $response =  Http::withOptions([
-            'stream' => true
-        ])->get($this->url());
-
-
-        if ($response->failed()) {
-            throw new FileNotDownloadedException($this->url());
-        }
-
-        $saved = $this->disk->put(
-            $this->filename(),
-            $response->getBody()
-        );
-
-        if (!$saved) {
-            throw new FileNotSavedException($this->filepath());
         }
     }
 
@@ -88,16 +51,6 @@ class DownloadLanguages implements ShouldQueue
     private function url()
     {
         return config('geonames.language_codes_url');
-    }
-
-    /**
-     * The full path of the language codes file
-     *
-     * @return string
-     */
-    private function filepath()
-    {
-        return $this->disk->path($this->filename());
     }
 
     /**
