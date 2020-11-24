@@ -50,5 +50,7 @@ class DatabaseSeeder extends Seeder
         // 10- Load all Feature classes and codes
         $this->call(FeatureClassesTableSeeder::class);
         $this->call(FeatureCodesTableSeeder::class);
+
+        $this->call(FlagsTableSeeder::class);
     }
 }

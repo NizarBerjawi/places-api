@@ -41,4 +41,14 @@ class Country extends Model
     {
         return $this->belongsToMany(Country::class, 'country_neighbour', 'neighbour_id', 'country_id');
     }
+    
+    /**
+     * Get the flag associated with this country
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function flag()
+    {
+        return $this->hasOne(Flag::class);
+    }
 }
