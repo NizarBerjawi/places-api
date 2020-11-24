@@ -4,24 +4,25 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Continent extends Model
+class FeatureClass extends Model
 {
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'code', 'name'
+    public $fillable = [
+        'code',
+        'description'
     ];
 
     /**
-     * Get the countries that belong to this continent
+     * Get the feature codes for this feature.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-    public function countries()
+    public function featureCodes()
     {
-        return $this->hasMany(Country::class);
+        return $this->hasMany(FeatureCode::class);
     }
 }

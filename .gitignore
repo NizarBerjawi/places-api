@@ -5,9 +5,13 @@
 /vendor
 .env
 .env.backup
+.vscode
 .docker/mysql/data
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+_ide_helper.php
+.phpstorm.meta.php
+.php_cs.cache

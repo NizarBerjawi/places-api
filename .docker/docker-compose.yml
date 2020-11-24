@@ -46,8 +46,8 @@ services:
     ports:
       - "33061:3306"
     environment:
-      MYSQL_DATABASE: iseekplant_database
-      MYSQL_USER: iseekplant
+      MYSQL_DATABASE: countries_api_database
+      MYSQL_USER: countries_api
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: secret
     volumes:
