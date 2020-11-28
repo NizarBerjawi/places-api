@@ -17,4 +17,14 @@ class Language extends Model
         'iso639_3',
         'language_name',
     ];
+
+    /**
+     * Get all the Countries that are associated with this language
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function countries()
+    {
+        return $this->belongsToMany(Country::class);
+    }
 }
