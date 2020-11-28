@@ -51,4 +51,14 @@ class Country extends Model
     {
         return $this->hasOne(Flag::class);
     }
+
+    /**
+     * Get all the languages associated with a country
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function languages()
+    {
+        return $this->belongsToMany(Language::class);
+    }
 }
