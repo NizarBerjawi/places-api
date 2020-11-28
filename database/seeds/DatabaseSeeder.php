@@ -52,5 +52,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FeatureCodesTableSeeder::class);
 
         $this->call(FlagsTableSeeder::class);
+
+        $this->call(CountryLanguageTableSeeder::class);
     }
 }
