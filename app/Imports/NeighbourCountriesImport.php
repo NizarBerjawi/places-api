@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Country;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -47,7 +48,9 @@ class NeighbourCountriesImport extends CountriesFileIterator implements Geonames
                 return $neighbours->map(function (Country $neighbour) use ($country) {
                     return [
                         'neighbour_id' => $neighbour->id,
-                        'country_id' => $country->id
+                        'country_id' => $country->id,
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now()
                     ];
                 });
             });

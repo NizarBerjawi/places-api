@@ -6,6 +6,7 @@ use App\Country;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
 use App\Language;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -53,7 +54,9 @@ class CountryLanguageImport extends CountriesFileIterator implements GeonamesImp
 
                         return [
                             'country_id' => $country->id,
-                            'language_id' => $language->id
+                            'language_id' => $language->id,
+                            'created_at' => Carbon::now(),
+                            'updated_at' => Carbon::now()
                         ];
                     });
             });
