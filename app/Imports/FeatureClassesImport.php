@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\FeatureClass;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\GeonamesFileIterator;
+use Carbon\Carbon;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Str;
 
@@ -60,7 +61,9 @@ class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImpor
 
                 return [
                     'code'  => $code,
-                    'description' => ucfirst($description)
+                    'description' => ucfirst($description),
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
                  ];
             });
 

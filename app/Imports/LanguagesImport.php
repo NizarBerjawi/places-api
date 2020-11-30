@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\GeonamesFileIterator;
 use App\Language;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 
 class LanguagesImport extends GeonamesFileIterator implements GeonamesImportable
@@ -37,6 +38,8 @@ class LanguagesImport extends GeonamesFileIterator implements GeonamesImportable
                         'iso639_2' => $row[1],
                         'iso639_3' => $row[0],
                         'language_name' => $row[3],
+                        'created_at' => Carbon::now(),
+                        'updated_at' => Carbon::now()
                     ];
                 });
             })->each(function ($data) {

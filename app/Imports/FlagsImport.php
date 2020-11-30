@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Country;
 use App\Flag;
 use App\Imports\Concerns\GeonamesImportable;
+use Carbon\Carbon;
 
 class FlagsImport implements GeonamesImportable
 {
@@ -21,7 +22,9 @@ class FlagsImport implements GeonamesImportable
 
                 return [
                     'path' => $code . '/' . strtolower($code . '.gif'),
-                    'country_id' => $country->id
+                    'country_id' => $country->id,
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now()
                 ];
             });
 
