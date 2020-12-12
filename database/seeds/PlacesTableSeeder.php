@@ -1,11 +1,12 @@
 <?php
 
 use App\Country;
+use App\Imports\PlacesImport;
 use App\Imports\TimezonesImport;
 use Illuminate\Database\Seeder;
 use Illuminate\Filesystem\FilesystemAdapter;
 
-class TimezonesTableSeeder extends Seeder
+class PlacesTableSeeder extends Seeder
 {
     /**
      * The Storage disk
@@ -42,6 +43,7 @@ class TimezonesTableSeeder extends Seeder
                 );
 
                 (new TimezonesImport($filepath))->import();
+                (new PlacesImport($filepath))->import();
             });
     }
 }

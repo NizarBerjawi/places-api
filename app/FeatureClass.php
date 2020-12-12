@@ -25,4 +25,14 @@ class FeatureClass extends Model
     {
         return $this->hasMany(FeatureCode::class);
     }
+
+    /**
+     * Get the Places that belong to this feature class
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function places()
+    {
+        return $this->hasManyThrough(Place::class, FeatureCode::class);
+    }
 }
