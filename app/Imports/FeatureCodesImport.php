@@ -44,7 +44,7 @@ class FeatureCodesImport extends GeonamesFileIterator implements GeonamesImporta
                     'code' => $featureCode,
                     'short_description' => ucfirst($row[1]),
                     'full_description' => ucfirst($row[2]),
-                    'feature_id' => $featureClass->id,
+                    'feature_class_id' => $featureClass->id,
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now()
                 ];

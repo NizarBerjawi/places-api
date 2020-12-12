@@ -18,12 +18,12 @@ class CreateFeatureCodesTable extends Migration
             $table->string('code')->unique();
             $table->string('short_description')->nullable();
             $table->text('full_description')->nullable();
-            $table->unsignedBigInteger('feature_id');
+            $table->unsignedBigInteger('feature_class_id');
             $table->timestamps();
         });
 
         Schema::table('feature_codes', function (Blueprint $table) {
-            $table->foreign('feature_id')->references('id')->on('feature_classes')->onCascade('delete');
+            $table->foreign('feature_class_id')->references('id')->on('feature_classes')->onCascade('delete');
         });
     }
 
@@ -35,7 +35,7 @@ class CreateFeatureCodesTable extends Migration
     public function down()
     {
         Schema::table('feature_codes', function (Blueprint $table) {
-            $table->dropForeign(['feature_id']);
+            $table->dropForeign(['feature_class_id']);
         });
 
         Schema::dropIfExists('feature_codes');
