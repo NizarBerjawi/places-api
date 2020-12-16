@@ -61,4 +61,14 @@ class Country extends Model
     {
         return $this->belongsToMany(Language::class);
     }
+
+    /**
+     * Get all the Places that belong to this Country
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function places()
+    {
+        return $this->hasMany(Place::class);
+    }
 }
