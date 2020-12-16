@@ -24,4 +24,24 @@ class Place extends Model
     {
         return $this->belongsTo(FeatureCode::class);
     }
+
+    /**
+     * Get the Country that this Place belongs to
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    /**
+     * Get the Location of this Place
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     */
+    public function location()
+    {
+        return $this->morphOne(Location::class, 'locationable');
+    }
 }
