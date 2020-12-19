@@ -19,10 +19,10 @@ class CreateCountriesTable extends Migration
             $table->string('iso3166_alpha2')->unique();
             $table->string('iso3166_alpha3')->unique();
             $table->string('iso3166_numeric')->unique();
-            $table->unsignedBigInteger('continent_id');
             $table->integer('population');
             $table->integer('area');
             $table->string('phone_code')->nullable();
+            $table->unsignedBigInteger('continent_id');
             $table->timestamps();
         });
 

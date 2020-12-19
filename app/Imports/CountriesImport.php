@@ -17,12 +17,10 @@ class CountriesImport extends CountriesFileIterator implements GeonamesImportabl
      */
     public function import()
     {
-        $continents = Continent::get();
-
         $data = $this
             ->iterable()
-            ->map(function (array $data) use ($continents) {
-                $continent = $continents->where('code', $data[8])->first();
+            ->map(function (array $data) {
+                $continent = Continent::where('code', $data[8])->first();
 
                 return [
                     'name' => $data[4],

@@ -58,13 +58,15 @@ class ContinentsImport extends GeonamesFileIterator implements GeonamesImportabl
         $data = $this
             ->iterable()
             ->map(function (array $data) {
+                $now = Carbon::now();
+                
                 [$code, $name] = Str::of($data[0])->explode(' : ');
                 
                 return [
                     'code' => $code,
                     'name' => $name,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
+                    'created_at' => $now,
+                    'updated_at' => $now
                 ];
             });
 
