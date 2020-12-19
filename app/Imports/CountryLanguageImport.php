@@ -32,7 +32,8 @@ class CountryLanguageImport extends CountriesFileIterator implements GeonamesImp
                     ->where('iso3166_alpha2', $row[0])
                     ->first();
                     
-                return $languagesString->explode(',')
+                return $languagesString
+                    ->explode(',')
                     ->reject(function ($item) {
                         return empty($item);
                     })

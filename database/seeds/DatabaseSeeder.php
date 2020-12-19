@@ -41,6 +41,8 @@ class DatabaseSeeder extends Seeder
 
         // 6- Seed the continents table
         $this->call(ContinentsTableSeeder::class);
+        // 13- Create all Currencies
+        $this->call(CurrenciesTableSeeder::class);
         // 7- Parse and import the countryInfo.txt file
         $this->call(CountriesTableSeeder::class);
         // 8- Import the iso-languagecodes.txt file
@@ -52,11 +54,10 @@ class DatabaseSeeder extends Seeder
         $this->call(FeatureCodesTableSeeder::class);
         // 11- Load all Flags
         $this->call(FlagsTableSeeder::class);
-        // 12- Create all Country-Language relationships
+        // 12- Create all Country-Language relations
         $this->call(CountryLanguageTableSeeder::class);
-        // 13- Create all Country-Language relationships
-        $this->call(CurrenciesTableSeeder::class);
-        // 14- Create all Timezones
+        $this->call(CountryCurrencyTableSeeder::class);
+        // 15- Create all Timezones
         $this->call(PlacesTableSeeder::class);
     }
 }

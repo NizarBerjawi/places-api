@@ -71,4 +71,21 @@ class Country extends Model
     {
         return $this->hasMany(Place::class);
     }
+
+    /**
+     * Get athe currency used in this Country
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function currency()
+    {
+        return $this->hasOneThrough(
+            Currency::class,
+            CountryCurrency::class,
+            'country_id',
+            'id',
+            null,
+            'currency_id'
+        );
+    }
 }
