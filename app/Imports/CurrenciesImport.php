@@ -18,10 +18,10 @@ class CurrenciesImport extends CountriesFileIterator implements GeonamesImportab
     {
         $data = $this
             ->iterable()
-            ->filter(function ($item) {
+            ->filter(function (array $item) {
                 return isset($item[10], $item[11]);
             })
-            ->unique(function ($item) {
+            ->unique(function (array $item) {
                 return $item[10];
             })
             ->map(function (array $data) {

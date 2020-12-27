@@ -25,15 +25,16 @@ class LocationsImport extends GeonamesFileIterator implements GeonamesImportable
                 return $chunk->map(function (array $data) {
                     $country = Country::where('iso3166_alpha2', $data[8])->first();
                     $featureCode = FeatureCode::where('code', $data[7])->first();
-                    
+                    $timestamp = Carbon::now()->toDateTimeString();
+
                     return [
                         'name' => $data[1],
                         'population' => $data[14],
                         'elevation' => $data[15],
                         'feature_code_id' => $featureCode->id ?? null,
                         'country_id' => $country->id ?? null,
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now(),
+                        'created_at' => $timestamp,
+                        'updated_at' => $timestamp,
                     ];
                 });
             })->each(function (LazyCollection $data) {

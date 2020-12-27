@@ -53,11 +53,13 @@ class CountryLanguageImport extends CountriesFileIterator implements GeonamesImp
                             return;
                         };
 
+                        $timestamp = Carbon::now()->toDateTimeString();
+
                         return [
                             'country_id' => $country->id,
                             'language_id' => $language->id,
-                            'created_at' => Carbon::now(),
-                            'updated_at' => Carbon::now()
+                            'created_at' => $timestamp,
+                            'updated_at' => $timestamp
                         ];
                     });
             });

@@ -21,6 +21,7 @@ class CountriesImport extends CountriesFileIterator implements GeonamesImportabl
             ->iterable()
             ->map(function (array $data) {
                 $continent = Continent::where('code', $data[8])->first();
+                $timestamp = Carbon::now()->toDateTimeString();
 
                 return [
                     'name' => $data[4],
@@ -31,8 +32,8 @@ class CountriesImport extends CountriesFileIterator implements GeonamesImportabl
                     'area' => $data[6],
                     'phone_code' => $data[12],
                     'continent_id' => $continent->id,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
+                    'created_at' => $timestamp,
+                    'updated_at' => $timestamp
                 ];
             });
 

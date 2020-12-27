@@ -57,13 +57,14 @@ class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImpor
         $data = $this
             ->iterable()
             ->map(function ($row) {
+                $timestamp = Carbon::now()->toDateTimeString();
                 [$code, $description] = explode(': ', $row[0]);
 
                 return [
                     'code'  => $code,
                     'description' => ucfirst($description),
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
+                    'created_at' => $timestamp,
+                    'updated_at' => $timestamp
                  ];
             });
 
