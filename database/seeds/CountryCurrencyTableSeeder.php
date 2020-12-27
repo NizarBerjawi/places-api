@@ -1,11 +1,12 @@
 <?php
 
-use App\Imports\CountryLanguageImport;
+use App\Imports\CountryCurrencyImport;
 use Illuminate\Database\Seeder;
 use Illuminate\Filesystem\FilesystemAdapter;
 
-class CountryLanguageTableSeeder extends Seeder
+class CountryCurrencyTableSeeder extends Seeder
 {
+
     /**
      * The path of the file to be imported
      *
@@ -25,14 +26,14 @@ class CountryLanguageTableSeeder extends Seeder
             config('geonames.countries_file')
         );
     }
-    
+
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      *
      * @return void
      */
     public function run()
     {
-        (new CountryLanguageImport($this->filepath))->import();
+        (new CountryCurrencyImport($this->filepath))->import();
     }
 }

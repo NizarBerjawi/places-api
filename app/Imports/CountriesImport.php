@@ -6,6 +6,7 @@ use App\Continent;
 use App\Country;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
+use Carbon\Carbon;
 
 class CountriesImport extends CountriesFileIterator implements GeonamesImportable
 {
@@ -16,12 +17,11 @@ class CountriesImport extends CountriesFileIterator implements GeonamesImportabl
      */
     public function import()
     {
-        $continents = Continent::get();
-
         $data = $this
             ->iterable()
-            ->map(function (array $data) use ($continents) {
-                $continent = $continents->where('code', $data[8])->first();
+            ->map(function (array $data) {
+                $continent = Continent::where('code', $data[8])->first();
+                $timestamp = Carbon::now()->toDateTimeString();
 
                 return [
                     'name' => $data[4],
@@ -31,7 +31,9 @@ class CountriesImport extends CountriesFileIterator implements GeonamesImportabl
                     'population' => $data[7],
                     'area' => $data[6],
                     'phone_code' => $data[12],
-                    'continent_id' => $continent->id
+                    'continent_id' => $continent->id,
+                    'created_at' => $timestamp,
+                    'updated_at' => $timestamp
                 ];
             });
 

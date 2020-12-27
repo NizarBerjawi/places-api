@@ -21,26 +21,28 @@ class DatabaseSeeder extends Seeder
     public function run(FilesystemAdapter $disk)
     {
         // 1- Download readme file
-        DownloadInfoFile::dispatch();
-        // 2- Download the countryInfo.txt file
-        DownloadCountriesFile::dispatch();
-        // 3- Download Files related to every country
-        $path = $disk->path(config('geonames.countries_file'));
-        (new CountriesFileIterator($path))
-            ->iterable()
-            ->each(function ($row) {
-                DownloadCountryFlag::dispatch($row[0]);
-                DownloadGeonamesFile::dispatch($row[0]);
-                UnzipGeonamesFile::dispatch($row[0]);
-            });
+        // DownloadInfoFile::dispatch();
+        // // 2- Download the countryInfo.txt file
+        // DownloadCountriesFile::dispatch();
+        // // 3- Download Files related to every country
+        // $path = $disk->path(config('geonames.countries_file'));
+        // (new CountriesFileIterator($path))
+        //     ->iterable()
+        //     ->each(function ($row) {
+        //         DownloadCountryFlag::dispatch($row[0]);
+        //         DownloadGeonamesFile::dispatch($row[0]);
+        //         UnzipGeonamesFile::dispatch($row[0]);
+        //     });
 
-        // 4- Download the iso-languagecodes.txt file
-        DownloadLanguages::dispatch();
-        // 5- Download the featureCodes_en.txt file
-        DownloadFeatureCodesFile::dispatch();
+        // // 4- Download the iso-languagecodes.txt file
+        // DownloadLanguages::dispatch();
+        // // 5- Download the featureCodes_en.txt file
+        // DownloadFeatureCodesFile::dispatch();
 
         // 6- Seed the continents table
         $this->call(ContinentsTableSeeder::class);
+        // 13- Create all Currencies
+        $this->call(CurrenciesTableSeeder::class);
         // 7- Parse and import the countryInfo.txt file
         $this->call(CountriesTableSeeder::class);
         // 8- Import the iso-languagecodes.txt file
@@ -52,7 +54,10 @@ class DatabaseSeeder extends Seeder
         $this->call(FeatureCodesTableSeeder::class);
         // 11- Load all Flags
         $this->call(FlagsTableSeeder::class);
-        // 12- Create all Country-Language relationships
+        // 12- Create all Country-Language relations
         $this->call(CountryLanguageTableSeeder::class);
+        $this->call(CountryCurrencyTableSeeder::class);
+        // 15- Create all Timezones
+        $this->call(PlacesTableSeeder::class);
     }
 }

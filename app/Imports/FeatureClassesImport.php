@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\FeatureClass;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\GeonamesFileIterator;
+use Carbon\Carbon;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Str;
 
@@ -56,11 +57,14 @@ class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImpor
         $data = $this
             ->iterable()
             ->map(function ($row) {
+                $timestamp = Carbon::now()->toDateTimeString();
                 [$code, $description] = explode(': ', $row[0]);
 
                 return [
                     'code'  => $code,
-                    'description' => ucfirst($description)
+                    'description' => ucfirst($description),
+                    'created_at' => $timestamp,
+                    'updated_at' => $timestamp
                  ];
             });
 

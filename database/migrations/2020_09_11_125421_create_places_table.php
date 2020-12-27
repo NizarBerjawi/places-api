@@ -14,12 +14,18 @@ class CreatePlacesTable extends Migration
     public function up()
     {
         Schema::create('places', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('geoname_id')->primary();
             $table->string('name');
-            $table->integer('population');
-            $table->integer('area');
-            $table->string('elevation');
+            $table->bigInteger('population')->nullable();
+            $table->smallInteger('elevation')->nullable();
+            $table->string('feature_code')->index()->nullable();
+            $table->string('country_code')->index()->nullable();
             $table->timestamps();
+        });
+
+        Schema::table('places', function (Blueprint $table) {
+            $table->foreign('feature_code')->references('code')->on('feature_codes')->onCascade('delete');
+            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->onCascade('delete');
         });
     }
 
@@ -30,6 +36,10 @@ class CreatePlacesTable extends Migration
      */
     public function down()
     {
+        Schema::table('places', function (Blueprint $table) {
+            $table->dropForeign(['feature_code']);
+            $table->dropForeign(['country_code']);
+        });
         Schema::dropIfExists('places');
     }
 }

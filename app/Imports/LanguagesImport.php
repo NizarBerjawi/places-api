@@ -5,6 +5,8 @@ namespace App\Imports;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\GeonamesFileIterator;
 use App\Language;
+use Carbon\Carbon;
+use Illuminate\Support\LazyCollection;
 use Illuminate\Support\Str;
 
 class LanguagesImport extends GeonamesFileIterator implements GeonamesImportable
@@ -30,13 +32,17 @@ class LanguagesImport extends GeonamesFileIterator implements GeonamesImportable
         $this
             ->iterable()
             ->chunk(1000)
-            ->map(function ($chunk) {
-                return $chunk->map(function ($row) {
+            ->map(function (LazyCollection $chunk) {
+                return $chunk->map(function (array $row) {
+                    $timestamp = Carbon::now()->toDateTimeString();
+
                     return [
                         'iso639_1' => $row[2],
                         'iso639_2' => $row[1],
                         'iso639_3' => $row[0],
                         'language_name' => $row[3],
+                        'created_at' => $timestamp,
+                        'updated_at' => $timestamp,
                     ];
                 });
             })->each(function ($data) {

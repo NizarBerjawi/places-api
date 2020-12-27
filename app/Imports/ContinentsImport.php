@@ -6,6 +6,7 @@ use App\Continent;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
 use App\Imports\Iterators\GeonamesFileIterator;
+use Carbon\Carbon;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Str;
 
@@ -56,10 +57,17 @@ class ContinentsImport extends GeonamesFileIterator implements GeonamesImportabl
     {
         $data = $this
             ->iterable()
-            ->map(function ($data) {
-                [$code, $name] = explode(' : ', $data[0]);
+            ->map(function (array $data) {
+                $timestamp = Carbon::now()->toDateTimeString();
                 
-                return compact('code', 'name');
+                [$code, $name] = Str::of($data[0])->explode(' : ');
+                
+                return [
+                    'code' => $code,
+                    'name' => $name,
+                    'created_at' => $timestamp,
+                    'updated_at' => $timestamp
+                ];
             });
 
         Continent::insert($data->all());

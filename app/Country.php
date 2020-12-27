@@ -61,4 +61,31 @@ class Country extends Model
     {
         return $this->belongsToMany(Language::class);
     }
+
+    /**
+     * Get all the Places that belong to this Country
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function places()
+    {
+        return $this->hasMany(Place::class, 'country_code', 'iso3166_alpha2');
+    }
+
+    /**
+     * Get athe currency used in this Country
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function currency()
+    {
+        return $this->hasOneThrough(
+            Currency::class,
+            CountryCurrency::class,
+            'country_id',
+            'id',
+            null,
+            'currency_id'
+        );
+    }
 }

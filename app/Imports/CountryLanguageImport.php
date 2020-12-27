@@ -6,6 +6,7 @@ use App\Country;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
 use App\Language;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -31,7 +32,8 @@ class CountryLanguageImport extends CountriesFileIterator implements GeonamesImp
                     ->where('iso3166_alpha2', $row[0])
                     ->first();
                     
-                return $languagesString->explode(',')
+                return $languagesString
+                    ->explode(',')
                     ->reject(function ($item) {
                         return empty($item);
                     })
@@ -51,9 +53,13 @@ class CountryLanguageImport extends CountriesFileIterator implements GeonamesImp
                             return;
                         };
 
+                        $timestamp = Carbon::now()->toDateTimeString();
+
                         return [
                             'country_id' => $country->id,
-                            'language_id' => $language->id
+                            'language_id' => $language->id,
+                            'created_at' => $timestamp,
+                            'updated_at' => $timestamp
                         ];
                     });
             });
