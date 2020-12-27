@@ -41,8 +41,7 @@ class PlacesTableSeeder extends Seeder
                     $code . '/' . $code . '.txt'
                 );
 
-                logger($country->iso3166_alpha2);
-                // (new TimezonesImport($filepath))->import();
+                (new TimezonesImport($filepath))->import();
                 (new PlacesImport($filepath))->import();
             });
     }
