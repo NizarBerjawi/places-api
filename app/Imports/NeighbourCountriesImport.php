@@ -46,11 +46,13 @@ class NeighbourCountriesImport extends CountriesFileIterator implements Geonames
                     ->get();
 
                 return $neighbours->map(function (Country $neighbour) use ($country) {
+                    $timestamp = Carbon::now()->toDateTimeString();
+
                     return [
                         'neighbour_id' => $neighbour->id,
                         'country_id' => $country->id,
-                        'created_at' => Carbon::now(),
-                        'updated_at' => Carbon::now()
+                        'created_at' => $timestamp,
+                        'updated_at' => $timestamp
                     ];
                 });
             });

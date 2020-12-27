@@ -69,7 +69,7 @@ class Country extends Model
      */
     public function places()
     {
-        return $this->hasMany(Place::class);
+        return $this->hasMany(Place::class, 'country_code', 'iso3166_alpha2');
     }
 
     /**

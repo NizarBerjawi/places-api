@@ -18,13 +18,14 @@ class FlagsImport implements GeonamesImportable
     {
         $data = Country::get()
             ->map(function (Country $country) {
+                $timestamp = Carbon::now()->toDateTimeString();
                 $code = $country->iso3166_alpha2;
 
                 return [
                     'path' => $code . '/' . strtolower($code . '.gif'),
                     'country_id' => $country->id,
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
+                    'created_at' => $timestamp,
+                    'updated_at' => $timestamp,
                 ];
             });
 

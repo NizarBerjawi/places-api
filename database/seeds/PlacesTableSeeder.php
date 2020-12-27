@@ -33,16 +33,16 @@ class PlacesTableSeeder extends Seeder
      */
     public function run()
     {
-        Country::query()
-            ->get()
-            ->map(function (Country $country) {
+        Country::cursor()
+            ->each(function (Country $country) {
                 $code = $country->iso3166_alpha2;
-                
+
                 $filepath = $this->storage->path(
                     $code . '/' . $code . '.txt'
                 );
 
-                (new TimezonesImport($filepath))->import();
+                logger($country->iso3166_alpha2);
+                // (new TimezonesImport($filepath))->import();
                 (new PlacesImport($filepath))->import();
             });
     }

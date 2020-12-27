@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Place extends Model
 {
     /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'geoname_id';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -32,7 +39,7 @@ class Place extends Model
      */
     public function country()
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(Country::class, 'country_code', 'iso3166_alpha2');
     }
 
     /**

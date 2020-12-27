@@ -14,18 +14,18 @@ class CreatePlacesTable extends Migration
     public function up()
     {
         Schema::create('places', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('geoname_id')->primary();
             $table->string('name');
-            $table->integer('population')->nullable();
-            $table->string('elevation')->nullable();
-            $table->unsignedBigInteger('feature_code_id')->nullable();
-            $table->unsignedBigInteger('country_id')->nullable();
+            $table->bigInteger('population')->nullable();
+            $table->smallInteger('elevation')->nullable();
+            $table->string('feature_code')->index()->nullable();
+            $table->string('country_code')->index()->nullable();
             $table->timestamps();
         });
 
         Schema::table('places', function (Blueprint $table) {
-            $table->foreign('feature_code_id')->references('id')->on('feature_codes')->onCascade('delete');
-            $table->foreign('country_id')->references('id')->on('countries')->onCascade('delete');
+            $table->foreign('feature_code')->references('code')->on('feature_codes')->onCascade('delete');
+            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->onCascade('delete');
         });
     }
 
@@ -37,8 +37,8 @@ class CreatePlacesTable extends Migration
     public function down()
     {
         Schema::table('places', function (Blueprint $table) {
-            $table->dropForeign(['feature_code_id']);
-            $table->dropForeign(['country_id']);
+            $table->dropForeign(['feature_code']);
+            $table->dropForeign(['country_code']);
         });
         Schema::dropIfExists('places');
     }
