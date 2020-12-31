@@ -14,13 +14,13 @@ class CreateCountryLanguageTable extends Migration
     public function up()
     {
         Schema::create('country_language', function (Blueprint $table) {
-            $table->id();
             $table->unsignedBigInteger('country_id');
             $table->unsignedBigInteger('language_id');
             $table->timestamps();
         });
 
         Schema::table('country_language', function (Blueprint $table) {
+            $table->primary(['country_id', 'language_id']);
             $table->foreign('country_id')->references('id')->on('countries')->onCascade('delete');
             $table->foreign('language_id')->references('id')->on('languages')->onCascade('delete');
         });

@@ -29,7 +29,7 @@ class Place extends Model
      */
     public function featureCode()
     {
-        return $this->belongsTo(FeatureCode::class);
+        return $this->belongsTo(FeatureCode::class, 'feature_code', 'code');
     }
 
     /**

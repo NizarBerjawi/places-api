@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImportable
 {
     /**
-     * Continent codes
+     * Feature Classes
      *
      * @var \Illuminate\Support\Collection
      */
@@ -40,7 +40,7 @@ class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImpor
      */
     public function skip(array $row)
     {
-        $codes = $this->featureClasses->map(function ($code) {
+        $codes = $this->featureClasses->map(function (string $code) {
             return Str::finish($code, ': ');
         });
 
@@ -54,21 +54,28 @@ class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImpor
      */
     public function import()
     {
-        $data = $this
-            ->iterable()
-            ->map(function ($row) {
-                $timestamp = Carbon::now()->toDateTimeString();
-                [$code, $description] = explode(': ', $row[0]);
+        $featureClasses = collect();
+        foreach ($this->iterable() as $item) {
+            if ($this->skip($item)) {
+                continue;
+            }
+            
+            [$code, $description] = Str::of($item[0])->explode(': ');
 
-                return [
-                    'code'  => $code,
-                    'description' => ucfirst($description),
-                    'created_at' => $timestamp,
-                    'updated_at' => $timestamp
-                 ];
-            });
+            if (! isset($code, $description)) {
+                continue;
+            }
 
-        FeatureClass::insert($data->all());
+            $timestamp = Carbon::now()->toDateTimeString();
+            $featureClasses->push([
+                'code'  => $code,
+                'description' => ucfirst($description),
+                'created_at' => $timestamp,
+                'updated_at' => $timestamp
+            ]);
+        }
+
+        FeatureClass::insert($featureClasses->all());
     }
 
     /**
@@ -81,22 +88,26 @@ class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImpor
         $path = resolve(FilesystemAdapter::class)
             ->path(config('geonames.feature_codes_file'));
 
-        $featureClasses = (new GeonamesFileIterator($path))
-            ->iterable()
-            ->flatMap(function ($row) {
-                if (! Str::contains($row[0], '.')) {
-                    return;
-                }
+        $iterable = (new GeonamesFileIterator($path))->iterable();
+ 
+        $featureClasses = collect();
 
-                [$featureClass, $featureCode] = explode('.', $row[0]);
+        foreach ($iterable as $item) {
+            $featureClassString = Str::of($item[0]);
 
-                return [
-                    'code' => $featureClass
-                ];
-            })
-            ->unique()
-            ->all();
+            if (! $featureClassString->contains('.')) {
+                continue;
+            }
 
-        return collect($featureClasses);
+            $featureClass = $featureClassString->explode('.')->first();
+
+            if (!$featureClass || $featureClasses->contains($featureClass)) {
+                continue;
+            }
+
+            $featureClasses->push($featureClass);
+        }
+
+        return $featureClasses;
     }
 }

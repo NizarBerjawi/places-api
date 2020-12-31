@@ -22,6 +22,13 @@ class Currency extends Model
      */
     public function countries()
     {
-        return $this->belongsToMany(Country::class);
+        return $this->belongsToMany(
+            Country::class,
+            'country_currency',
+            'currency_code',
+            'country_code',
+            'code',
+            'iso3166_alpha2'
+        );
     }
 }

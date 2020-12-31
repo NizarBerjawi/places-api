@@ -29,28 +29,38 @@ class FeatureCodesImport extends GeonamesFileIterator implements GeonamesImporta
      */
     public function import()
     {
+        $featureCodes = collect();
         $featureClasses = FeatureClass::get();
 
-        $data = $this
-            ->iterable()
-            ->map(function ($row) use ($featureClasses) {
-                [$featureClassCode, $featureCode] = explode('.', $row[0]);
-                $timestamp = Carbon::now()->toDateTimeString();
+        foreach ($this->iterable() as $item) {
+            if ($this->skip($item)) {
+                continue;
+            }
 
-                $featureClass = $featureClasses
-                    ->where('code', $featureClassCode)
-                    ->first();
-                
-                return [
-                    'code' => $featureCode,
-                    'short_description' => ucfirst($row[1]),
-                    'full_description' => ucfirst($row[2]),
-                    'feature_class_id' => $featureClass->id,
-                    'created_at' => $timestamp,
-                    'updated_at' => $timestamp
-                ];
-            });
+            $data = Str::of($item[0])->explode('.');
+            
+            $featureClassCode = $data->first();
+            $featureCode = $data->last();
 
-        FeatureCode::insert($data->all());
+            $featureClass = $featureClasses
+                ->firstWhere('code', $featureClassCode);
+            
+            if (! isset($featureClass, $featureCode)) {
+                continue;
+            }
+
+            $timestamp = Carbon::now()->toDateTimeString();
+
+            $featureCodes->push([
+                'code' => $featureCode,
+                'short_description' => ucfirst($item[1]),
+                'full_description' => ucfirst($item[2]),
+                'feature_class_id' => $featureClass->id,
+                'created_at' => $timestamp,
+                'updated_at' => $timestamp
+            ]);
+        }
+
+        FeatureCode::insert($featureCodes->all());
     }
 }

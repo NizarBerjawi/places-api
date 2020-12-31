@@ -2,7 +2,6 @@
 
 namespace App\Imports;
 
-use App\Country;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
 use Carbon\Carbon;
@@ -31,26 +30,16 @@ class NeighbourCountriesImport extends CountriesFileIterator implements Geonames
     {
         $data = $this
             ->iterable()
-            ->flatMap(function ($data) {
-                // Get the id of the country we are adding the neighbours for
-                $country = Country::query()
-                    ->select('id')
-                    ->where('iso3166_alpha2', $data[0])
-                    ->first();
-
-                // Get the ids of all the neighbouring countries to be added
+            ->reject([$this, 'skip'])
+            ->flatMap(function (array $data) {
                 $neighbourCodes = Str::of($data[17])->explode(',');
-                $neighbours = Country::query()
-                    ->select('id')
-                    ->whereIn('iso3166_alpha2', $neighbourCodes)
-                    ->get();
 
-                return $neighbours->map(function (Country $neighbour) use ($country) {
+                return $neighbourCodes->map(function (string $code) use ($data) {
                     $timestamp = Carbon::now()->toDateTimeString();
 
                     return [
-                        'neighbour_id' => $neighbour->id,
-                        'country_id' => $country->id,
+                        'neighbour_code' => $code,
+                        'country_code' => $data[0],
                         'created_at' => $timestamp,
                         'updated_at' => $timestamp
                     ];

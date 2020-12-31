@@ -27,7 +27,7 @@ class CreateCountriesTable extends Migration
         });
 
         Schema::table('countries', function (Blueprint $table) {
-            $table->foreign('continent_id')->references('id')->on('continents')->onCascade('delete');
+            $table->foreign('continent_id')->references('geoname_id')->on('continents')->onCascade('delete');
         });
     }
 
