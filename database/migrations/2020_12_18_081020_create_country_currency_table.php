@@ -14,15 +14,15 @@ class CreateCountryCurrencyTable extends Migration
     public function up()
     {
         Schema::create('country_currency', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('country_id');
-            $table->unsignedBigInteger('currency_id');
+            $table->string('country_code');
+            $table->string('currency_code');
             $table->timestamps();
         });
         
         Schema::table('country_currency', function (Blueprint $table) {
-            $table->foreign('country_id')->references('id')->on('countries')->onCascade('delete');
-            $table->foreign('currency_id')->references('id')->on('currencies')->onCascade('delete');
+            $table->primary(['country_code', 'currency_code']);
+            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->onCascade('delete');
+            $table->foreign('currency_code')->references('code')->on('currencies')->onCascade('delete');
         });
     }
 
@@ -34,8 +34,8 @@ class CreateCountryCurrencyTable extends Migration
     public function down()
     {
         Schema::table('countries', function (Blueprint $table) {
-            $table->dropForeign(['country_id']);
-            $table->dropForeign(['currency_id']);
+            $table->dropForeign(['country_code']);
+            $table->dropForeign(['currency_code']);
         });
 
         Schema::dropIfExists('country_currency');

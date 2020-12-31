@@ -14,15 +14,15 @@ class CreateCountryNeighbourTable extends Migration
     public function up()
     {
         Schema::create('country_neighbour', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('country_id');
-            $table->unsignedBigInteger('neighbour_id');
+            $table->string('country_code');
+            $table->string('neighbour_code');
             $table->timestamps();
         });
 
         Schema::table('country_neighbour', function (Blueprint $table) {
-            $table->foreign('country_id')->references('id')->on('countries')->onCascade('delete');
-            $table->foreign('neighbour_id')->references('id')->on('countries')->onCascade('delete');
+            $table->primary(['country_code', 'neighbour_code']);
+            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->onCascade('delete');
+            $table->foreign('neighbour_code')->references('iso3166_alpha2')->on('countries')->onCascade('delete');
         });
     }
 
@@ -34,8 +34,8 @@ class CreateCountryNeighbourTable extends Migration
     public function down()
     {
         Schema::table('country_neighbour', function (Blueprint $table) {
-            $table->dropForeign(['country_id']);
-            $table->dropForeign(['neighbour_id']);
+            $table->dropForeign(['country_code']);
+            $table->dropForeign(['neighbour_code']);
         });
 
         Schema::dropIfExists('country_neighbour');

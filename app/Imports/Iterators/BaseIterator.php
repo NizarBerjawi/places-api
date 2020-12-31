@@ -37,17 +37,6 @@ class BaseIterator implements GeonamesIterable
     }
 
     /**
-     * Decides whether to skip a row or not
-     *
-     * @param array  $row
-     * @return boolean
-     */
-    public function skip(array $row)
-    {
-        return false;
-    }
-
-    /**
      * Iterates over the file and returns a LazyCollection which
      * yields the values on every line
      *
@@ -63,10 +52,6 @@ class BaseIterator implements GeonamesIterable
                     $data = $this->clean(
                         explode($this->delimiter, $line)
                     );
-                    
-                    if ($this->skip($data)) {
-                        continue;
-                    }
 
                     yield $data;
                 }

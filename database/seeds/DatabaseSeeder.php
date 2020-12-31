@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         // $path = $disk->path(config('geonames.countries_file'));
         // (new CountriesFileIterator($path))
         //     ->iterable()
-        //     ->each(function ($row) {
+        //     ->each(function (array $row) {
         //         DownloadCountryFlag::dispatch($row[0]);
         //         DownloadGeonamesFile::dispatch($row[0]);
         //         UnzipGeonamesFile::dispatch($row[0]);

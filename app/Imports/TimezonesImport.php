@@ -31,13 +31,15 @@ class TimezonesImport extends GeonamesFileIterator implements GeonamesImportable
                 'updated_at' => $now
             ];
 
-            $shouldAdd = ! $data->contains(function ($item) use ($timezone) {
+            $reject = $data->contains(function ($item) use ($timezone) {
                 return $item['code'] === $timezone['code'];
             });
-
-            if ($shouldAdd) {
-                $data->push($timezone);
+            
+            if ($reject) {
+                continue;
             }
+
+            $data->push($timezone);
         };
 
         DB::table('timezones')->insertOrIgnore($data->all());

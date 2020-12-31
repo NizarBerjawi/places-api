@@ -17,26 +17,33 @@ class CountriesImport extends CountriesFileIterator implements GeonamesImportabl
      */
     public function import()
     {
-        $data = $this
-            ->iterable()
-            ->map(function (array $data) {
-                $continent = Continent::where('code', $data[8])->first();
-                $timestamp = Carbon::now()->toDateTimeString();
+        $countries = collect();
+        $continents = Continent::query()
+            ->select(['geoname_id', 'code'])
+            ->get();
 
-                return [
-                    'name' => $data[4],
-                    'iso3166_alpha2' => $data[0],
-                    'iso3166_alpha3' => $data[1],
-                    'iso3166_numeric' => $data[2],
-                    'population' => $data[7],
-                    'area' => $data[6],
-                    'phone_code' => $data[12],
-                    'continent_id' => $continent->id,
-                    'created_at' => $timestamp,
-                    'updated_at' => $timestamp
-                ];
-            });
+        foreach ($this->iterable() as $item) {
+            $continent = $continents->firstWhere('code', $item[8]);
 
-        Country::insert($data->all());
+            if (! $continent) {
+                continue;
+            }
+
+            $timestamp = Carbon::now()->toDateTimeString();
+            $countries->push([
+                'name' => $item[4],
+                'iso3166_alpha2' => $item[0],
+                'iso3166_alpha3' => $item[1],
+                'iso3166_numeric' => $item[2],
+                'population' => $item[7],
+                'area' => $item[6],
+                'phone_code' => $item[12],
+                'continent_id' => $continent->geoname_id,
+                'created_at' => $timestamp,
+                'updated_at' => $timestamp
+            ]);
+        };
+
+        Country::insert($countries->all());
     }
 }

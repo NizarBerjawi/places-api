@@ -55,22 +55,35 @@ class ContinentsImport extends GeonamesFileIterator implements GeonamesImportabl
      */
     public function import()
     {
-        $data = $this
-            ->iterable()
-            ->map(function (array $data) {
-                $timestamp = Carbon::now()->toDateTimeString();
-                
-                [$code, $name] = Str::of($data[0])->explode(' : ');
-                
-                return [
-                    'code' => $code,
-                    'name' => $name,
-                    'created_at' => $timestamp,
-                    'updated_at' => $timestamp
-                ];
-            });
+        $continents = collect();
 
-        Continent::insert($data->all());
+        foreach ($this->iterable() as $item) {
+            if ($this->skip($item)) {
+                continue;
+            }
+
+            $data = collect($item)->filter()->values();
+
+            [$code, $name] = Str::of($data->first())->explode(' : ');
+
+            $geonameId = Str::of($data->last())->explode('=')->last();
+                      
+            if (! isset($code, $name, $geonameId)) {
+                continue;
+            }
+
+            $timestamp = Carbon::now()->toDateTimeString();
+
+            $continents->push([
+                'geoname_id' => $geonameId,
+                'code' => $code,
+                'name' => $name,
+                'created_at' => $timestamp,
+                'updated_at' => $timestamp
+            ]);
+        }
+
+        Continent::insert($continents->all());
     }
 
     /**
@@ -83,13 +96,14 @@ class ContinentsImport extends GeonamesFileIterator implements GeonamesImportabl
         $path = resolve(FilesystemAdapter::class)
             ->path(config('geonames.countries_file'));
 
-        $continentCodes = (new CountriesFileIterator($path))
+        $codes = (new CountriesFileIterator($path))
             ->iterable()
             ->pluck(8)
-            ->unique()
             ->filter()
-            ->all();
+            ->unique()
+            ->values()
+            ->collect();
 
-        return collect($continentCodes);
+        return $codes;
     }
 }

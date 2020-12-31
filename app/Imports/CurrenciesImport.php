@@ -16,23 +16,35 @@ class CurrenciesImport extends CountriesFileIterator implements GeonamesImportab
      */
     public function import()
     {
-        $data = $this
-            ->iterable()
-            ->filter(function (array $item) {
-                return isset($item[10], $item[11]);
-            })
-            ->unique(function (array $item) {
-                return $item[10];
-            })
-            ->map(function (array $data) {
-                return [
-                    'code' => $data[10],
-                    'name' => $data[11],
-                    'created_at' => Carbon::now(),
-                    'updated_at' => Carbon::now()
-                ];
-            });
+        $currencies = collect();
 
-        Currency::insert($data->all());
+        foreach ($this->iterable() as $item) {
+            [$code, $name] = [$item[10], $item[11]];
+
+            if (! isset($code, $name)) {
+                continue;
+            }
+
+            $reject = $currencies->contains(
+                function (array $currency) use ($code) {
+                    return $currency['code'] === $code;
+                }
+            );
+
+            if ($reject) {
+                continue;
+            }
+            
+            $timestamp = Carbon::now()->toDateTimeString();
+
+            $currencies->push([
+                'code' => $code,
+                'name' => $name,
+                'created_at' => $timestamp,
+                'updated_at' => $timestamp
+            ]);
+        }
+
+        Currency::insert($currencies->all());
     }
 }
