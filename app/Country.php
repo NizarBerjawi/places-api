@@ -29,7 +29,7 @@ class Country extends Model
      */
     public function continent()
     {
-        return $this->belongsTo(Continent::class);
+        return $this->belongsTo(Continent::class, 'continent_id', 'geoname_id');
     }
 
     /**
@@ -39,7 +39,7 @@ class Country extends Model
      */
     public function neighbours()
     {
-        return $this->belongsToMany(Country::class, 'country_neighbour', 'neighbour_id', 'country_id');
+        return $this->belongsToMany(Country::class, 'country_neighbour', 'neighbour_code', 'country_code', 'iso3166_alpha2', 'iso3166_alpha2');
     }
     
     /**
@@ -82,10 +82,10 @@ class Country extends Model
         return $this->hasOneThrough(
             Currency::class,
             CountryCurrency::class,
-            'country_id',
-            'id',
-            null,
-            'currency_id'
+            'country_code',
+            'code',
+            'iso3166_alpha2',
+            'currency_code'
         );
     }
 }

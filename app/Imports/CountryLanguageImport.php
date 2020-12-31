@@ -9,6 +9,7 @@ use App\Language;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Stringable;
 
 class CountryLanguageImport extends CountriesFileIterator implements GeonamesImportable
 {
@@ -19,51 +20,62 @@ class CountryLanguageImport extends CountriesFileIterator implements GeonamesImp
      */
     public function import()
     {
-        $data = $this
-            ->iterable()
-            ->flatMap(function (array $row) {
-                $languagesString = Str::of($row[15])->trim();
+        $countryLanguages = collect();
 
-                if ($languagesString->isEmpty()) {
-                    return collect();
-                };
+        foreach ($this->iterable() as $item) {
+            $languagesString = Str::of($item[15])->trim();
 
-                $country = Country::query()
-                    ->where('iso3166_alpha2', $row[0])
+            if ($languagesString->isEmpty()) {
+                continue;
+            };
+
+            $languageCodes = $this->parseLanguageString($languagesString);
+            $languages = Language::query()
+                ->whereIn('iso639_1', $languageCodes)
+                ->orWhereIn('iso639_2', $languageCodes)
+                ->orWhereIn('iso639_3', $languageCodes)
+                ->distinct()
+                ->get('id');
+
+            $country = Country::query()
+                ->where('iso3166_alpha2', $item[0])
+                ->first();
+
+            foreach ($languages as $language) {
+                $timestamp = Carbon::now()->toDateTimeString();
+
+                $countryLanguages->push([
+                    'country_id' => $country->id,
+                    'language_id' => $language->id,
+                    'created_at' => $timestamp,
+                    'updated_at' => $timestamp
+                ]);
+            }
+        }
+
+        DB::table('country_language')->insert($countryLanguages->all());
+    }
+
+    /**
+     * Parses a language string into an array of language codes.
+     *
+     * For example, the language string "am,en,en-ET,om-ET,ti-ET,so-ET,sid"
+     * will turn to ["am", "en", "om", "ti", "so", "sid"]
+     *
+     * @param \Illuminate\Support\Stringable  $languagesString
+     * @return \Illuminate\Support\Collection
+     */
+    private function parseLanguageString(Stringable $languagesString)
+    {
+        return $languagesString
+            ->explode(',')
+            ->map(function (string $language) {
+                return Str::of($language)
+                    ->trim()
+                    ->explode('-')
                     ->first();
-                    
-                return $languagesString
-                    ->explode(',')
-                    ->reject(function ($item) {
-                        return empty($item);
-                    })
-                    ->unique()
-                    ->map(function ($item) use ($country) {
-                        $item = Str::of($item)->trim();
-
-                        $languageCode = $item->explode('-')->first();
-
-                        $language = Language::query()
-                            ->where('iso639_1', $languageCode)
-                            ->orWhere('iso639_2', $languageCode)
-                            ->orWhere('iso639_3', $languageCode)
-                            ->first();
-
-                        if (! $language) {
-                            return;
-                        };
-
-                        $timestamp = Carbon::now()->toDateTimeString();
-
-                        return [
-                            'country_id' => $country->id,
-                            'language_id' => $language->id,
-                            'created_at' => $timestamp,
-                            'updated_at' => $timestamp
-                        ];
-                    });
-            });
-
-        DB::table('country_language')->insert($data->all());
+            })
+            ->filter()
+            ->unique();
     }
 }

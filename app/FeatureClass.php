@@ -33,6 +33,13 @@ class FeatureClass extends Model
      */
     public function places()
     {
-        return $this->hasManyThrough(Place::class, FeatureCode::class);
+        return $this->hasManyThrough(
+            Place::class,
+            FeatureCode::class,
+            'feature_class_id',
+            'feature_code',
+            null,
+            'code'
+        );
     }
 }

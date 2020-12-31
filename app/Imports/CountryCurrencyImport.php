@@ -2,8 +2,6 @@
 
 namespace App\Imports;
 
-use App\Country;
-use App\Currency;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
 use Carbon\Carbon;
@@ -18,30 +16,23 @@ class CountryCurrencyImport extends CountriesFileIterator implements GeonamesImp
      */
     public function import()
     {
-        $data = $this
-            ->iterable()
-            ->filter(function ($item) {
-                return isset($item[10], $item[11]);
-            })
-            ->map(function (array $data) {
-                $now = Carbon::now();
+        $countryCurrencies = collect();
 
-                $country = Country::query()
-                    ->where('iso3166_alpha2', $data[0])
-                    ->first();
+        foreach ($this->iterable() as $item) {
+            if (! isset($item[10], $item[11])) {
+                continue;
+            }
 
-                $currency = Currency::query()
-                    ->where('code', $data[10])
-                    ->first();
+            $timestamp = Carbon::now()->toDateTimeString();
 
-                return [
-                    'country_id' => $country->id,
-                    'currency_id' => $currency->id,
-                    'created_at' => $now,
-                    'updated_at' => $now,
-                ];
-            });
+            $countryCurrencies->push([
+                'country_code' => $item[0],
+                'currency_code' => $item[10],
+                'created_at' => $timestamp,
+                'updated_at' => $timestamp,
+            ]);
+        }
 
-        DB::table('country_currency')->insert($data->all());
+        DB::table('country_currency')->insert($countryCurrencies->all());
     }
 }

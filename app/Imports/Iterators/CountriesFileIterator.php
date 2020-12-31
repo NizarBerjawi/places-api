@@ -42,4 +42,15 @@ class CountriesFileIterator extends BaseIterator
     {
         return $this->isComment($row) || $this->isExcluded($row);
     }
+
+    /**
+     * Iterates over the file and returns a LazyCollection which
+     * yields the values on every line
+     *
+     * @return \Illuminate\Support\LazyCollection
+     */
+    public function iterable()
+    {
+        return parent::iterable()->reject([$this, 'skip']);
+    }
 }
