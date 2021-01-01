@@ -17,3 +17,16 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::group([
+
+    'middleware' => 'api',
+    'prefix' => 'countries',
+    'namespace' => 'API'
+
+], function ($router) {
+
+    Route::get('/', 'CountryController@index');
+    Route::get('/{country}', 'CountryController@show');
+
+});

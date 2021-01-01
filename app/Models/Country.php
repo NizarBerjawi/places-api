@@ -23,6 +23,21 @@ class Country extends Model
     ];
 
     /**
+     * The attributes we can use to filter countries
+     *
+     * @var array
+     */
+    public static $allowedFilters = [
+        'name',
+        'iso3166_alpha2',
+        'iso3166_alpha3',
+        'iso3166_numeric',
+        'population',
+        'area',
+        'phone_code',
+    ];
+
+    /**
      * Get the continent that owns this country
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
