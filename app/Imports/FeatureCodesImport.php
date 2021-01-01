@@ -2,10 +2,10 @@
 
 namespace App\Imports;
 
-use App\FeatureClass;
-use App\FeatureCode;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\GeonamesFileIterator;
+use App\Models\FeatureClass;
+use App\Models\FeatureCode;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 

@@ -2,9 +2,9 @@
 
 namespace App\Imports;
 
-use App\Currency;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
+use App\Models\Currency;
 use Carbon\Carbon;
 
 class CurrenciesImport extends CountriesFileIterator implements GeonamesImportable

@@ -4,7 +4,7 @@ namespace App\Imports;
 
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\GeonamesFileIterator;
-use App\Language;
+use App\Models\Language;
 use Carbon\Carbon;
 use Illuminate\Support\LazyCollection;
 

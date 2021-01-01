@@ -2,10 +2,10 @@
 
 namespace App\Imports;
 
-use App\Continent;
-use App\Country;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
+use App\Models\Continent;
+use App\Models\Country;
 use Carbon\Carbon;
 
 class CountriesImport extends CountriesFileIterator implements GeonamesImportable

@@ -2,10 +2,10 @@
 
 namespace App\Imports;
 
-use App\Country;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
-use App\Language;
+use App\Models\Country;
+use App\Models\Language;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;

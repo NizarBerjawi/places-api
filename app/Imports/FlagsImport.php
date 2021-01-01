@@ -2,9 +2,9 @@
 
 namespace App\Imports;
 
-use App\Country;
-use App\Flag;
 use App\Imports\Concerns\GeonamesImportable;
+use App\Models\Country;
+use App\Models\Flag;
 use Carbon\Carbon;
 
 class FlagsImport implements GeonamesImportable
