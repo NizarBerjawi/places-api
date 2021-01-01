@@ -25,8 +25,6 @@ Route::group([
     'namespace' => 'API'
 
 ], function ($router) {
-
     Route::get('/', 'CountryController@index');
     Route::get('/{country}', 'CountryController@show');
-
 });

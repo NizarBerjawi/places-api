@@ -19,7 +19,7 @@ class CountryResource extends JsonResource
             'iso3166_alpha2',
             'iso3166_alpha3',
             'population',
-            'area', 
+            'area',
             'phone_code'
         ]);
     }

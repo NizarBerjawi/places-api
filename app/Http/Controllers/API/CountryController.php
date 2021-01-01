@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Country;
-use App\Http\Resources\{CountryResource, CountryCollection};
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CountryResource;
+use App\Models\Country;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class CountryController extends Controller
