@@ -1,8 +1,8 @@
 <?php
 
-use App\Country;
 use App\Imports\PlacesImport;
 use App\Imports\TimezonesImport;
+use App\Models\Country;
 use Illuminate\Database\Seeder;
 use Illuminate\Filesystem\FilesystemAdapter;
 

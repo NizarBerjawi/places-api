@@ -2,9 +2,9 @@
 
 namespace App\Imports;
 
-use App\FeatureClass;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\GeonamesFileIterator;
+use App\Models\FeatureClass;
 use Carbon\Carbon;
 use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Str;
