@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Filters\CountryFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CountryResource;
 use App\Models\Country;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class CountryController extends Controller
 {
@@ -14,12 +14,10 @@ class CountryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(CountryFilter $filter)
     {
-        $countries = QueryBuilder::for(Country::class)
-            ->allowedFilters(Country::$allowedFilters)
-            ->get();
-
+        $countries = $filter->getBuilder()->get();
+        
         return CountryResource::collection($countries);
     }
 
