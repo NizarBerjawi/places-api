@@ -14,13 +14,14 @@ class CountryResource extends JsonResource
      */
     public function toArray($request)
     {
-        return $this->only([
-            'name',
-            'iso3166_alpha2',
-            'iso3166_alpha3',
-            'population',
-            'area',
-            'phone_code'
-        ]);
+        return [
+            'name' => $this->name,
+            'iso3166_alpha2' => $this->iso3166_alpha2,
+            'iso3166_alpha3' => $this->iso3166_alpha3,
+            'iso3166_numeric' => $this->iso3166_numeric,
+            'population' => $this->population,
+            'area' => $this->area,
+            'phone_code' => $this->phone_code,
+        ];
     }
 }
