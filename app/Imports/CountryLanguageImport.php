@@ -4,7 +4,6 @@ namespace App\Imports;
 
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
-use App\Models\Country;
 use App\Models\Language;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -37,15 +36,11 @@ class CountryLanguageImport extends CountriesFileIterator implements GeonamesImp
                 ->distinct()
                 ->get('id');
 
-            $country = Country::query()
-                ->where('iso3166_alpha2', $item[0])
-                ->first();
-
             foreach ($languages as $language) {
                 $timestamp = Carbon::now()->toDateTimeString();
 
                 $countryLanguages->push([
-                    'country_id' => $country->id,
+                    'country_id' => $item[16],
                     'language_id' => $language->id,
                     'created_at' => $timestamp,
                     'updated_at' => $timestamp

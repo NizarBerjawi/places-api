@@ -40,7 +40,7 @@ class PlacesImport extends GeonamesFileIterator implements GeonamesImportable
                     $locations->push([
                         'latitude' => $item[4],
                         'longitude' => $item[5],
-                        'locationable_type' => \App\Place::class,
+                        'locationable_type' => \App\Models\Place::class,
                         'locationable_id' => $item[0],
                         'created_at' => $timestamp,
                         'updated_at' => $timestamp,

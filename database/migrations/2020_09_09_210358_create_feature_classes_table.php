@@ -14,8 +14,7 @@ class CreateFeatureClassesTable extends Migration
     public function up()
     {
         Schema::create('feature_classes', function (Blueprint $table) {
-            $table->id();
-            $table->string('code')->unique();
+            $table->string('code')->primary();
             $table->text('description');
             $table->timestamps();
         });

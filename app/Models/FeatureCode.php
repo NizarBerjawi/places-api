@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class FeatureCode extends Model
 {
     /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'code';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -24,7 +31,7 @@ class FeatureCode extends Model
      */
     public function featureClass()
     {
-        return $this->belongsTo(FeatureClass::class);
+        return $this->belongsTo(FeatureClass::class, 'feature_class_code', 'code');
     }
 
     /**

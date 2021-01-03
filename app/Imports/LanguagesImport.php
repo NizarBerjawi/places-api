@@ -31,7 +31,7 @@ class LanguagesImport extends GeonamesFileIterator implements GeonamesImportable
                         'iso639_1' => $item[2],
                         'iso639_2' => $item[1],
                         'iso639_3' => $item[0],
-                        'language_name' => $item[3],
+                        'name' => $item[3],
                         'created_at' => $timestamp,
                         'updated_at' => $timestamp,
                     ];

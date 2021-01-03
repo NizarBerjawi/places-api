@@ -21,7 +21,7 @@ class CreateFlagsTable extends Migration
         });
 
         Schema::table('flags', function (Blueprint $table) {
-            $table->foreign('country_id')->references('id')->on('countries')->onCascade('delete');
+            $table->foreign('country_id')->references('geoname_id')->on('countries')->onCascade('delete');
         });
     }
 
