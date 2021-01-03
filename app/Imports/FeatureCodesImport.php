@@ -38,16 +38,8 @@ class FeatureCodesImport extends GeonamesFileIterator implements GeonamesImporta
             }
 
             $data = Str::of($item[0])->explode('.');
-            
             $featureClassCode = $data->first();
             $featureCode = $data->last();
-
-            $featureClass = $featureClasses
-                ->firstWhere('code', $featureClassCode);
-            
-            if (! isset($featureClass, $featureCode)) {
-                continue;
-            }
 
             $timestamp = Carbon::now()->toDateTimeString();
 
@@ -55,7 +47,7 @@ class FeatureCodesImport extends GeonamesFileIterator implements GeonamesImporta
                 'code' => $featureCode,
                 'short_description' => ucfirst($item[1]),
                 'full_description' => ucfirst($item[2]),
-                'feature_class_id' => $featureClass->id,
+                'feature_class_code' => $featureClassCode,
                 'created_at' => $timestamp,
                 'updated_at' => $timestamp
             ]);

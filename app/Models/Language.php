@@ -15,7 +15,7 @@ class Language extends Model
         'iso639_1',
         'iso639_2',
         'iso639_3',
-        'language_name',
+        'name',
     ];
 
     /**
@@ -25,6 +25,6 @@ class Language extends Model
      */
     public function countries()
     {
-        return $this->belongsToMany(Country::class);
+        return $this->belongsToMany(Country::class, null, null, 'country_id');
     }
 }

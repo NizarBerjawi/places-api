@@ -21,7 +21,7 @@ class CreateCountryLanguageTable extends Migration
 
         Schema::table('country_language', function (Blueprint $table) {
             $table->primary(['country_id', 'language_id']);
-            $table->foreign('country_id')->references('id')->on('countries')->onCascade('delete');
+            $table->foreign('country_id')->references('geoname_id')->on('countries')->onCascade('delete');
             $table->foreign('language_id')->references('id')->on('languages')->onCascade('delete');
         });
     }

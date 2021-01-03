@@ -31,6 +31,7 @@ class CountriesImport extends CountriesFileIterator implements GeonamesImportabl
 
             $timestamp = Carbon::now()->toDateTimeString();
             $countries->push([
+                'geoname_id' => $item[16],
                 'name' => $item[4],
                 'iso3166_alpha2' => $item[0],
                 'iso3166_alpha3' => $item[1],

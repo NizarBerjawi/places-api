@@ -23,7 +23,7 @@ class FeatureClass extends Model
      */
     public function featureCodes()
     {
-        return $this->hasMany(FeatureCode::class);
+        return $this->hasMany(FeatureCode::class, 'feature_class_code', 'code');
     }
 
     /**
@@ -36,9 +36,8 @@ class FeatureClass extends Model
         return $this->hasManyThrough(
             Place::class,
             FeatureCode::class,
-            'feature_class_id',
+            'feature_class_code',
             'feature_code',
-            null,
             'code'
         );
     }

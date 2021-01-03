@@ -8,11 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Country extends Model
 {
     /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'geoname_id';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
+        'geoname_id',
         'name',
         'iso3166_alpha2',
         'iso3166_alpha3',
@@ -50,7 +58,7 @@ class Country extends Model
      */
     public function flag()
     {
-        return $this->hasOne(Flag::class);
+        return $this->hasOne(Flag::class, 'country_id');
     }
 
     /**
@@ -60,7 +68,7 @@ class Country extends Model
      */
     public function languages()
     {
-        return $this->belongsToMany(Language::class);
+        return $this->belongsToMany(Language::class, null, 'country_id', null, 'geoname_id');
     }
 
     /**
