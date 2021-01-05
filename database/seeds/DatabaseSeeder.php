@@ -21,31 +21,33 @@ class DatabaseSeeder extends Seeder
      */
     public function run(FilesystemAdapter $disk)
     {
-        // 1- Download readme file
-        DownloadInfoFile::dispatch();
-        // 2- Download the countryInfo.txt file
-        DownloadCountriesFile::dispatch();
-        // 3- Download Files related to every country
-        $path = $disk->path(config('geonames.countries_file'));
-        (new CountriesFileIterator($path))
-            ->iterable()
-            ->each(function (array $row) {
-                DownloadCountryFlag::dispatch($row[0]);
-                DownloadGeonamesFile::dispatch($row[0]);
-                UnzipGeonamesFile::dispatch($row[0]);
-            });
+        // // 1- Download readme file
+        // DownloadInfoFile::dispatch();
+        // // 2- Download the countryInfo.txt file
+        // DownloadCountriesFile::dispatch();
+        // // 3- Download Files related to every country
+        // $path = $disk->path(config('geonames.countries_file'));
+        // (new CountriesFileIterator($path))
+        //     ->iterable()
+        //     ->each(function (array $row) {
+        //         DownloadCountryFlag::dispatch($row[0]);
+        //         DownloadGeonamesFile::dispatch($row[0]);
+        //         UnzipGeonamesFile::dispatch($row[0]);
+        //     });
 
-        // 4- Download the iso-languagecodes.txt file
-        DownloadLanguages::dispatch();
-        // 5- Download the featureCodes_en.txt file
-        DownloadFeatureCodesFile::dispatch();
-        DownloadTimezonesFile::dispatch();
+        // // 4- Download the iso-languagecodes.txt file
+        // DownloadLanguages::dispatch();
+        // // 5- Download the featureCodes_en.txt file
+        // DownloadFeatureCodesFile::dispatch();
+        // DownloadTimezonesFile::dispatch();
         // 6- Seed the continents table
         $this->call(ContinentsTableSeeder::class);
         // 13- Create all Currencies
         $this->call(CurrenciesTableSeeder::class);
         // 7- Parse and import the countryInfo.txt file
         $this->call(CountriesTableSeeder::class);
+        //
+        $this->call(TimeZonesTableSeeder::class);
         // 8- Import the iso-languagecodes.txt file
         $this->call(LanguagesTableSeeder::class);
         // 9- Load all neighbouring countries
