@@ -1,7 +1,6 @@
 <?php
 
 use App\Imports\PlacesImport;
-use App\Imports\TimezonesImport;
 use App\Models\Country;
 use Illuminate\Database\Seeder;
 use Illuminate\Filesystem\FilesystemAdapter;
@@ -41,7 +40,6 @@ class PlacesTableSeeder extends Seeder
                     $code . '/' . $code . '.txt'
                 );
 
-                (new TimezonesImport($filepath))->import();
                 (new PlacesImport($filepath))->import();
             });
     }
