@@ -23,4 +23,14 @@ class TimeZone extends Model
     protected $casts = [
         'gmt_offset' => 'float'
     ];
+
+    /**
+     * Get all the countries that belong to this TimeZone
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function countries()
+    {
+        return $this->belongsToMany(Country::class, 'country_time_zone', 'time_zone_id', 'country_id');
+    }
 }
