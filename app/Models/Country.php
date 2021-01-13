@@ -99,6 +99,16 @@ class Country extends Model
     }
 
     /**
+     * Get the TimeZones belonging to this Country
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function timeZones()
+    {
+        return $this->belongsToMany(TimeZone::class, 'country_time_zone', 'country_id', 'time_zone_id');
+    }
+
+    /**
      * Get countries with area greater than a specified
      * value
      *

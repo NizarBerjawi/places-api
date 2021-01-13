@@ -60,6 +60,7 @@ class DatabaseSeeder extends Seeder
         // 12- Create all Country-Language relations
         $this->call(CountryLanguageTableSeeder::class);
         $this->call(CountryCurrencyTableSeeder::class);
+        $this->call(CountryTimeZoneTableSeeder::class);
         // 15- Create all Timezones
         $this->call(PlacesTableSeeder::class);
     }
