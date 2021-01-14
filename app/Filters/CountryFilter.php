@@ -4,16 +4,25 @@ namespace App\Filters;
 
 use App\Models\Country;
 use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
 
-class CountryFilter implements Filter
+class CountryFilter extends Filter
 {
+    /**
+     * Return the model classname to be filtered
+     *
+     * @return string
+     */
+    public function modelClass(): string
+    {
+        return Country::class;
+    }
+
     /**
      * The attributes we can use to filter countries
      *
      * @var array
      */
-    public function getAllowedFilters()
+    public function getAllowedFilters() : array
     {
         return [
             AllowedFilter::partial('name'),
@@ -34,16 +43,5 @@ class CountryFilter implements Filter
             AllowedFilter::scope('population_lte'),
             AllowedFilter::scope('population_between'),
         ];
-    }
-
-    /**
-     * The query builder used to apply the filters
-     *
-     * @return \Spatie\QueryBuilder\QueryBuilder
-     */
-    public function getBuilder()
-    {
-        return QueryBuilder::for(Country::class)
-            ->allowedFilters($this->getAllowedFilters());
     }
 }
