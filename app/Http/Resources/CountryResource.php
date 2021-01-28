@@ -22,6 +22,7 @@ class CountryResource extends JsonResource
             'population' => $this->population,
             'area' => $this->area,
             'phone_code' => $this->phone_code,
+            'continent' => new ContinentResource($this->whenLoaded('continent'))
         ];
     }
 }

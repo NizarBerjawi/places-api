@@ -4,6 +4,7 @@ namespace App\Filters;
 
 use App\Models\Country;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
 
 class CountryFilter extends Filter
 {
@@ -42,6 +43,16 @@ class CountryFilter extends Filter
             AllowedFilter::scope('population_lt'),
             AllowedFilter::scope('population_lte'),
             AllowedFilter::scope('population_between'),
+        ];
+    }
+
+    /**
+     *
+     */
+    public function getAllowedIncludes() : array
+    {
+        return [
+            AllowedInclude::relationship('continent')
         ];
     }
 }

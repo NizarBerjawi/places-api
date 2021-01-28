@@ -19,12 +19,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::group([
-
     'middleware' => 'api',
     'prefix' => 'countries',
     'namespace' => 'API'
-
 ], function ($router) {
     Route::get('/', 'CountryController@index');
     Route::get('/{country}', 'CountryController@show');
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'continents',
+    'namespace' => 'API'
+], function ($router) {
+    Route::get('/', 'ContinentController@index');
+    Route::get('/{continent}', 'ContinentController@show');
 });

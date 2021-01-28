@@ -22,6 +22,12 @@ abstract class Filter
     abstract public function getAllowedFilters() : array;
 
     /**
+     *
+     */
+    abstract public function getAllowedIncludes() : array;
+
+
+    /**
      * The query builder used to apply the filters
      *
      * @return \Spatie\QueryBuilder\QueryBuilder
@@ -29,6 +35,7 @@ abstract class Filter
     public function getBuilder() : QueryBuilder
     {
         return QueryBuilder::for($this->modelClass())
-            ->allowedFilters($this->getAllowedFilters());
+            ->allowedFilters($this->getAllowedFilters())
+            ->allowedIncludes($this->getAllowedIncludes());
     }
 }
