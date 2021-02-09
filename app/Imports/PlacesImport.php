@@ -29,7 +29,7 @@ class PlacesImport extends GeonamesFileIterator implements GeonamesImportable
                     $places->push([
                         'geoname_id' => $item[0],
                         'name' => $item[1],
-                        'population' => (int) $item[14],
+                        'population' => max((int) $item[14], 0),
                         'elevation' => (int) $item[15],
                         'feature_code' => $item[7] ?? null,
                         'country_code' => $item[8] ?? null,
