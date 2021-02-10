@@ -33,4 +33,9 @@ Route::group(['middleware' => 'api', 'namespace' => 'API'], function ($router) {
         Route::get('/', 'CurrencyController@index');
         Route::get('/{currency}', 'CurrenciesController@show');
     });
+
+    Route::group(['prefix' => 'featureClasses'], function () {
+        Route::get('/', 'FeatureClassController@index');
+        Route::get('/{featureClass}', 'CurrFeatureClassControllerenciesController@show');
+    });
 });
