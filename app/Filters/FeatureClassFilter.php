@@ -4,12 +4,11 @@ namespace App\Filters;
 
 use App\Models\FeatureClass;
 use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\AllowedInclude;
 
 class FeatureClassFilter extends Filter
 {
     /**
-     * Return the model classname to be filtered
+     * Return the model classname to be filtered.
      *
      * @return string
      */
@@ -19,7 +18,7 @@ class FeatureClassFilter extends Filter
     }
 
     /**
-     * The attributes we can use to filter countries
+     * The attributes we can use to filter countries.
      *
      * @var array
      */
@@ -31,12 +30,12 @@ class FeatureClassFilter extends Filter
     }
 
     /**
+     * The relations that we can include.
      *
+     * @var array
      */
     public function getAllowedIncludes() : array
     {
-        return [
-            AllowedInclude::relationship('featureCodes')
-        ];
+        return [];
     }
 }

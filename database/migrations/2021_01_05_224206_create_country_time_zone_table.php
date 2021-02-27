@@ -14,15 +14,15 @@ class CreateCountryTimeZoneTable extends Migration
     public function up()
     {
         Schema::create('country_time_zone', function (Blueprint $table) {
-            $table->unsignedBigInteger('time_zone_id');
-            $table->unsignedBigInteger('country_id');
+            $table->string('time_zone_code');
+            $table->string('country_code');
             $table->timestamps();
         });
 
         Schema::table('country_time_zone', function (Blueprint $table) {
-            $table->primary(['time_zone_id', 'country_id']);
-            $table->foreign('country_id')->references('geoname_id')->on('countries')->onCascade('delete');
-            $table->foreign('time_zone_id')->references('id')->on('time_zones')->onCascade('delete');
+            $table->primary(['time_zone_code', 'country_code']);
+            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->onCascade('delete');
+            $table->foreign('time_zone_code')->references('code')->on('time_zones')->onCascade('delete');
         });
     }
 
@@ -34,8 +34,8 @@ class CreateCountryTimeZoneTable extends Migration
     public function down()
     {
         Schema::table('country_time_zone', function (Blueprint $table) {
-            $table->dropForeign(['time_zone_id']);
-            $table->dropForeign(['country_id']);
+            $table->dropForeign(['time_zone_code']);
+            $table->dropForeign(['country_code']);
         });
 
         Schema::dropIfExists('country_time_zone');

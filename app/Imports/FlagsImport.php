@@ -10,23 +10,23 @@ use Carbon\Carbon;
 class FlagsImport implements GeonamesImportable
 {
     /**
-     * Import the required data into the database
+     * Import the required data into the database.
      *
      * @return void
      */
     public function import()
     {
         $data = Country::query()
-            ->get(['geoname_id', 'iso3166_alpha2'])
+            ->get(['iso3166_alpha2'])
             ->map(function (Country $country) {
                 $timestamp = Carbon::now()->toDateTimeString();
                 $code = $country->iso3166_alpha2;
-                
+
                 return [
-                    'path' => $code . '/' . strtolower($code . '.gif'),
-                    'country_id' => $country->geoname_id,
-                    'created_at' => $timestamp,
-                    'updated_at' => $timestamp,
+                    'path'         => $code.'/'.strtolower($code.'.gif'),
+                    'country_code' => $code,
+                    'created_at'   => $timestamp,
+                    'updated_at'   => $timestamp,
                 ];
             });
 

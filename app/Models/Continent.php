@@ -11,24 +11,31 @@ class Continent extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'geoname_id';
-    
+    protected $primaryKey = 'code';
+
+    /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'code', 'name'
+        'code', 'name',
     ];
 
     /**
-     * Get the countries that belong to this continent
+     * Get the countries that belong to this continent.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function countries()
     {
-        return $this->hasMany(Country::class, 'continent_id');
+        return $this->hasMany(Country::class, 'continent_code');
     }
 }

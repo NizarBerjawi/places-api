@@ -12,11 +12,11 @@ class Location extends Model
      * @var array
      */
     protected $fillable = [
-        'latitude', 'longitude'
+        'latitude', 'longitude',
     ];
-    
+
     /**
-     * Get the owning locationable model
+     * Get the owning locationable model.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphTo
      */

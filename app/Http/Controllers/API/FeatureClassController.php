@@ -16,8 +16,8 @@ class FeatureClassController extends Controller
      */
     public function index(FeatureClassFilter $filter)
     {
-        $featureClasses = $filter->getBuilder()->get();
-        
+        $featureClasses = $filter->getBuilder();
+
         return FeatureClassResource::collection($featureClasses);
     }
 

@@ -19,11 +19,11 @@ class Place extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'population', 'elevation'
+        'name', 'population', 'elevation',
     ];
 
     /**
-     * Get the Feature Code that this Place belongs to
+     * Get the Feature Code that this Place belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -33,7 +33,7 @@ class Place extends Model
     }
 
     /**
-     * Get the Country that this Place belongs to
+     * Get the Country that this Place belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -43,7 +43,7 @@ class Place extends Model
     }
 
     /**
-     * Get the Location of this Place
+     * Get the Location of this Place.
      *
      * @return \Illuminate\Database\Eloquent\Relations\MorphOne
      */

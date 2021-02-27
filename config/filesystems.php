@@ -67,8 +67,8 @@ return [
 
         'data' => [
             'driver' => 'local',
-            'root' => storage_path('app/data')
-        ]
+            'root' => storage_path('app/data'),
+        ],
     ],
 
     /*

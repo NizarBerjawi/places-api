@@ -36,6 +36,11 @@ Route::group(['middleware' => 'api', 'namespace' => 'API'], function ($router) {
 
     Route::group(['prefix' => 'featureClasses'], function () {
         Route::get('/', 'FeatureClassController@index');
-        Route::get('/{featureClass}', 'CurrFeatureClassControllerenciesController@show');
+        Route::get('/{featureClass}', 'FeatureClassController@show');
+    });
+
+    Route::group(['prefix' => 'featureCodes'], function () {
+        Route::get('/', 'FeatureCodeController@index');
+        Route::get('/{featureCode}', 'FeatureCodeController@show');
     });
 });

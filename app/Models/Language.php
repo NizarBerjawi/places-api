@@ -19,12 +19,12 @@ class Language extends Model
     ];
 
     /**
-     * Get all the Countries that are associated with this language
+     * Get all the Countries that are associated with this language.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function countries()
     {
-        return $this->belongsToMany(Country::class, null, null, 'country_id');
+        return $this->belongsToMany(Country::class, null, null, 'country_code');
     }
 }

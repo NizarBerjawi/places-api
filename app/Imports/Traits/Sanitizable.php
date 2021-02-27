@@ -5,7 +5,7 @@ namespace App\Imports\Traits;
 trait Sanitizable
 {
     /**
-     * Cleans/Sanitises an array of strings
+     * Cleans/Sanitises an array of strings.
      *
      * @param array  $row
      * @return array
@@ -18,14 +18,14 @@ trait Sanitizable
 
             if (is_string($item)) {
                 $item = $this->trim($item);
-            };
-            
+            }
+
             return $item;
         }, $row);
     }
 
     /**
-     * Removes any UTF8 BOM characters from a given string
+     * Removes any UTF8 BOM characters from a given string.
      *
      * @param string $text
      * @return string
@@ -34,22 +34,23 @@ trait Sanitizable
     {
         $bom = pack('H*', 'EFBBBF');
         $text = preg_replace("/^$bom/", '', $text);
+
         return $text;
     }
 
     /**
-     * Replace empty strings with null values
+     * Replace empty strings with null values.
      *
      * @param string  $text
      * @return mixed
      */
     protected function removeEmptyStrings(string $text)
     {
-        return $text !== "" ? $text : null;
+        return $text !== '' ? $text : null;
     }
 
     /**
-     * Trim any trailing spaces at start or end of a string
+     * Trim any trailing spaces at start or end of a string.
      *
      * @param string  $text
      * @return string $text
@@ -59,7 +60,7 @@ trait Sanitizable
         if (empty($text)) {
             return $text;
         }
-        
+
         return trim($text);
     }
 }

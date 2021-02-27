@@ -13,7 +13,7 @@ use Illuminate\Support\Stringable;
 class CountryLanguageImport extends CountriesFileIterator implements GeonamesImportable
 {
     /**
-     * Import the required data into the database
+     * Import the required data into the database.
      *
      * @return void
      */
@@ -26,7 +26,7 @@ class CountryLanguageImport extends CountriesFileIterator implements GeonamesImp
 
             if ($languagesString->isEmpty()) {
                 continue;
-            };
+            }
 
             $languageCodes = $this->parseLanguageString($languagesString);
             $languages = Language::query()
@@ -40,10 +40,10 @@ class CountryLanguageImport extends CountriesFileIterator implements GeonamesImp
                 $timestamp = Carbon::now()->toDateTimeString();
 
                 $countryLanguages->push([
-                    'country_id' => $item[16],
-                    'language_id' => $language->id,
-                    'created_at' => $timestamp,
-                    'updated_at' => $timestamp
+                    'country_code' => $item[0],
+                    'language_id'  => $language->id,
+                    'created_at'   => $timestamp,
+                    'updated_at'   => $timestamp,
                 ]);
             }
         }

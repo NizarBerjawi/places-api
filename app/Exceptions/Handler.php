@@ -104,7 +104,7 @@ class Handler extends ExceptionHandler
      * @param \Exception $exception
      * @return int
      */
-    protected function getStatusCode(\Exception $exception)
+    protected function getStatusCode(Exception $exception)
     {
         return $exception instanceof HttpExceptionInterface ? $exception->getStatusCode() : 500;
     }

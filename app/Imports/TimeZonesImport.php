@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class TimeZonesImport extends GeonamesFileIterator implements GeonamesImportable
 {
     /**
-     * Import the required data into the database
+     * Import the required data into the database.
      *
      * @return void
      */
@@ -20,12 +20,12 @@ class TimeZonesImport extends GeonamesFileIterator implements GeonamesImportable
 
         foreach ($this->iterable()->skip(1) as $item) {
             $timestamp = Carbon::now();
-            
+
             $timeZones->push([
-                'code' => $item[1],
+                'code'       => $item[1],
                 'gmt_offset' => $item[2],
                 'created_at' => $timestamp,
-                'updated_at' => $timestamp
+                'updated_at' => $timestamp,
             ]);
         }
 

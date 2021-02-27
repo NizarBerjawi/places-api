@@ -7,14 +7,14 @@ use Illuminate\Filesystem\FilesystemAdapter;
 class ContinentsTableSeeder extends Seeder
 {
     /**
-     * The path of the file to be imported
+     * The path of the file to be imported.
      *
      * @var string
      */
     public $filepath;
 
     /**
-     * Initialize an instance of the seeder
+     * Initialize an instance of the seeder.
      *
      * @param \Illuminate\Filesystem\FilesystemAdapter  $storage
      * @return void

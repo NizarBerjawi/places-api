@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 class CountryTimeZoneImport extends GeonamesFileIterator implements GeonamesImportable
 {
     /**
-     * Import the required data into the database
+     * Import the required data into the database.
      *
      * @return void
      */
@@ -31,10 +31,10 @@ class CountryTimeZoneImport extends GeonamesFileIterator implements GeonamesImpo
             $timeZone = TimeZone::where('code', $item[1])->first();
 
             $countryTimeZones->push([
-                'country_id' => $country->geoname_id,
-                'time_zone_id' => $timeZone->id,
-                'created_at' => $timestamp,
-                'updated_at' => $timestamp,
+                'country_code'   => $country->iso3166_alpha2,
+                'time_zone_code' => $timeZone->code,
+                'created_at'     => $timestamp,
+                'updated_at'     => $timestamp,
             ]);
         }
 

@@ -2,20 +2,19 @@
 
 use App\Imports\CountryTimeZoneImport;
 use Illuminate\Database\Seeder;
-
 use Illuminate\Filesystem\FilesystemAdapter;
 
 class CountryTimeZoneTableSeeder extends Seeder
 {
     /**
-      * The path of the file to be imported
-      *
-      * @var string
-      */
+     * The path of the file to be imported.
+     *
+     * @var string
+     */
     public $filepath;
 
     /**
-     * Initialize an instance of the seeder
+     * Initialize an instance of the seeder.
      *
      * @param \Illuminate\Filesystem\FilesystemAdapter  $storage
      * @return void

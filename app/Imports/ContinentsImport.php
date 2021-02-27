@@ -13,14 +13,14 @@ use Illuminate\Support\Str;
 class ContinentsImport extends GeonamesFileIterator implements GeonamesImportable
 {
     /**
-     * Continent codes
+     * Continent codes.
      *
      * @var \Illuminate\Support\Collection
      */
     public $continentCodes;
 
     /**
-     * Initialize an instance
+     * Initialize an instance.
      *
      * @param string $filepath
      * @param string $delimiter
@@ -34,10 +34,10 @@ class ContinentsImport extends GeonamesFileIterator implements GeonamesImportabl
     }
 
     /**
-     * Decides whether to skip a row or not
+     * Decides whether to skip a row or not.
      *
      * @param array  @row
-     * @return boolean
+     * @return bool
      */
     public function skip(array $row)
     {
@@ -45,11 +45,11 @@ class ContinentsImport extends GeonamesFileIterator implements GeonamesImportabl
             return Str::finish($code, ' : ');
         });
 
-        return !Str::startsWith($row[0], $codes->all());
+        return ! Str::startsWith($row[0], $codes->all());
     }
 
     /**
-     * Import the required data into the database
+     * Import the required data into the database.
      *
      * @return void
      */
@@ -67,7 +67,7 @@ class ContinentsImport extends GeonamesFileIterator implements GeonamesImportabl
             [$code, $name] = Str::of($data->first())->explode(' : ');
 
             $geonameId = Str::of($data->last())->explode('=')->last();
-                      
+
             if (! isset($code, $name, $geonameId)) {
                 continue;
             }
@@ -75,11 +75,10 @@ class ContinentsImport extends GeonamesFileIterator implements GeonamesImportabl
             $timestamp = Carbon::now()->toDateTimeString();
 
             $continents->push([
-                'geoname_id' => $geonameId,
                 'code' => $code,
                 'name' => $name,
                 'created_at' => $timestamp,
-                'updated_at' => $timestamp
+                'updated_at' => $timestamp,
             ]);
         }
 
@@ -87,7 +86,7 @@ class ContinentsImport extends GeonamesFileIterator implements GeonamesImportabl
     }
 
     /**
-     * Collect all continent codes from the countryInfo.txt file
+     * Collect all continent codes from the countryInfo.txt file.
      *
      * @return \Illuminate\Support\Collection
      */
