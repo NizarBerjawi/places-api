@@ -14,14 +14,14 @@ class CreateCountryLanguageTable extends Migration
     public function up()
     {
         Schema::create('country_language', function (Blueprint $table) {
-            $table->unsignedBigInteger('country_id');
+            $table->string('country_code');
             $table->unsignedBigInteger('language_id');
             $table->timestamps();
         });
 
         Schema::table('country_language', function (Blueprint $table) {
-            $table->primary(['country_id', 'language_id']);
-            $table->foreign('country_id')->references('geoname_id')->on('countries')->onCascade('delete');
+            $table->primary(['country_code', 'language_id']);
+            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->onCascade('delete');
             $table->foreign('language_id')->references('id')->on('languages')->onCascade('delete');
         });
     }
@@ -34,7 +34,7 @@ class CreateCountryLanguageTable extends Migration
     public function down()
     {
         Schema::table('country_language', function (Blueprint $table) {
-            $table->dropForeign(['country_id']);
+            $table->dropForeign(['country_code']);
             $table->dropForeign(['language_id']);
         });
 

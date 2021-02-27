@@ -7,14 +7,14 @@ use Exception;
 class FileNotDownloadedException extends Exception
 {
     /**
-     * The location of the file
+     * The location of the file.
      *
      * @var string
      */
     public $location;
 
     /**
-     * Instantiate the exception
+     * Instantiate the exception.
      *
      * @param string $location
      * @return void
@@ -28,7 +28,7 @@ class FileNotDownloadedException extends Exception
         if (! $location) {
             $this->message = $defaultMessage;
         } else {
-            $this->message = $defaultMessage . ' from: ' . $location;
+            $this->message = $defaultMessage.' from: '.$location;
         }
     }
 }

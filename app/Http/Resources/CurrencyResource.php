@@ -17,7 +17,7 @@ class CurrencyResource extends JsonResource
         return [
             'code'      => $this->code,
             'name'      => $this->name,
-            'countries' => CountryResource::collection($this->whenLoaded('countries'))
+            'countries' => CountryResource::collection($this->whenLoaded('countries')),
         ];
     }
 }

@@ -14,6 +14,13 @@ class FeatureCode extends Model
     protected $primaryKey = 'code';
 
     /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -21,11 +28,11 @@ class FeatureCode extends Model
     public $fillable = [
         'code',
         'short_description',
-        'full_description'
+        'full_description',
     ];
-    
+
     /**
-     * Get the feature that this feature code belongs to
+     * Get the feature that this feature code belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -35,7 +42,7 @@ class FeatureCode extends Model
     }
 
     /**
-     * Get all the places that belong to this Feature Code
+     * Get all the places that belong to this Feature Code.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

@@ -13,7 +13,7 @@ class FeatureClass extends Model
      */
     public $fillable = [
         'code',
-        'description'
+        'description',
     ];
 
     /**
@@ -27,7 +27,7 @@ class FeatureClass extends Model
     }
 
     /**
-     * Get the Places that belong to this feature class
+     * Get the Places that belong to this feature class.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */

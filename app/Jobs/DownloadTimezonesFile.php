@@ -17,24 +17,24 @@ class DownloadTimezonesFile implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-         * Execute the job.
-         *
-         * @return void
-         */
+     * Execute the job.
+     *
+     * @return void
+     */
     public function handle(FilesystemAdapter $disk)
     {
         try {
-            $response =  Http::withOptions([
-                'stream' => true
+            $response = Http::withOptions([
+                'stream' => true,
             ])->get($this->url());
-    
+
             if ($response->failed()) {
                 throw new FileNotDownloadedException($this->url($this->code));
             }
-    
+
             $saved = $disk->put($this->filename(), $response->getBody());
-    
-            if (!$saved) {
+
+            if (! $saved) {
                 throw new FileNotSavedException(
                     $disk->path($this->filename())
                 );
@@ -45,7 +45,7 @@ class DownloadTimezonesFile implements ShouldQueue
     }
 
     /**
-     * The location of the file
+     * The location of the file.
      *
      * @return string
      */
@@ -55,7 +55,7 @@ class DownloadTimezonesFile implements ShouldQueue
     }
 
     /**
-     * The name of the info file
+     * The name of the info file.
      *
      * @return string
      */

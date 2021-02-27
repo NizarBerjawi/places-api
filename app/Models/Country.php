@@ -12,7 +12,14 @@ class Country extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'geoname_id';
+    protected $primaryKey = 'iso3166_alpha2';
+
+    /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
 
     /**
      * The attributes that are mass assignable.
@@ -20,7 +27,6 @@ class Country extends Model
      * @var array
      */
     protected $fillable = [
-        'geoname_id',
         'name',
         'iso3166_alpha2',
         'iso3166_alpha3',
@@ -28,51 +34,51 @@ class Country extends Model
         'population',
         'area',
         'phone_code',
-        'continent_id'
+        'continent_code',
     ];
 
     /**
-     * Get the continent that owns this country
+     * Get the continent that owns this country.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function continent()
     {
-        return $this->belongsTo(Continent::class, 'continent_id', 'geoname_id');
+        return $this->belongsTo(Continent::class, 'continent_code', 'code');
     }
 
     /**
-     * Get all the neighbouring countries of this country
+     * Get all the neighbouring countries of this country.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function neighbours()
     {
-        return $this->belongsToMany(Country::class, 'country_neighbour', 'neighbour_code', 'country_code', 'iso3166_alpha2', 'iso3166_alpha2');
+        return $this->belongsToMany(self::class, 'country_neighbour', 'neighbour_code', 'country_code', 'iso3166_alpha2', 'iso3166_alpha2');
     }
-    
+
     /**
-     * Get the flag associated with this country
+     * Get the flag associated with this country.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function flag()
     {
-        return $this->hasOne(Flag::class, 'country_id');
+        return $this->hasOne(Flag::class, 'country_code');
     }
 
     /**
-     * Get all the languages associated with a country
+     * Get all the languages associated with a country.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function languages()
     {
-        return $this->belongsToMany(Language::class, null, 'country_id', null, 'geoname_id');
+        return $this->belongsToMany(Language::class, null, 'country_code', null, 'iso3166_alpha2');
     }
 
     /**
-     * Get all the Places that belong to this Country
+     * Get all the Places that belong to this Country.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -82,7 +88,7 @@ class Country extends Model
     }
 
     /**
-     * Get athe currency used in this Country
+     * Get athe currency used in this Country.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -99,18 +105,18 @@ class Country extends Model
     }
 
     /**
-     * Get the TimeZones belonging to this Country
+     * Get the TimeZones belonging to this Country.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function timeZones()
     {
-        return $this->belongsToMany(TimeZone::class, 'country_time_zone', 'country_id', 'time_zone_id');
+        return $this->belongsToMany(TimeZone::class, 'country_time_zone', 'country_code', 'time_zone_code');
     }
 
     /**
      * Get countries with area greater than a specified
-     * value
+     * value.
      *
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param float $value
@@ -123,7 +129,7 @@ class Country extends Model
 
     /**
      * Get countries with area greater than or equal to a
-     * specified value
+     * specified value.
      *
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param float $value
@@ -136,7 +142,7 @@ class Country extends Model
 
     /**
      * Get countries with area less than a specified
-     * value
+     * value.
      *
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param float $value
@@ -149,7 +155,7 @@ class Country extends Model
 
     /**
      * Get countries with area less than or equal to a
-     * specified value
+     * specified value.
      *
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param float $value
@@ -159,9 +165,9 @@ class Country extends Model
     {
         return $query->where('area', '<=', $value);
     }
-    
+
     /**
-     * Get countries with area between two specified values
+     * Get countries with area between two specified values.
      *
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param float $min
@@ -177,7 +183,7 @@ class Country extends Model
 
     /**
      * Get countries with population greater than a specified
-     * value
+     * value.
      *
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param int $value
@@ -190,7 +196,7 @@ class Country extends Model
 
     /**
      * Get countries with population greater than or equal to a
-     * specified value
+     * specified value.
      *
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param int $value
@@ -202,13 +208,13 @@ class Country extends Model
     }
 
     /**
-      * Get countries with population less than a specified
-      * value
-      *
-      * @param \Illuminate\Database\Eloquent\Builder  $query
-      * @param float $value
-      * @return \Illuminate\Database\Eloquent\Builder  $query
-      */
+     * Get countries with population less than a specified
+     * value.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param float $value
+     * @return \Illuminate\Database\Eloquent\Builder  $query
+     */
     public function scopePopulationLt(Builder $query, int $value)
     {
         return $query->where('population', '<', $value);
@@ -216,7 +222,7 @@ class Country extends Model
 
     /**
      * Get countries with population less than or equal to a
-     * specified value
+     * specified value.
      *
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param float $value
@@ -226,9 +232,9 @@ class Country extends Model
     {
         return $query->where('population', '<=', $value);
     }
-    
+
     /**
-     * Get countries with population between two specified values
+     * Get countries with population between two specified values.
      *
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param float $min

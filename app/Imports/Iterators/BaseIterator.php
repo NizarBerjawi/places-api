@@ -9,23 +9,23 @@ use Illuminate\Support\LazyCollection;
 class BaseIterator implements GeonamesIterable
 {
     use Sanitizable;
-    
+
     /**
-     * The path of the file to be read
+     * The path of the file to be read.
      *
      * @param string
      */
     public $filepath;
 
     /**
-     * The delimiter used in the file
+     * The delimiter used in the file.
      *
      * @var string
      */
     public $delimiter;
 
     /**
-     * Initialize an instance
+     * Initialize an instance.
      *
      * @param string $filepath
      * @param string $delimiter
@@ -38,7 +38,7 @@ class BaseIterator implements GeonamesIterable
 
     /**
      * Iterates over the file and returns a LazyCollection which
-     * yields the values on every line
+     * yields the values on every line.
      *
      * @return \Illuminate\Support\LazyCollection
      */

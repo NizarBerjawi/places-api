@@ -12,11 +12,11 @@ class CountriesFileIterator extends BaseIterator
      * @var array
      */
     const EXCLUDE = ['CS', 'AN'];
-    
+
     /**
-     * Decide whether a row is a comment or actual data
+     * Decide whether a row is a comment or actual data.
      *
-     * @param boolean
+     * @param bool
      */
     protected function isComment(array $row)
     {
@@ -24,9 +24,9 @@ class CountriesFileIterator extends BaseIterator
     }
 
     /**
-     * Decide whether a row should be excluded
+     * Decide whether a row should be excluded.
      *
-     * @param boolean
+     * @param bool
      */
     protected function isExcluded(array $row)
     {
@@ -34,9 +34,9 @@ class CountriesFileIterator extends BaseIterator
     }
 
     /**
-     * Decides whether to skip a row or not
+     * Decides whether to skip a row or not.
      *
-     * @param boolean
+     * @param bool
      */
     public function skip(array $row)
     {
@@ -45,7 +45,7 @@ class CountriesFileIterator extends BaseIterator
 
     /**
      * Iterates over the file and returns a LazyCollection which
-     * yields the values on every line
+     * yields the values on every line.
      *
      * @return \Illuminate\Support\LazyCollection
      */

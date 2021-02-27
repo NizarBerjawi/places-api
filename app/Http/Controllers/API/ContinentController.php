@@ -16,7 +16,7 @@ class ContinentController extends Controller
      */
     public function index(ContinentFilter $filter)
     {
-        $continents = $filter->getBuilder()->get();
+        $continents = $filter->getBuilder();
 
         return ContinentResource::collection($continents);
     }

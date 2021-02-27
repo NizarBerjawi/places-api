@@ -16,12 +16,12 @@ class Flag extends Model
     ];
 
     /**
-     * Get the country that this flag belongs to
+     * Get the country that this flag belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function country()
     {
-        return $this->belongsTo(Country::class, 'country_id');
+        return $this->belongsTo(Country::class, 'country_code');
     }
 }

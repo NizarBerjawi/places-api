@@ -14,8 +14,7 @@ class CreateTimeZonesTable extends Migration
     public function up()
     {
         Schema::create('time_zones', function (Blueprint $table) {
-            $table->id();
-            $table->string('code')->unique();
+            $table->string('code')->primary();
             $table->float('gmt_offset', 4, 2);
             $table->timestamps();
         });

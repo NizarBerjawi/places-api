@@ -12,11 +12,11 @@ class Currency extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'code', 'symbol'
+        'name', 'code', 'symbol',
     ];
-    
+
     /**
-     * Get all the countries that use this Currency
+     * Get all the countries that use this Currency.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

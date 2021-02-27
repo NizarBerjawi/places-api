@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class CountryCurrencyImport extends CountriesFileIterator implements GeonamesImportable
 {
     /**
-     * Import the required data into the database
+     * Import the required data into the database.
      *
      * @return void
      */
@@ -26,10 +26,10 @@ class CountryCurrencyImport extends CountriesFileIterator implements GeonamesImp
             $timestamp = Carbon::now()->toDateTimeString();
 
             $countryCurrencies->push([
-                'country_code' => $item[0],
+                'country_code'  => $item[0],
                 'currency_code' => $item[10],
-                'created_at' => $timestamp,
-                'updated_at' => $timestamp,
+                'created_at'    => $timestamp,
+                'updated_at'    => $timestamp,
             ]);
         }
 

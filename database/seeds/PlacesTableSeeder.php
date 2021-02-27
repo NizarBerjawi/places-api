@@ -8,14 +8,14 @@ use Illuminate\Filesystem\FilesystemAdapter;
 class PlacesTableSeeder extends Seeder
 {
     /**
-     * The Storage disk
+     * The Storage disk.
      *
      * @var \Illuminate\Filesystem\FilesystemAdapter
      */
     public $storage;
 
     /**
-     * Initialize an instance of the seeder
+     * Initialize an instance of the seeder.
      *
      * @param \Illuminate\Filesystem\FilesystemAdapter  $storage
      * @return void
@@ -37,7 +37,7 @@ class PlacesTableSeeder extends Seeder
                 $code = $country->iso3166_alpha2;
 
                 $filepath = $this->storage->path(
-                    $code . '/' . $code . '.txt'
+                    $code.'/'.$code.'.txt'
                 );
 
                 (new PlacesImport($filepath))->import();

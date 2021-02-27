@@ -12,10 +12,10 @@ use Illuminate\Support\Str;
 class FeatureCodesImport extends GeonamesFileIterator implements GeonamesImportable
 {
     /**
-     * Decides whether to skip a row or not
+     * Decides whether to skip a row or not.
      *
      * @param array  $row
-     * @param boolean
+     * @param bool
      */
     public function skip(array $row)
     {
@@ -23,7 +23,7 @@ class FeatureCodesImport extends GeonamesFileIterator implements GeonamesImporta
     }
 
     /**
-     * Import the required data into the database
+     * Import the required data into the database.
      *
      * @return void
      */
@@ -44,12 +44,12 @@ class FeatureCodesImport extends GeonamesFileIterator implements GeonamesImporta
             $timestamp = Carbon::now()->toDateTimeString();
 
             $featureCodes->push([
-                'code' => $featureCode,
-                'short_description' => ucfirst($item[1]),
-                'full_description' => ucfirst($item[2]),
+                'code'               => $featureCode,
+                'short_description'  => ucfirst($item[1]),
+                'full_description'   => ucfirst($item[2]),
                 'feature_class_code' => $featureClassCode,
-                'created_at' => $timestamp,
-                'updated_at' => $timestamp
+                'created_at'         => $timestamp,
+                'updated_at'         => $timestamp,
             ]);
         }
 

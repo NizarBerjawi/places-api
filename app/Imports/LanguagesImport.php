@@ -11,7 +11,7 @@ use Illuminate\Support\LazyCollection;
 class LanguagesImport extends GeonamesFileIterator implements GeonamesImportable
 {
     /**
-     * Import the required data into the database
+     * Import the required data into the database.
      *
      * @return void
      */
@@ -28,10 +28,10 @@ class LanguagesImport extends GeonamesFileIterator implements GeonamesImportable
                     $timestamp = Carbon::now()->toDateTimeString();
 
                     $language = [
-                        'iso639_1' => $item[2],
-                        'iso639_2' => $item[1],
-                        'iso639_3' => $item[0],
-                        'name' => $item[3],
+                        'iso639_1'   => $item[2],
+                        'iso639_2'   => $item[1],
+                        'iso639_3'   => $item[0],
+                        'name'       => $item[3],
                         'created_at' => $timestamp,
                         'updated_at' => $timestamp,
                     ];

@@ -17,7 +17,7 @@ class DownloadCountryFlag implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * A country code to download flag image for
+     * A country code to download flag image for.
      *
      * @var string
      */
@@ -41,20 +41,20 @@ class DownloadCountryFlag implements ShouldQueue
     public function handle(FilesystemAdapter $disk)
     {
         try {
-            $response =  Http::withOptions([
-                'stream' => true
+            $response = Http::withOptions([
+                'stream' => true,
             ])->get($this->url($this->code));
-    
+
             if ($response->failed()) {
                 throw new FileNotDownloadedException($this->url($this->code));
             }
-    
+
             $saved = $disk->put(
                 $this->filepath($this->code),
                 $response->getBody()
             );
-    
-            if (!$saved) {
+
+            if (! $saved) {
                 throw new FileNotSavedException($this->filepath(($this->code)));
             }
         } catch (\Exception $e) {
@@ -63,35 +63,35 @@ class DownloadCountryFlag implements ShouldQueue
     }
 
     /**
-     * Get the flag filename
+     * Get the flag filename.
      *
      * @param string $code
      * @return string
      */
     private function filename(string $code)
     {
-        return strtolower($code . '.gif');
+        return strtolower($code.'.gif');
     }
 
     /**
-     * Get the flag filepath
+     * Get the flag filepath.
      *
      * @param string $code
      * @return string
      */
     private function filepath(string $code)
     {
-        return $code . '/' . $this->filename($code);
+        return $code.'/'.$this->filename($code);
     }
 
     /**
-     * Get the url of the flag
+     * Get the url of the flag.
      *
      * @param string $code
      * @return string
      */
     private function url(string $code)
     {
-        return config('geonames.flags_url') . '/' . $this->filename($code);
+        return config('geonames.flags_url').'/'.$this->filename($code);
     }
 }

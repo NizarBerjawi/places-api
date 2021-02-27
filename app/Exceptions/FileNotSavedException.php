@@ -7,14 +7,14 @@ use Exception;
 class FileNotSavedException extends Exception
 {
     /**
-     * The location to save the file
+     * The location to save the file.
      *
      * @var string
      */
     public $location;
 
     /**
-     * Instantiate the exception
+     * Instantiate the exception.
      *
      * @param string $filename
      * @return void
@@ -28,7 +28,7 @@ class FileNotSavedException extends Exception
         if (! $location) {
             $this->message = $defaultMessage;
         } else {
-            $this->message = $defaultMessage . ': ' . $location;
+            $this->message = $defaultMessage.': '.$location;
         }
     }
 }

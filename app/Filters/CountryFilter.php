@@ -9,7 +9,7 @@ use Spatie\QueryBuilder\AllowedInclude;
 class CountryFilter extends Filter
 {
     /**
-     * Return the model classname to be filtered
+     * Return the model classname to be filtered.
      *
      * @return string
      */
@@ -19,7 +19,7 @@ class CountryFilter extends Filter
     }
 
     /**
-     * The attributes we can use to filter countries
+     * The attributes we can use to filter countries.
      *
      * @var array
      */
@@ -47,12 +47,15 @@ class CountryFilter extends Filter
     }
 
     /**
+     * The relations that we can include.
      *
+     * @var array
      */
     public function getAllowedIncludes() : array
     {
         return [
-            AllowedInclude::relationship('continent')
+            AllowedInclude::relationship('continent'),
+            AllowedInclude::relationship('timeZones'),
         ];
     }
 }

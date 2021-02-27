@@ -2,11 +2,11 @@
 
 namespace App\Filters;
 
-use App\Models\Currency;
+use App\Models\FeatureCode;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
 
-class CurrencyFilter extends Filter
+class FeatureCodeFilter extends Filter
 {
     /**
      * Return the model classname to be filtered.
@@ -15,7 +15,7 @@ class CurrencyFilter extends Filter
      */
     public function modelClass(): string
     {
-        return Currency::class;
+        return FeatureCode::class;
     }
 
     /**
@@ -27,7 +27,6 @@ class CurrencyFilter extends Filter
     {
         return [
             AllowedFilter::exact('code'),
-            AllowedFilter::partial('name'),
         ];
     }
 
@@ -39,7 +38,7 @@ class CurrencyFilter extends Filter
     public function getAllowedIncludes() : array
     {
         return [
-            AllowedInclude::relationship('countries'),
+            AllowedInclude::relationship('featureClass'),
         ];
     }
 }
