@@ -43,4 +43,9 @@ Route::group(['middleware' => 'api', 'namespace' => 'API'], function ($router) {
         Route::get('/', 'FeatureCodeController@index');
         Route::get('/{featureCode}', 'FeatureCodeController@show');
     });
+
+    Route::group(['prefix' => 'timeZones'], function () {
+        Route::get('/', 'TimeZoneController@index');
+        Route::get('/{timeZone}', 'TimeZoneController@show');
+    });
 });

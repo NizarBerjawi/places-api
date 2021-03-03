@@ -111,7 +111,7 @@ class Country extends Model
      */
     public function timeZones()
     {
-        return $this->belongsToMany(TimeZone::class, 'country_time_zone', 'country_code', 'time_zone_code');
+        return $this->hasMany(TimeZone::class, 'country_code', 'iso3166_alpha2');
     }
 
     /**

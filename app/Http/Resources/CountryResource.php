@@ -22,9 +22,8 @@ class CountryResource extends JsonResource
             'population'      => $this->population,
             'area'            => $this->area,
             'phone_code'      => $this->phone_code,
-            'continent'       => new ContinentResource($this->whenLoaded('continent')),
-            'time_zones'      => $this->timeZones,
-
+            'continent'       => ContinentResource::make($this->whenLoaded('continent')),
+            'time_zones'      => TimeZoneResource::collection($this->whenLoaded('timeZones')),
         ];
     }
 }

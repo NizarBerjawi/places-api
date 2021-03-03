@@ -19,13 +19,14 @@ class TimeZonesImport extends GeonamesFileIterator implements GeonamesImportable
         $timeZones = collect();
 
         foreach ($this->iterable()->skip(1) as $item) {
-            $timestamp = Carbon::now();
+            $timestamp = Carbon::now()->toDateTimeString();
 
             $timeZones->push([
-                'code'       => $item[1],
-                'gmt_offset' => $item[2],
-                'created_at' => $timestamp,
-                'updated_at' => $timestamp,
+                'code'         => $item[1],
+                'country_code' => $item[0],
+                'gmt_offset'   => $item[2],
+                'created_at'   => $timestamp,
+                'updated_at'   => $timestamp,
             ]);
         }
 
