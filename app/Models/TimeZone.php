@@ -11,14 +11,7 @@ class TimeZone extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'code';
-
-    /**
-     * The "type" of the primary key ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
+    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -41,10 +34,10 @@ class TimeZone extends Model
     /**
      * Get all the countries that belong to this TimeZone.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function countries()
+    public function country()
     {
-        return $this->belongsToMany(Country::class, 'country_time_zone', 'time_zone_code', 'country_code');
+        return $this->belongsTo(Country::class, 'country_code', 'iso3166_alpha2');
     }
 }

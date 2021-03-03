@@ -19,7 +19,6 @@ class FeatureCodeResource extends JsonResource
             'short_description' => $this->short_description,
             'full_description'  => $this->full_description,
             'feature_class'     => FeatureClassResource::make($this->whenLoaded('featureClass')),
-
         ];
     }
 }
