@@ -23,7 +23,7 @@ class FlagsImport implements GeonamesImportable
                 $code = $country->iso3166_alpha2;
 
                 return [
-                    'path'         => $code.'/'.strtolower($code.'.gif'),
+                    'path'         => 'storage/flags/'.$code.'/'.strtolower($code.'.gif'),
                     'country_code' => $code,
                     'created_at'   => $timestamp,
                     'updated_at'   => $timestamp,

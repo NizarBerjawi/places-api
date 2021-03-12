@@ -48,4 +48,9 @@ Route::group(['middleware' => 'api', 'namespace' => 'API'], function ($router) {
         Route::get('/', 'TimeZoneController@index');
         Route::get('/{timeZone}', 'TimeZoneController@show');
     });
+
+    Route::group(['prefix' => 'flags'], function () {
+        Route::get('/', 'FlagController@index');
+        Route::get('/{flag}', 'FlagController@show');
+    });
 });
