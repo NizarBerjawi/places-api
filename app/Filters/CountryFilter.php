@@ -56,6 +56,7 @@ class CountryFilter extends Filter
         return [
             AllowedInclude::relationship('continent'),
             AllowedInclude::relationship('timeZones'),
+            AllowedInclude::relationship('flag')
         ];
     }
 }

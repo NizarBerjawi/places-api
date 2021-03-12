@@ -6,11 +6,11 @@ use App\Exceptions\FileNotDownloadedException;
 use App\Exceptions\FileNotSavedException;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
+use Storage;
 
 class DownloadCountryFlag implements ShouldQueue
 {
@@ -38,8 +38,10 @@ class DownloadCountryFlag implements ShouldQueue
      *
      * @return void
      */
-    public function handle(FilesystemAdapter $disk)
+    public function handle()
     {
+        $disk = Storage::disk('public');
+        
         try {
             $response = Http::withOptions([
                 'stream' => true,
@@ -81,7 +83,7 @@ class DownloadCountryFlag implements ShouldQueue
      */
     private function filepath(string $code)
     {
-        return $code.'/'.$this->filename($code);
+        return "flags/$code/{$this->filename($code)}";
     }
 
     /**
