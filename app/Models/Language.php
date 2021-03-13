@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Language extends Model
@@ -26,5 +27,20 @@ class Language extends Model
     public function countries()
     {
         return $this->belongsToMany(Country::class, null, null, 'country_code');
+    }
+
+    /**
+     * Get languages have belonging to specific countries
+     *
+     * @param string $countries
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder  $query
+     */
+    public function scopeByCountries(Builder $query, string ...$countries)
+    {
+        return $query
+            ->whereHas('countries', function (Builder $query) use ($countries) {
+                $query->whereIn('iso3166_alpha2', $countries);
+            });
     }
 }

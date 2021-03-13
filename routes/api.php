@@ -18,39 +18,41 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group(['middleware' => 'api', 'namespace' => 'API'], function ($router) {
-    Route::group(['prefix' => 'countries'], function () {
-        Route::get('/', 'CountryController@index');
-        Route::get('/{country}', 'CountryController@show');
-    });
+Route::group(['prefix' => 'countries'], function () {
+    Route::get('/', 'CountryController@index');
+    Route::get('/{country}', 'CountryController@show');
+});
 
-    Route::group(['prefix' => 'continents'], function () {
-        Route::get('/', 'ContinentController@index');
-        Route::get('/{continent}', 'ContinentController@show');
-    });
+Route::group(['prefix' => 'continents'], function () {
+    Route::get('/', 'ContinentController@index');
+    Route::get('/{continent}', 'ContinentController@show');
+});
 
-    Route::group(['prefix' => 'currencies'], function () {
-        Route::get('/', 'CurrencyController@index');
-        Route::get('/{currency}', 'CurrenciesController@show');
-    });
+Route::group(['prefix' => 'currencies'], function () {
+    Route::get('/', 'CurrencyController@index');
+    Route::get('/{currency}', 'CurrenciesController@show');
+});
 
-    Route::group(['prefix' => 'featureClasses'], function () {
-        Route::get('/', 'FeatureClassController@index');
-        Route::get('/{featureClass}', 'FeatureClassController@show');
-    });
+Route::group(['prefix' => 'featureClasses'], function () {
+    Route::get('/', 'FeatureClassController@index');
+    Route::get('/{featureClass}', 'FeatureClassController@show');
+});
 
-    Route::group(['prefix' => 'featureCodes'], function () {
-        Route::get('/', 'FeatureCodeController@index');
-        Route::get('/{featureCode}', 'FeatureCodeController@show');
-    });
+Route::group(['prefix' => 'featureCodes'], function () {
+    Route::get('/', 'FeatureCodeController@index');
+    Route::get('/{featureCode}', 'FeatureCodeController@show');
+});
 
-    Route::group(['prefix' => 'timeZones'], function () {
-        Route::get('/', 'TimeZoneController@index');
-        Route::get('/{timeZone}', 'TimeZoneController@show');
-    });
+Route::group(['prefix' => 'timeZones'], function () {
+    Route::get('/', 'TimeZoneController@index');
+    Route::get('/{timeZone}', 'TimeZoneController@show');
+});
 
-    Route::group(['prefix' => 'flags'], function () {
-        Route::get('/', 'FlagController@index');
-        Route::get('/{flag}', 'FlagController@show');
-    });
+Route::group(['prefix' => 'flags'], function () {
+    Route::get('/', 'FlagController@index');
+    Route::get('/{flag}', 'FlagController@show');
+});
+
+Route::group(['prefix' => 'languages'], function () {
+    Route::get('/', 'LanguageController@index');
 });
