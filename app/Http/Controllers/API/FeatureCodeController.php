@@ -16,7 +16,7 @@ class FeatureCodeController extends Controller
      */
     public function index(FeatureCodeFilter $filter)
     {
-        $featureCodes = $filter->getBuilder();
+        $featureCodes = $filter->getPaginator();
 
         return FeatureCodeResource::collection($featureCodes);
     }

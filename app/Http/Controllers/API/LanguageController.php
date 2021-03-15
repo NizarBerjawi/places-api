@@ -15,7 +15,7 @@ class LanguageController extends Controller
      */
     public function index(LanguageFilter $filter)
     {
-        $languages = $filter->getBuilder();
+        $languages = $filter->getPaginator();
 
         return LanguageResource::collection($languages);
     }

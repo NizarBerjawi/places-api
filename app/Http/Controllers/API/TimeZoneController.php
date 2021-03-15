@@ -16,7 +16,7 @@ class TimeZoneController extends Controller
      */
     public function index(TimeZoneFilter $filter)
     {
-        $timeZones = $filter->getBuilder();
+        $timeZones = $filter->getPaginator();
 
         return TimeZoneResource::collection($timeZones);
     }

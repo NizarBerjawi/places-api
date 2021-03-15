@@ -16,7 +16,7 @@ class CurrencyController extends Controller
      */
     public function index(CurrencyFilter $filter)
     {
-        $currencies = $filter->getBuilder();
+        $currencies = $filter->getPaginator();
 
         return CurrencyResource::collection($currencies);
     }
