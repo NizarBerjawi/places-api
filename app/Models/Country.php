@@ -115,6 +115,20 @@ class Country extends Model
     }
 
     /**
+     * Get Countries by continent code
+     *
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $continentCode
+     * @return \Illuminate\Database\Eloquent\Builder  $query
+     */
+    public function scopeByContinent(Builder $query, $continentCode)
+    {
+        return $query->whereHas('continent', function (Builder $query) use ($continentCode) {
+            $query->where('continent_code', $continentCode);
+        });
+    }
+
+    /**
      * Get countries with area greater than a specified
      * value.
      *

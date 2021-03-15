@@ -16,7 +16,7 @@ class CountryController extends Controller
      */
     public function index(CountryFilter $filter)
     {
-        $countries = $filter->getBuilder();
+        $countries = $filter->getPaginator();
 
         return CountryResource::collection($countries);
     }

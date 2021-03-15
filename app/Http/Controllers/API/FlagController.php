@@ -16,7 +16,7 @@ class FlagController extends Controller
     */
     public function index(FlagFilter $filter)
     {
-        $flags= $filter->getBuilder();
+        $flags= $filter->getPaginator();
 
         return FlagResource::collection($flags);
     }
