@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Flag extends Model
@@ -37,5 +38,15 @@ class Flag extends Model
     public function country()
     {
         return $this->belongsTo(Country::class, 'country_code');
+    }
+
+    /**
+     *
+     */
+    public function scopeByCountry(Builder $query, $countryCode)
+    {
+        return $query->whereHas('country', function (Builder $query) use ($countryCode) {
+            return $query->where('country_code', $countryCode);
+        });
     }
 }
