@@ -21,6 +21,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::group(['prefix' => 'countries'], function () {
     Route::get('/', 'CountryController@index');
     Route::get('/{country}', 'CountryController@show');
+
+    Route::get('/{country}/flag', 'CountryFlagController@index');
 });
 
 Route::group(['prefix' => 'continents'], function () {
