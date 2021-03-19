@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Currency extends Model
@@ -30,5 +31,19 @@ class Currency extends Model
             'code',
             'iso3166_alpha2'
         );
+    }
+
+    /**
+     * Get a currency by its parent country
+     *
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $countrytCode
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByCountry(Builder $query, $countryCode)
+    {
+        return $query->whereHas('countries', function (Builder $query) use ($countryCode) {
+            $query->where('iso3166_alpha2', $countryCode);
+        });
     }
 }
