@@ -12,6 +12,7 @@ class CurrencyController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \App\Filters\CurrencyFilter  $filter
      * @return \Illuminate\Http\Response
      */
     public function index(CurrencyFilter $filter)
@@ -24,7 +25,7 @@ class CurrencyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Currency  $currency
      * @return \Illuminate\Http\Response
      */
     public function show(Currency $Currency)

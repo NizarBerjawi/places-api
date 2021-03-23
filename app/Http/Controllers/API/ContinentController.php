@@ -12,6 +12,7 @@ class ContinentController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \App\Filters\ContinentFilter  $filter
      * @return \Illuminate\Http\Response
      */
     public function index(ContinentFilter $filter)
@@ -24,7 +25,7 @@ class ContinentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Continent  $continent
      * @return \Illuminate\Http\Response
      */
     public function show(Continent $continent)

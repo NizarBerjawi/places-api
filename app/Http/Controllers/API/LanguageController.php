@@ -11,6 +11,7 @@ class LanguageController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \App\Filters\LanguageFilter  $filter
      * @return \Illuminate\Http\Response
      */
     public function index(LanguageFilter $filter)

@@ -12,6 +12,7 @@ class TimeZoneController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \App\Filters\TimeZoneFilter  $filter
      * @return \Illuminate\Http\Response
      */
     public function index(TimeZoneFilter $filter)
@@ -24,7 +25,7 @@ class TimeZoneController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\TimeZone  $timeZone
      * @return \Illuminate\Http\Response
      */
     public function show(TimeZone $timeZone)

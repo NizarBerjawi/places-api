@@ -12,6 +12,7 @@ class FeatureCodeController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \App\Filters\FeatureCodeFilter  $filter
      * @return \Illuminate\Http\Response
      */
     public function index(FeatureCodeFilter $filter)
@@ -24,7 +25,7 @@ class FeatureCodeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\FeatureCode $featureCode
      * @return \Illuminate\Http\Response
      */
     public function show(FeatureCode $featureCode)
