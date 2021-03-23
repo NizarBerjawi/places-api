@@ -32,15 +32,15 @@ class Language extends Model
     /**
      * Get languages have belonging to specific countries
      *
-     * @param string $countries
+     * @param string $countryCode
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @return \Illuminate\Database\Eloquent\Builder  $query
      */
-    public function scopeByCountries(Builder $query, string ...$countries)
+    public function scopeByCountry(Builder $query, string $countryCode)
     {
         return $query
-            ->whereHas('countries', function (Builder $query) use ($countries) {
-                $query->whereIn('iso3166_alpha2', $countries);
+            ->whereHas('countries', function (Builder $query) use ($countryCode) {
+                $query->where('iso3166_alpha2', $countryCode);
             });
     }
 }
