@@ -88,7 +88,7 @@ class Country extends Model
     }
 
     /**
-     * Get athe currency used in this Country.
+     * Get the official currency used in this Country.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -119,7 +119,7 @@ class Country extends Model
      *
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param string $continentCode
-     * @return \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByContinent(Builder $query, $continentCode)
     {

@@ -13,6 +13,8 @@ class CountryFlagController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \App\Filters\FlagFilter  $filter
+     * @param  \App\Models\Country      $country
      * @return \Illuminate\Http\Response
      */
     public function index(FlagFilter $filter, Country $country)

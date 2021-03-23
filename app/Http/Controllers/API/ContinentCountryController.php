@@ -13,6 +13,8 @@ class ContinentCountryController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param \App\Filters\CountryFilter  $filter
+     * @param \App\Models\Continent  $continent
      * @return \Illuminate\Http\Response
      */
     public function index(CountryFilter $filter, Continent $continent)

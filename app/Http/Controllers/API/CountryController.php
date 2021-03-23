@@ -12,6 +12,7 @@ class CountryController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \App\Filters\CountryFilter  $filter
      * @return \Illuminate\Http\Response
      */
     public function index(CountryFilter $filter)
@@ -24,7 +25,7 @@ class CountryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Country $country
      * @return \Illuminate\Http\Response
      */
     public function show(Country $country)

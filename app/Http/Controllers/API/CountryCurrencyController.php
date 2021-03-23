@@ -13,6 +13,8 @@ class CountryCurrencyController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param  \App\Filters\CurrencyFilter  $filter
+     * @param  \App\Models\Country          $country
      * @return \Illuminate\Http\Response
      */
     public function index(CurrencyFilter $filter, Country $country)

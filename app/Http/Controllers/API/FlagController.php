@@ -10,10 +10,11 @@ use App\Models\Flag;
 class FlagController extends Controller
 {
     /**
-    * Display a listing of the resource.
-    *
-    * @return \Illuminate\Http\Response
-    */
+     * Display a listing of the resource.
+     *
+     * @param \App\Filters\FlagFilter  $filter
+     * @return \Illuminate\Http\Response
+     */
     public function index(FlagFilter $filter)
     {
         $flags= $filter->getPaginator();
@@ -24,7 +25,7 @@ class FlagController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Flag $flag
      * @return \Illuminate\Http\Response
      */
     public function show(Flag $flag)
