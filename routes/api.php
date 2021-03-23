@@ -23,6 +23,7 @@ Route::group(['prefix' => 'countries'], function () {
     Route::get('/{country}', 'CountryController@show');
 
     Route::get('/{country}/flag', 'CountryFlagController@index');
+    Route::get('/{country}/currency', 'CountryCurrencyController@index');
 });
 
 Route::group(['prefix' => 'continents'], function () {
