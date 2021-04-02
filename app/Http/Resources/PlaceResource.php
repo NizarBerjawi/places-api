@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FlagResource extends JsonResource
+class PlaceResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,8 +15,10 @@ class FlagResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'country_code' => $this->country_code,
-            'path'         => url($this->path),
+            'name'         => $this->name,
+            'population'   => $this->population,
+            'elevation'    => $this->elevation,
+            'feature_code' => FeatureCodeResource::make($this->whenLoaded('featureCode')),
             'country'      => CountryResource::make($this->whenLoaded('country'))
         ];
     }
