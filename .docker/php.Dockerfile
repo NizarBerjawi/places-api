@@ -2,10 +2,6 @@ FROM php:7.3-fpm
 
 LABEL maintainer="Nizar El Berjawi <nizarberjawi12@gmail.com>"
 
-# Set Environment Variables
-ENV DEBIAN_FRONTEND noninteractive
-
-# Replace shell with bash so we can source files
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 # Install dependencies
@@ -13,12 +9,9 @@ RUN apt-get update && \
   apt-get upgrade -y && \
   apt-get install -y --no-install-recommends \
     git \
-    curl \
     zip \
     unzip \
-    openssh-client \
     apt-transport-https \
-    ca-certificates \
     build-essential \
     libz-dev \
     libzip-dev \
@@ -34,13 +27,6 @@ RUN apt-get update && \
     --with-png-dir=/usr/lib \
     --with-freetype-dir=/usr/include/freetype2 && \
   docker-php-ext-install gd pdo_mysql exif json zip
-
-# Install composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-# Install node js
-RUN curl -sL https://deb.nodesource.com/setup_10.x | bash -
-RUN apt-get install -y nodejs
 
 # Add user for laravel application
 RUN groupadd -g 1000 www
