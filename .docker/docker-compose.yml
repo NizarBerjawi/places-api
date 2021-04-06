@@ -1,31 +1,5 @@
 version: '3.3'
 services:
-  # PHP FPM Service
-  php:
-    build:
-      context: ..
-      dockerfile: .docker/Dockerfile
-    volumes:
-      - ../:/var/www
-      - ./php-fpm/php.ini:/etc/php/7.3/fpm/php.ini
-      - ./php-fpm/www.conf:/etc/php/7.3/fpm/pool.d/www.conf
-      - ./php-fpm/php-fpm.conf:/etc/php/7.3/fpm/php-fpm.conf
-    tty: true
-    expose:
-      - "9000"
-    networks:
-      - app-network
-  # PHP Worker
-  php-worker:
-    build:
-      context: ./php-worker
-    environment:
-      PHP_VERSION: 7.3
-    volumes:
-        - ../:/var/www
-        - ./php-worker/supervisord.d:/etc/supervisord.d
-    networks:
-      - app-network
   # Nginx Service
   nginx:
     image: nginx:alpine
@@ -37,12 +11,41 @@ services:
       - ./nginx/conf.d/:/etc/nginx/conf.d
     depends_on:
       - php
-      - db
+      - mariadb
+      - supervisor
     networks:
-      - app-network
+      - laravel
+  # PHP FPM Service
+  php:
+    build:
+      context: ..
+      dockerfile: .docker/php.Dockerfile
+    volumes:
+      - ../:/var/www
+      - ./php-fpm/php.ini:/etc/php/7.3/fpm/php.ini
+      - ./php-fpm/www.conf:/etc/php/7.3/fpm/pool.d/www.conf
+      - ./php-fpm/php-fpm.conf:/etc/php/7.3/fpm/php-fpm.conf
+    tty: true
+    expose:
+      - "9000"
+    networks:
+      - laravel
+  # supervisor
+  supervisor:
+    build:
+      context: ..
+      dockerfile: .docker/supervisor.Dockerfile
+    volumes:
+        - ../:/var/www
+        - ./supervisor/supervisord.d:/etc/supervisord.d
+    networks:
+      - laravel
   # MySQL Service
-  db:
-    image: mariadb:latest
+  mariadb:
+    image: mariadb:10.5.9
+    container_name: mariadb
+    restart: unless-stopped
+    tty: true
     ports:
       - "33061:3306"
     environment:
@@ -51,13 +54,40 @@ services:
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: secret
     volumes:
-      - ./mysql/data:/var/lib/mysql
+      # - ./mysql/data:/var/lib/mysql
       - ./mysql/my.cnf:/etc/mysql/my.cnf
     networks:
-      - app-network
+      - laravel
+  composer:
+    build:
+      context: ..
+      dockerfile: .docker/composer.Dockerfile
+    container_name: composer
+    volumes:
+      - ../:/var/www
+    working_dir: /var/www
+    depends_on:
+      - php
+    user: www
+    entrypoint: ['composer', '--ignore-platform-reqs']
+    networks:
+      - laravel
+  artisan:
+    build:
+      context: ..
+      dockerfile: .docker/php.Dockerfile
+    container_name: artisan
+    volumes:
+      - ../:/var/www
+    depends_on:
+      - mariadb
+    working_dir: /var/www
+    entrypoint: ['php', '/var/www/artisan']
+    networks:
+      - laravel
 # Docker Networks
 networks:
-  app-network:
+  laravel:
     driver: bridge
 # Volumes
 volumes:
