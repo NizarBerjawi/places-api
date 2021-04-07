@@ -19,10 +19,10 @@ class CountryLanguageController extends Controller
     */
     public function index(LanguageFilter $filter, Country $country)
     {
-        $currency = $filter
+        $language = $filter
             ->applyScope('byCountry', Arr::wrap($country->iso3166_alpha2))
             ->getPaginator();
 
-        return LanguageResource::collection($currency);
+        return LanguageResource::collection($language);
     }
 }
