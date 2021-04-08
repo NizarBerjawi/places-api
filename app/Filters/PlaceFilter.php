@@ -45,7 +45,7 @@ class PlaceFilter extends Filter
         return [
             'country',
             'location',
-            'featureCode'
+            'feature_code'
         ];
     }
 }
