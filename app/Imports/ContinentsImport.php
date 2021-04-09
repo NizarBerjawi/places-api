@@ -41,7 +41,7 @@ class ContinentsImport extends GeonamesFileIterator implements GeonamesImportabl
      */
     public function skip(array $row)
     {
-        $codes = $this->continentCodes->map(function ($code) {
+        $codes = $this->continentCodes->map(function (string $code) {
             return Str::finish($code, ' : ');
         });
 
