@@ -21,7 +21,7 @@ class CountryFilter extends Filter
     /**
      * The attributes we can use to filter countries.
      *
-     * @var array
+     * @return array
      */
     public function getAllowedFilters() : array
     {
@@ -49,7 +49,7 @@ class CountryFilter extends Filter
     /**
      * The relations that we can include.
      *
-     * @var array
+     * @return array
      */
     public function getAllowedIncludes() : array
     {

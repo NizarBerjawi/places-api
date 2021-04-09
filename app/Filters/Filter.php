@@ -42,14 +42,14 @@ abstract class Filter
     /**
      * The attributes we can use to filter.
      *
-     * @var array
+     * @return array
      */
     abstract public function getAllowedFilters(): array;
 
     /**
      * The relations that we can include.
      *
-     * @var array
+     * @return array
      */
     abstract public function getAllowedIncludes(): array;
 
