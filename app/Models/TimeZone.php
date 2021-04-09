@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class TimeZone extends Model
@@ -39,5 +40,19 @@ class TimeZone extends Model
     public function country()
     {
         return $this->belongsTo(Country::class, 'country_code', 'iso3166_alpha2');
+    }
+
+
+    
+    /**
+     * Get a time zones by its parent country code
+     *
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $countryCode
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByCountry(Builder $query, $countryCode)
+    {
+        return $query->where('country_code', $countryCode);
     }
 }
