@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Filters\CurrencyFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CurrencyResource;
-use App\Models\Currency;
 
 class CurrencyController extends Controller
 {
@@ -25,11 +24,17 @@ class CurrencyController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Currency  $currency
+     * @param  \App\Filters\CurrencyFilter  $filter
+     * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function show(Currency $Currency)
+    public function show(CurrencyFilter $filter, string $code)
     {
-        return new CurrencyResource($Currency);
+        $currency = $filter
+            ->getBuilder()
+            ->where('code', $code)
+            ->first();
+
+        return new CurrencyResource($currency);
     }
 }

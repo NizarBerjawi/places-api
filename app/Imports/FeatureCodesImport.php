@@ -4,9 +4,9 @@ namespace App\Imports;
 
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\GeonamesFileIterator;
-use App\Models\FeatureClass;
 use App\Models\FeatureCode;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class FeatureCodesImport extends GeonamesFileIterator implements GeonamesImportable
@@ -29,8 +29,7 @@ class FeatureCodesImport extends GeonamesFileIterator implements GeonamesImporta
      */
     public function import()
     {
-        $featureCodes = collect();
-        $featureClasses = FeatureClass::get();
+        $featureCodes = Collection::make();
 
         foreach ($this->iterable() as $item) {
             if ($this->skip($item)) {

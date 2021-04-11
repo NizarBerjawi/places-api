@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Filters\FlagFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FlagResource;
-use App\Models\Flag;
 
 class FlagController extends Controller
 {
@@ -25,11 +24,17 @@ class FlagController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Flag $flag
+     * @param \App\Filters\FlagFilter  $filter
+     * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function show(Flag $flag)
+    public function show(FlagFilter $filter, string $code)
     {
+        $flag = $filter
+            ->getBuilder()
+            ->where('country_code', $code)
+            ->first();
+
         return new FlagResource($flag);
     }
 }

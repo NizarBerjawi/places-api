@@ -20,45 +20,45 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['prefix' => 'countries'], function () {
     Route::get('/', 'CountryController@index');
-    Route::get('/{country}', 'CountryController@show');
+    Route::get('/{code}', 'CountryController@show');
 
-    Route::get('/{country}/flag', 'CountryFlagController@index');
-    Route::get('/{country}/currency', 'CountryCurrencyController@index');
-    Route::get('/{country}/languages', 'CountryLanguageController@index');
-    Route::get('/{country}/places', 'CountryPlacesController@index');
-    Route::get('/{country}/timeZones', 'CountryTimeZoneController@index');
+    Route::get('/{code}/flag', 'CountryFlagController@index');
+    Route::get('/{code}/currency', 'CountryCurrencyController@index');
+    Route::get('/{code}/languages', 'CountryLanguageController@index');
+    Route::get('/{code}/places', 'CountryPlacesController@index');
+    Route::get('/{code}/timeZones', 'CountryTimeZoneController@index');
 });
 
 Route::group(['prefix' => 'continents'], function () {
     Route::get('/', 'ContinentController@index');
-    Route::get('/{continent}', 'ContinentController@show');
+    Route::get('/{code}', 'ContinentController@show');
 
-    Route::get('/{continent}/countries', 'ContinentCountryController@index');
+    Route::get('/{code}/countries', 'ContinentCountryController@index');
 });
 
 Route::group(['prefix' => 'currencies'], function () {
     Route::get('/', 'CurrencyController@index');
-    Route::get('/{currency}', 'CurrenciesController@show');
+    Route::get('/{code}', 'CurrencyController@show');
 });
 
 Route::group(['prefix' => 'featureClasses'], function () {
     Route::get('/', 'FeatureClassController@index');
-    Route::get('/{featureClass}', 'FeatureClassController@show');
+    Route::get('/{code}', 'FeatureClassController@show');
 });
 
 Route::group(['prefix' => 'featureCodes'], function () {
     Route::get('/', 'FeatureCodeController@index');
-    Route::get('/{featureCode}', 'FeatureCodeController@show');
+    Route::get('/{code}', 'FeatureCodeController@show');
 });
 
 Route::group(['prefix' => 'timeZones'], function () {
     Route::get('/', 'TimeZoneController@index');
-    Route::get('/{timeZone}', 'TimeZoneController@show');
+    Route::get('/{code}', 'TimeZoneController@show');
 });
 
 Route::group(['prefix' => 'flags'], function () {
     Route::get('/', 'FlagController@index');
-    Route::get('/{flag}', 'FlagController@show');
+    Route::get('/{code}', 'FlagController@show');
 });
 
 Route::group(['prefix' => 'languages'], function () {

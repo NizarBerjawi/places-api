@@ -7,6 +7,7 @@ use App\Imports\Iterators\GeonamesFileIterator;
 use App\Models\Country;
 use App\Models\TimeZone;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class CountryTimeZoneImport extends GeonamesFileIterator implements GeonamesImportable
@@ -18,17 +19,21 @@ class CountryTimeZoneImport extends GeonamesFileIterator implements GeonamesImpo
      */
     public function import()
     {
-        $countryTimeZones = collect();
+        $countryTimeZones = Collection::make();
 
         $country = new Country();
         foreach ($this->iterable()->skip(1) as $item) {
             $timestamp = Carbon::now()->toDateTimeString();
 
             if ($country && $country->iso3166_alpha2 !== $item[0]) {
-                $country = $country->where('iso3166_alpha2', $item[0])->first();
+                $country = $country
+                    ->where('iso3166_alpha2', $item[0])
+                    ->first();
             }
 
-            $timeZone = TimeZone::where('code', $item[1])->first();
+            $timeZone = TimeZone::query()
+                ->where('code', $item[1])
+                ->first();
 
             $countryTimeZones->push([
                 'country_code'   => $country->iso3166_alpha2,

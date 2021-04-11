@@ -7,6 +7,7 @@ use App\Imports\Iterators\GeonamesFileIterator;
 use App\Models\FeatureClass;
 use Carbon\Carbon;
 use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImportable
@@ -54,7 +55,7 @@ class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImpor
      */
     public function import()
     {
-        $featureClasses = collect();
+        $featureClasses = Collection::make();
         foreach ($this->iterable() as $item) {
             if ($this->skip($item)) {
                 continue;
@@ -90,7 +91,7 @@ class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImpor
 
         $iterable = (new GeonamesFileIterator($path))->iterable();
 
-        $featureClasses = collect();
+        $featureClasses = Collection::make();
 
         foreach ($iterable as $item) {
             $featureClassString = Str::of($item[0]);
