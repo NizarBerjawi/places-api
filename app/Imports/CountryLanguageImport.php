@@ -6,6 +6,7 @@ use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
 use App\Models\Language;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
@@ -19,7 +20,7 @@ class CountryLanguageImport extends CountriesFileIterator implements GeonamesImp
      */
     public function import()
     {
-        $countryLanguages = collect();
+        $countryLanguages = Collection::make();
 
         foreach ($this->iterable() as $item) {
             $languagesString = Str::of($item[15])->trim();

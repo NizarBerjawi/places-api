@@ -6,6 +6,7 @@ use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
 use App\Models\Currency;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class CurrenciesImport extends CountriesFileIterator implements GeonamesImportable
 {
@@ -16,7 +17,7 @@ class CurrenciesImport extends CountriesFileIterator implements GeonamesImportab
      */
     public function import()
     {
-        $currencies = collect();
+        $currencies = Collection::make();
 
         foreach ($this->iterable() as $item) {
             [$code, $name] = [$item[10], $item[11]];

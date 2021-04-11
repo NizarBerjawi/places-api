@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\GeonamesFileIterator;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\LazyCollection;
 
@@ -20,8 +21,8 @@ class PlacesImport extends GeonamesFileIterator implements GeonamesImportable
         $this->iterable()
             ->chunk(500)
             ->each(function (LazyCollection $chunk) {
-                $places = collect();
-                $locations = collect();
+                $places = Collection::make();
+                $locations = Collection::make();
 
                 foreach ($chunk as $item) {
                     $timestamp = Carbon::now()->toDateTimeString();

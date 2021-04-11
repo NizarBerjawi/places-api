@@ -7,6 +7,7 @@ use App\Imports\Iterators\CountriesFileIterator;
 use App\Models\Continent;
 use App\Models\Country;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class CountriesImport extends CountriesFileIterator implements GeonamesImportable
 {
@@ -17,7 +18,7 @@ class CountriesImport extends CountriesFileIterator implements GeonamesImportabl
      */
     public function import()
     {
-        $countries = collect();
+        $countries = Collection::make();
         $continents = Continent::query()
             ->select(['code'])
             ->get();

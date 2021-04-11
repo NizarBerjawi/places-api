@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Filters\PlaceFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PlaceResource;
-use App\Models\Country;
 use Illuminate\Support\Arr;
 
 class CountryPlacesController extends Controller
@@ -14,13 +13,13 @@ class CountryPlacesController extends Controller
      * Display a listing of the resource.
      *
      * @param  \App\Filters\FlagFilter  $filter
-     * @param  \App\Models\Country      $country
+     * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function index(PlaceFilter $filter, Country $country)
+    public function index(PlaceFilter $filter, string $code)
     {
         $places = $filter
-            ->applyScope('byCountry', Arr::wrap($country->iso3166_alpha2))
+            ->applyScope('byCountry', Arr::wrap($code))
             ->getPaginator();
         
         return PlaceResource::collection($places);

@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Filters\ContinentFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ContinentResource;
-use App\Models\Continent;
 
 class ContinentController extends Controller
 {
@@ -25,11 +24,17 @@ class ContinentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Continent  $continent
+     * @param \App\Filters\ContinentFilter  $filter
+     * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function show(Continent $continent)
+    public function show(ContinentFilter $filter, string $code)
     {
+        $continent = $filter
+            ->getBuilder()
+            ->where('code', $code)
+            ->first();
+
         return new ContinentResource($continent);
     }
 }

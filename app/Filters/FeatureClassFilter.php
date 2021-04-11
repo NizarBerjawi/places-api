@@ -36,6 +36,8 @@ class FeatureClassFilter extends Filter
      */
     public function getAllowedIncludes() : array
     {
-        return [];
+        return [
+            'featureCodes'
+        ];
     }
 }

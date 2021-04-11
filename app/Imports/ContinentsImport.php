@@ -8,6 +8,7 @@ use App\Imports\Iterators\GeonamesFileIterator;
 use App\Models\Continent;
 use Carbon\Carbon;
 use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class ContinentsImport extends GeonamesFileIterator implements GeonamesImportable
@@ -41,9 +42,11 @@ class ContinentsImport extends GeonamesFileIterator implements GeonamesImportabl
      */
     public function skip(array $row)
     {
-        $codes = $this->continentCodes->map(function (string $code) {
-            return Str::finish($code, ' : ');
-        });
+        $codes = $this
+            ->continentCodes
+            ->map(function (string $code) {
+                return Str::finish($code, ' : ');
+            });
 
         return ! Str::startsWith($row[0], $codes->all());
     }
@@ -55,7 +58,7 @@ class ContinentsImport extends GeonamesFileIterator implements GeonamesImportabl
      */
     public function import()
     {
-        $continents = collect();
+        $continents = Collection::make();
 
         foreach ($this->iterable() as $item) {
             if ($this->skip($item)) {

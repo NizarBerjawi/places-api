@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Filters\FeatureClassFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\FeatureClassResource;
-use App\Models\FeatureClass;
 
 class FeatureClassController extends Controller
 {
@@ -25,11 +24,17 @@ class FeatureClassController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\FeatureClass  $featureClass
+     * @param  \App\Filters\FeatureClassFilter  $filter
+     * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function show(FeatureClass $featureClass)
+    public function show(FeatureClassFilter $filter, string $code)
     {
+        $featureClass = $filter
+            ->getBuilder()
+            ->where('code', $code)
+            ->first();
+
         return new FeatureClassResource($featureClass);
     }
 }

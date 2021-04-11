@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Filters\TimeZoneFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TimeZoneResource;
-use App\Models\TimeZone;
 
 class TimeZoneController extends Controller
 {
@@ -25,11 +24,17 @@ class TimeZoneController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\TimeZone  $timeZone
+     * @param \App\Filters\TimeZoneFilter  $filter
+     * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function show(TimeZone $timeZone)
+    public function show(TimeZoneFilter $filter, string $code)
     {
+        $timeZone = $filter
+            ->getBuilder()
+            ->where('code', $code)
+            ->first();
+            
         return new TimeZoneResource($timeZone);
     }
 }
