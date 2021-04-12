@@ -30,10 +30,10 @@ class Language extends Model
     }
 
     /**
-     * Get languages have belonging to specific countries
+     * Get languages by countrys
      *
-     * @param string $countryCode
      * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $countryCode
      * @return \Illuminate\Database\Eloquent\Builder  $query
      */
     public function scopeByCountry(Builder $query, string $countryCode)

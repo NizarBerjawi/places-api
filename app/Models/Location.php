@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 class Location extends Model
@@ -23,5 +24,19 @@ class Location extends Model
     public function locationable()
     {
         return $this->morphTo();
+    }
+
+    /**
+     * Get locations by place
+     *
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $uuid
+     * @return \Illuminate\Database\Eloquent\Builder  $query
+     */
+    public function scopeByPlace(Builder $query, string $uuid)
+    {
+        return $query
+            ->where('locationable_id', $uuid)
+            ->where('locationable_type', Place::class);
     }
 }
