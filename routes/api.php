@@ -64,3 +64,10 @@ Route::group(['prefix' => 'flags'], function () {
 Route::group(['prefix' => 'languages'], function () {
     Route::get('/', 'LanguageController@index');
 });
+
+Route::group(['prefix' => 'places'], function () {
+    Route::get('/', 'PlaceController@index');
+    Route::get('/{uuid}', 'PlaceController@show');
+
+    Route::get('/{uuid}/location', 'PlaceLocationController@index');
+});

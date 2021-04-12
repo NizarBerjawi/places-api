@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\LazyCollection;
+use Str;
 
 class PlacesImport extends GeonamesFileIterator implements GeonamesImportable
 {
@@ -27,8 +28,9 @@ class PlacesImport extends GeonamesFileIterator implements GeonamesImportable
                 foreach ($chunk as $item) {
                     $timestamp = Carbon::now()->toDateTimeString();
 
+                    $uuid = Str::uuid();
                     $places->push([
-                        'geoname_id'   => $item[0],
+                        'uuid'         => $uuid,
                         'name'         => $item[1],
                         'population'   => max((int) $item[14], 0),
                         'elevation'    => (int) $item[15],
@@ -42,7 +44,7 @@ class PlacesImport extends GeonamesFileIterator implements GeonamesImportable
                         'latitude'          => $item[4],
                         'longitude'         => $item[5],
                         'locationable_type' => \App\Models\Place::class,
-                        'locationable_id'   => $item[0],
+                        'locationable_id'   => $uuid,
                         'created_at'        => $timestamp,
                         'updated_at'        => $timestamp,
                     ]);

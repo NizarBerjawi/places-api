@@ -12,7 +12,14 @@ class Place extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'geoname_id';
+    protected $primaryKey = 'uuid';
+
+    /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
 
     /**
      * The attributes that are mass assignable.
