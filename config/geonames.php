@@ -64,6 +64,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Time Zones file
+    |--------------------------------------------------------------------------
+    |
+    | The name of the Time Zones file
+    |
+    */
+    'time_zones_file' => env('GEONAMES_TIME_ZONES_FILE', 'timeZones.txt'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Countries information file url
     |--------------------------------------------------------------------------
     |
@@ -102,5 +112,13 @@ return [
     */
     'feature_codes_url' => env('GEONAMES_FEATURE_CODES_URL', 'https://download.geonames.org/export/dump/featureCodes_en.txt'),
 
-
+    /*
+    |--------------------------------------------------------------------------
+    | Time Zones file base url
+    |--------------------------------------------------------------------------
+    |
+    | The URL of Time Zones file
+    |
+    */
+    'time_zones_url' => env('GEONAMES_TIME_ZONES_URL', 'http://download.geonames.org/export/dump/timeZones.txt'),
 ];

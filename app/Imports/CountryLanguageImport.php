@@ -2,11 +2,11 @@
 
 namespace App\Imports;
 
-use App\Country;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
-use App\Language;
+use App\Models\Language;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Stringable;
@@ -14,20 +14,20 @@ use Illuminate\Support\Stringable;
 class CountryLanguageImport extends CountriesFileIterator implements GeonamesImportable
 {
     /**
-     * Import the required data into the database
+     * Import the required data into the database.
      *
      * @return void
      */
     public function import()
     {
-        $countryLanguages = collect();
+        $countryLanguages = Collection::make();
 
         foreach ($this->iterable() as $item) {
             $languagesString = Str::of($item[15])->trim();
 
             if ($languagesString->isEmpty()) {
                 continue;
-            };
+            }
 
             $languageCodes = $this->parseLanguageString($languagesString);
             $languages = Language::query()
@@ -37,18 +37,14 @@ class CountryLanguageImport extends CountriesFileIterator implements GeonamesImp
                 ->distinct()
                 ->get('id');
 
-            $country = Country::query()
-                ->where('iso3166_alpha2', $item[0])
-                ->first();
-
             foreach ($languages as $language) {
                 $timestamp = Carbon::now()->toDateTimeString();
 
                 $countryLanguages->push([
-                    'country_id' => $country->id,
-                    'language_id' => $language->id,
-                    'created_at' => $timestamp,
-                    'updated_at' => $timestamp
+                    'country_code' => $item[0],
+                    'language_id'  => $language->id,
+                    'created_at'   => $timestamp,
+                    'updated_at'   => $timestamp,
                 ]);
             }
         }

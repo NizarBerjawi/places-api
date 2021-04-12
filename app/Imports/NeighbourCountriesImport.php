@@ -11,10 +11,10 @@ use Illuminate\Support\Str;
 class NeighbourCountriesImport extends CountriesFileIterator implements GeonamesImportable
 {
     /**
-     * Decides whether to skip a row or not
+     * Decides whether to skip a row or not.
      *
      * @param array  $row
-     * @param boolean
+     * @param bool
      */
     public function skip(array $row)
     {
@@ -22,7 +22,7 @@ class NeighbourCountriesImport extends CountriesFileIterator implements Geonames
     }
 
     /**
-     * Import the required data into the database
+     * Import the required data into the database.
      *
      * @return void
      */
@@ -39,13 +39,13 @@ class NeighbourCountriesImport extends CountriesFileIterator implements Geonames
 
                     return [
                         'neighbour_code' => $code,
-                        'country_code' => $data[0],
-                        'created_at' => $timestamp,
-                        'updated_at' => $timestamp
+                        'country_code'   => $data[0],
+                        'created_at'     => $timestamp,
+                        'updated_at'     => $timestamp,
                     ];
                 });
             });
-            
+
         DB::table('country_neighbour')->insert($data->all());
     }
 }

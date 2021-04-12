@@ -14,14 +14,13 @@ class CreateFlagsTable extends Migration
     public function up()
     {
         Schema::create('flags', function (Blueprint $table) {
-            $table->id();
             $table->string('path');
-            $table->unsignedBigInteger('country_id');
+            $table->string('country_code')->primary();
             $table->timestamps();
         });
 
         Schema::table('flags', function (Blueprint $table) {
-            $table->foreign('country_id')->references('id')->on('countries')->onCascade('delete');
+            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->onCascade('delete');
         });
     }
 
@@ -33,7 +32,7 @@ class CreateFlagsTable extends Migration
     public function down()
     {
         Schema::table('flags', function (Blueprint $table) {
-            $table->dropForeign(['country_id']);
+            $table->dropForeign(['country_code']);
         });
 
         Schema::dropIfExists('flags');

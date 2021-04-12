@@ -1,0 +1,121 @@
+<?php
+
+namespace App\Filters;
+
+use Illuminate\Pagination\Paginator;
+use Spatie\QueryBuilder\QueryBuilder;
+
+abstract class Filter
+{
+    /**
+     * An instance of the query builder
+     *
+     * @var \Spatie\QueryBuilder\QueryBuilder
+     */
+    protected $builder;
+
+    /**
+     * A flag to determine if the query builder has been
+     * initialized
+     *
+     * @var boolean
+     */
+    protected $isInitialized;
+
+    /**
+     * Instantiate the Filter
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->initializeBuilder();
+    }
+
+    /**
+     * Return the model classname to be filtered.
+     *
+     * @return string
+     */
+    abstract public function modelClass(): string;
+
+    /**
+     * The attributes we can use to filter.
+     *
+     * @return array
+     */
+    abstract public function getAllowedFilters(): array;
+
+    /**
+     * The relations that we can include.
+     *
+     * @return array
+     */
+    abstract public function getAllowedIncludes(): array;
+
+    /**
+     * Apply a scope to the builder
+     *
+     * @param string $scope
+     * @param array $parameters
+     * @return static
+     */
+    public function applyScope(string $scope, array $parameters = [])
+    {
+        $this->builder->scopes([$scope => $parameters]);
+
+        return $this;
+    }
+
+    /**
+     * The query builder used to apply the filters.
+     *
+     * @return \Spatie\QueryBuilder\QueryBuilder
+     */
+    public function getBuilder(): QueryBuilder
+    {
+        $this->checkBuilder();
+
+        return $this->builder
+            ->allowedFilters($this->getAllowedFilters())
+            ->allowedIncludes($this->getAllowedIncludes());
+    }
+
+    /**
+     * The paginator used to paginate the result.
+     *
+     * @return \Illuminate\Pagination\Paginator
+     */
+    public function getPaginator(): Paginator
+    {
+        $this->checkBuilder();
+
+        return $this->getBuilder()
+            ->simplePaginate(10)
+            ->appends(request()->query());
+    }
+
+    /**
+     * Initialize the query builder
+     *
+     * @return void
+     */
+    protected function initializeBuilder()
+    {
+        $this->builder = QueryBuilder::for($this->modelClass());
+
+        $this->isInitialized = $this->builder instanceof QueryBuilder;
+    }
+
+    /**
+     * Check if the builder has been initialized
+     *
+     * @return void
+     */
+    protected function checkBuilder()
+    {
+        if (! $this->isInitialized) {
+            throw new \Exception('Filter not initialized');
+        }
+    }
+}

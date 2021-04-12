@@ -2,24 +2,25 @@
 
 namespace App\Imports;
 
-use App\FeatureClass;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\GeonamesFileIterator;
+use App\Models\FeatureClass;
 use Carbon\Carbon;
 use Illuminate\Filesystem\FilesystemAdapter;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
 class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImportable
 {
     /**
-     * Feature Classes
+     * Feature Classes.
      *
      * @var \Illuminate\Support\Collection
      */
     public $featureClasses;
 
     /**
-     * Initialize an instance
+     * Initialize an instance.
      *
      * @param string $filepath
      * @param string $delimiter
@@ -33,10 +34,10 @@ class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImpor
     }
 
     /**
-     * Decides whether to skip a row or not
+     * Decides whether to skip a row or not.
      *
      * @param array  $row
-     * @param boolean
+     * @param bool
      */
     public function skip(array $row)
     {
@@ -44,22 +45,22 @@ class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImpor
             return Str::finish($code, ': ');
         });
 
-        return !Str::startsWith($row[0], $codes->all());
+        return ! Str::startsWith($row[0], $codes->all());
     }
 
     /**
-     * Import the required data into the database
+     * Import the required data into the database.
      *
      * @return void
      */
     public function import()
     {
-        $featureClasses = collect();
+        $featureClasses = Collection::make();
         foreach ($this->iterable() as $item) {
             if ($this->skip($item)) {
                 continue;
             }
-            
+
             [$code, $description] = Str::of($item[0])->explode(': ');
 
             if (! isset($code, $description)) {
@@ -68,10 +69,10 @@ class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImpor
 
             $timestamp = Carbon::now()->toDateTimeString();
             $featureClasses->push([
-                'code'  => $code,
+                'code'        => $code,
                 'description' => ucfirst($description),
-                'created_at' => $timestamp,
-                'updated_at' => $timestamp
+                'created_at'  => $timestamp,
+                'updated_at'  => $timestamp,
             ]);
         }
 
@@ -79,7 +80,7 @@ class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImpor
     }
 
     /**
-     * Collect all continent codes from the countryInfo.txt file
+     * Collect all continent codes from the countryInfo.txt file.
      *
      * @return \Illuminate\Support\Collection
      */
@@ -89,8 +90,8 @@ class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImpor
             ->path(config('geonames.feature_codes_file'));
 
         $iterable = (new GeonamesFileIterator($path))->iterable();
- 
-        $featureClasses = collect();
+
+        $featureClasses = Collection::make();
 
         foreach ($iterable as $item) {
             $featureClassString = Str::of($item[0]);
@@ -101,7 +102,7 @@ class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImpor
 
             $featureClass = $featureClassString->explode('.')->first();
 
-            if (!$featureClass || $featureClasses->contains($featureClass)) {
+            if (! $featureClass || $featureClasses->contains($featureClass)) {
                 continue;
             }
 

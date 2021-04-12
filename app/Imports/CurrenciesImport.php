@@ -2,21 +2,22 @@
 
 namespace App\Imports;
 
-use App\Currency;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
+use App\Models\Currency;
 use Carbon\Carbon;
+use Illuminate\Support\Collection;
 
 class CurrenciesImport extends CountriesFileIterator implements GeonamesImportable
 {
     /**
-     * Import the required data into the database
+     * Import the required data into the database.
      *
      * @return void
      */
     public function import()
     {
-        $currencies = collect();
+        $currencies = Collection::make();
 
         foreach ($this->iterable() as $item) {
             [$code, $name] = [$item[10], $item[11]];
@@ -34,14 +35,14 @@ class CurrenciesImport extends CountriesFileIterator implements GeonamesImportab
             if ($reject) {
                 continue;
             }
-            
+
             $timestamp = Carbon::now()->toDateTimeString();
 
             $currencies->push([
-                'code' => $code,
-                'name' => $name,
+                'code'       => $code,
+                'name'       => $name,
                 'created_at' => $timestamp,
-                'updated_at' => $timestamp
+                'updated_at' => $timestamp,
             ]);
         }
 

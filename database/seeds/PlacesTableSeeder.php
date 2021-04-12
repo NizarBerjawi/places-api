@@ -1,22 +1,21 @@
 <?php
 
-use App\Country;
 use App\Imports\PlacesImport;
-use App\Imports\TimezonesImport;
+use App\Models\Country;
 use Illuminate\Database\Seeder;
 use Illuminate\Filesystem\FilesystemAdapter;
 
 class PlacesTableSeeder extends Seeder
 {
     /**
-     * The Storage disk
+     * The Storage disk.
      *
      * @var \Illuminate\Filesystem\FilesystemAdapter
      */
     public $storage;
 
     /**
-     * Initialize an instance of the seeder
+     * Initialize an instance of the seeder.
      *
      * @param \Illuminate\Filesystem\FilesystemAdapter  $storage
      * @return void
@@ -38,10 +37,9 @@ class PlacesTableSeeder extends Seeder
                 $code = $country->iso3166_alpha2;
 
                 $filepath = $this->storage->path(
-                    $code . '/' . $code . '.txt'
+                    $code.'/'.$code.'.txt'
                 );
 
-                (new TimezonesImport($filepath))->import();
                 (new PlacesImport($filepath))->import();
             });
     }

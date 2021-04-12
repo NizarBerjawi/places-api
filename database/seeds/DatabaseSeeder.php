@@ -7,6 +7,7 @@ use App\Jobs\DownloadFeatureCodesFile;
 use App\Jobs\DownloadGeonamesFile;
 use App\Jobs\DownloadInfoFile;
 use App\Jobs\DownloadLanguages;
+use App\Jobs\DownloadTimezonesFile;
 use App\Jobs\UnzipGeonamesFile;
 use Illuminate\Database\Seeder;
 use Illuminate\Filesystem\FilesystemAdapter;
@@ -38,13 +39,15 @@ class DatabaseSeeder extends Seeder
         // DownloadLanguages::dispatch();
         // // 5- Download the featureCodes_en.txt file
         // DownloadFeatureCodesFile::dispatch();
-
+        // DownloadTimezonesFile::dispatch();
         // 6- Seed the continents table
         $this->call(ContinentsTableSeeder::class);
         // 13- Create all Currencies
         $this->call(CurrenciesTableSeeder::class);
         // 7- Parse and import the countryInfo.txt file
         $this->call(CountriesTableSeeder::class);
+        //
+        $this->call(TimeZonesTableSeeder::class);
         // 8- Import the iso-languagecodes.txt file
         $this->call(LanguagesTableSeeder::class);
         // 9- Load all neighbouring countries

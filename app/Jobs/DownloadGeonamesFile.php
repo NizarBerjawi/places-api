@@ -17,7 +17,7 @@ class DownloadGeonamesFile implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * A countrycode to download geonames for
+     * A countrycode to download geonames for.
      *
      * @var string
      */
@@ -41,17 +41,17 @@ class DownloadGeonamesFile implements ShouldQueue
     public function handle(FilesystemAdapter $disk)
     {
         try {
-            $response =  Http::withOptions([
-                'stream' => true
+            $response = Http::withOptions([
+                'stream' => true,
             ])->get($this->url());
-    
+
             if ($response->failed()) {
                 throw new FileNotDownloadedException($this->url());
             }
-    
+
             $saved = $disk->put($this->filepath(), $response->getBody());
-    
-            if (!$saved) {
+
+            if (! $saved) {
                 throw new FileNotSavedException($this->filepath());
             }
         } catch (\Exception $e) {
@@ -60,32 +60,32 @@ class DownloadGeonamesFile implements ShouldQueue
     }
 
     /**
-     * The path where the downloaded file should be stored
+     * The path where the downloaded file should be stored.
      *
      * @return string
      */
     private function filepath()
     {
-        return $this->code . '/' . $this->fileName();
+        return $this->code.'/'.$this->fileName();
     }
 
     /**
-     * The location of the file
+     * The location of the file.
      *
      * @return string
      */
     private function url()
     {
-        return config('geonames.files_url') . '/' . $this->filename();
+        return config('geonames.files_url').'/'.$this->filename();
     }
 
     /**
-     * The name of the file
+     * The name of the file.
      *
      * @return string
      */
     private function filename()
     {
-        return $this->code . '.zip';
+        return $this->code.'.zip';
     }
 }
