@@ -19,14 +19,14 @@ class TimeZoneFilter extends Filter
     }
 
     /**
-     * The attributes we can use to filter countries.
+     * The attributes we can use to filter.
      *
      * @return array
      */
     public function getAllowedFilters() : array
     {
         return [
-            AllowedFilter::exact('code')
+            AllowedFilter::exact('code'),
         ];
     }
 
@@ -38,7 +38,7 @@ class TimeZoneFilter extends Filter
     public function getAllowedIncludes() : array
     {
         return [
-            AllowedInclude::relationship('country')
+            AllowedInclude::relationship('country'),
         ];
     }
 }

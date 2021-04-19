@@ -4,20 +4,12 @@ namespace App\Jobs;
 
 use App\Exceptions\FileNotDownloadedException;
 use App\Exceptions\FileNotSavedException;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Filesystem\FilesystemAdapter;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 
-class DownloadGeonamesFile implements ShouldQueue
+class DownloadGeonamesFile extends GeonamesJob
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
     /**
-     * A countrycode to download geonames for.
+     * A country code to download geonames for.
      *
      * @var string
      */
@@ -30,6 +22,7 @@ class DownloadGeonamesFile implements ShouldQueue
      */
     public function __construct(string $code)
     {
+        parent::__construct();
         $this->code = $code;
     }
 
@@ -38,7 +31,7 @@ class DownloadGeonamesFile implements ShouldQueue
      *
      * @return void
      */
-    public function handle(FilesystemAdapter $disk)
+    public function handle()
     {
         try {
             $response = Http::withOptions([
@@ -49,24 +42,22 @@ class DownloadGeonamesFile implements ShouldQueue
                 throw new FileNotDownloadedException($this->url());
             }
 
-            $saved = $disk->put($this->filepath(), $response->getBody());
+            $this
+                ->filesystem
+                ->ensureDirectoryExists($this->folderPath());
+
+            $saved = $this
+                ->filesystem
+                ->put($this->filepath(), $response->getBody());
 
             if (! $saved) {
                 throw new FileNotSavedException($this->filepath());
             }
-        } catch (\Exception $e) {
-            logger($e->getMessage());
-        }
-    }
 
-    /**
-     * The path where the downloaded file should be stored.
-     *
-     * @return string
-     */
-    private function filepath()
-    {
-        return $this->code.'/'.$this->fileName();
+            $this->unzip();
+        } catch (\Exception $e) {
+            $this->log($e->getMessage(), 'warning');
+        }
     }
 
     /**
@@ -74,7 +65,7 @@ class DownloadGeonamesFile implements ShouldQueue
      *
      * @return string
      */
-    private function url()
+    public function url()
     {
         return config('geonames.files_url').'/'.$this->filename();
     }
@@ -84,8 +75,47 @@ class DownloadGeonamesFile implements ShouldQueue
      *
      * @return string
      */
-    private function filename()
+    public function filename()
     {
         return $this->code.'.zip';
+    }
+
+    /**
+     * The location where the file should be stored.
+     *
+     * @return string
+     */
+    public function filepath()
+    {
+        return $this->folderPath().'/'.$this->fileName();
+    }
+
+    /**
+     * The folder path where the downloaded file should be saved.
+     *
+     * @return string
+     */
+    private function folderPath()
+    {
+        return storage_path('app/data/'.$this->code);
+    }
+
+    /**
+     * Unzip all downloaded Geoname files.
+     *
+     * @return void
+     */
+    private function unzip()
+    {
+        $zip = new \ZipArchive();
+
+        $res = $zip->open($this->filepath());
+
+        if (! $res) {
+            throw new \Exception('Could not unzip file: '.$this->fileName());
+        }
+
+        $zip->extractTo($this->folderPath());
+        $zip->close();
     }
 }

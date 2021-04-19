@@ -4,24 +4,16 @@ namespace App\Jobs;
 
 use App\Exceptions\FileNotDownloadedException;
 use App\Exceptions\FileNotSavedException;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Filesystem\FilesystemAdapter;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 
-class DownloadLanguages implements ShouldQueue
+class DownloadLanguages extends GeonamesJob
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
     /**
      * Execute the job.
      *
      * @return void
      */
-    public function handle(FilesystemAdapter $disk)
+    public function handle()
     {
         try {
             $response = Http::withOptions([
@@ -32,13 +24,15 @@ class DownloadLanguages implements ShouldQueue
                 throw new FileNotDownloadedException($this->url());
             }
 
-            $saved = $disk->put($this->filename(), $response->getBody());
+            $saved = $this
+                ->filesystem
+                ->put($this->filepath(), $response->getBody());
 
             if (! $saved) {
-                throw new FileNotSavedException($disk->path($this->filename()));
+                throw new FileNotSavedException($this->filepath());
             }
         } catch (\Exception $e) {
-            logger($e->getMessage());
+            $this->log($e->getMessage(), 'warning');
         }
     }
 
@@ -47,7 +41,7 @@ class DownloadLanguages implements ShouldQueue
      *
      * @return string
      */
-    private function url()
+    public function url()
     {
         return config('geonames.language_codes_url');
     }
@@ -57,8 +51,18 @@ class DownloadLanguages implements ShouldQueue
      *
      * @return string
      */
-    private function filename()
+    public function filename()
     {
         return config('geonames.language_codes_file');
+    }
+
+    /**
+     * The location where the file should be stored.
+     *
+     * @return string
+     */
+    public function filepath()
+    {
+        return storage_path('app/'.$this->filename());
     }
 }

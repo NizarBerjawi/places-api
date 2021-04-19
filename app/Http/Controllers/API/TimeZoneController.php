@@ -34,7 +34,7 @@ class TimeZoneController extends Controller
             ->getBuilder()
             ->where('code', $code)
             ->first();
-            
+
         return new TimeZoneResource($timeZone);
     }
 }

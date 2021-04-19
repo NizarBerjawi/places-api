@@ -22,7 +22,7 @@ class CountryFlagController extends Controller
             ->applyScope('byCountry', Arr::wrap($code))
             ->getBuilder()
             ->first();
-        
+
         return FlagResource::make($flag);
     }
 }

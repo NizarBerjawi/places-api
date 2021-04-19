@@ -8,7 +8,7 @@ use Spatie\QueryBuilder\QueryBuilder;
 abstract class Filter
 {
     /**
-     * An instance of the query builder
+     * An instance of the query builder.
      *
      * @var \Spatie\QueryBuilder\QueryBuilder
      */
@@ -16,14 +16,14 @@ abstract class Filter
 
     /**
      * A flag to determine if the query builder has been
-     * initialized
+     * initialized.
      *
-     * @var boolean
+     * @var bool
      */
     protected $isInitialized;
 
     /**
-     * Instantiate the Filter
+     * Instantiate the Filter.
      *
      * @return void
      */
@@ -54,7 +54,7 @@ abstract class Filter
     abstract public function getAllowedIncludes(): array;
 
     /**
-     * Apply a scope to the builder
+     * Apply a scope to the builder.
      *
      * @param string $scope
      * @param array $parameters
@@ -91,12 +91,12 @@ abstract class Filter
         $this->checkBuilder();
 
         return $this->getBuilder()
-            ->simplePaginate(10)
+            ->simplePaginate(config('geonames.pagination_limit'))
             ->appends(request()->query());
     }
 
     /**
-     * Initialize the query builder
+     * Initialize the query builder.
      *
      * @return void
      */
@@ -108,7 +108,7 @@ abstract class Filter
     }
 
     /**
-     * Check if the builder has been initialized
+     * Check if the builder has been initialized.
      *
      * @return void
      */

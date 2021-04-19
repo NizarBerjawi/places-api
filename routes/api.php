@@ -1,73 +1,72 @@
 <?php
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
+/** @var \Laravel\Lumen\Routing\Router $router */
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| Application Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| Here is where you can register all of the routes for an application.
+| It is a breeze. Simply tell Lumen the URIs it should respond to
+| and give it the Closure to call when that URI is requested.
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+$router->get('/', function () use ($router) {
+    return $router->app->version();
 });
 
-Route::group(['prefix' => 'countries'], function () {
-    Route::get('/', 'CountryController@index');
-    Route::get('/{code}', 'CountryController@show');
+$router->group(['prefix' => 'countries'], function () use ($router) {
+    $router->get('/', ['uses' => 'CountryController@index']);
+    $router->get('/{code}', ['uses' => 'CountryController@show']);
 
-    Route::get('/{code}/flag', 'CountryFlagController@index');
-    Route::get('/{code}/currency', 'CountryCurrencyController@index');
-    Route::get('/{code}/languages', 'CountryLanguageController@index');
-    Route::get('/{code}/places', 'CountryPlacesController@index');
-    Route::get('/{code}/timeZones', 'CountryTimeZoneController@index');
+    $router->get('/{code}/flag', ['uses' => 'CountryFlagController@index']);
+    $router->get('/{code}/currency', ['uses' => 'CountryCurrencyController@index']);
+    $router->get('/{code}/languages', ['uses' => 'CountryLanguageController@index']);
+    $router->get('/{code}/places', ['uses' => 'CountryPlacesController@index']);
+    $router->get('/{code}/timeZones', ['uses' => 'CountryTimeZoneController@index']);
 });
 
-Route::group(['prefix' => 'continents'], function () {
-    Route::get('/', 'ContinentController@index');
-    Route::get('/{code}', 'ContinentController@show');
+$router->group(['prefix' => 'continents'], function () use ($router) {
+    $router->get('/', ['uses' => 'ContinentController@index']);
+    $router->get('/{code}', ['uses' => 'ContinentController@show']);
 
-    Route::get('/{code}/countries', 'ContinentCountryController@index');
+    $router->get('/{code}/countries', ['uses' => 'ContinentCountryController@index']);
 });
 
-Route::group(['prefix' => 'currencies'], function () {
-    Route::get('/', 'CurrencyController@index');
-    Route::get('/{code}', 'CurrencyController@show');
+$router->group(['prefix' => 'currencies'], function () use ($router) {
+    $router->get('/', ['uses' => 'CurrencyController@index']);
+    $router->get('/{code}', ['uses' => 'CurrencyController@show']);
 });
 
-Route::group(['prefix' => 'featureClasses'], function () {
-    Route::get('/', 'FeatureClassController@index');
-    Route::get('/{code}', 'FeatureClassController@show');
+$router->group(['prefix' => 'featureClasses'], function () use ($router) {
+    $router->get('/', ['uses' => 'FeatureClassController@index']);
+    $router->get('/{code}', ['uses' => 'FeatureClassController@show']);
 });
 
-Route::group(['prefix' => 'featureCodes'], function () {
-    Route::get('/', 'FeatureCodeController@index');
-    Route::get('/{code}', 'FeatureCodeController@show');
+$router->group(['prefix' => 'featureCodes'], function () use ($router) {
+    $router->get('/', ['uses' => 'FeatureCodeController@index']);
+    $router->get('/{code}', ['uses' => 'FeatureCodeController@show']);
 });
 
-Route::group(['prefix' => 'timeZones'], function () {
-    Route::get('/', 'TimeZoneController@index');
-    Route::get('/{code}', 'TimeZoneController@show');
+$router->group(['prefix' => 'timeZones'], function () use ($router) {
+    $router->get('/', ['uses' => 'TimeZoneController@index']);
+    $router->get('/{code}', ['uses' => 'TimeZoneController@show']);
 });
 
-Route::group(['prefix' => 'flags'], function () {
-    Route::get('/', 'FlagController@index');
-    Route::get('/{code}', 'FlagController@show');
+$router->group(['prefix' => 'flags'], function () use ($router) {
+    $router->get('/', ['uses' => 'FlagController@index']);
+    $router->get('/{code}', ['uses' => 'FlagController@show']);
 });
 
-Route::group(['prefix' => 'languages'], function () {
-    Route::get('/', 'LanguageController@index');
+$router->group(['prefix' => 'languages'], function () use ($router) {
+    $router->get('/', ['uses' => 'LanguageController@index']);
 });
 
-Route::group(['prefix' => 'places'], function () {
-    Route::get('/', 'PlaceController@index');
-    Route::get('/{uuid}', 'PlaceController@show');
+$router->group(['prefix' => 'places'], function () use ($router) {
+    $router->get('/', ['uses' => 'PlaceController@index']);
+    $router->get('/{uuid}', ['uses' => 'PlaceController@show']);
 
-    Route::get('/{uuid}/location', 'PlaceLocationController@index');
+    $router->get('/{uuid}/location', ['uses' => 'PlaceLocationController@index']);
 });

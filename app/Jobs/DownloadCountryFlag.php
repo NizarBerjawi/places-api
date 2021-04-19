@@ -4,18 +4,10 @@ namespace App\Jobs;
 
 use App\Exceptions\FileNotDownloadedException;
 use App\Exceptions\FileNotSavedException;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
-use Storage;
 
-class DownloadCountryFlag implements ShouldQueue
+class DownloadCountryFlag extends GeonamesJob
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
     /**
      * A country code to download flag image for.
      *
@@ -30,6 +22,7 @@ class DownloadCountryFlag implements ShouldQueue
      */
     public function __construct(string $code)
     {
+        parent::__construct();
         $this->code = $code;
     }
 
@@ -40,60 +33,68 @@ class DownloadCountryFlag implements ShouldQueue
      */
     public function handle()
     {
-        $disk = Storage::disk('public');
-        
         try {
             $response = Http::withOptions([
                 'stream' => true,
-            ])->get($this->url($this->code));
+            ])->get($this->url());
 
             if ($response->failed()) {
-                throw new FileNotDownloadedException($this->url($this->code));
+                throw new FileNotDownloadedException($this->url());
             }
 
-            $saved = $disk->put(
-                $this->filepath($this->code),
-                $response->getBody()
-            );
+            $this
+                ->filesystem
+                ->ensureDirectoryExists($this->folderPath());
+
+            $saved = $this
+                ->filesystem
+                ->put($this->filepath(), $response->getBody());
 
             if (! $saved) {
-                throw new FileNotSavedException($this->filepath(($this->code)));
+                throw new FileNotSavedException($this->filepath());
             }
         } catch (\Exception $e) {
-            logger($e->getMessage());
+            $this->log($e->getMessage(), 'warning');
         }
-    }
-
-    /**
-     * Get the flag filename.
-     *
-     * @param string $code
-     * @return string
-     */
-    private function filename(string $code)
-    {
-        return strtolower($code.'.gif');
-    }
-
-    /**
-     * Get the flag filepath.
-     *
-     * @param string $code
-     * @return string
-     */
-    private function filepath(string $code)
-    {
-        return "flags/$code/{$this->filename($code)}";
     }
 
     /**
      * Get the url of the flag.
      *
-     * @param string $code
      * @return string
      */
-    private function url(string $code)
+    public function url()
     {
-        return config('geonames.flags_url').'/'.$this->filename($code);
+        return config('geonames.flags_url').'/'.strtolower($this->filename());
+    }
+
+    /**
+     * Get the flag filename.
+     *
+     * @return string
+     */
+    public function filename()
+    {
+        return $this->code.'.gif';
+    }
+
+    /**
+     * The location where the file should be stored.
+     *
+     * @return string
+     */
+    public function filepath()
+    {
+        return $this->folderPath().'/'.$this->filename();
+    }
+
+    /**
+     * The folder path where the downloaded file should be saved.
+     *
+     * @return string
+     */
+    private function folderPath()
+    {
+        return storage_path('app/flags/'.$this->code);
     }
 }

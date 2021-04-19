@@ -33,7 +33,7 @@ class ContinentController extends Controller
         $continent = $filter
             ->getBuilder()
             ->where('code', $code)
-            ->first();
+            ->firstOrFail();
 
         return new ContinentResource($continent);
     }

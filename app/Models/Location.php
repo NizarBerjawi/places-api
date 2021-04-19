@@ -27,7 +27,7 @@ class Location extends Model
     }
 
     /**
-     * Get locations by place
+     * Get locations by place.
      *
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param string $uuid

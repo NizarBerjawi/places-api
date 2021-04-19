@@ -18,7 +18,7 @@ class TimeZoneResource extends JsonResource
             'code'       => $this->code,
             'time_zone'  => $this->time_zone,
             'gmt_offset' => $this->gmt_offset,
-            'country'    => new CountryResource($this->whenLoaded('country'))
+            'country'    => new CountryResource($this->whenLoaded('country')),
         ];
     }
 }
