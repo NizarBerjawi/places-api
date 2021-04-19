@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\LazyCollection;
-use Str;
+use Illuminate\Support\Str;
 
 class PlacesImport extends GeonamesFileIterator implements GeonamesImportable
 {

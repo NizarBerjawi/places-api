@@ -19,7 +19,7 @@ class FeatureCodeFilter extends Filter
     }
 
     /**
-     * The attributes we can use to filter countries.
+     * The attributes we can use to filter.
      *
      * @return array
      */

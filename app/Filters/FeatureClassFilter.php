@@ -18,7 +18,7 @@ class FeatureClassFilter extends Filter
     }
 
     /**
-     * The attributes we can use to filter countries.
+     * The attributes we can use to filter.
      *
      * @return array
      */
@@ -37,7 +37,7 @@ class FeatureClassFilter extends Filter
     public function getAllowedIncludes() : array
     {
         return [
-            'featureCodes'
+            'featureCodes',
         ];
     }
 }

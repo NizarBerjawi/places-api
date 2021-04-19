@@ -21,7 +21,7 @@ class PlaceResource extends JsonResource
             'elevation'    => $this->elevation,
             'feature_code' => FeatureCodeResource::make($this->whenLoaded('featureCode')),
             'country'      => CountryResource::make($this->whenLoaded('country')),
-            'location'     => LocationResource::make($this->whenLoaded('location'))
+            'location'     => LocationResource::make($this->whenLoaded('location')),
         ];
     }
 }

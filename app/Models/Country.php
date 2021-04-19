@@ -115,7 +115,7 @@ class Country extends Model
     }
 
     /**
-     * Get Countries by continent code
+     * Get Countries by continent code.
      *
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param string $continentCode

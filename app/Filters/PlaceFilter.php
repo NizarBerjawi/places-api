@@ -18,7 +18,7 @@ class PlaceFilter extends Filter
     }
 
     /**
-     * The attributes we can use to filter countries.
+     * The attributes we can use to filter.
      *
      * @return array
      */
@@ -45,7 +45,7 @@ class PlaceFilter extends Filter
         return [
             'country',
             'location',
-            'feature_code'
+            'feature_code',
         ];
     }
 }

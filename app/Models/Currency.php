@@ -34,13 +34,13 @@ class Currency extends Model
     }
 
     /**
-     * Get a currency by its parent country
+     * Get a currency by its parent country.
      *
      * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param string $countrytCode
+     * @param string $countryCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeByCountry(Builder $query, $countryCode)
+    public function scopeByCountry(Builder $query, string $countryCode)
     {
         return $query->whereHas('countries', function (Builder $query) use ($countryCode) {
             $query->where('iso3166_alpha2', $countryCode);

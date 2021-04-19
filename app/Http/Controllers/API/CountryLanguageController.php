@@ -10,12 +10,12 @@ use Illuminate\Support\Arr;
 class CountryLanguageController extends Controller
 {
     /**
-    * Display a listing of the resource.
-    *
-    * @param  \App\Filters\LanguageFilter  $filter
-    * @param  string $code
-    * @return \Illuminate\Http\Response
-    */
+     * Display a listing of the resource.
+     *
+     * @param  \App\Filters\LanguageFilter  $filter
+     * @param  string $code
+     * @return \Illuminate\Http\Response
+     */
     public function index(LanguageFilter $filter, string $code)
     {
         $language = $filter

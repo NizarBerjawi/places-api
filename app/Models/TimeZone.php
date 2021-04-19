@@ -42,16 +42,14 @@ class TimeZone extends Model
         return $this->belongsTo(Country::class, 'country_code', 'iso3166_alpha2');
     }
 
-
-    
     /**
-     * Get a time zones by its parent country code
+     * Get a time zones by its parent country code.
      *
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param string $countryCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeByCountry(Builder $query, $countryCode)
+    public function scopeByCountry(Builder $query, string $countryCode)
     {
         return $query->where('country_code', $countryCode);
     }

@@ -30,7 +30,7 @@ class Language extends Model
     }
 
     /**
-     * Get languages by countrys
+     * Get languages by country code.
      *
      * @param \Illuminate\Database\Eloquent\Builder  $query
      * @param string $countryCode

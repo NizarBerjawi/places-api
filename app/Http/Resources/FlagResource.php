@@ -17,7 +17,7 @@ class FlagResource extends JsonResource
         return [
             'country_code' => $this->country_code,
             'path'         => url($this->path),
-            'country'      => CountryResource::make($this->whenLoaded('country'))
+            'country'      => CountryResource::make($this->whenLoaded('country')),
         ];
     }
 }

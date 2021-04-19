@@ -21,7 +21,7 @@ class CountryPlacesController extends Controller
         $places = $filter
             ->applyScope('byCountry', Arr::wrap($code))
             ->getPaginator();
-        
+
         return PlaceResource::collection($places);
     }
 }

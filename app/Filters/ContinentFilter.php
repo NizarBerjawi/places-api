@@ -19,14 +19,14 @@ class ContinentFilter extends Filter
     }
 
     /**
-     * The attributes we can use to filter countries.
+     * The attributes we can use to filter.
      *
      * @return array
      */
     public function getAllowedFilters() : array
     {
         return [
-            AllowedFilter::partial('name'),
+            AllowedFilter::exact('name'),
             AllowedFilter::exact('code'),
         ];
     }

@@ -6,7 +6,6 @@ use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\GeonamesFileIterator;
 use App\Models\FeatureClass;
 use Carbon\Carbon;
-use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -86,8 +85,7 @@ class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImpor
      */
     private static function loadFeatureClasses()
     {
-        $path = resolve(FilesystemAdapter::class)
-            ->path(config('geonames.feature_codes_file'));
+        $path = storage_path('app/'.config('geonames.feature_codes_file'));
 
         $iterable = (new GeonamesFileIterator($path))->iterable();
 

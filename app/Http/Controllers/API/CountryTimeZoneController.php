@@ -21,7 +21,7 @@ class CountryTimeZoneController extends Controller
         $timeZones = $filter
             ->applyScope('byCountry', Arr::wrap($code))
             ->getPaginator();
-        
+
         return TimeZoneResource::collection($timeZones);
     }
 }

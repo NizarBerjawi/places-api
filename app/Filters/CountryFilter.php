@@ -19,7 +19,7 @@ class CountryFilter extends Filter
     }
 
     /**
-     * The attributes we can use to filter countries.
+     * The attributes we can use to filter.
      *
      * @return array
      */
@@ -56,7 +56,7 @@ class CountryFilter extends Filter
         return [
             AllowedInclude::relationship('continent'),
             AllowedInclude::relationship('timeZones'),
-            AllowedInclude::relationship('flag')
+            AllowedInclude::relationship('flag'),
         ];
     }
 }

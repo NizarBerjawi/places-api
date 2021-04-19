@@ -7,7 +7,6 @@ use App\Imports\Iterators\CountriesFileIterator;
 use App\Imports\Iterators\GeonamesFileIterator;
 use App\Models\Continent;
 use Carbon\Carbon;
-use Illuminate\Filesystem\FilesystemAdapter;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -95,8 +94,7 @@ class ContinentsImport extends GeonamesFileIterator implements GeonamesImportabl
      */
     private static function loadContinentCodes()
     {
-        $path = resolve(FilesystemAdapter::class)
-            ->path(config('geonames.countries_file'));
+        $path = storage_path('app/'.config('geonames.countries_file'));
 
         $codes = (new CountriesFileIterator($path))
             ->iterable()
