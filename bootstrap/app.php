@@ -25,7 +25,7 @@ $app = new Laravel\Lumen\Application(
 
 // $app->withFacades();
 
-// $app->withEloquent();
+$app->withEloquent();
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +37,9 @@ $app = new Laravel\Lumen\Application(
 | your own bindings here if you like or you can make another file.
 |
 */
+if ($app->environment() === 'local') {
+    $app->register(Laravel\Tinker\TinkerServiceProvider::class);
+}
 
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
@@ -58,8 +61,9 @@ $app->singleton(
 | the default version. You may register other files below as needed.
 |
 */
-
 $app->configure('app');
+$app->configure('logging');
+$app->configure('geonames');
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +99,8 @@ $app->configure('app');
 // $app->register(App\Providers\AuthServiceProvider::class);
 // $app->register(App\Providers\EventServiceProvider::class);
 
+$app->register(\Spatie\QueryBuilder\QueryBuilderServiceProvider::class);
+
 /*
 |--------------------------------------------------------------------------
 | Load The Application Routes
@@ -107,9 +113,10 @@ $app->configure('app');
 */
 
 $app->router->group([
-    'namespace' => 'App\Http\Controllers',
+    'namespace' => 'App\Http\Controllers\API',
+    'prefix'    => 'api' 
 ], function ($router) {
-    require __DIR__.'/../routes/web.php';
+    require __DIR__.'/../routes/api.php';
 });
 
 return $app;

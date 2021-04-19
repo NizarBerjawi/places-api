@@ -45,12 +45,11 @@ WORKDIR /var/www
 
 # Give the webserver ownership of the storage and cache folders
 RUN chown -R www:www \
-  /var/www/storage \
-  /var/www/bootstrap/cache
+  /var/www/storage
 
 # Give the webserver the rights to read and write to storage and cache
-RUN chgrp -R www /var/www/storage /var/www/bootstrap/cache && \
-  chmod -R ug+rwx /var/www/storage /var/www/bootstrap/cache
+RUN chgrp -R www /var/www/storage && \
+  chmod -R ug+rwx /var/www/storage
 
 USER www
 
