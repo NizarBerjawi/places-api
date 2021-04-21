@@ -12,7 +12,6 @@ class ContinentControllerTest extends TestCase
         $response = $this->get('/api/continents');
 
         $response->shouldReturnJson();
-        $response->assertResponseOk();
         $response->seeJsonStructure([
             'data' => [
                 [
@@ -84,7 +83,7 @@ class ContinentControllerTest extends TestCase
     }
 
     /** @test */
-    public function returnsCorrectContinentOnShowContinent()
+    public function returnsCorrectStructureOnShowContinent()
     {
         $continent = Continent::query()
             ->inRandomOrder()
@@ -94,10 +93,10 @@ class ContinentControllerTest extends TestCase
         $response = $this->get('/api/continents/'.$continent->code);
 
         $response->shouldReturnJson();
-        $response->seeJsonEquals([
+        $response->seeJsonStructure([
             'data' => [
-                'code' => $continent->code,
-                'name' => $continent->name,
+                'code',
+                'name',
             ],
         ]);
     }
