@@ -1,6 +1,5 @@
 version: '3.3'
 services:
-  # Nginx Service
   nginx:
     image: nginx:alpine
     ports:
@@ -15,7 +14,6 @@ services:
       - supervisor
     networks:
       - laravel
-  # PHP FPM Service
   php:
     build:
       context: ..
@@ -30,7 +28,6 @@ services:
       - "9000"
     networks:
       - laravel
-  # supervisor
   supervisor:
     build:
       context: ..
@@ -40,7 +37,6 @@ services:
         - ./supervisor/supervisord.d:/etc/supervisord.d
     networks:
       - laravel
-  # MySQL Service
   mariadb:
     image: mariadb:10.5.9
     container_name: mariadb
@@ -83,6 +79,19 @@ services:
       - mariadb
     working_dir: /var/www
     entrypoint: ['php', '/var/www/artisan']
+    networks:
+      - laravel
+  test:
+    build:
+      context: ..
+      dockerfile: .docker/php.Dockerfile
+    container_name: artisan
+    volumes:
+      - ../:/var/www
+    depends_on:
+      - mariadb
+    working_dir: /var/www
+    entrypoint: ['/var/www/vendor/bin/phpunit']
     networks:
       - laravel
 # Docker Networks
