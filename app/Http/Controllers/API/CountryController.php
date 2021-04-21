@@ -33,7 +33,7 @@ class CountryController extends Controller
         $country = $filter
             ->getBuilder()
             ->where('iso3166_alpha2', $code)
-            ->first();
+            ->firstOrFail();
 
         return new CountryResource($country);
     }

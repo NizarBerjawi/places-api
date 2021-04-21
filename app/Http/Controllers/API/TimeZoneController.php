@@ -33,7 +33,7 @@ class TimeZoneController extends Controller
         $timeZone = $filter
             ->getBuilder()
             ->where('code', $code)
-            ->first();
+            ->firstOrFail();
 
         return new TimeZoneResource($timeZone);
     }

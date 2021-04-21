@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Filters\CountryFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CountryResource;
+use App\Models\Continent;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
 class ContinentCountryController extends Controller
@@ -18,6 +20,10 @@ class ContinentCountryController extends Controller
      */
     public function index(CountryFilter $filter, string $code)
     {
+        if (! Continent::where('code', $code)->exists()) {
+            throw (new ModelNotFoundException)->setModel(Continent::class);
+        }
+
         $countries = $filter
             ->applyScope('byContinent', Arr::wrap($code))
             ->getPaginator();

@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Filters\PlaceFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PlaceResource;
+use App\Models\Country;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
 class CountryPlacesController extends Controller
@@ -18,6 +20,10 @@ class CountryPlacesController extends Controller
      */
     public function index(PlaceFilter $filter, string $code)
     {
+        if (! Country::where('iso3166_alpha2', $code)->exists()) {
+            throw (new ModelNotFoundException())->setModel(Country::class);
+        }
+
         $places = $filter
             ->applyScope('byCountry', Arr::wrap($code))
             ->getPaginator();

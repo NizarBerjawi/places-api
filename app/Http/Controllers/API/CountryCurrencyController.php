@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Filters\CurrencyFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\CurrencyResource;
+use App\Models\Country;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
 class CountryCurrencyController extends Controller
@@ -18,6 +20,10 @@ class CountryCurrencyController extends Controller
      */
     public function index(CurrencyFilter $filter, string $code)
     {
+        if (! Country::where('iso3166_alpha2', $code)->exists()) {
+            throw (new ModelNotFoundException())->setModel(Country::class);
+        }
+
         $currency = $filter
             ->applyScope('byCountry', Arr::wrap($code))
             ->getBuilder()

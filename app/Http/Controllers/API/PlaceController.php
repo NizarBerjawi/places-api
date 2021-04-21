@@ -33,7 +33,7 @@ class PlaceController extends Controller
         $place = $filter
             ->getBuilder()
             ->where('uuid', $uuid)
-            ->first();
+            ->firstOrFail();
 
         return PlaceResource::make($place);
     }
