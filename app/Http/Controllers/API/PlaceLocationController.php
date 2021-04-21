@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Filters\LocationFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\LocationResource;
+use App\Models\Place;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
 class PlaceLocationController extends Controller
@@ -18,10 +20,15 @@ class PlaceLocationController extends Controller
      */
     public function index(LocationFilter $filter, string $uuid)
     {
-        $places = $filter
-            ->applyScope('byPlace', Arr::wrap($uuid))
-            ->getPaginator();
+        if (! Place::where('uuid', $uuid)->exists()) {
+            throw (new ModelNotFoundException())->setModel(Country::class);
+        }
 
-        return LocationResource::collection($places);
+        $location = $filter
+            ->applyScope('byPlace', Arr::wrap($uuid))
+            ->getBuilder()
+            ->first();
+
+        return LocationResource::make($location);
     }
 }

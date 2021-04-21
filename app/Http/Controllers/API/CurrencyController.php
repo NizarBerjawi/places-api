@@ -33,7 +33,7 @@ class CurrencyController extends Controller
         $currency = $filter
             ->getBuilder()
             ->where('code', $code)
-            ->first();
+            ->firstOrFail();
 
         return new CurrencyResource($currency);
     }

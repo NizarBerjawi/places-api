@@ -33,7 +33,7 @@ class FeatureClassController extends Controller
         $featureClass = $filter
             ->getBuilder()
             ->where('code', $code)
-            ->first();
+            ->firstOrFail();
 
         return new FeatureClassResource($featureClass);
     }

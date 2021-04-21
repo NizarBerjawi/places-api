@@ -33,7 +33,7 @@ class FlagController extends Controller
         $flag = $filter
             ->getBuilder()
             ->where('country_code', $code)
-            ->first();
+            ->firstOrFail();
 
         return new FlagResource($flag);
     }
