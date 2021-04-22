@@ -2,10 +2,8 @@
 
 use App\Http\Resources\ContinentResource;
 use App\Http\Resources\CountryResource;
-use App\Models\Continent;
 use App\Models\Country;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Collection;
 
 class CountryControllerTest extends TestCase
 {
@@ -18,12 +16,12 @@ class CountryControllerTest extends TestCase
         $response->seeJsonStructure([
             'data' => [
                 [
-                    'name',           
-                    'iso3166_alpha2', 
-                    'iso3166_alpha3', 
+                    'name',
+                    'iso3166_alpha2',
+                    'iso3166_alpha3',
                     'iso3166_numeric',
-                    'population',     
-                    'area',           
+                    'population',
+                    'area',
                     'phone_code',
                 ],
             ],
@@ -103,13 +101,13 @@ class CountryControllerTest extends TestCase
         $response->shouldReturnJson();
         $response->seeJsonStructure([
             'data' => [
-                'name',           
-                'iso3166_alpha2', 
-                'iso3166_alpha3', 
+                'name',
+                'iso3166_alpha2',
+                'iso3166_alpha3',
                 'iso3166_numeric',
-                'population',     
-                'area',           
-                'phone_code',     
+                'population',
+                'area',
+                'phone_code',
             ],
         ]);
     }
@@ -134,7 +132,7 @@ class CountryControllerTest extends TestCase
 
         $response->shouldReturnJson();
         $response->seeJsonEquals([
-            'data' => CountryResource::make($country)->resolve()
+            'data' => CountryResource::make($country)->resolve(),
         ]);
     }
 
@@ -152,7 +150,7 @@ class CountryControllerTest extends TestCase
         $response->seeJsonContains([
             'data' => CountryResource::collection(
                 Arr::wrap($country)
-            )->resolve()
+            )->resolve(),
         ]);
     }
 
@@ -165,14 +163,14 @@ class CountryControllerTest extends TestCase
         $response->seeJsonStructure([
             'data' => [
                 [
-                    'name',           
-                    'iso3166_alpha2', 
-                    'iso3166_alpha3', 
+                    'name',
+                    'iso3166_alpha2',
+                    'iso3166_alpha3',
                     'iso3166_numeric',
-                    'population',     
-                    'area',           
+                    'population',
+                    'area',
                     'phone_code',
-                    'continent'
+                    'continent',
                 ],
             ],
             'links' => [
@@ -203,10 +201,9 @@ class CountryControllerTest extends TestCase
 
         $response->shouldReturnJson();
         $response->seeJsonEquals([
-            'data' => 
-                CountryResource::make($country)->resolve() + [
-                    'continent' => ContinentResource::make($country->continent)
-                ]
+            'data' => CountryResource::make($country)->resolve() + [
+                    'continent' => ContinentResource::make($country->continent),
+                ],
         ]);
     }
 }
