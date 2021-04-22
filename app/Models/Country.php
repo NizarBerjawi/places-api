@@ -261,4 +261,19 @@ class Country extends Model
             ->populationGte($min)
             ->populationLte($max);
     }
+
+    /**
+     * Get any country that is a neighbour of the specified country.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $code
+     * @return \Illuminate\Database\Eloquent\Builder  $query
+     */
+    public function scopeNeighbourOf(Builder $query, string $code)
+    {
+        return $query
+            ->whereHas('neighbours', function (Builder $query) use ($code) {
+                $query->where('country_code', $code);
+            });
+    }
 }

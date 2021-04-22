@@ -26,6 +26,7 @@ $router->group(['prefix' => 'countries'], function () use ($router) {
     $router->get('/{code}/languages', ['uses' => 'CountryLanguageController@index']);
     $router->get('/{code}/places', ['uses' => 'CountryPlacesController@index']);
     $router->get('/{code}/timeZones', ['uses' => 'CountryTimeZoneController@index']);
+    $router->get('/{code}/neighbours', ['uses' => 'CountryNeighbourController@index']);
 });
 
 $router->group(['prefix' => 'continents'], function () use ($router) {

@@ -26,7 +26,7 @@ class CountryFilter extends Filter
     public function getAllowedFilters() : array
     {
         return [
-            AllowedFilter::partial('name'),
+            AllowedFilter::exact('name'),
             AllowedFilter::exact('iso3166_alpha2'),
             AllowedFilter::exact('iso3166_alpha3'),
             AllowedFilter::exact('iso3166_numeric'),
@@ -57,6 +57,7 @@ class CountryFilter extends Filter
             AllowedInclude::relationship('continent'),
             AllowedInclude::relationship('timeZones'),
             AllowedInclude::relationship('flag'),
+            AllowedInclude::relationship('neighbours'),
         ];
     }
 }
