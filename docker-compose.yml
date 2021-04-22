@@ -1,46 +1,42 @@
 version: '3.3'
 services:
-  # Nginx Service
   nginx:
     image: nginx:alpine
     ports:
       - "8080:80"
       - "443:443"
     volumes:
-      - ../:/var/www
-      - ./nginx/conf.d/:/etc/nginx/conf.d
+      - .:/var/www
+      - .docker/nginx/conf.d/:/etc/nginx/conf.d
     depends_on:
       - php
       - mariadb
       - supervisor
     networks:
       - laravel
-  # PHP FPM Service
   php:
     build:
-      context: ..
+      context: .
       dockerfile: .docker/php.Dockerfile
     volumes:
-      - ../:/var/www
-      - ./php-fpm/php.ini:/etc/php/7.3/fpm/php.ini
-      - ./php-fpm/www.conf:/etc/php/7.3/fpm/pool.d/www.conf
-      - ./php-fpm/php-fpm.conf:/etc/php/7.3/fpm/php-fpm.conf
+      - .:/var/www
+      - .docker/php-fpm/php.ini:/etc/php/7.3/fpm/php.ini
+      - .docker/php-fpm/www.conf:/etc/php/7.3/fpm/pool.d/www.conf
+      - .docker/php-fpm/php-fpm.conf:/etc/php/7.3/fpm/php-fpm.conf
     tty: true
     expose:
       - "9000"
     networks:
       - laravel
-  # supervisor
   supervisor:
     build:
-      context: ..
+      context: .
       dockerfile: .docker/supervisor.Dockerfile
     volumes:
-        - ../:/var/www
-        - ./supervisor/supervisord.d:/etc/supervisord.d
+        - .:/var/www
+        - .docker/supervisor/supervisord.d:/etc/supervisord.d
     networks:
       - laravel
-  # MySQL Service
   mariadb:
     image: mariadb:10.5.9
     container_name: mariadb
@@ -54,17 +50,17 @@ services:
       MYSQL_PASSWORD: secret
       MYSQL_ROOT_PASSWORD: secret
     volumes:
-      # - ./mysql/data:/var/lib/mysql
-      - ./mysql/my.cnf:/etc/mysql/my.cnf
+      # - .docker/mysql/data:/var/lib/mysql # Uncomment to persist data on disk
+      - .docker/mysql/my.cnf:/etc/mysql/my.cnf
     networks:
       - laravel
   composer:
     build:
-      context: ..
+      context: .
       dockerfile: .docker/composer.Dockerfile
     container_name: composer
     volumes:
-      - ../:/var/www
+      - .:/var/www
     working_dir: /var/www
     depends_on:
       - php
@@ -74,15 +70,28 @@ services:
       - laravel
   artisan:
     build:
-      context: ..
+      context: .
       dockerfile: .docker/php.Dockerfile
     container_name: artisan
     volumes:
-      - ../:/var/www
+      - .:/var/www
     depends_on:
       - mariadb
     working_dir: /var/www
     entrypoint: ['php', '/var/www/artisan']
+    networks:
+      - laravel
+  test:
+    build:
+      context: .
+      dockerfile: .docker/php.Dockerfile
+    container_name: artisan
+    volumes:
+      - .:/var/www
+    depends_on:
+      - mariadb
+    working_dir: /var/www
+    entrypoint: ['/var/www/vendor/bin/phpunit']
     networks:
       - laravel
 # Docker Networks
