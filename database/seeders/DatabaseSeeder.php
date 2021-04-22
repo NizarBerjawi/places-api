@@ -22,25 +22,25 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // // 1- Download readme.txt file
-        // dispatch(new DownloadInfoFile());
-        // // 2- Download the countryInfo.txt file
-        // dispatch(new DownloadCountriesFile);
-        // // 3- Download the iso-languagecodes.txt file
-        // dispatch(new DownloadLanguages);
-        // // 4- Download the featureCodes_en.txt file
-        // dispatch(new DownloadFeatureCodesFile);
-        // // 5- Download the timeZones.txt file
-        // dispatch(new DownloadTimezonesFile);
-        // // 6- Download Geonames files related to every country
-        // $path = storage_path('app/'.config('geonames.countries_file'));
-        // (new CountriesFileIterator($path))
-        //     ->iterable()
-        //     ->each(function (array $row) {
-        //         $code = Arr::get($row, 0);
-        //         dispatch(new DownloadCountryFlag($code));
-        //         dispatch(new DownloadGeonamesFile($code));
-        //     });
+        // 1- Download readme.txt file
+        dispatch(new DownloadInfoFile());
+        // 2- Download the countryInfo.txt file
+        dispatch(new DownloadCountriesFile);
+        // 3- Download the iso-languagecodes.txt file
+        dispatch(new DownloadLanguages);
+        // 4- Download the featureCodes_en.txt file
+        dispatch(new DownloadFeatureCodesFile);
+        // 5- Download the timeZones.txt file
+        dispatch(new DownloadTimezonesFile);
+        // 6- Download Geonames files related to every country
+        $path = storage_path('app/'.config('geonames.countries_file'));
+        (new CountriesFileIterator($path))
+            ->iterable()
+            ->each(function (array $row) {
+                $code = Arr::get($row, 0);
+                dispatch(new DownloadCountryFlag($code));
+                dispatch(new DownloadGeonamesFile($code));
+            });
 
         // 7- Seed the continents table
         $this->call(ContinentsTableSeeder::class);
