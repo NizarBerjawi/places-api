@@ -13,7 +13,7 @@ services:
       - mariadb
       - supervisor
     networks:
-      - laravel
+      - api_network
   php:
     build:
       context: .
@@ -27,7 +27,7 @@ services:
     expose:
       - "9000"
     networks:
-      - laravel
+      - api_network
   supervisor:
     build:
       context: .
@@ -36,7 +36,7 @@ services:
         - .:/var/www
         - .docker/supervisor/supervisord.d:/etc/supervisord.d
     networks:
-      - laravel
+      - api_network
   mariadb:
     image: mariadb:10.5.9
     container_name: mariadb
@@ -53,7 +53,7 @@ services:
       # - .docker/mysql/data:/var/lib/mysql # Uncomment to persist data on disk
       - .docker/mysql/my.cnf:/etc/mysql/my.cnf
     networks:
-      - laravel
+      - api_network
   composer:
     build:
       context: .
@@ -67,7 +67,7 @@ services:
     user: www
     entrypoint: ['composer', '--ignore-platform-reqs']
     networks:
-      - laravel
+      - api_network
   artisan:
     build:
       context: .
@@ -80,7 +80,7 @@ services:
     working_dir: /var/www
     entrypoint: ['php', '/var/www/artisan']
     networks:
-      - laravel
+      - api_network
   test:
     build:
       context: .
@@ -93,10 +93,10 @@ services:
     working_dir: /var/www
     entrypoint: ['/var/www/vendor/bin/phpunit']
     networks:
-      - laravel
+      - api_network
 # Docker Networks
 networks:
-  laravel:
+  api_network:
     driver: bridge
 # Volumes
 volumes:
