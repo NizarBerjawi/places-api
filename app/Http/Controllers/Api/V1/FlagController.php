@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Filters\FlagFilter;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\FlagResource;
+use App\Http\Resources\V1\FlagResource;
 
 class FlagController extends Controller
 {

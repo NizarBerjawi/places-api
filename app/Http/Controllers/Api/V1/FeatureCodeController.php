@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Filters\FeatureCodeFilter;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\FeatureCodeResource;
+use App\Http\Resources\V1\FeatureCodeResource;
 
 class FeatureCodeController extends Controller
 {

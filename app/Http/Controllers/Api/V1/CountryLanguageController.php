@@ -1,34 +1,33 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\CurrencyFilter;
+use App\Filters\LanguageFilter;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CurrencyResource;
+use App\Http\Resources\V1\LanguageResource;
 use App\Models\Country;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
-class CountryCurrencyController extends Controller
+class CountryLanguageController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @param  \App\Filters\CurrencyFilter $filter
+     * @param  \App\Filters\LanguageFilter  $filter
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function index(CurrencyFilter $filter, string $code)
+    public function index(LanguageFilter $filter, string $code)
     {
         if (! Country::where('iso3166_alpha2', $code)->exists()) {
             throw (new ModelNotFoundException())->setModel(Country::class);
         }
 
-        $currency = $filter
+        $language = $filter
             ->applyScope('byCountry', Arr::wrap($code))
-            ->getBuilder()
-            ->first();
+            ->getPaginator();
 
-        return CurrencyResource::make($currency);
+        return LanguageResource::collection($language);
     }
 }

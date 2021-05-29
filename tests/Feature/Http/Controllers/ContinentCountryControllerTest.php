@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Resources\CountryResource;
+use App\Http\Resources\V1\CountryResource;
 use App\Models\Continent;
 use App\Models\Country;
 use Illuminate\Support\Arr;
@@ -15,7 +15,7 @@ class ContinentCountryControllerTest extends TestCase
             ->limit(1)
             ->first();
 
-        $response = $this->get('/api/continents/'.$continent->code.'/countries');
+        $response = $this->get('/api/v1/continents/'.$continent->code.'/countries');
 
         $response->shouldReturnJson();
         $response->seeJsonStructure([
@@ -54,7 +54,7 @@ class ContinentCountryControllerTest extends TestCase
             ->limit(1)
             ->first();
 
-        $response = $this->get('/api/continents/'.$continent->code.'/countries');
+        $response = $this->get('/api/v1/continents/'.$continent->code.'/countries');
 
         $response->assertResponseOk();
     }
@@ -67,7 +67,7 @@ class ContinentCountryControllerTest extends TestCase
             ->limit(1)
             ->first();
 
-        $this->get('/api/continents/'.$continent->code.'/countries');
+        $this->get('/api/v1/continents/'.$continent->code.'/countries');
 
         $countriesData = json_decode($this->response->getContent(), true);
 
@@ -85,7 +85,7 @@ class ContinentCountryControllerTest extends TestCase
             ->limit(1)
             ->first();
 
-        $this->get('/api/continents/'.$continent->code.'/countries');
+        $this->get('/api/v1/continents/'.$continent->code.'/countries');
 
         $countriesCount = Country::query()
             ->byContinent($continent->code)
@@ -114,7 +114,7 @@ class ContinentCountryControllerTest extends TestCase
     /** @test */
     public function returnsNotFoundErrorOnNonExistentContinent()
     {
-        $response = $this->get('/api/continents/invalid/countries');
+        $response = $this->get('/api/v1/continents/invalid/countries');
 
         $response->assertResponseStatus(404);
     }
@@ -131,7 +131,7 @@ class ContinentCountryControllerTest extends TestCase
             ->byContinent($continent->code)
             ->simplePaginate(config('geonames.pagination_limit'));
 
-        $response = $this->get('/api/continents/'.$continent->code.'/countries');
+        $response = $this->get('/api/v1/continents/'.$continent->code.'/countries');
 
         $countriesData = json_decode($this->response->getContent(), true);
 

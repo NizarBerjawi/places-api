@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Resources\ContinentResource;
-use App\Http\Resources\CountryResource;
+use App\Http\Resources\V1\ContinentResource;
+use App\Http\Resources\V1\CountryResource;
 use App\Models\Country;
 use Illuminate\Support\Arr;
 
@@ -10,7 +10,7 @@ class CountryControllerTest extends TestCase
     /** @test */
     public function returnsCorrectStructureOnGetCountries()
     {
-        $response = $this->get('/api/countries');
+        $response = $this->get('/api/v1/countries');
 
         $response->shouldReturnJson();
         $response->seeJsonStructure([
@@ -44,7 +44,7 @@ class CountryControllerTest extends TestCase
     /** @test */
     public function returnsSuccessResponseOnGetCountries()
     {
-        $response = $this->get('/api/countries');
+        $response = $this->get('/api/v1/countries');
 
         $response->assertResponseOk();
     }
@@ -52,7 +52,7 @@ class CountryControllerTest extends TestCase
     /** @test */
     public function returnsCorrectPaginationLimitOnGetCountries()
     {
-        $this->get('/api/countries');
+        $this->get('/api/v1/countries');
 
         $countriesData = json_decode($this->response->getContent(), true);
 
@@ -65,7 +65,7 @@ class CountryControllerTest extends TestCase
     /** @test */
     public function returnsCorrectPaginatedDataOnGetCountries()
     {
-        $this->get('/api/countries');
+        $this->get('/api/v1/countries');
 
         $countriesCount = Country::count();
         $countriesData = json_decode($this->response->getContent(), true);
@@ -96,7 +96,7 @@ class CountryControllerTest extends TestCase
             ->limit(1)
             ->first();
 
-        $response = $this->get('/api/countries/'.$country->iso3166_alpha2);
+        $response = $this->get('/api/v1/countries/'.$country->iso3166_alpha2);
 
         $response->shouldReturnJson();
         $response->seeJsonStructure([
@@ -115,7 +115,7 @@ class CountryControllerTest extends TestCase
     /** @test */
     public function returnsNotFoundErrorOnNonExistentCountry()
     {
-        $response = $this->get('/api/countries/invalid');
+        $response = $this->get('/api/v1/countries/invalid');
 
         $response->assertResponseStatus(404);
     }
@@ -128,7 +128,7 @@ class CountryControllerTest extends TestCase
             ->limit(1)
             ->first();
 
-        $response = $this->get('/api/countries/'.$country->iso3166_alpha2);
+        $response = $this->get('/api/v1/countries/'.$country->iso3166_alpha2);
 
         $response->shouldReturnJson();
         $response->seeJsonEquals([
@@ -144,7 +144,7 @@ class CountryControllerTest extends TestCase
             ->limit(1)
             ->first();
 
-        $response = $this->get('/api/countries?filter[iso3166_alpha2]='.$country->iso3166_alpha2);
+        $response = $this->get('/api/v1/countries?filter[iso3166_alpha2]='.$country->iso3166_alpha2);
 
         $response->shouldReturnJson();
         $response->seeJsonContains([
@@ -157,7 +157,7 @@ class CountryControllerTest extends TestCase
     /** @test */
     public function returnsCountriesWithContinent()
     {
-        $response = $this->get('/api/countries?include=continent');
+        $response = $this->get('/api/v1/countries?include=continent');
 
         $response->shouldReturnJson();
         $response->seeJsonStructure([
@@ -197,7 +197,7 @@ class CountryControllerTest extends TestCase
             ->limit(1)
             ->first();
 
-        $response = $this->get('/api/countries/'.$country->iso3166_alpha2.'?include=continent');
+        $response = $this->get('/api/v1/countries/'.$country->iso3166_alpha2.'?include=continent');
 
         $response->shouldReturnJson();
         $response->seeJsonEquals([

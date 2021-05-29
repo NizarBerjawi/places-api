@@ -64,6 +64,7 @@ $app->singleton(
 $app->configure('app');
 $app->configure('logging');
 $app->configure('geonames');
+$app->configure('api');
 
 /*
 |--------------------------------------------------------------------------
@@ -77,12 +78,12 @@ $app->configure('geonames');
 */
 
 // $app->middleware([
-//     App\Http\Middleware\ExampleMiddleware::class
+//     App\Http\Middleware\ApiVersion::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+$app->routeMiddleware([
+    'api_version' => App\Http\Middleware\ApiVersion::class,
+]);
 
 /*
 |--------------------------------------------------------------------------
@@ -113,10 +114,11 @@ $app->register(\Spatie\QueryBuilder\QueryBuilderServiceProvider::class);
 */
 
 $app->router->group([
-    'namespace' => 'App\Http\Controllers\API',
-    'prefix'    => 'api' 
+    'middleware' => 'api_version:v1',
+    'namespace'  => 'App\Http\Controllers\Api\V1',
+    'prefix'     => 'api/v1' 
 ], function ($router) {
-    require __DIR__.'/../routes/api.php';
+    require __DIR__.'/../routes/api.v1.php';
 });
 
 return $app;

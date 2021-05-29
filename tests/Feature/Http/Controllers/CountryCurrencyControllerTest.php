@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Resources\CurrencyResource;
+use App\Http\Resources\V1\CurrencyResource;
 use App\Models\Country;
 use App\Models\Currency;
 use Illuminate\Support\Arr;
@@ -15,7 +15,7 @@ class CountryCurrencyControllerTest extends TestCase
             ->limit(1)
             ->first();
 
-        $response = $this->get('/api/countries/'.$country->iso3166_alpha2.'/currency');
+        $response = $this->get('/api/v1/countries/'.$country->iso3166_alpha2.'/currency');
 
         $response->shouldReturnJson();
         $response->seeJsonStructure([
@@ -34,7 +34,7 @@ class CountryCurrencyControllerTest extends TestCase
             ->limit(1)
             ->first();
 
-        $response = $this->get('/api/countries/'.$country->iso3166_alpha2.'/currency');
+        $response = $this->get('/api/v1/countries/'.$country->iso3166_alpha2.'/currency');
 
         $response->assertResponseOk();
     }
@@ -42,7 +42,7 @@ class CountryCurrencyControllerTest extends TestCase
     /** @test */
     public function returnsNotFoundErrorOnNonExistentCountry()
     {
-        $response = $this->get('/api/countries/invalid/currency');
+        $response = $this->get('/api/v1/countries/invalid/currency');
 
         $response->assertResponseStatus(404);
     }
@@ -59,7 +59,7 @@ class CountryCurrencyControllerTest extends TestCase
             ->byCountry($country->iso3166_alpha2)
             ->first();
 
-        $response = $this->get('/api/countries/'.$country->iso3166_alpha2.'/currency');
+        $response = $this->get('/api/v1/countries/'.$country->iso3166_alpha2.'/currency');
 
         $currencyData = json_decode($this->response->getContent(), true);
 

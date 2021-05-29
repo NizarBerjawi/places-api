@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\V1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FeatureClassResource extends JsonResource
+class TimeZoneResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,8 +15,9 @@ class FeatureClassResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'code'          => $this->code,
-            'description'   => $this->description,
+            'time_zone'  => $this->time_zone,
+            'gmt_offset' => $this->gmt_offset,
+            'country'    => new CountryResource($this->whenLoaded('country')),
         ];
     }
 }

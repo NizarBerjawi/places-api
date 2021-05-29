@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\V1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class FlagResource extends JsonResource
+class FeatureClassResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,9 +15,8 @@ class FlagResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'country_code' => $this->country_code,
-            'path'         => url($this->path),
-            'country'      => CountryResource::make($this->whenLoaded('country')),
+            'code'          => $this->code,
+            'description'   => $this->description,
         ];
     }
 }
