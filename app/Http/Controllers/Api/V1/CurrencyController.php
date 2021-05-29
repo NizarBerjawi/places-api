@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Filters\CurrencyFilter;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\CurrencyResource;
+use App\Http\Resources\V1\CurrencyResource;
 
 class CurrencyController extends Controller
 {

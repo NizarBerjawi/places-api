@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Resources\CountryResource;
+use App\Http\Resources\V1\CountryResource;
 use App\Models\Continent;
 use Illuminate\Support\Arr;
 
@@ -9,7 +9,7 @@ class ContinentControllerTest extends TestCase
     /** @test */
     public function returnsCorrectStructureOnGetContinents()
     {
-        $response = $this->get('/api/continents');
+        $response = $this->get('/api/v1/continents');
 
         $response->shouldReturnJson();
         $response->seeJsonStructure([
@@ -38,7 +38,7 @@ class ContinentControllerTest extends TestCase
     /** @test */
     public function returnsSuccessResponseOnGetContinents()
     {
-        $response = $this->get('/api/continents');
+        $response = $this->get('/api/v1/continents');
 
         $response->assertResponseOk();
     }
@@ -46,7 +46,7 @@ class ContinentControllerTest extends TestCase
     /** @test */
     public function returnsCorrectPaginationLimitOnGetContinents()
     {
-        $this->get('/api/continents');
+        $this->get('/api/v1/continents');
 
         $continentsData = json_decode($this->response->getContent(), true);
 
@@ -59,7 +59,7 @@ class ContinentControllerTest extends TestCase
     /** @test */
     public function returnsCorrectPaginatedDataOnGetContinents()
     {
-        $this->get('/api/continents');
+        $this->get('/api/v1/continents');
 
         $continentsCount = Continent::count();
         $continentsData = json_decode($this->response->getContent(), true);
@@ -90,7 +90,7 @@ class ContinentControllerTest extends TestCase
             ->limit(1)
             ->first();
 
-        $response = $this->get('/api/continents/'.$continent->code);
+        $response = $this->get('/api/v1/continents/'.$continent->code);
 
         $response->shouldReturnJson();
         $response->seeJsonStructure([
@@ -104,7 +104,7 @@ class ContinentControllerTest extends TestCase
     /** @test */
     public function returnsNotFoundErrorOnNonExistentContinent()
     {
-        $response = $this->get('/api/continents/invalid');
+        $response = $this->get('/api/v1/continents/invalid');
 
         $response->assertResponseStatus(404);
     }
@@ -117,7 +117,7 @@ class ContinentControllerTest extends TestCase
             ->limit(1)
             ->first();
 
-        $response = $this->get('/api/continents/'.$continent->code);
+        $response = $this->get('/api/v1/continents/'.$continent->code);
 
         $response->shouldReturnJson();
         $response->seeJsonEquals([
@@ -136,7 +136,7 @@ class ContinentControllerTest extends TestCase
             ->limit(1)
             ->first();
 
-        $response = $this->get('/api/continents?filter[code]='.$continent->code);
+        $response = $this->get('/api/v1/continents?filter[code]='.$continent->code);
 
         $response->shouldReturnJson();
         $response->seeJsonContains([
@@ -155,7 +155,7 @@ class ContinentControllerTest extends TestCase
             ->limit(1)
             ->first();
 
-        $response = $this->get('/api/continents?filter[name]='.$continent->name);
+        $response = $this->get('/api/v1/continents?filter[name]='.$continent->name);
 
         $response->shouldReturnJson();
         $response->seeJsonContains([
@@ -174,7 +174,7 @@ class ContinentControllerTest extends TestCase
             ->limit(2)
             ->get();
 
-        $response = $this->get('/api/continents?filter[code]='.$continents->first()->code.'&filter[name]='.$continents->last()->name);
+        $response = $this->get('/api/v1/continents?filter[code]='.$continents->first()->code.'&filter[name]='.$continents->last()->name);
 
         $response->shouldReturnJson();
         $response->seeJsonContains([
@@ -185,7 +185,7 @@ class ContinentControllerTest extends TestCase
     /** @test */
     public function returnsContinentsWithCountry()
     {
-        $response = $this->get('/api/continents?include=countries');
+        $response = $this->get('/api/v1/continents?include=countries');
 
         $response->shouldReturnJson();
         $response->seeJsonStructure([
@@ -220,7 +220,7 @@ class ContinentControllerTest extends TestCase
             ->limit(1)
             ->first();
 
-        $response = $this->get('/api/continents/'.$continent->code.'?include=countries');
+        $response = $this->get('/api/v1/continents/'.$continent->code.'?include=countries');
 
         $response->shouldReturnJson();
         $response->seeJsonEquals([

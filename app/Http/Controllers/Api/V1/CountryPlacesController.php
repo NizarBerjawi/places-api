@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Filters\PlaceFilter;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PlaceResource;
+use App\Http\Resources\V1\PlaceResource;
 use App\Models\Country;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
