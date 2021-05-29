@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 
-class ExampleMiddleware
+class ApiVersion
 {
     /**
      * Handle an incoming request.
@@ -13,8 +13,10 @@ class ExampleMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $guard = null)
     {
+        config(['api.version' => $guard]);
+
         return $next($request);
     }
 }

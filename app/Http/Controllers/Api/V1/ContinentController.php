@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api\V1;
 
 use App\Filters\ContinentFilter;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ContinentResource;
+use App\Http\Resources\V1\ContinentResource;
 
 class ContinentController extends Controller
 {
