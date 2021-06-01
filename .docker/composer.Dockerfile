@@ -1,6 +1,11 @@
 FROM composer:2
 
-RUN addgroup -g 1000 www
-RUN adduser -G www -g www -s /bin/sh -D www
+ARG USER
+ARG GUID
+
+RUN addgroup -g ${GUID} ${USER}
+RUN adduser -G ${USER} -g ${USER} -s /bin/sh -D ${USER}
 
 WORKDIR /var/www
+
+USER ${USER}
