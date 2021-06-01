@@ -2,6 +2,9 @@ FROM php:7.3-fpm
 
 LABEL maintainer="Nizar El Berjawi <nizarberjawi12@gmail.com>"
 
+ARG USER
+ARG GUID
+
 RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 
 # Install dependencies
@@ -29,8 +32,8 @@ RUN apt-get update && \
   docker-php-ext-install gd pdo_mysql exif json zip
 
 # Add user for laravel application
-RUN groupadd -g 1000 www
-RUN useradd -u 1000 -ms /bin/bash -g www www
+RUN groupadd -g ${GUID} ${USER}
+RUN useradd -u ${GUID} -ms /bin/bash -g ${USER} ${USER}
 
 # Clean up
 RUN apt-get -y autoclean && \
@@ -48,10 +51,10 @@ RUN chown -R www:www \
   /var/www/storage
 
 # Give the webserver the rights to read and write to storage and cache
-RUN chgrp -R www /var/www/storage && \
+RUN chgrp -R ${USER} /var/www/storage && \
   chmod -R ug+rwx /var/www/storage
 
-USER www
+USER ${USER}
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
