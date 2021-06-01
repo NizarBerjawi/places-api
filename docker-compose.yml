@@ -10,7 +10,7 @@ services:
       - .docker/nginx/conf.d/:/etc/nginx/conf.d
     depends_on:
       - php
-      - mariadb
+      - mysql
       - supervisor
     networks:
       - api_network
@@ -18,6 +18,9 @@ services:
     build:
       context: .
       dockerfile: .docker/php.Dockerfile
+      args: 
+        GUID: 1000
+        USER: www
     volumes:
       - .:/var/www
       - .docker/php-fpm/php.ini:/etc/php/7.3/fpm/php.ini
@@ -37,9 +40,9 @@ services:
         - .docker/supervisor/supervisord.d:/etc/supervisord.d
     networks:
       - api_network
-  mariadb:
-    image: mariadb:10.5.9
-    container_name: mariadb
+  mysql:
+    image: mysql:5.7.34
+    container_name: mysql
     restart: unless-stopped
     tty: true
     ports:
@@ -58,13 +61,13 @@ services:
     build:
       context: .
       dockerfile: .docker/composer.Dockerfile
+      args: 
+        GUID: 1000
+        USER: www
     container_name: composer
     volumes:
       - .:/var/www
     working_dir: /var/www
-    depends_on:
-      - php
-    user: www
     entrypoint: ['composer', '--ignore-platform-reqs']
     networks:
       - api_network
@@ -72,11 +75,14 @@ services:
     build:
       context: .
       dockerfile: .docker/php.Dockerfile
+      args: 
+        GUID: 1000
+        USER: www
     container_name: artisan
     volumes:
       - .:/var/www
     depends_on:
-      - mariadb
+      - mysql
     working_dir: /var/www
     entrypoint: ['php', '/var/www/artisan']
     networks:
@@ -85,11 +91,14 @@ services:
     build:
       context: .
       dockerfile: .docker/php.Dockerfile
+      args: 
+        GUID: 1000
+        USER: www
     container_name: artisan
     volumes:
       - .:/var/www
     depends_on:
-      - mariadb
+      - mysql
     working_dir: /var/www
     entrypoint: ['/var/www/vendor/bin/phpunit']
     networks:
