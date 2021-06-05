@@ -15,6 +15,6 @@
 
 $router->get('/', ['uses' => 'HomeController@index']);
 $router->get('/documentation', [
-    'uses' => 'HomeController@index',
+    'uses' => 'DocumentationController@index',
     'as' => 'docs',
 ]);
