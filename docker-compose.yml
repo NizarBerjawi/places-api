@@ -87,6 +87,12 @@ services:
     entrypoint: ['php', '/var/www/artisan']
     networks:
       - api_network
+  npm:
+    image: node:alpine
+    volumes:
+        - .:/app
+    working_dir: /app
+    entrypoint: ["npm"]
   test:
     build:
       context: .
