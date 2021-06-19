@@ -1,0 +1,610 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Places API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/v1/continents": {
+            "get": {
+                "tags": [
+                    "Continents"
+                ],
+                "summary": "Returns a list of paginated continents",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\ContinentController::index",
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filter continents by name or continent code",
+                        "required": false,
+                        "style": "deepObject",
+                        "schema": {
+                            "properties": {
+                                "code": {
+                                    "description": "Display a listing of all continents.",
+                                    "type": "string",
+                                    "example": "OC"
+                                },
+                                "name": {
+                                    "description": "Display a listing of all continents.",
+                                    "type": "string",
+                                    "example": "Oceania"
+                                }
+                            },
+                            "type": "object",
+                            "enum": [
+                                "code",
+                                "name"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Include related resources",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "countries"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/continent"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/continents/{continentCode}": {
+            "get": {
+                "tags": [
+                    "Continents"
+                ],
+                "summary": "Display a specified continent.",
+                "operationId": "getContinentByCode",
+                "parameters": [
+                    {
+                        "name": "continentCode",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/continent"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Continent not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/continents/{continentCode}/countries": {
+            "get": {
+                "tags": [
+                    "Continents"
+                ],
+                "summary": "Returns a list of paginated countries in a specific continent",
+                "description": "Display a listing of all countries in a continent.",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\ContinentCountryController::index",
+                "parameters": [
+                    {
+                        "name": "continentCode",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Include related resources",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "continent",
+                                    "timeZones",
+                                    "flag",
+                                    "neighbours"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/country"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Continent not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/countries": {
+            "get": {
+                "tags": [
+                    "Countries"
+                ],
+                "summary": "Returns a list of paginated countries",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\CountryController::index",
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filter countries by certain criteria",
+                        "required": false,
+                        "style": "deepObject",
+                        "schema": {
+                            "properties": {
+                                "area_lt": {
+                                    "description": "Display a listing of all countries.",
+                                    "type": "integer",
+                                    "example": "100000"
+                                }
+                            },
+                            "type": "object",
+                            "enum": [
+                                "name",
+                                "iso3166_alpha2",
+                                "iso3166_alpha3",
+                                "iso3166_numeric",
+                                "population",
+                                "area",
+                                "phone_code",
+                                "area_gt",
+                                "area_gte",
+                                "area_lt",
+                                "area_lte",
+                                "area_between",
+                                "population_gt",
+                                "population_gte",
+                                "population_lt",
+                                "population_lte",
+                                "population_between"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Include related resources",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "continent",
+                                    "timeZones",
+                                    "flag",
+                                    "neighbours"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/country"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/countries/{countryCode}": {
+            "get": {
+                "tags": [
+                    "Countries"
+                ],
+                "summary": "Display a specified country.",
+                "operationId": "getCountryByCode",
+                "parameters": [
+                    {
+                        "name": "countryCode",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Include related resources",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "continent",
+                                    "timeZones",
+                                    "flag",
+                                    "neighbours"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/country"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Country not found"
+                    }
+                }
+            }
+        },
+        "/api/v1/countries/{countryCode}/currency": {
+            "get": {
+                "tags": [
+                    "Countries"
+                ],
+                "summary": "Returns the currency of a specific country",
+                "description": "Display the currency of a country.",
+                "operationId": "App\\Http\\Controllers\\Api\\V1\\CountryCurrencyController::index",
+                "parameters": [
+                    {
+                        "name": "countryCode",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "include",
+                        "in": "query",
+                        "description": "Include related resources",
+                        "required": false,
+                        "explode": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "enum": [
+                                    "countries"
+                                ]
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/currency"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Country not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "continent": {
+                "title": "Continent",
+                "properties": {
+                    "code": {
+                        "schema": "Continent",
+                        "description": "The two letter continent code",
+                        "type": "string",
+                        "example": "OC"
+                    },
+                    "name": {
+                        "schema": "Continent",
+                        "description": "The name of the continent",
+                        "type": "string",
+                        "example": "Oceania"
+                    }
+                },
+                "type": "object"
+            },
+            "country": {
+                "title": "Country",
+                "properties": {
+                    "name": {
+                        "schema": "Country",
+                        "description": "The English name of the country",
+                        "type": "string",
+                        "example": "Australia"
+                    },
+                    "iso3166_alpha2": {
+                        "schema": "Country",
+                        "description": "The two-letter ISO 3166-1 alpha-2 country code",
+                        "type": "string",
+                        "example": "AU"
+                    },
+                    "iso3166_alpha3": {
+                        "schema": "Country",
+                        "description": "The three-letter ISO 3166-1 alpha-3 country code",
+                        "type": "string",
+                        "example": "AUS"
+                    },
+                    "iso3166_numeric": {
+                        "schema": "Country",
+                        "description": "The three-digit ISO 3166-1 numeric country code",
+                        "type": "integer",
+                        "example": "036"
+                    },
+                    "population": {
+                        "schema": "Country",
+                        "description": "The population of the country",
+                        "type": "integer",
+                        "example": "24992369"
+                    },
+                    "area": {
+                        "schema": "Country",
+                        "description": "The total area of the country",
+                        "type": "integer",
+                        "example": "7686850"
+                    },
+                    "phone_code": {
+                        "schema": "Country",
+                        "description": "The country calling code",
+                        "type": "string",
+                        "example": "61"
+                    }
+                },
+                "type": "object"
+            },
+            "currency": {
+                "title": "Currency",
+                "properties": {
+                    "name": {
+                        "schema": "Currency",
+                        "description": "The name of the currency",
+                        "type": "string",
+                        "example": "Dollar"
+                    },
+                    "code": {
+                        "schema": "Currency",
+                        "description": "The code of the currency",
+                        "type": "string",
+                        "example": "AUD"
+                    }
+                },
+                "type": "object"
+            },
+            "feature_class": {
+                "title": "Feature Class",
+                "properties": {
+                    "name": {
+                        "schema": "FeatureClass",
+                        "description": "The name of the feature class",
+                        "type": "string",
+                        "example": "A"
+                    },
+                    "description": {
+                        "schema": "FeatureClass",
+                        "description": "The description of the feature class",
+                        "type": "string",
+                        "example": "Country, state, region,..."
+                    }
+                },
+                "type": "object"
+            },
+            "feature_coode": {
+                "title": "Feature Code",
+                "properties": {
+                    "code": {
+                        "schema": "FeatureCode",
+                        "description": "The code of the feature code",
+                        "type": "string",
+                        "example": "ADM4H"
+                    },
+                    "full_description": {
+                        "schema": "FeatureCode",
+                        "description": "The full description of the feature code",
+                        "type": "string",
+                        "example": "A former fourth-order administrative division"
+                    },
+                    "short_description": {
+                        "schema": "FeatureCode",
+                        "description": "The short description of the feature code",
+                        "type": "string",
+                        "example": "Historical fourth-order administrative division"
+                    }
+                },
+                "type": "object"
+            },
+            "flag": {
+                "title": "Country Flag",
+                "properties": {
+                    "country_code": {
+                        "schema": "Flag",
+                        "description": "The two-letter ISO 3166-1 alpha-2 country code that this flag belongs to",
+                        "type": "string",
+                        "example": "AU"
+                    },
+                    "path": {
+                        "schema": "Flag",
+                        "description": "The location of the flag image",
+                        "type": "string",
+                        "example": "http://localhost:8080/storage/flags/AU/au.gif"
+                    }
+                },
+                "type": "object"
+            },
+            "language": {
+                "title": "Language",
+                "properties": {
+                    "name": {
+                        "schema": "Language",
+                        "description": "The name of a specific language",
+                        "type": "string",
+                        "example": "English"
+                    },
+                    "iso639_1": {
+                        "schema": "Language",
+                        "description": "Two-letter language codes, one per language for ISO 639 macrolanguage",
+                        "type": "string",
+                        "example": "en"
+                    },
+                    "iso639_2": {
+                        "schema": "Language",
+                        "description": "Three-letter language codes but with some codes derived from English names rather than native names of languages",
+                        "type": "string",
+                        "example": "eng"
+                    },
+                    "iso639_3": {
+                        "schema": "Language",
+                        "description": "Three-letter language codes but with distinct codes for each variety of an ISO 639 macrolanguage",
+                        "type": "string",
+                        "example": "eng"
+                    }
+                },
+                "type": "object"
+            },
+            "location": {
+                "title": "Location",
+                "properties": {
+                    "latitude": {
+                        "schema": "Location",
+                        "description": "The latitude of a certain place",
+                        "type": "string",
+                        "example": "-25.734968"
+                    },
+                    "longitude": {
+                        "schema": "Location",
+                        "description": "The longitude of a certain place",
+                        "type": "string",
+                        "example": "134.489563"
+                    }
+                },
+                "type": "object"
+            },
+            "place": {
+                "title": "Place",
+                "properties": {
+                    "elevation": {
+                        "schema": "Place",
+                        "description": "The elevation of a place in meters",
+                        "type": "integer",
+                        "example": "2209"
+                    },
+                    "name": {
+                        "schema": "Place",
+                        "description": "The name of a place",
+                        "type": "string",
+                        "example": "Mount Townsend"
+                    },
+                    "population": {
+                        "schema": "Place",
+                        "description": "The population of a certain place",
+                        "type": "integer",
+                        "example": "0"
+                    },
+                    "uuid": {
+                        "schema": "Place",
+                        "description": "The UUID of a certain place",
+                        "type": "string",
+                        "example": "000b9dff-92cf-4a01-a2c0-59473aab5a3c"
+                    }
+                },
+                "type": "object"
+            },
+            "time_zone": {
+                "title": "Time Zone",
+                "properties": {
+                    "gmt_offset": {
+                        "schema": "TimeZone",
+                        "description": "The number of hours a place refers to that time zone being three hours ",
+                        "type": "integer",
+                        "example": "2"
+                    },
+                    "time_zone": {
+                        "schema": "TimeZone",
+                        "description": "The name of a place",
+                        "type": "string",
+                        "example": "Mount Townsend"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Continents",
+            "description": "Everything about continents"
+        },
+        {
+            "name": "Countries",
+            "description": "Everything about countries"
+        }
+    ]
+}

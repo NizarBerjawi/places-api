@@ -4,6 +4,33 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Feature Code.
+ *
+ * @OA\Schema(
+ *      schema="feature_coode",
+ *      type="object",
+ *      title="Feature Code"
+ * )
+ * @OA\Property(
+ *      property="code",
+ *      type="string",
+ *      example="ADM4H",
+ *      description="The code of the feature code"
+ * )
+ * @OA\Property(
+ *      property="full_description",
+ *      type="string",
+ *      example="A former fourth-order administrative division",
+ *      description="The full description of the feature code"
+ * )
+ * @OA\Property(
+ *      property="short_description",
+ *      type="string",
+ *      example="Historical fourth-order administrative division",
+ *      description="The short description of the feature code"
+ * )
+ */
 class FeatureCode extends Model
 {
     /**

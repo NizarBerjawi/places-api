@@ -5,6 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Location.
+ *
+ * @OA\Schema(
+ *      schema="location",
+ *      type="object",
+ *      title="Location"
+ * )
+ * @OA\Property(
+ *      property="latitude",
+ *      type="string",
+ *      example="-25.734968",
+ *      description="The latitude of a certain place"
+ * )
+ * @OA\Property(
+ *      property="longitude",
+ *      type="string",
+ *      example="134.489563",
+ *      description="The longitude of a certain place"
+ * )
+ */
 class Location extends Model
 {
     /**

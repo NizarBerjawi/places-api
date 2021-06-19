@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,17 +15,14 @@
     <header>
         @include('partials.navbar')
     </header>
-    
+
     <main>
         <div class="container">
-            <div class="row">
-                <div class="col s12">
-                    @yield('content')
-                </div>
-            </div>
+            @yield('content')
         </div>
     </main>
 
     @yield('scripts')
 </body>
+
 </html>

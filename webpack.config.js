@@ -38,6 +38,6 @@ module.exports = {
             path: path.resolve(__dirname, 'public/dist'),
             prettyPrint: true,
             removeFullPathAutoPrefix: true
-        }),
+        })
     ],
 };

@@ -30,7 +30,7 @@ class GenerateDocumentation extends Command
      */
     public function handle()
     {
-        $openApi = Generator::scan(['app/Http/Controllers/Api']);
+        $openApi = Generator::scan(['app/Http/Controllers', 'app/Models']);
         $content = $openApi->toJson();
 
         (new Filesystem)->put(base_path('openApi.json'), $content);

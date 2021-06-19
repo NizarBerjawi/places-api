@@ -5,6 +5,39 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Place.
+ *
+ * @OA\Schema(
+ *      schema="place",
+ *      type="object",
+ *      title="Place"
+ * )
+ * @OA\Property(
+ *      property="elevation",
+ *      type="integer",
+ *      example="2209",
+ *      description="The elevation of a place in meters"
+ * )
+ * @OA\Property(
+ *      property="name",
+ *      type="string",
+ *      example="Mount Townsend",
+ *      description="The name of a place"
+ * )
+ * @OA\Property(
+ *      property="population",
+ *      type="integer",
+ *      example="0",
+ *      description="The population of a certain place"
+ * )
+ * @OA\Property(
+ *      property="uuid",
+ *      type="string",
+ *      example="000b9dff-92cf-4a01-a2c0-59473aab5a3c",
+ *      description="The UUID of a certain place"
+ * )
+ */
 class Place extends Model
 {
     /**

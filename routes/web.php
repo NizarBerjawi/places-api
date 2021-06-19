@@ -13,8 +13,17 @@
 |
 */
 
-$router->get('/', ['uses' => 'HomeController@index']);
+$router->get('/', [
+    'uses' => 'WebController@home',
+    'as' => 'home',
+]);
+
+$router->get('/introduction', [
+    'uses' => 'WebController@intro',
+    'as' => 'intro',
+]);
+
 $router->get('/documentation', [
-    'uses' => 'DocumentationController@index',
+    'uses' => 'WebController@docs',
     'as' => 'docs',
 ]);
