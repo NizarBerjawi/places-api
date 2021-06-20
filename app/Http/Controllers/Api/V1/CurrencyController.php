@@ -9,7 +9,55 @@ use App\Http\Resources\V1\CurrencyResource;
 class CurrencyController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of all currencies.
+     *
+     * @OA\Get(
+     *      tags={"Currencies"},
+     *      summary="Returns a list of paginated currencies",
+     *      path="/api/v1/currencies",
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/currency")
+     *          ),
+     *      ),
+     *      @OA\Parameter(
+     *          name="filter",
+     *          in="query",
+     *          description="Filter currencies by certain criteria",
+     *          required=false,
+     *          style="deepObject",
+     *          @OA\Schema(
+     *              type="object",
+     *              enum={"code", "name"},
+     *              @OA\Property(
+     *                  property="code",
+     *                  type="string",
+     *                  example="AUD"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="include",
+     *          in="query",
+     *          description="Include related resources",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="array",
+     *              @OA\Items(
+     *                  type="string",
+     *                  enum = {"countries"},
+     *              )
+     *          )
+     *      ),
+     * )
+     * @OA\Tag(
+     *     name="Currencies",
+     *     description="Everything about currencies"
+     * )
      *
      * @param  \App\Filters\CurrencyFilter  $filter
      * @return \Illuminate\Http\Response
