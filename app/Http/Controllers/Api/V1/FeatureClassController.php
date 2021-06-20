@@ -70,8 +70,45 @@ class FeatureClassController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display a specified feature class.
      *
+     * @OA\Get(
+     *     tags={"Feature Classes"},
+     *     path="/api/v1/featureClasses/{featureClassCode}",
+     *     operationId="getFeatureClassByCode",
+     *     @OA\Property(ref="#/components/schemas/featureClass"),
+     *     @OA\Parameter(
+     *        name="featureClassCode",
+     *        in="path",
+     *        required=true,
+     *        @OA\Schema(
+     *            type="string"
+     *        )
+     *     ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/feature_class")
+     *       ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Feature class not found"
+     *       ),
+     *      @OA\Parameter(
+     *          name="include",
+     *          in="query",
+     *          description="Include related resources",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="array",
+     *              @OA\Items(
+     *                  type="string",
+     *                  enum = {"featureCodes"},
+     *              )
+     *          )
+     *      ),
+     * )
      * @param  \App\Filters\FeatureClassFilter  $filter
      * @param  string $code
      * @return \Illuminate\Http\Response
