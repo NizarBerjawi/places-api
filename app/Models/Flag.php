@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Schema(
  *      schema="flag",
  *      type="object",
- *      title="Country Flag"
+ *      title="Flag"
  * )
  * @OA\Property(
  *      property="country_code",
