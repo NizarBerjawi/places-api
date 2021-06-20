@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * Feature Code.
  *
  * @OA\Schema(
- *      schema="feature_coode",
+ *      schema="feature_code",
  *      type="object",
  *      title="Feature Code"
  * )
