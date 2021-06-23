@@ -70,8 +70,45 @@ class CurrencyController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display a specified currency.
      *
+     * @OA\Get(
+     *     tags={"Currencies"},
+     *     path="/api/v1/currencies/{currencyCode}",
+     *     operationId="getCurrencyByCode",
+     *     @OA\Property(ref="#/components/schemas/currency"),
+     *     @OA\Parameter(
+     *        name="currencyCode",
+     *        in="path",
+     *        required=true,
+     *        @OA\Schema(
+     *            type="string"
+     *        )
+     *     ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/currency")
+     *       ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Currency not found"
+     *       ),
+     *      @OA\Parameter(
+     *          name="include",
+     *          in="query",
+     *          description="Include related resources",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="array",
+     *              @OA\Items(
+     *                  type="string",
+     *                  enum = {"countries"},
+     *              )
+     *          )
+     *      ),
+     * )
      * @param  \App\Filters\CurrencyFilter  $filter
      * @param  string $code
      * @return \Illuminate\Http\Response

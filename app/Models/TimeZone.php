@@ -22,8 +22,14 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Property(
  *      property="time_zone",
  *      type="string",
- *      example="Mount Townsend",
- *      description="The name of a place"
+ *      example="Asia/Tokyo",
+ *      description="The time one name"
+ * )
+ * @OA\Property(
+ *      property="code",
+ *      type="string",
+ *      example="asia_tokyo",
+ *      description="The time zone name"
  * )
  */
 class TimeZone extends Model

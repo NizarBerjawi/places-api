@@ -28,7 +28,7 @@ class LanguageFilter extends Filter
             AllowedFilter::exact('iso639_1'),
             AllowedFilter::exact('iso639_2'),
             AllowedFilter::exact('iso639_3'),
-            AllowedFilter::scope('by_country'),
+            AllowedFilter::scope('country_code', 'by_country'),
         ];
     }
 

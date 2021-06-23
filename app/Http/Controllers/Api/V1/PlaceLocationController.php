@@ -12,8 +12,31 @@ use Illuminate\Support\Arr;
 class PlaceLocationController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a location of a specific place.
      *
+     * @OA\Get(
+     *     tags={"Places"},
+     *     path="/api/v1/places/{uuid}/location",
+     *     operationId="getLocationByPlace",
+     *     @OA\Property(ref="#/components/schemas/Place"),
+     *     @OA\Parameter(
+     *        name="uuid",
+     *        in="path",
+     *        required=true,
+     *        @OA\Schema(
+     *            type="string"
+     *        )
+     *     ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/location")
+     *       ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Place not found"
+     *       ),
+     * )
      * @param \App\Filters\PlaceFilter  $filter
      * @param string $uuid
      * @return \Illuminate\Http\Response

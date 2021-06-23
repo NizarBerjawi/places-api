@@ -15,13 +15,13 @@ use Illuminate\Database\Eloquent\Model;
  * )
  * @OA\Property(
  *      property="latitude",
- *      type="string",
+ *      type="number",
  *      example="-25.734968",
  *      description="The latitude of a certain place"
  * )
  * @OA\Property(
  *      property="longitude",
- *      type="string",
+ *      type="number",
  *      example="134.489563",
  *      description="The longitude of a certain place"
  * )

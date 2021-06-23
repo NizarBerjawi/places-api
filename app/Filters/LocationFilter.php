@@ -3,7 +3,6 @@
 namespace App\Filters;
 
 use App\Models\Location;
-use Spatie\QueryBuilder\AllowedFilter;
 
 class LocationFilter extends Filter
 {
@@ -24,9 +23,7 @@ class LocationFilter extends Filter
      */
     public function getAllowedFilters() : array
     {
-        return [
-            AllowedFilter::scope('by_country'),
-        ];
+        return [];
     }
 
     /**

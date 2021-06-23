@@ -5,9 +5,18 @@ namespace App\Http\Controllers;
 use Laravel\Lumen\Routing\Controller as BaseController;
 
 /**
- * Places API v1.
- *
- * @OA\Info(title="Places API", version="1.0.0")
+ * @OA\Info(
+ *     description="This is the full documentation for the Places API.",
+ *     version="1.0.0",
+ *     title="Places API",
+ *     @OA\Contact(
+ *         email="nizarberjawi12@gmail.com"
+ *     ),
+ *     @OA\License(
+ *         name="Apache 2.0",
+ *         url="http://www.apache.org/licenses/LICENSE-2.0.html"
+ *     )
+ * )
  */
 class Controller extends BaseController
 {

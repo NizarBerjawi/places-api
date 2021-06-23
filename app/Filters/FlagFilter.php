@@ -27,7 +27,6 @@ class FlagFilter extends Filter
     {
         return [
             AllowedFilter::exact('country_code'),
-            AllowedFilter::partial('name'),
         ];
     }
 
