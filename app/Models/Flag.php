@@ -5,6 +5,27 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Flag.
+ *
+ * @OA\Schema(
+ *      schema="flag",
+ *      type="object",
+ *      title="Flag"
+ * )
+ * @OA\Property(
+ *      property="country_code",
+ *      type="string",
+ *      example="AU",
+ *      description="The two-letter ISO 3166-1 alpha-2 country code that this flag belongs to"
+ * )
+ * @OA\Property(
+ *      property="path",
+ *      type="string",
+ *      example="http://localhost:8080/storage/flags/AU/au.gif",
+ *      description="The location of the flag image"
+ * )
+ */
 class Flag extends Model
 {
     /**

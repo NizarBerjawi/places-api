@@ -23,7 +23,7 @@ class TimeZonesImport extends GeonamesFileIterator implements GeonamesImportable
             $timestamp = Carbon::now()->toDateTimeString();
 
             $timeZones->push([
-                'code'         => str_replace('/', '-', strtolower($item[1])),
+                'code'         => str_replace('/', '_', strtolower($item[1])),
                 'time_zone'    => $item[1],
                 'country_code' => $item[0],
                 'gmt_offset'   => $item[2],

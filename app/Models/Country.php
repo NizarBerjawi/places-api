@@ -5,6 +5,55 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @OA\Schema(
+ *      schema="country",
+ *      type="object",
+ *      title="Country"
+ * )
+ * @OA\Property(
+ *      property="name",
+ *      type="string",
+ *      example="Australia",
+ *      description="The English name of the country"
+ * )
+ * @OA\Property(
+ *      property="iso3166_alpha2",
+ *      type="string",
+ *      example="AU",
+ *      description="The two-letter ISO 3166-1 alpha-2 country code"
+ * )
+ * @OA\Property(
+ *      property="iso3166_alpha3",
+ *      type="string",
+ *      example="AUS",
+ *      description="The three-letter ISO 3166-1 alpha-3 country code"
+ * )
+ * @OA\Property(
+ *      property="iso3166_numeric",
+ *      type="integer",
+ *      example="036",
+ *      description="The three-digit ISO 3166-1 numeric country code"
+ * )
+ * @OA\Property(
+ *      property="population",
+ *      type="integer",
+ *      example="24992369",
+ *      description="The population of the country"
+ * )
+ * @OA\Property(
+ *      property="area",
+ *      type="integer",
+ *      example="7686850",
+ *      description="The total area of the country"
+ * )
+ * @OA\Property(
+ *      property="phone_code",
+ *      type="string",
+ *      example="61",
+ *      description="The country calling code"
+ * )
+ */
 class Country extends Model
 {
     /**

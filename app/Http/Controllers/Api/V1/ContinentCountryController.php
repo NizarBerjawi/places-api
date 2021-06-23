@@ -12,7 +12,47 @@ use Illuminate\Support\Arr;
 class ContinentCountryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of all countries in a continent.
+     *
+     * @OA\Get(
+     *      tags={"Continents"},
+     *      summary="Returns a list of paginated countries in a specific continent",
+     *      path="/api/v1/continents/{continentCode}/countries",
+     *      @OA\Parameter(
+     *         name="continentCode",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/country")
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Continent not found"
+     *       ),
+     *      @OA\Parameter(
+     *          name="include",
+     *          in="query",
+     *          description="Include related resources",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="array",
+     *              @OA\Items(
+     *                  type="string",
+     *                  enum = {"continent", "timeZones", "flag", "neighbours"},
+     *              )
+     *          )
+     *      ),
+     * )
      *
      * @param \App\Filters\CountryFilter  $filter
      * @param string $code

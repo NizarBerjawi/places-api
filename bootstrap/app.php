@@ -114,6 +114,12 @@ $app->register(\Spatie\QueryBuilder\QueryBuilderServiceProvider::class);
 */
 
 $app->router->group([
+    'namespace'  => 'App\Http\Controllers', 
+], function ($router) {
+    require __DIR__.'/../routes/web.php';
+});
+
+$app->router->group([
     'middleware' => 'api_version:v1',
     'namespace'  => 'App\Http\Controllers\Api\V1',
     'prefix'     => 'api/v1' 

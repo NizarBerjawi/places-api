@@ -5,6 +5,25 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @OA\Schema(
+ *      schema="currency",
+ *      type="object",
+ *      title="Currency"
+ * )
+ * @OA\Property(
+ *      property="name",
+ *      type="string",
+ *      example="Dollar",
+ *      description="The name of the currency"
+ * )
+ * @OA\Property(
+ *      property="code",
+ *      type="string",
+ *      example="AUD",
+ *      description="The code of the currency"
+ * )
+ */
 class Currency extends Model
 {
     /**

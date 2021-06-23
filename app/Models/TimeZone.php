@@ -5,6 +5,33 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Time Zone.
+ *
+ * @OA\Schema(
+ *      schema="time_zone",
+ *      type="object",
+ *      title="Time Zone"
+ * )
+ * @OA\Property(
+ *      property="gmt_offset",
+ *      type="integer",
+ *      example="2",
+ *      description="The number of hours a place refers to that time zone being three hours "
+ * )
+ * @OA\Property(
+ *      property="time_zone",
+ *      type="string",
+ *      example="Asia/Tokyo",
+ *      description="The time one name"
+ * )
+ * @OA\Property(
+ *      property="code",
+ *      type="string",
+ *      example="asia_tokyo",
+ *      description="The time zone name"
+ * )
+ */
 class TimeZone extends Model
 {
     /**
