@@ -4,6 +4,7 @@ namespace App\Filters;
 
 use App\Models\FeatureClass;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
 
 class FeatureClassFilter extends Filter
 {
@@ -37,7 +38,7 @@ class FeatureClassFilter extends Filter
     public function getAllowedIncludes() : array
     {
         return [
-            'featureCodes',
+            AllowedInclude::relationship('featureCodes'),
         ];
     }
 }

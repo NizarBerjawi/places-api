@@ -12,7 +12,33 @@ use Illuminate\Support\Arr;
 class CountryNeighbourController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the neighbouring countries of a country.
+     *
+     * @OA\Get(
+     *      tags={"Countries"},
+     *      summary="Returns the neighbouring countries of a specific country",
+     *      path="/api/v1/countries/{countryCode}/neighbours",
+     *      @OA\Parameter(
+     *         name="countryCode",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/country")
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Country not found"
+     *       )
+     * )
      *
      * @param  \App\Filters\CountryFilter  $filter
      * @param  string $code

@@ -4,6 +4,27 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Feature Class.
+ *
+ * @OA\Schema(
+ *      schema="feature_class",
+ *      type="object",
+ *      title="Feature Class"
+ * )
+ * @OA\Property(
+ *      property="name",
+ *      type="string",
+ *      example="A",
+ *      description="The name of the feature class"
+ * )
+ * @OA\Property(
+ *      property="description",
+ *      type="string",
+ *      example="Country, state, region,...",
+ *      description="The description of the feature class"
+ * )
+ */
 class FeatureClass extends Model
 {
     /**

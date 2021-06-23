@@ -1,6 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
+/public/dist
 /storage/*.key
 /vendor
 /.idea
@@ -16,3 +17,4 @@ yarn-error.log
 _ide_helper.php
 .phpstorm.meta.php
 .php_cs.cache
+openApi.json

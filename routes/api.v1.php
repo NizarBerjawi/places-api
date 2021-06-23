@@ -13,10 +13,6 @@
 |
 */
 
-$router->get('/', function () use ($router) {
-    return $router->app->version();
-});
-
 $router->group(['prefix' => 'countries'], function () use ($router) {
     $router->get('/', ['uses' => 'CountryController@index']);
     $router->get('/{code}', ['uses' => 'CountryController@show']);

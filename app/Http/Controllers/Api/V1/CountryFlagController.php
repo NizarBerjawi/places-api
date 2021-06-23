@@ -12,7 +12,47 @@ use Illuminate\Support\Arr;
 class CountryFlagController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display the flag of a country.
+     *
+     * @OA\Get(
+     *      tags={"Countries"},
+     *      summary="Returns the flag of a specific country",
+     *      path="/api/v1/countries/{countryCode}/flag",
+     *      @OA\Parameter(
+     *         name="countryCode",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/flag")
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Country not found"
+     *       ),
+     *      @OA\Parameter(
+     *          name="include",
+     *          in="query",
+     *          description="Include related resources",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="array",
+     *              @OA\Items(
+     *                  type="string",
+     *                  enum = {"country"},
+     *              )
+     *          )
+     *      ),
+     * )
      *
      * @param  \App\Filters\FlagFilter  $filter
      * @param  string $code
