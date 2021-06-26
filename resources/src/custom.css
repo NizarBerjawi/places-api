@@ -1,0 +1,8 @@
+/* Dealing with conflict between Bulma and Swagger UI styles */
+.swagger-ui .info .title small pre.version {
+    background: #7d8492 !important;
+}
+
+.swagger-ui .info .title small.version-stamp pre.version {
+    background-color: #89bf04 !important;
+}
