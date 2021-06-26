@@ -58,6 +58,7 @@ class CountryFilter extends Filter
             AllowedInclude::relationship('timeZones'),
             AllowedInclude::relationship('flag'),
             AllowedInclude::relationship('neighbours'),
+            AllowedInclude::relationship('languages'),
         ];
     }
 }
