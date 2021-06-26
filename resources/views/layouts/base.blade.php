@@ -18,11 +18,17 @@
 
     <main>
         <div class="container">
-            @yield('content')
+            <div class="column is-10 is-offset-1">
+                @yield('content')
+            </div>
         </div>
     </main>
 
     @yield('scripts')
+
+    <footer class="footer">
+        @include('partials.footer')
+    </footer>
 </body>
 
 </html>

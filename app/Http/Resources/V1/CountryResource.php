@@ -25,7 +25,9 @@ class CountryResource extends JsonResource
             'continent'       => ContinentResource::make($this->whenLoaded('continent')),
             'time_zones'      => TimeZoneResource::collection($this->whenLoaded('timeZones')),
             'flag'            => FlagResource::make($this->whenLoaded('flag')),
-            'neighbours'     => self::collection($this->whenLoaded('neighbours')),
+            'neighbours'      => self::collection($this->whenLoaded('neighbours')),
+            'languages'       => LanguageResource::collection($this->whenLoaded('languages')),
+
         ];
     }
 }

@@ -26,6 +26,30 @@ class CountryPlacesController extends Controller
      *             type="string"
      *         )
      *     ),
+     *      @OA\Parameter(
+     *          name="filter",
+     *          in="query",
+     *          description="Filter places by certain criteria",
+     *          required=false,
+     *          style="deepObject",
+     *          @OA\Schema(
+     *              type="object",
+     *              enum={
+     *                  "feature_code",
+     *                  "country_code",
+     *                  "population_gt",
+     *                  "population_gte",
+     *                  "population_lt",
+     *                  "population_lte",
+     *                  "population_between"
+     *              },
+     *              @OA\Property(
+     *                  property="population_gt",
+     *                  type="integer",
+     *                  example="100000"
+     *              )
+     *          )
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
