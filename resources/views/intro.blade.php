@@ -13,7 +13,7 @@
                 available for download free of charge.
             </blockquote>
 
-            <h1>Available Resources</h1>
+            {{-- <h1>Available Resources</h1>
 
             <table class="table is-striped">
                 <thead>
@@ -27,8 +27,8 @@
                         <td class="is-vcentered">Continent</td>
                         <td class="is-vcentered">Continent 2 letter code</td>
                         <td class="is-vcentered">AS, AF, EU...</td>
-                        <td class="is-vcentered"></td>
-                    </tr>
+                        <td class="is-vcentered"><a class="button is-info is-small"
+                            href="https://www.geonames.org/countries/" target="_blank">Full List</a></td>                    </tr>
                     <tr>
                         <td class="is-vcentered">Country</td>
                         <td class="is-vcentered">ISO-3166 alpha2 code</td>
@@ -64,8 +64,8 @@
                     </tr>
                     <tr>
                         <td class="is-vcentered">Time Zone</td>
-                        <td class="is-vcentered">Time zone code</td>
-                        <td class="is-vcentered">Australia/Sydney, Asia/Shanghai, Europe/London</td>
+                        <td class="is-vcentered">Time zone code.<br /> A camel case version of the time zone.</td>
+                        <td class="is-vcentered">Australia_Sydney, Asia_Shanghai, Europe_London...</td>
                         <td class="is-vcentered"></td>
                     </tr>
                     <tr>
@@ -77,7 +77,7 @@
                     <tr>
                         <td class="is-vcentered">Feature Class</td>
                         <td class="is-vcentered">Feature class code</td>
-                        <td class="is-vcentered"></td>
+                        <td class="is-vcentered">A, H, L...</td>
                         <td class="is-vcentered">
                             <a class="button is-info is-small" href="https://www.geonames.org/export/codes.html"
                                 target="_blank">Full List</a>
@@ -86,7 +86,7 @@
                     <tr>
                         <td class="is-vcentered">Feature Code</td>
                         <td class="is-vcentered">N/A</td>
-                        <td class="is-vcentered">A, H, L...</td>
+                        <td class="is-vcentered">PCLI, PPLA, BDG...</td>
                         <td class="is-vcentered">
                             <a class="button is-info is-small" href="https://www.geonames.org/export/codes.html"
                                 target="_blank">
@@ -95,7 +95,7 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>
+            </table> --}}
 
             <h1>Querying Relations</h1>
             <p>You can query a relation by adding the <code>include</code> query parameter to the request.</p>
@@ -124,6 +124,7 @@
             <p>By default, all API results are paginated with a total of 10 results per page. You can fetch the data on
                 different pages by adding the <code>page</code> query parameter to the request.
             <pre>GET api/v1/featureCodes?page=3</pre>
+            <p>The above request will return all the results on the 3rd page</p>
         </div>
     </section>
 
