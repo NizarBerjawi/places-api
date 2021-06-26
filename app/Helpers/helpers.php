@@ -2,7 +2,7 @@
 
 if (! function_exists('public_path')) {
     /**
-     * Get the path to the application configuration files.
+     * Get the path to the application public folder.
      *
      * @param  string  $path
      * @return string
@@ -15,7 +15,7 @@ if (! function_exists('public_path')) {
 
 if (! function_exists('dist_path')) {
     /**
-     * Get the path to the application configuration files.
+     * Get the path to the application dist folder.
      *
      * @param  string  $path
      * @return string
@@ -35,7 +35,7 @@ if (! function_exists('asset_path')) {
      */
     function asset_path($path = '')
     {
-        return 'dist'.DIRECTORY_SEPARATOR.($path ? DIRECTORY_SEPARATOR.$path : $path);
+        return DIRECTORY_SEPARATOR.'dist'.DIRECTORY_SEPARATOR.($path);
     }
 }
 
