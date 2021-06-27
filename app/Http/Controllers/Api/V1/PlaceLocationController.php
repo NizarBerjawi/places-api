@@ -16,11 +16,11 @@ class PlaceLocationController extends Controller
      *
      * @OA\Get(
      *     tags={"Places"},
-     *     path="/api/v1/places/{uuid}/location",
+     *     path="/api/v1/places/{geonameId}/location",
      *     operationId="getLocationByPlace",
      *     @OA\Property(ref="#/components/schemas/Place"),
      *     @OA\Parameter(
-     *        name="uuid",
+     *        name="geonameId",
      *        in="path",
      *        required=true,
      *        @OA\Schema(
@@ -38,17 +38,17 @@ class PlaceLocationController extends Controller
      *       ),
      * )
      * @param \App\Filters\PlaceFilter  $filter
-     * @param string $uuid
+     * @param int $geonameId
      * @return \Illuminate\Http\Response
      */
-    public function index(LocationFilter $filter, string $uuid)
+    public function index(LocationFilter $filter, $geonameId)
     {
-        if (! Place::where('uuid', $uuid)->exists()) {
+        if (! Place::where('geoname_id', $geonameId)->exists()) {
             throw (new ModelNotFoundException())->setModel(Country::class);
         }
 
         $location = $filter
-            ->applyScope('byPlace', Arr::wrap($uuid))
+            ->applyScope('byPlace', Arr::wrap($geonameId))
             ->getBuilder()
             ->first();
 

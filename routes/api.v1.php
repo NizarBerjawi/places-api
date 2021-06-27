@@ -63,7 +63,7 @@ $router->group(['prefix' => 'languages'], function () use ($router) {
 
 $router->group(['prefix' => 'places'], function () use ($router) {
     $router->get('/', ['uses' => 'PlaceController@index']);
-    $router->get('/{uuid}', ['uses' => 'PlaceController@show']);
+    $router->get('/{geonameId}', ['uses' => 'PlaceController@show']);
 
-    $router->get('/{uuid}/location', ['uses' => 'PlaceLocationController@index']);
+    $router->get('/{geonameId}/location', ['uses' => 'PlaceLocationController@index']);
 });

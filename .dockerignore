@@ -2,7 +2,7 @@
 .env
 .git
 .vscode
-.docker/mysql/data/*
+.docker
 bootstrap/cache/*
 node_modules
 public/dist/*

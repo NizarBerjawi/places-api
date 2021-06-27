@@ -82,11 +82,11 @@ class PlaceController extends Controller
      *
      * @OA\Get(
      *     tags={"Places"},
-     *     path="/api/v1/places/{uuid}",
-     *     operationId="getPlaceByUuid",
+     *     path="/api/v1/places/{geonameId}",
+     *     operationId="getPlaceByGeonameId",
      *     @OA\Property(ref="#/components/schemas/Place"),
      *     @OA\Parameter(
-     *        name="uuid",
+     *        name="geonameId",
      *        in="path",
      *        required=true,
      *        @OA\Schema(
@@ -121,11 +121,11 @@ class PlaceController extends Controller
      * @param string $uuid
      * @return \Illuminate\Http\Response
      */
-    public function show(PlaceFilter $filter, string $uuid)
+    public function show(PlaceFilter $filter, $geonameId)
     {
         $place = $filter
             ->getBuilder()
-            ->where('uuid', $uuid)
+            ->where('geoname_id', $geonameId)
             ->firstOrFail();
 
         return PlaceResource::make($place);
