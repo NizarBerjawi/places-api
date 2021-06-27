@@ -32,10 +32,10 @@ use Illuminate\Database\Eloquent\Model;
  *      description="The population of a certain place"
  * )
  * @OA\Property(
- *      property="uuid",
- *      type="string",
- *      example="000b9dff-92cf-4a01-a2c0-59473aab5a3c",
- *      description="The UUID of a certain place"
+ *      property="geoname_id",
+ *      type="integer",
+ *      example="105480",
+ *      description="The Geoname ID of a certain place"
  * )
  */
 class Place extends Model
@@ -45,14 +45,14 @@ class Place extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'uuid';
+    protected $primaryKey = 'geoname_id';
 
     /**
      * The "type" of the primary key ID.
      *
      * @var string
      */
-    protected $keyType = 'string';
+    protected $keyType = 'integer';
 
     /**
      * The attributes that are mass assignable.
