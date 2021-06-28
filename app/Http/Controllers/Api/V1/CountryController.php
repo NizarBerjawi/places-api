@@ -48,7 +48,8 @@ class CountryController extends Controller
      *                  "population_gte",
      *                  "population_lt",
      *                  "population_lte",
-     *                  "population_between"
+     *                  "population_between",
+     *                  "neighbour_of"
      *              },
      *              @OA\Property(
      *                  property="area_lt",
