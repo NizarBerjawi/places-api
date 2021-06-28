@@ -43,6 +43,7 @@ class CountryFilter extends Filter
             AllowedFilter::scope('population_lt'),
             AllowedFilter::scope('population_lte'),
             AllowedFilter::scope('population_between'),
+            AllowedFilter::scope('neighbour_of'),
         ];
     }
 
