@@ -2,16 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Imports\Iterators\CountriesFileIterator;
-use App\Jobs\DownloadCountriesFile;
-use App\Jobs\DownloadCountryFlag;
-use App\Jobs\DownloadFeatureCodesFile;
-use App\Jobs\DownloadGeonamesFile;
-use App\Jobs\DownloadInfoFile;
-use App\Jobs\DownloadLanguages;
-use App\Jobs\DownloadTimezonesFile;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Arr;
 
 class DatabaseSeeder extends Seeder
 {
