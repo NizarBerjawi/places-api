@@ -116,7 +116,7 @@ Using Docker and docker-compose:
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-For a full details, please refer to the [Documentation](https://example.com)_
+For a full details, please refer to the [Documentation](https://example.com).
    
 <!-- LICENSE -->
 ## License
