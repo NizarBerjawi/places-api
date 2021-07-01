@@ -4,7 +4,6 @@ namespace App\Imports;
 
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -35,13 +34,9 @@ class NeighbourCountriesImport extends CountriesFileIterator implements Geonames
                 $neighbourCodes = Str::of($data[17])->explode(',');
 
                 return $neighbourCodes->map(function (string $code) use ($data) {
-                    $timestamp = Carbon::now()->toDateTimeString();
-
                     return [
                         'neighbour_code' => $code,
                         'country_code'   => $data[0],
-                        'created_at'     => $timestamp,
-                        'updated_at'     => $timestamp,
                     ];
                 });
             });

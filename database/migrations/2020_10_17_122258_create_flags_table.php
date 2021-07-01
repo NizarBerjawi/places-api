@@ -16,7 +16,6 @@ class CreateFlagsTable extends Migration
         Schema::create('flags', function (Blueprint $table) {
             $table->string('path');
             $table->string('country_code')->primary();
-            $table->timestamps();
         });
 
         Schema::table('flags', function (Blueprint $table) {

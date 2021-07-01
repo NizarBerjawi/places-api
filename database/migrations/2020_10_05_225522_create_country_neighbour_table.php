@@ -16,7 +16,6 @@ class CreateCountryNeighbourTable extends Migration
         Schema::create('country_neighbour', function (Blueprint $table) {
             $table->string('country_code');
             $table->string('neighbour_code');
-            $table->timestamps();
         });
 
         Schema::table('country_neighbour', function (Blueprint $table) {
