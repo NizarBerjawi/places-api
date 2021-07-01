@@ -22,7 +22,6 @@ class CreateCountriesTable extends Migration
             $table->unsignedDouble('area');
             $table->string('phone_code')->nullable();
             $table->string('continent_code');
-            $table->timestamps();
         });
 
         Schema::table('countries', function (Blueprint $table) {

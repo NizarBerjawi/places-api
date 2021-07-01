@@ -48,7 +48,7 @@ class Place extends Model
     protected $primaryKey = 'geoname_id';
 
     /**
-     * The "type" of the primary key ID.
+     * The "type" of the primary key geoname_id.
      *
      * @var string
      */
@@ -71,6 +71,16 @@ class Place extends Model
     public function featureCode()
     {
         return $this->belongsTo(FeatureCode::class, 'feature_code', 'code');
+    }
+
+    /**
+     * Get the Time Zone that this Place belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function timeZone()
+    {
+        return $this->belongsTo(TimeZone::class, 'time_zone', 'time_zone');
     }
 
     /**

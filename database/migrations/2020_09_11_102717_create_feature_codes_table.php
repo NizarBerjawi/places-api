@@ -18,7 +18,6 @@ class CreateFeatureCodesTable extends Migration
             $table->text('short_description')->nullable();
             $table->text('full_description')->nullable();
             $table->string('feature_class_code');
-            $table->timestamps();
         });
 
         Schema::table('feature_codes', function (Blueprint $table) {

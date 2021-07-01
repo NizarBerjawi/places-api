@@ -4,7 +4,6 @@ namespace App\Imports;
 
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class CountryCurrencyImport extends CountriesFileIterator implements GeonamesImportable
@@ -23,13 +22,9 @@ class CountryCurrencyImport extends CountriesFileIterator implements GeonamesImp
                 continue;
             }
 
-            $timestamp = Carbon::now()->toDateTimeString();
-
             $countryCurrencies->push([
                 'country_code'  => $item[0],
                 'currency_code' => $item[10],
-                'created_at'    => $timestamp,
-                'updated_at'    => $timestamp,
             ]);
         }
 

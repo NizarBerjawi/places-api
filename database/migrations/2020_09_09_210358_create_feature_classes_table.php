@@ -16,7 +16,6 @@ class CreateFeatureClassesTable extends Migration
         Schema::create('feature_classes', function (Blueprint $table) {
             $table->string('code')->primary();
             $table->text('description');
-            $table->timestamps();
         });
     }
 

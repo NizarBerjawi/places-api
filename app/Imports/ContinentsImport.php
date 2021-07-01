@@ -6,7 +6,6 @@ use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
 use App\Imports\Iterators\GeonamesFileIterator;
 use App\Models\Continent;
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -74,13 +73,9 @@ class ContinentsImport extends GeonamesFileIterator implements GeonamesImportabl
                 continue;
             }
 
-            $timestamp = Carbon::now()->toDateTimeString();
-
             $continents->push([
                 'code' => $code,
                 'name' => $name,
-                'created_at' => $timestamp,
-                'updated_at' => $timestamp,
             ]);
         }
 
