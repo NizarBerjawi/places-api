@@ -38,6 +38,7 @@ services:
     volumes:
         - .:/var/www
         - .docker/supervisor/supervisord.d:/etc/supervisord.d
+        - .docker/supervisor/supervisord.conf:/etc/supervisord.conf
     networks:
       - api_network
   mysql:
