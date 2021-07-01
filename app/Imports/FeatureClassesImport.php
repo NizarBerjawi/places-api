@@ -5,7 +5,6 @@ namespace App\Imports;
 use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\GeonamesFileIterator;
 use App\Models\FeatureClass;
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
@@ -66,12 +65,9 @@ class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImpor
                 continue;
             }
 
-            $timestamp = Carbon::now()->toDateTimeString();
             $featureClasses->push([
                 'code'        => $code,
                 'description' => ucfirst($description),
-                'created_at'  => $timestamp,
-                'updated_at'  => $timestamp,
             ]);
         }
 

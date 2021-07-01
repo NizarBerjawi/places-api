@@ -16,7 +16,6 @@ class CreateCountryLanguageTable extends Migration
         Schema::create('country_language', function (Blueprint $table) {
             $table->string('country_code');
             $table->unsignedBigInteger('language_id');
-            $table->timestamps();
         });
 
         Schema::table('country_language', function (Blueprint $table) {

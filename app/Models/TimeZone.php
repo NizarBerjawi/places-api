@@ -39,7 +39,14 @@ class TimeZone extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'id';
+    protected $primaryKey = 'time_zone';
+
+    /**
+     * The "type" of the primary key time_zone.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
 
     /**
      * The attributes that are mass assignable.
@@ -47,7 +54,7 @@ class TimeZone extends Model
      * @var array
      */
     protected $fillable = [
-        'code', 'gmt_offset',
+        'gmt_offset',
     ];
 
     /**
@@ -67,6 +74,16 @@ class TimeZone extends Model
     public function country()
     {
         return $this->belongsTo(Country::class, 'country_code', 'iso3166_alpha2');
+    }
+
+    /**
+     * Get all the places that belong to this Time Zone.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function places()
+    {
+        return $this->hasMany(Place::class, 'time_zone', 'time_zone');
     }
 
     /**

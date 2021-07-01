@@ -16,7 +16,6 @@ class CreateCountryCurrencyTable extends Migration
         Schema::create('country_currency', function (Blueprint $table) {
             $table->string('country_code');
             $table->string('currency_code');
-            $table->timestamps();
         });
 
         Schema::table('country_currency', function (Blueprint $table) {

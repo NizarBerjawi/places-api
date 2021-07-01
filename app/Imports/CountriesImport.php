@@ -6,7 +6,6 @@ use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
 use App\Models\Continent;
 use App\Models\Country;
-use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 class CountriesImport extends CountriesFileIterator implements GeonamesImportable
@@ -30,7 +29,6 @@ class CountriesImport extends CountriesFileIterator implements GeonamesImportabl
                 continue;
             }
 
-            $timestamp = Carbon::now()->toDateTimeString();
             $countries->push([
                 'name'            => $item[4],
                 'iso3166_alpha2'  => $item[0],
@@ -40,8 +38,6 @@ class CountriesImport extends CountriesFileIterator implements GeonamesImportabl
                 'area'            => $item[6],
                 'phone_code'      => $item[12],
                 'continent_code'  => $continent->code,
-                'created_at'      => $timestamp,
-                'updated_at'      => $timestamp,
             ]);
         }
 
