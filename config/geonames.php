@@ -84,6 +84,26 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Modifications file
+    |--------------------------------------------------------------------------
+    |
+    | The name of the modifications file
+    |
+    */
+    'modifications_file' => env('GEONAMES_MODIFICATIONS_FILE', 'modifications-<<date><.txt'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Modifications file
+    |--------------------------------------------------------------------------
+    |
+    | The name of the deletes file
+    |
+    */
+    'deletes_file' => env('GEONAMES_DELETES_FILE', 'deletes-<<date>>.txt'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Countries information file url
     |--------------------------------------------------------------------------
     |
@@ -131,4 +151,24 @@ return [
     |
     */
     'time_zones_url' => env('GEONAMES_TIME_ZONES_URL', 'http://download.geonames.org/export/dump/timeZones.txt'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Modifications file base url
+    |--------------------------------------------------------------------------
+    |
+    | The URL of Modifications file
+    |
+    */
+    'modifications_url' => env('GEONAMES_MODIFICATIONS_URL', 'http://download.geonames.org/export/dump/modifications.txt'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Deletes file base url
+    |--------------------------------------------------------------------------
+    |
+    | The URL of Deletes file
+    |
+    */
+    'deletes_url' => env('GEONAMES_DELETES_URL', 'http://download.geonames.org/export/dump/deletes.txt'),
 ];
