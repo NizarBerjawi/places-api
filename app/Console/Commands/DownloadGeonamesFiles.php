@@ -2,15 +2,19 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Imports\Iterators\CountriesFileIterator;
+use App\Jobs\DeleteDeletesFile;
+use App\Jobs\DeleteModificationsFile;
 use App\Jobs\DownloadCountriesFile;
 use App\Jobs\DownloadCountryFlag;
+use App\Jobs\DownloadDeletesFile;
 use App\Jobs\DownloadFeatureCodesFile;
 use App\Jobs\DownloadGeonamesFile;
 use App\Jobs\DownloadInfoFile;
 use App\Jobs\DownloadLanguages;
+use App\Jobs\DownloadModificationsFile;
 use App\Jobs\DownloadTimezonesFile;
+use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
 
 class DownloadGeonamesFiles extends Command
@@ -37,17 +41,15 @@ class DownloadGeonamesFiles extends Command
      */
     public function handle()
     {
-        // 1- Download readme.txt file
+        dispatch(new DeleteModificationsFile());
+        dispatch(new DeleteDeletesFile());
+        dispatch(new DownloadModificationsFile());
+        dispatch(new DownloadDeletesFile());
         dispatch(new DownloadInfoFile());
-        // 2- Download the countryInfo.txt file
         dispatch(new DownloadCountriesFile);
-        // 3- Download the iso-languagecodes.txt file
         dispatch(new DownloadLanguages);
-        // 4- Download the featureCodes_en.txt file
         dispatch(new DownloadFeatureCodesFile);
-        // 5- Download the timeZones.txt file
         dispatch(new DownloadTimezonesFile);
-        // 6- Download Geonames files related to every country
         $path = storage_path('app/'.config('geonames.countries_file'));
         (new CountriesFileIterator($path))
             ->iterable()
