@@ -6,6 +6,6 @@ ARG GUID
 RUN addgroup -g ${GUID} ${USER}
 RUN adduser -G ${USER} -g ${USER} -s /bin/sh -D ${USER}
 
-WORKDIR /var/www
+WORKDIR /var/www/html
 
 USER ${USER}
