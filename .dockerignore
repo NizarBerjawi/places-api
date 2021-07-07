@@ -1,8 +1,10 @@
 
 .env
 .git
+.idea
 .vscode
-.docker
+.DS_Store
+.gitignore
 bootstrap/cache/*
 node_modules
 public/dist/*

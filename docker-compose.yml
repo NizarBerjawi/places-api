@@ -2,11 +2,12 @@ version: '3.3'
 services:
   nginx:
     image: nginx:alpine
+    container_name: nginx
     ports:
       - "8080:80"
       - "443:443"
     volumes:
-      - .:/var/www
+      - .:/var/www/html
       - .docker/nginx/conf.d/:/etc/nginx/conf.d
     depends_on:
       - php
@@ -20,12 +21,14 @@ services:
       dockerfile: .docker/php.Dockerfile
       args: 
         GUID: 1000
-        USER: www
+        USER: laravel
+    container_name: php
     volumes:
-      - .:/var/www
-      - .docker/php-fpm/php.ini:/etc/php/7.3/fpm/php.ini
-      - .docker/php-fpm/www.conf:/etc/php/7.3/fpm/pool.d/www.conf
-      - .docker/php-fpm/php-fpm.conf:/etc/php/7.3/fpm/php-fpm.conf
+      - .:/var/www/html
+      - .docker/php/php-fpm.d:/etc/php7/php-fpm.d
+      - .docker/php/php-fpm.conf:/etc/php7/php-fpm.conf
+      - .docker/php/php.ini:/etc/php7/php.ini
+    working_dir: /var/www/html
     tty: true
     expose:
       - "9000"
@@ -35,8 +38,11 @@ services:
     build:
       context: .
       dockerfile: .docker/supervisor.Dockerfile
+      args: 
+        GUID: 1000
+        USER: laravel
     volumes:
-        - .:/var/www
+        - .:/var/www/html
         - .docker/supervisor/supervisord.d:/etc/supervisord.d
         - .docker/supervisor/supervisord.conf:/etc/supervisord.conf
     networks:
@@ -64,11 +70,11 @@ services:
       dockerfile: .docker/composer.Dockerfile
       args: 
         GUID: 1000
-        USER: www
+        USER: laravel
     container_name: composer
     volumes:
-      - .:/var/www
-    working_dir: /var/www
+      - .:/var/www/html
+    working_dir: /var/www/html
     entrypoint: ['composer', '--ignore-platform-reqs']
     networks:
       - api_network
@@ -78,18 +84,18 @@ services:
       dockerfile: .docker/php.Dockerfile
       args: 
         GUID: 1000
-        USER: www
+        USER: laravel
     container_name: artisan
     volumes:
-      - .:/var/www
+      - .:/var/www/html
     depends_on:
       - mysql
-    working_dir: /var/www
-    entrypoint: ['php', '/var/www/artisan']
+    working_dir: /var/www/html
+    entrypoint: ['php', '/var/www/html/artisan']
     networks:
       - api_network
   npm:
-    image: node:alpine
+    image: node:14-alpine3.13
     volumes:
         - .:/app
     working_dir: /app
@@ -100,14 +106,14 @@ services:
       dockerfile: .docker/php.Dockerfile
       args: 
         GUID: 1000
-        USER: www
+        USER: laravel
     container_name: artisan
     volumes:
-      - .:/var/www
+      - .:/var/www/html
     depends_on:
       - mysql
-    working_dir: /var/www
-    entrypoint: ['/var/www/vendor/bin/phpunit']
+    working_dir: /var/www/html
+    entrypoint: ['/var/www/html/vendor/bin/phpunit']
     networks:
       - api_network
 # Docker Networks

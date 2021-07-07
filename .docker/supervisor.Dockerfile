@@ -1,14 +1,17 @@
-FROM php:7.3-alpine
+FROM php:7.3-alpine3.13
 
 LABEL maintainer="Nizar El Berjawi <nizarberjawi12@gmail.com>"
 
-RUN apk --update add supervisor
+ARG USER
+ARG GUID
 
-RUN addgroup -g 1000 www
-RUN adduser -G www -g www -s /bin/sh -D www
+RUN apk --update add --no-cache \
+    supervisor
 
-RUN rm /var/cache/apk/* \
-    && mkdir -p /var/www
+RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
+
+RUN addgroup -g ${GUID} ${USER}
+RUN adduser -G ${USER} -g ${USER} -s /bin/sh -D ${USER}
 
 ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisord.conf"]
 
