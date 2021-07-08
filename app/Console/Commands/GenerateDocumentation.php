@@ -25,8 +25,7 @@ class GenerateDocumentation extends Command
     /**
      * Execute the console command.
      *
-     * @param  \App\Support\DripEmailer  $drip
-     * @return mixed
+     * @return void
      */
     public function handle()
     {

@@ -14,10 +14,12 @@ class CreateLocationsTable extends Migration
     public function up()
     {
         Schema::create('locations', function (Blueprint $table) {
-            $table->id();
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
-            $table->morphs('locationable');
+            $table->string('locationable_type');
+            $table->unsignedBigInteger('locationable_id');
+
+            $table->primary(['locationable_type', 'locationable_id']);
         });
     }
 

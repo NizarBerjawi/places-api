@@ -5,12 +5,20 @@ namespace App\Jobs;
 use App\Exceptions\FileNotDownloadedException;
 use App\Exceptions\FileNotSavedException;
 use App\Jobs\Traits\HasPlaceholders;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 
 class DownloadModificationsFile extends GeonamesJob
 {
     use HasPlaceholders;
+
+    public $date;
+
+    public function __construct(string $date)
+    {
+        parent::__construct();
+
+        $this->date = $date;
+    }
 
     /**
      * Execute the job.
@@ -19,6 +27,8 @@ class DownloadModificationsFile extends GeonamesJob
      */
     public function handle()
     {
+        $this->log($this > url(), 'warning');
+
         try {
             $response = Http::withOptions([
                 'stream' => true,
@@ -49,9 +59,7 @@ class DownloadModificationsFile extends GeonamesJob
     {
         $url = config('geonames.modifications_url');
 
-        $date = Carbon::yesterday()->format('Y-m-d');
-
-        return $this->replace('date', $date, $url);
+        return $this->replace('date', $this->date, $url);
     }
 
     /**
@@ -63,9 +71,7 @@ class DownloadModificationsFile extends GeonamesJob
     {
         $filename = config('geonames.modifications_file');
 
-        $date = Carbon::yesterday()->format('Y-m-d');
-
-        return $this->replace('date', $date, $filename);
+        return $this->replace('date', $this->date, $filename);
     }
 
     /**
