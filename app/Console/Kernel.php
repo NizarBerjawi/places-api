@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         Commands\GenerateDocumentation::class,
         Commands\DownloadGeonamesFiles::class,
+        Commands\UpdateGeonamesData::class,
     ];
 
     /**
