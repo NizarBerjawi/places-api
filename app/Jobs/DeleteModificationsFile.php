@@ -4,11 +4,19 @@ namespace App\Jobs;
 
 use App\Exceptions\FileNotDeletedException;
 use App\Jobs\Traits\HasPlaceholders;
-use Carbon\Carbon;
 
 class DeleteModificationsFile extends GeonamesJob
 {
     use HasPlaceholders;
+
+    public $date;
+
+    public function __construct(string $date)
+    {
+        parent::__construct();
+
+        $this->date = $date;
+    }
 
     /**
      * Execute the job.
@@ -39,9 +47,7 @@ class DeleteModificationsFile extends GeonamesJob
     {
         $url = config('geonames.modifications_url');
 
-        $date = Carbon::yesterday()->subDays(1)->format('Y-m-d');
-
-        return $this->replace('date', $date, $url);
+        return $this->replace('date', $this->date, $url);
     }
 
     /**
@@ -53,9 +59,7 @@ class DeleteModificationsFile extends GeonamesJob
     {
         $filename = config('geonames.modifications_file');
 
-        $date = Carbon::yesterday()->subDays(1)->format('Y-m-d');
-
-        return $this->replace('date', $date, $filename);
+        return $this->replace('date', $this->date, $filename);
     }
 
     /**
