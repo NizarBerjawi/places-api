@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Imports\PlacesImport;
+use App\Jobs\DeleteGeonamesFile;
 use App\Models\Country;
 use Illuminate\Database\Seeder;
 
@@ -22,6 +23,8 @@ class PlacesTableSeeder extends Seeder
                 $filepath = storage_path('app/data/'.$code.'/'.$code.'.txt');
 
                 (new PlacesImport($filepath))->import();
+
+                dispatch(new DeleteGeonamesFile($code));
             });
     }
 }
