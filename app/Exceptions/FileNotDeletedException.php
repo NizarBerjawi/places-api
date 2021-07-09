@@ -23,7 +23,7 @@ class FileNotDeletedException extends Exception
     {
         $this->location = $location;
 
-        $defaultMessage = 'Could not delete the file from disk';
+        $defaultMessage = 'Could not delete the file or folder from disk';
 
         if (! $location) {
             $this->message = $defaultMessage;
