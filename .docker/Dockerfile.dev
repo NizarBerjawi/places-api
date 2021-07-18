@@ -1,3 +1,6 @@
+#################################
+## Build application container ##
+#################################
 FROM php:7.3-fpm-alpine3.13
 
 LABEL maintainer="Nizar El Berjawi <nizarberjawi12@gmail.com>"
@@ -9,24 +12,27 @@ WORKDIR /var/www/html/
 
 RUN echo "UTC" > /etc/timezone
 RUN apk add --no-cache \
+    vim \
     git \
     zip \
-    bash \
+    curl \
     unzip \
-    libzip-dev && \
+    libzip-dev \
+    postgresql-dev && \
   docker-php-ext-install \
-    pdo \
-    pdo_mysql \
+    pgsql \
+    pdo_pgsql \
     zip
 
 RUN sed -i 's/bin\/ash/bin\/bash/g' /etc/passwd
 
-# Add a user for the application
 RUN addgroup -g ${GUID} ${USER}
 RUN adduser -G ${USER} -g ${USER} -s /bin/sh -D ${USER}
 
 RUN chown -R ${USER}:${USER} .
 
 USER ${USER}
+
+EXPOSE 9000
 
 CMD ["php-fpm"]

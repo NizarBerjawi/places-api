@@ -1,0 +1,72 @@
+version: '3.3'
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: .docker/nginx/Dockerfile.nginx
+    container_name: nginx
+    ports:
+      - "8080:80"
+      - "443:443"
+    depends_on:
+      - builder
+      - php
+      - postgres
+      - supervisor
+    networks:
+      - api_network
+  php:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile.prod
+    container_name: php
+    env_file:
+      - .env
+    tty: true
+    networks:
+      - api_network
+    volumes:
+      - storage:/var/www/html/storage
+    depends_on:
+      - builder
+      - postgres
+  supervisor:
+    build:
+      context: .
+      dockerfile: .docker/supervisor/Dockerfile.supervisor
+    volumes:
+      - storage:/var/www/html/storage
+    networks:
+      - api_network
+    depends_on:
+      - builder
+    env_file:
+      - .env
+  postgres:
+    image: postgres:13.3-alpine3.13
+    restart: always
+    environment:
+      - POSTGRES_USER=countries_api
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=countries_api_database
+    ports:
+      - "5432:5432"
+    # volumes:
+      # - .docker/postgresql/data:/var/lib/postgresql/data
+    networks:
+      - api_network
+  builder:
+    build:
+      context: .
+      dockerfile: .docker/utilities/Dockerfile.builder
+    image: builder
+    container_name: builder
+    networks:
+      - api_network
+# Docker Networks
+networks:
+  api_network:
+    driver: bridge
+# Volumes
+volumes:
+  storage:
