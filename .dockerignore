@@ -5,6 +5,8 @@
 .vscode
 .DS_Store
 .gitignore
+.php_cs.cache
+.phpunit.result.cache
 bootstrap/cache/*
 node_modules
 public/dist/*
@@ -13,4 +15,5 @@ storage/framework/cache/*
 storage/framework/sessions/*
 storage/framework/views/*
 storage/logs/*
+docker-compose.*
 vendor

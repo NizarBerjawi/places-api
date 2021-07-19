@@ -1,76 +1,81 @@
 version: '3.3'
 services:
   nginx:
-    image: nginx:alpine
+    build:
+      context: .
+      dockerfile: .docker/nginx/Dockerfile.nginx
     container_name: nginx
     ports:
       - "8080:80"
       - "443:443"
     volumes:
-      - .:/var/www/html
-      - .docker/nginx/conf.d/:/etc/nginx/conf.d
+      - ./public:/var/www/html/public
+      - .docker/nginx/http.d/:/etc/nginx/http.d
+      - .docker/nginx/nginx.conf/:/etc/nginx/nginx.conf
     depends_on:
+      - builder
       - php
-      - mysql
+      - postgres
       - supervisor
     networks:
       - api_network
   php:
     build:
       context: .
-      dockerfile: .docker/php.Dockerfile
+      dockerfile: .docker/Dockerfile.dev
       args: 
         GUID: 1000
         USER: laravel
     container_name: php
+    env_file:
+      - .env
     volumes:
       - .:/var/www/html
-      - .docker/php/php-fpm.d:/etc/php7/php-fpm.d
-      - .docker/php/php-fpm.conf:/etc/php7/php-fpm.conf
-      - .docker/php/php.ini:/etc/php7/php.ini
+      - .docker/php:/etc/php7
     working_dir: /var/www/html
     tty: true
     expose:
       - "9000"
     networks:
       - api_network
+    depends_on:
+      - builder
+      - postgres
   supervisor:
     build:
       context: .
-      dockerfile: .docker/supervisor.Dockerfile
-      args: 
-        GUID: 1000
-        USER: laravel
+      dockerfile: .docker/supervisor/Dockerfile.supervisor
     volumes:
-        - .:/var/www/html
-        - .docker/supervisor/supervisord.d:/etc/supervisord.d
-        - .docker/supervisor/supervisord.conf:/etc/supervisord.conf
+        - ./storage:/var/www/html/storage
     networks:
       - api_network
-  mysql:
-    image: mysql:5.7.34
-    container_name: mysql
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "33061:3306"
+    depends_on:
+      - builder
+    env_file:
+      - .env
+  postgres:
+    image: postgres:13.3-alpine3.13
+    restart: always
     environment:
-      MYSQL_DATABASE: countries_api_database
-      MYSQL_USER: countries_api
-      MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: secret
-    volumes:
-      # - .docker/mysql/data:/var/lib/mysql # Uncomment to persist data on disk
-      - .docker/mysql/my.cnf:/etc/mysql/my.cnf
+      - POSTGRES_USER=countries_api
+      - POSTGRES_PASSWORD=secret
+      - POSTGRES_DB=countries_api_database
+    ports:
+      - "5432:5432"
+    # volumes:
+    # - .docker/postgresql/data:/var/lib/postgresql/data
+    networks:
+      - api_network
+  builder:
+    build:
+      context: .
+      dockerfile: .docker/utilities/Dockerfile.builder
+    image: builder
+    container_name: builder
     networks:
       - api_network
   composer:
-    build:
-      context: .
-      dockerfile: .docker/composer.Dockerfile
-      args: 
-        GUID: 1000
-        USER: laravel
+    image: composer:2
     container_name: composer
     volumes:
       - .:/var/www/html
@@ -81,7 +86,7 @@ services:
   artisan:
     build:
       context: .
-      dockerfile: .docker/php.Dockerfile
+      dockerfile: .docker/Dockerfile.dev
       args: 
         GUID: 1000
         USER: laravel
@@ -89,7 +94,7 @@ services:
     volumes:
       - .:/var/www/html
     depends_on:
-      - mysql
+      - postgres
     working_dir: /var/www/html
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
@@ -103,7 +108,7 @@ services:
   test:
     build:
       context: .
-      dockerfile: .docker/php.Dockerfile
+      dockerfile: .docker/Dockerfile.dev
       args: 
         GUID: 1000
         USER: laravel
@@ -111,7 +116,7 @@ services:
     volumes:
       - .:/var/www/html
     depends_on:
-      - mysql
+      - postgres
     working_dir: /var/www/html
     entrypoint: ['/var/www/html/vendor/bin/phpunit']
     networks:
@@ -120,7 +125,3 @@ services:
 networks:
   api_network:
     driver: bridge
-# Volumes
-volumes:
-  data:
-    driver: local
