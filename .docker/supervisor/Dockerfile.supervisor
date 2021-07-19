@@ -1,0 +1,21 @@
+################################
+## Build supervisor container ##
+################################
+FROM php:7.3-alpine3.13
+
+LABEL maintainer="Nizar El Berjawi <nizarberjawi12@gmail.com>"
+
+RUN apk --update add --no-cache \
+    supervisor
+    
+COPY .docker/supervisor/conf.d /etc/supervisor/conf.d
+COPY .docker/supervisor/supervisord.conf /etc/supervisord.conf
+
+COPY --chown=www-data:www-data . /var/www/html
+COPY --from=builder --chown=www-data:www-data /app/vendor /var/www/html/vendor
+
+ENTRYPOINT ["/usr/bin/supervisord", "-n", "-c",  "/etc/supervisord.conf"]
+
+WORKDIR /etc/supervisor/conf.d/
+
+USER www-data

@@ -1,3 +1,6 @@
+##############################
+## Build COMPOSER container ##
+##############################
 FROM composer:2
 
 ARG USER
