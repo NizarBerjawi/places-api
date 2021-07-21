@@ -6,7 +6,5 @@ FROM nginx:1.21.1-alpine
 COPY .docker/nginx/http.d /etc/nginx/http.d
 COPY .docker/nginx/nginx.conf /etc/nginx/nginx.conf
 
-WORKDIR /var/www/html/
-
-COPY . .
-COPY --from=builder /app/public/dist ./public/dist
+COPY . /var/www/html
+COPY --from=builder /app/public/dist /var/www/html/public/dist
