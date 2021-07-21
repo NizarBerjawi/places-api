@@ -1,9 +1,7 @@
 version: '3.3'
 services:
   nginx:
-    build:
-      context: .
-      dockerfile: .docker/nginx/Dockerfile.nginx
+    image: nginx:1.21.1-alpine
     container_name: nginx
     ports:
       - "8080:80"
@@ -13,10 +11,8 @@ services:
       - .docker/nginx/http.d/:/etc/nginx/http.d
       - .docker/nginx/nginx.conf/:/etc/nginx/nginx.conf
     depends_on:
-      - builder
       - php
       - postgres
-      - supervisor
     networks:
       - api_network
   php:
@@ -24,7 +20,7 @@ services:
       context: .
       dockerfile: .docker/Dockerfile.dev
       args: 
-        GUID: 1000
+        GUID: 1001
         USER: laravel
     container_name: php
     env_file:
@@ -39,20 +35,7 @@ services:
     networks:
       - api_network
     depends_on:
-      - builder
       - postgres
-  supervisor:
-    build:
-      context: .
-      dockerfile: .docker/supervisor/Dockerfile.supervisor
-    volumes:
-        - ./storage:/var/www/html/storage
-    networks:
-      - api_network
-    depends_on:
-      - builder
-    env_file:
-      - .env
   postgres:
     image: postgres:13.3-alpine3.13
     restart: always
@@ -66,21 +49,17 @@ services:
     # - .docker/postgresql/data:/var/lib/postgresql/data
     networks:
       - api_network
-  builder:
+  composer:
     build:
       context: .
-      dockerfile: .docker/utilities/Dockerfile.builder
-    image: builder
-    container_name: builder
-    networks:
-      - api_network
-  composer:
-    image: composer:2
+      dockerfile: .docker/utilities/Dockerfile.composer
+      args: 
+        GUID: 1001
+        USER: laravel
     container_name: composer
     volumes:
       - .:/var/www/html
     working_dir: /var/www/html
-    entrypoint: ['composer', '--ignore-platform-reqs']
     networks:
       - api_network
   artisan:
@@ -88,7 +67,7 @@ services:
       context: .
       dockerfile: .docker/Dockerfile.dev
       args: 
-        GUID: 1000
+        GUID: 1001
         USER: laravel
     container_name: artisan
     volumes:
@@ -100,17 +79,21 @@ services:
     networks:
       - api_network
   npm:
-    image: node:14-alpine3.13
+    build:
+      context: .
+      dockerfile: .docker/utilities/Dockerfile.node
+      args: 
+        GUID: 1001
+        USER: laravel
     volumes:
         - .:/app
-    working_dir: /app
     entrypoint: ["npm"]
   test:
     build:
       context: .
       dockerfile: .docker/Dockerfile.dev
       args: 
-        GUID: 1000
+        GUID: 1001
         USER: laravel
     container_name: artisan
     volumes:

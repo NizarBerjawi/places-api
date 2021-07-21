@@ -3,7 +3,6 @@
 namespace App\Jobs;
 
 use App\Exceptions\FileNotDownloadedException;
-use App\Exceptions\FileNotSavedException;
 use Illuminate\Support\Facades\Http;
 
 class DownloadGeonamesFile extends GeonamesJob
@@ -34,24 +33,16 @@ class DownloadGeonamesFile extends GeonamesJob
     public function handle()
     {
         try {
-            $response = Http::withOptions([
-                'stream' => true,
-            ])->get($this->url());
-
-            if ($response->failed()) {
-                throw new FileNotDownloadedException($this->url());
-            }
-
             $this
                 ->filesystem
                 ->ensureDirectoryExists($this->folderPath());
 
-            $saved = $this
-                ->filesystem
-                ->put($this->filepath(), $response->getBody());
+            $response = Http::withOptions([
+                'sink' => $this->filepath(),
+            ])->get($this->url());
 
-            if (! $saved) {
-                throw new FileNotSavedException($this->filepath());
+            if ($response->failed()) {
+                throw new FileNotDownloadedException($this->url());
             }
 
             $this->unzip();
