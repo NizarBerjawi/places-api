@@ -5,7 +5,7 @@ FROM composer:2 as composer
 WORKDIR /app
 
 COPY composer.* /app/
-Run composer install \
+RUN composer install \
   --no-dev \
   --no-scripts \
   --no-suggest \

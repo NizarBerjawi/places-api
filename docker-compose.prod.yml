@@ -51,14 +51,14 @@ services:
       - POSTGRES_DB=countries_api_database
     ports:
       - "5432:5432"
-    # volumes:
-      # - .docker/postgresql/data:/var/lib/postgresql/data
+    volumes:
+      - dbData:/var/lib/postgresql/data
     networks:
       - api_network
   builder:
     build:
       context: .
-      dockerfile: .docker/utilities/Dockerfile.builder
+      dockerfile: .docker/Dockerfile.builder
     image: builder
     container_name: builder
     networks:
@@ -69,4 +69,5 @@ networks:
     driver: bridge
 # Volumes
 volumes:
+  dbData:
   storage:
