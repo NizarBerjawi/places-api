@@ -20,7 +20,8 @@ services:
       context: .
       dockerfile: .docker/Dockerfile.dev
       args: 
-        GUID: 1001
+        GID: 1001
+        UID: 1001
         USER: laravel
     container_name: php
     env_file:
@@ -54,7 +55,8 @@ services:
       context: .
       dockerfile: .docker/utilities/Dockerfile.composer
       args: 
-        GUID: 1001
+        GID: 1001
+        UID: 1001
         USER: laravel
     container_name: composer
     volumes:
@@ -67,7 +69,8 @@ services:
       context: .
       dockerfile: .docker/Dockerfile.dev
       args: 
-        GUID: 1001
+        GID: 1001
+        UID: 1001
         USER: laravel
     container_name: artisan
     volumes:
@@ -82,8 +85,9 @@ services:
     build:
       context: .
       dockerfile: .docker/utilities/Dockerfile.node
-      args: 
-        GUID: 1001
+      args:
+        GID: 1001
+        UID: 1001
         USER: laravel
     volumes:
         - .:/app
@@ -93,7 +97,8 @@ services:
       context: .
       dockerfile: .docker/Dockerfile.dev
       args: 
-        GUID: 1001
+        GID: 1001
+        UID: 1001
         USER: laravel
     container_name: artisan
     volumes:

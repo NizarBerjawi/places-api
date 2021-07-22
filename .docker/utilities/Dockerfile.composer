@@ -4,10 +4,16 @@
 FROM composer:2
 
 ARG USER
-ARG GUID
+ARG GID
+ARG UID
 
-RUN addgroup -g ${GUID} ${USER}
-RUN adduser -G ${USER} -g ${USER} -s /bin/sh -D ${USER}
+RUN addgroup --gid ${GID} ${USER}
+RUN adduser \
+  --ingroup ${USER} \ 
+  --gecos ${USER} \
+  --uid ${UID} \
+  --shell /bin/sh \
+  --disabled-password ${USER}
 
 WORKDIR /var/www/html
 
