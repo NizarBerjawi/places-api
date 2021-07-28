@@ -4,10 +4,13 @@ namespace App\Jobs;
 
 use App\Exceptions\FileNotDownloadedException;
 use App\Exceptions\FileNotSavedException;
+use Illuminate\Bus\Batchable;
 use Illuminate\Support\Facades\Http;
 
 class DownloadLanguages extends GeonamesJob
 {
+    use Batchable;
+
     /**
      * Execute the job.
      *
