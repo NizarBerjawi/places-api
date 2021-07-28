@@ -10,6 +10,7 @@ use App\Jobs\DownloadGeonamesFile;
 use App\Jobs\DownloadInfoFile;
 use App\Jobs\DownloadLanguages;
 use App\Jobs\DownloadTimezonesFile;
+use Illuminate\Bus\Batch;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
@@ -37,22 +38,32 @@ class DownloadGeonamesFiles extends Command
      */
     public function handle()
     {
-        dispatch_now(new DownloadInfoFile());
-        dispatch_now(new DownloadCountriesFile);
-        dispatch_now(new DownloadLanguages);
-        dispatch_now(new DownloadFeatureCodesFile);
-        dispatch_now(new DownloadTimezonesFile);
+        $filesystem = new Filesystem();
 
-        $path = storage_path('app/'.config('geonames.countries_file'));
+        $filesystem->ensureDirectoryExists(storage_path('app'));
 
-        if ((new Filesystem)->exists($path)) {
-            (new CountriesFileIterator($path))
-                ->iterable()
-                ->each(function (array $row) {
-                    $code = Arr::get($row, 0);
-                    dispatch(new DownloadCountryFlag($code))->onQueue('download');
-                    dispatch(new DownloadGeonamesFile($code))->onQueue('download');
-                });
-        }
+        $dispatcher = app()->make(\Illuminate\Contracts\Bus\Dispatcher::class);
+        $dispatcher->batch([
+            new DownloadCountriesFile,
+            new DownloadInfoFile,
+            new DownloadLanguages,
+            new DownloadFeatureCodesFile,
+            new DownloadTimezonesFile,
+        ])->then(function (Batch $batch) use ($filesystem) {
+            // Once all the main files are successfully
+            // downloaded, we begin the process or downloading
+            // the individual geonames files for every country.
+            $path = storage_path('app/'.config('geonames.countries_file'));
+
+            if ($filesystem->exists($path)) {
+                (new CountriesFileIterator($path))
+                    ->iterable()
+                    ->each(function (array $row) {
+                        $code = Arr::get($row, 0);
+                        dispatch(new DownloadCountryFlag($code))->onQueue('download');
+                        dispatch(new DownloadGeonamesFile($code))->onQueue('download');
+                    });
+            }
+        })->onQueue('download')->dispatch();
     }
 }
