@@ -5,8 +5,20 @@ FROM php:7.3-alpine3.13
 
 LABEL maintainer="Nizar El Berjawi <nizarberjawi12@gmail.com>"
 
+RUN echo "UTC" > /etc/timezone
 RUN apk --update add --no-cache \
-    supervisor
+    zip \
+    curl \
+    unzip \
+    supervisor \
+    libzip-dev \
+    postgresql-dev && \
+  docker-php-ext-install \
+    pgsql \
+    pdo_pgsql \
+    zip
+
+COPY .docker/php /etc/php7
     
 COPY .docker/supervisor/conf.d /etc/supervisor/conf.d
 COPY .docker/supervisor/supervisord.conf /etc/supervisord.conf

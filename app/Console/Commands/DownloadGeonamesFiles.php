@@ -11,6 +11,7 @@ use App\Jobs\DownloadInfoFile;
 use App\Jobs\DownloadLanguages;
 use App\Jobs\DownloadTimezonesFile;
 use Illuminate\Console\Command;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
 
 class DownloadGeonamesFiles extends Command
@@ -36,18 +37,22 @@ class DownloadGeonamesFiles extends Command
      */
     public function handle()
     {
-        dispatch(new DownloadInfoFile());
-        dispatch(new DownloadCountriesFile);
-        dispatch(new DownloadLanguages);
-        dispatch(new DownloadFeatureCodesFile);
-        dispatch(new DownloadTimezonesFile);
+        dispatch_now(new DownloadInfoFile());
+        dispatch_now(new DownloadCountriesFile);
+        dispatch_now(new DownloadLanguages);
+        dispatch_now(new DownloadFeatureCodesFile);
+        dispatch_now(new DownloadTimezonesFile);
+
         $path = storage_path('app/'.config('geonames.countries_file'));
-        (new CountriesFileIterator($path))
-            ->iterable()
-            ->each(function (array $row) {
-                $code = Arr::get($row, 0);
-                dispatch(new DownloadCountryFlag($code));
-                dispatch(new DownloadGeonamesFile($code));
-            });
+
+        if ((new Filesystem)->exists($path)) {
+            (new CountriesFileIterator($path))
+                ->iterable()
+                ->each(function (array $row) {
+                    $code = Arr::get($row, 0);
+                    dispatch(new DownloadCountryFlag($code))->onQueue('download');
+                    dispatch(new DownloadGeonamesFile($code))->onQueue('download');
+                });
+        }
     }
 }

@@ -39,8 +39,8 @@ class UpdateGeonamesData extends Command
     {
         $date = Carbon::yesterday()->format('Y-m-d');
 
-        dispatch(new DownloadModificationsFile($date));
-        dispatch(new DownloadDeletesFile($date));
+        dispatch_now(new DownloadModificationsFile($date));
+        dispatch_now(new DownloadDeletesFile($date));
 
         $modifications = $this->replace('date', $date, config('geonames.modifications_file'));
         (new ModificationsImport(storage_path("app/$modifications")))->import();
@@ -48,7 +48,7 @@ class UpdateGeonamesData extends Command
         $deletes = $this->replace('date', $date, config('geonames.deletes_file'));
         (new DeletesImport(storage_path("app/$deletes")))->import();
 
-        dispatch(new DeleteModificationsFile($date));
-        dispatch(new DeleteDeletesFile($date));
+        dispatch_now(new DeleteModificationsFile($date));
+        dispatch_now(new DeleteDeletesFile($date));
     }
 }
