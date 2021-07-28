@@ -47,6 +47,7 @@ class DownloadGeonamesFile extends GeonamesJob
 
             $this->unzip();
         } catch (\Exception $e) {
+            $this->fail($e);
             $this->log($e->getMessage(), 'warning');
         }
     }

@@ -54,6 +54,7 @@ class DownloadCountryFlag extends GeonamesJob
                 throw new FileNotSavedException($this->filepath());
             }
         } catch (\Exception $e) {
+            $this->fail($e);
             $this->log($e->getMessage(), 'warning');
         }
     }
