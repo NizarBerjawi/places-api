@@ -64,6 +64,8 @@ class DownloadGeonamesFiles extends Command
                         dispatch(new DownloadGeonamesFile($code))->onQueue('download');
                     });
             }
-        })->onQueue('download')->dispatch();
+        })
+        ->onQueue('download')
+        ->dispatch();
     }
 }

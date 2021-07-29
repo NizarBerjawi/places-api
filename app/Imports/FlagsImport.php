@@ -2,18 +2,23 @@
 
 namespace App\Imports;
 
-use App\Imports\Concerns\GeonamesImportable;
 use App\Models\Country;
 use App\Models\Flag;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 
-class FlagsImport implements GeonamesImportable
+class FlagsImport implements ShouldQueue
 {
+    use InteractsWithQueue, Queueable, SerializesModels;
+
     /**
      * Import the required data into the database.
      *
      * @return void
      */
-    public function import()
+    public function handle()
     {
         $data = Country::query()
             ->get(['iso3166_alpha2'])

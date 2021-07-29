@@ -2,14 +2,19 @@
 
 namespace App\Imports;
 
-use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\GeonamesFileIterator;
 use App\Models\FeatureCode;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class FeatureCodesImport extends GeonamesFileIterator implements GeonamesImportable
+class FeatureCodesImport extends GeonamesFileIterator implements ShouldQueue
 {
+    use InteractsWithQueue, Queueable, SerializesModels;
+
     /**
      * Decides whether to skip a row or not.
      *
@@ -26,7 +31,7 @@ class FeatureCodesImport extends GeonamesFileIterator implements GeonamesImporta
      *
      * @return void
      */
-    public function import()
+    public function handle()
     {
         $featureCodes = Collection::make();
 

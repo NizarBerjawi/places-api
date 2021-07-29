@@ -2,20 +2,25 @@
 
 namespace App\Imports;
 
-use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\GeonamesFileIterator;
 use App\Models\Language;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Illuminate\Support\LazyCollection;
 
-class LanguagesImport extends GeonamesFileIterator implements GeonamesImportable
+class LanguagesImport extends GeonamesFileIterator implements ShouldQueue
 {
+    use InteractsWithQueue, Queueable, SerializesModels;
+
     /**
      * Import the required data into the database.
      *
      * @return void
      */
-    public function import()
+    public function handle()
     {
         $this
             ->iterable()

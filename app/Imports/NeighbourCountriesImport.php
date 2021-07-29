@@ -2,13 +2,18 @@
 
 namespace App\Imports;
 
-use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
-class NeighbourCountriesImport extends CountriesFileIterator implements GeonamesImportable
+class NeighbourCountriesImport extends CountriesFileIterator implements ShouldQueue
 {
+    use InteractsWithQueue, Queueable, SerializesModels;
+
     /**
      * Decides whether to skip a row or not.
      *
@@ -25,7 +30,7 @@ class NeighbourCountriesImport extends CountriesFileIterator implements Geonames
      *
      * @return void
      */
-    public function import()
+    public function handle()
     {
         $data = $this
             ->iterable()
