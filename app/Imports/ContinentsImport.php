@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Imports\Iterators\CountriesFileIterator;
 use App\Imports\Iterators\GeonamesFileIterator;
 use App\Models\Continent;
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -14,7 +15,7 @@ use Illuminate\Support\Str;
 
 class ContinentsImport extends GeonamesFileIterator implements ShouldQueue
 {
-    use InteractsWithQueue, Queueable, SerializesModels;
+    use Batchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Continent codes.

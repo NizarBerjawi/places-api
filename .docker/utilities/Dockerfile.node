@@ -4,14 +4,6 @@ ARG USER
 ARG GID
 ARG UID
 
-RUN addgroup --gid ${GID} ${USER}
-RUN adduser \
-  --ingroup ${USER} \ 
-  --gecos ${USER} \
-  --uid ${UID} \
-  --shell /bin/sh \
-  --disabled-password ${USER}
-
 WORKDIR /app
 
-USER ${USER}
+USER node

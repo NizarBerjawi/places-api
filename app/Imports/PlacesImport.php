@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Imports\Iterators\GeonamesFileIterator;
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -13,7 +14,7 @@ use Illuminate\Support\LazyCollection;
 
 class PlacesImport extends GeonamesFileIterator implements ShouldQueue
 {
-    use InteractsWithQueue, Queueable, SerializesModels;
+    use Batchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Import the required data into the database.

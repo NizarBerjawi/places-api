@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Imports\Iterators\CountriesFileIterator;
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -12,7 +13,7 @@ use Illuminate\Support\Str;
 
 class NeighbourCountriesImport extends CountriesFileIterator implements ShouldQueue
 {
-    use InteractsWithQueue, Queueable, SerializesModels;
+    use Batchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Decides whether to skip a row or not.

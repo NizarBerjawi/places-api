@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Imports\Iterators\CountriesFileIterator;
 use App\Models\Continent;
 use App\Models\Country;
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -13,7 +14,7 @@ use Illuminate\Support\Collection;
 
 class CountriesImport extends CountriesFileIterator implements ShouldQueue
 {
-    use InteractsWithQueue, Queueable, SerializesModels;
+    use Batchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Import the required data into the database.

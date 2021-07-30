@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Imports\Iterators\CountriesFileIterator;
+use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
@@ -11,7 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class CountryCurrencyImport extends CountriesFileIterator implements ShouldQueue
 {
-    use InteractsWithQueue, Queueable, SerializesModels;
+    use Batchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Import the required data into the database.
