@@ -17,7 +17,6 @@ use App\Imports\TimeZonesImport;
 use App\Models\Country;
 use Illuminate\Bus\Batch;
 use Illuminate\Console\Command;
-use Illuminate\Filesystem\Filesystem;
 
 class ImportGeonamesFiles extends Command
 {
@@ -42,10 +41,6 @@ class ImportGeonamesFiles extends Command
      */
     public function handle()
     {
-        $filesystem = new Filesystem();
-
-        $filesystem->ensureDirectoryExists(storage_path('app'));
-
         $dispatcher = app()->make(\Illuminate\Contracts\Bus\Dispatcher::class);
         $dispatcher->batch([
             new ContinentsImport(storage_path('app/'.config('geonames.readme_file'))),
@@ -60,14 +55,17 @@ class ImportGeonamesFiles extends Command
             new CountryLanguageImport(storage_path('app/'.config('geonames.countries_file'))),
             new CountryCurrencyImport(storage_path('app/'.config('geonames.countries_file'))),
         ])->then(function (Batch $batch) {
-            Country::cursor()
-                ->each(function (Country $country) use ($batch) {
-                    $code = $country->iso3166_alpha2;
+            if ($batch->finished()) {
+                Country::cursor()
+                    ->each(function (Country $country) {
+                        $code = $country->iso3166_alpha2;
 
-                    $filepath = storage_path('app/data/'.$code.'/'.$code.'.txt');
+                        $filepath = storage_path('app/data/'.$code.'/'.$code.'.txt');
 
-                    $batch->add([new PlacesImport($filepath)]);
-                });
+                        dispatch(new PlacesImport($filepath))
+                            ->onQueue('import');
+                    });
+            }
         })
         ->onQueue('import')
         ->dispatch();

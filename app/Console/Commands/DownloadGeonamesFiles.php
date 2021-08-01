@@ -39,7 +39,6 @@ class DownloadGeonamesFiles extends Command
     public function handle()
     {
         $filesystem = new Filesystem();
-
         $filesystem->ensureDirectoryExists(storage_path('app'));
 
         $dispatcher = app()->make(\Illuminate\Contracts\Bus\Dispatcher::class);
@@ -49,13 +48,10 @@ class DownloadGeonamesFiles extends Command
             new DownloadLanguages,
             new DownloadFeatureCodesFile,
             new DownloadTimezonesFile,
-        ])->then(function (Batch $batch) use ($filesystem) {
-            // Once all the main files are successfully
-            // downloaded, we begin the process or downloading
-            // the individual geonames files for every country.
-            $path = storage_path('app/'.config('geonames.countries_file'));
+        ])->then(function (Batch $batch) {
+            if ($batch->finished()) {
+                $path = storage_path('app/'.config('geonames.countries_file'));
 
-            if ($filesystem->exists($path)) {
                 (new CountriesFileIterator($path))
                     ->iterable()
                     ->each(function (array $row) {
