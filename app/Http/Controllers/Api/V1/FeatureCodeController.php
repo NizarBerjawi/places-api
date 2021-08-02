@@ -14,7 +14,7 @@ class FeatureCodeController extends Controller
      * @OA\Get(
      *      tags={"Feature Codes"},
      *      summary="Returns a list of paginated feature codes",
-     *      path="/api/v1/featureCodes",
+     *      path="/featureCodes",
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -53,6 +53,17 @@ class FeatureCodeController extends Controller
      *              )
      *          )
      *      ),
+     *      @OA\Parameter(
+     *          name="page",
+     *          in="query",
+     *          description="Get a specific page",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="integer",
+     *              example=1
+     *          )
+     *      ),
      * )
      * @OA\Tag(
      *     name="Feature Codes",
@@ -74,7 +85,7 @@ class FeatureCodeController extends Controller
      *
      * @OA\Get(
      *     tags={"Feature Codes"},
-     *     path="/api/v1/featureCodes/{featureCodeCode}",
+     *     path="/featureCodes/{featureCodeCode}",
      *     operationId="getFeatureCodeByCode",
      *     @OA\Property(ref="#/components/schemas/featureCode"),
      *     @OA\Parameter(

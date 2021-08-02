@@ -14,7 +14,7 @@ class PlaceController extends Controller
      * @OA\Get(
      *      tags={"Places"},
      *      summary="Returns a list of paginated places",
-     *      path="/api/v1/places",
+     *      path="/places",
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -61,6 +61,17 @@ class PlaceController extends Controller
      *              )
      *          )
      *      ),
+     *      @OA\Parameter(
+     *          name="page",
+     *          in="query",
+     *          description="Get a specific page",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="integer",
+     *              example=1
+     *          )
+     *      ),
      * )
      * @OA\Tag(
      *     name="Places",
@@ -82,7 +93,7 @@ class PlaceController extends Controller
      *
      * @OA\Get(
      *     tags={"Places"},
-     *     path="/api/v1/places/{geonameId}",
+     *     path="/places/{geonameId}",
      *     operationId="getPlaceByGeonameId",
      *     @OA\Property(ref="#/components/schemas/Place"),
      *     @OA\Parameter(

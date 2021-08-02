@@ -17,7 +17,7 @@ class ContinentCountryController extends Controller
      * @OA\Get(
      *      tags={"Continents"},
      *      summary="Returns a list of paginated countries in a specific continent",
-     *      path="/api/v1/continents/{continentCode}/countries",
+     *      path="/continents/{continentCode}/countries",
      *      @OA\Parameter(
      *         name="continentCode",
      *         in="path",
@@ -50,6 +50,17 @@ class ContinentCountryController extends Controller
      *                  type="string",
      *                  enum = {"continent", "timeZones", "flag", "neighbours"},
      *              )
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="page",
+     *          in="query",
+     *          description="Get a specific page",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="integer",
+     *              example=1
      *          )
      *      ),
      * )

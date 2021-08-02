@@ -14,7 +14,7 @@ class ContinentController extends Controller
      * @OA\Get(
      *      tags={"Continents"},
      *      summary="Returns a list of paginated continents",
-     *      path="/api/v1/continents",
+     *      path="/continents",
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -58,6 +58,17 @@ class ContinentController extends Controller
      *              )
      *          )
      *      ),
+     *      @OA\Parameter(
+     *          name="page",
+     *          in="query",
+     *          description="Get a specific page",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="integer",
+     *              example=1
+     *          )
+     *      ),
      * )
      * @OA\Tag(
      *     name="Continents",
@@ -79,7 +90,7 @@ class ContinentController extends Controller
      *
      * @OA\Get(
      *     tags={"Continents"},
-     *     path="/api/v1/continents/{continentCode}",
+     *     path="/continents/{continentCode}",
      *     operationId="getContinentByCode",
      *     @OA\Property(ref="#/components/schemas/continent"),
      *     @OA\Parameter(

@@ -14,7 +14,7 @@ class FeatureClassController extends Controller
      * @OA\Get(
      *      tags={"Feature Classes"},
      *      summary="Returns a list of paginated feature classes",
-     *      path="/api/v1/featureClasses",
+     *      path="/featureClasses",
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -53,6 +53,17 @@ class FeatureClassController extends Controller
      *              )
      *          )
      *      ),
+     *      @OA\Parameter(
+     *          name="page",
+     *          in="query",
+     *          description="Get a specific page",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="integer",
+     *              example=1
+     *          )
+     *      )
      * )
      * @OA\Tag(
      *     name="Feature Classes",
@@ -74,7 +85,7 @@ class FeatureClassController extends Controller
      *
      * @OA\Get(
      *     tags={"Feature Classes"},
-     *     path="/api/v1/featureClasses/{featureClassCode}",
+     *     path="/featureClasses/{featureClassCode}",
      *     operationId="getFeatureClassByCode",
      *     @OA\Property(ref="#/components/schemas/featureClass"),
      *     @OA\Parameter(

@@ -14,7 +14,7 @@ class CountryController extends Controller
      * @OA\Get(
      *      tags={"Countries"},
      *      summary="Returns a list of paginated countries",
-     *      path="/api/v1/countries",
+     *      path="/countries",
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -72,6 +72,17 @@ class CountryController extends Controller
      *              )
      *          )
      *      ),
+     *      @OA\Parameter(
+     *          name="page",
+     *          in="query",
+     *          description="Get a specific page",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="integer",
+     *              example=1
+     *          )
+     *      ),
      * )
      * @OA\Tag(
      *     name="Countries",
@@ -93,7 +104,7 @@ class CountryController extends Controller
      *
      * @OA\Get(
      *     tags={"Countries"},
-     *     path="/api/v1/countries/{countryCode}",
+     *     path="/countries/{countryCode}",
      *     operationId="getCountryByCode",
      *     @OA\Property(ref="#/components/schemas/country"),
      *     @OA\Parameter(

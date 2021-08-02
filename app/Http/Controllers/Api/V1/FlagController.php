@@ -14,7 +14,7 @@ class FlagController extends Controller
      * @OA\Get(
      *      tags={"Flags"},
      *      summary="Returns a list of paginated flags",
-     *      path="/api/v1/flags",
+     *      path="/flags",
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -53,6 +53,17 @@ class FlagController extends Controller
      *              )
      *          )
      *      ),
+     *      @OA\Parameter(
+     *          name="page",
+     *          in="query",
+     *          description="Get a specific page",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="integer",
+     *              example=1
+     *          )
+     *      ),
      * )
      * @OA\Tag(
      *     name="Flags",
@@ -74,7 +85,7 @@ class FlagController extends Controller
      *
      * @OA\Get(
      *     tags={"Flags"},
-     *     path="/api/v1/flags/{countryCode}",
+     *     path="/flags/{countryCode}",
      *     operationId="getFlagByCode",
      *     @OA\Property(ref="#/components/schemas/flag"),
      *     @OA\Parameter(

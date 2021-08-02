@@ -16,7 +16,7 @@ class PlaceLocationController extends Controller
      *
      * @OA\Get(
      *     tags={"Places"},
-     *     path="/api/v1/places/{geonameId}/location",
+     *     path="/places/{geonameId}/location",
      *     operationId="getLocationByPlace",
      *     @OA\Property(ref="#/components/schemas/Place"),
      *     @OA\Parameter(
@@ -27,6 +27,17 @@ class PlaceLocationController extends Controller
      *            type="string"
      *        )
      *     ),
+     *      @OA\Parameter(
+     *          name="page",
+     *          in="query",
+     *          description="Get a specific page",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="integer",
+     *              example=1
+     *          )
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
