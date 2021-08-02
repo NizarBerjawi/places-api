@@ -4,6 +4,7 @@ namespace App\Imports\Iterators;
 
 use App\Imports\Concerns\GeonamesIterable;
 use App\Imports\Traits\Sanitizable;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\LazyCollection;
 
 class BaseIterator implements GeonamesIterable
@@ -44,6 +45,10 @@ class BaseIterator implements GeonamesIterable
      */
     public function iterable()
     {
+        if ((new Filesystem)->missing($this->filepath)) {
+            return LazyCollection::empty();
+        }
+
         return LazyCollection::make(function () {
             $handle = fopen($this->filepath, 'r');
 
