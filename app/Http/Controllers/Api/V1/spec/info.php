@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * @OA\Info(
  *     description="This is the full documentation for the Places API.",
  *     version="1.0.0",
