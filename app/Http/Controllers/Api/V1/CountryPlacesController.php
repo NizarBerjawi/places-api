@@ -17,7 +17,7 @@ class CountryPlacesController extends Controller
      * @OA\Get(
      *      tags={"Countries"},
      *      summary="Returns the places available in a specific country",
-     *      path="/api/v1/countries/{countryCode}/places",
+     *      path="/countries/{countryCode}/places",
      *      @OA\Parameter(
      *         name="countryCode",
      *         in="path",
@@ -48,6 +48,17 @@ class CountryPlacesController extends Controller
      *                  type="integer",
      *                  example="100000"
      *              )
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="page",
+     *          in="query",
+     *          description="Get a specific page",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="integer",
+     *              example=1
      *          )
      *      ),
      *      @OA\Response(

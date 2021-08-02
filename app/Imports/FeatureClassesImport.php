@@ -2,14 +2,20 @@
 
 namespace App\Imports;
 
-use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\GeonamesFileIterator;
 use App\Models\FeatureClass;
+use Illuminate\Bus\Batchable;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImportable
+class FeatureClassesImport extends GeonamesFileIterator implements ShouldQueue
 {
+    use Batchable, InteractsWithQueue, Queueable, SerializesModels;
+
     /**
      * Feature Classes.
      *
@@ -51,7 +57,7 @@ class FeatureClassesImport extends GeonamesFileIterator implements GeonamesImpor
      *
      * @return void
      */
-    public function import()
+    public function handle()
     {
         $featureClasses = Collection::make();
         foreach ($this->iterable() as $item) {

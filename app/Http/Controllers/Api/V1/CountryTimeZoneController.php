@@ -17,7 +17,7 @@ class CountryTimeZoneController extends Controller
      * @OA\Get(
      *      tags={"Countries"},
      *      summary="Returns the Time Zones available in a specific country",
-     *      path="/api/v1/countries/{countryCode}/timeZones",
+     *      path="/countries/{countryCode}/timeZones",
      *      @OA\Parameter(
      *         name="countryCode",
      *         in="path",
@@ -26,6 +26,17 @@ class CountryTimeZoneController extends Controller
      *             type="string"
      *         )
      *     ),
+     *      @OA\Parameter(
+     *          name="page",
+     *          in="query",
+     *          description="Get a specific page",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="integer",
+     *              example=1
+     *          )
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",

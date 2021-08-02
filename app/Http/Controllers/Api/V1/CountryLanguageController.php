@@ -17,7 +17,7 @@ class CountryLanguageController extends Controller
      * @OA\Get(
      *      tags={"Countries"},
      *      summary="Returns the languages of a specific country",
-     *      path="/api/v1/countries/{countryCode}/languages",
+     *      path="/countries/{countryCode}/languages",
      *      @OA\Parameter(
      *         name="countryCode",
      *         in="path",
@@ -26,6 +26,17 @@ class CountryLanguageController extends Controller
      *             type="string"
      *         )
      *     ),
+     *      @OA\Parameter(
+     *          name="page",
+     *          in="query",
+     *          description="Get a specific page",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="integer",
+     *              example=1
+     *          )
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",

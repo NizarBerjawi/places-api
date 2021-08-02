@@ -17,7 +17,7 @@ class CountryCurrencyController extends Controller
      * @OA\Get(
      *      tags={"Countries"},
      *      summary="Returns the currency of a specific country",
-     *      path="/api/v1/countries/{countryCode}/currency",
+     *      path="/countries/{countryCode}/currency",
      *      @OA\Parameter(
      *         name="countryCode",
      *         in="path",
@@ -50,6 +50,17 @@ class CountryCurrencyController extends Controller
      *                  type="string",
      *                  enum = {"countries"},
      *              )
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="page",
+     *          in="query",
+     *          description="Get a specific page",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="integer",
+     *              example=1
      *          )
      *      ),
      * )

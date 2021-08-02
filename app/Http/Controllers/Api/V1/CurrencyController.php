@@ -14,7 +14,7 @@ class CurrencyController extends Controller
      * @OA\Get(
      *      tags={"Currencies"},
      *      summary="Returns a list of paginated currencies",
-     *      path="/api/v1/currencies",
+     *      path="/currencies",
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -53,6 +53,17 @@ class CurrencyController extends Controller
      *              )
      *          )
      *      ),
+     *      @OA\Parameter(
+     *          name="page",
+     *          in="query",
+     *          description="Get a specific page",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="integer",
+     *              example=1
+     *          )
+     *      )
      * )
      * @OA\Tag(
      *     name="Currencies",
@@ -74,7 +85,7 @@ class CurrencyController extends Controller
      *
      * @OA\Get(
      *     tags={"Currencies"},
-     *     path="/api/v1/currencies/{currencyCode}",
+     *     path="/currencies/{currencyCode}",
      *     operationId="getCurrencyByCode",
      *     @OA\Property(ref="#/components/schemas/currency"),
      *     @OA\Parameter(
