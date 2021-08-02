@@ -13,7 +13,7 @@ class GenerateDocumentation extends Command
      *
      * @var string
      */
-    protected $signature = 'docs:generate';
+    protected $signature = 'docs:generate {--apiVersion=v1}';
 
     /**
      * The console command description.
@@ -29,8 +29,24 @@ class GenerateDocumentation extends Command
      */
     public function handle()
     {
-        $openApi = Generator::scan(['app/Http/Controllers', 'app/Models']);
-        $content = $openApi->toJson();
+        $apiVersion = strtoupper($this->option('apiVersion'));
+
+        if (! $apiVersion) {
+            return $this->error('You must provide an apiVersion value.');
+        }
+
+        $path = "app/Http/Controllers/Api/$apiVersion/spec/constants.php";
+
+        $filesystem = new Filesystem();
+
+        if (! $filesystem->exists($path)) {
+            return $this->error('Failed to generate documentation');
+        }
+
+        require_once $path;
+
+        $content = Generator::scan(['app/Http/Controllers', 'app/Models'])
+            ->toJson();
 
         (new Filesystem)->put(base_path('openApi.json'), $content);
     }

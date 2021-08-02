@@ -17,7 +17,7 @@ class CountryNeighbourController extends Controller
      * @OA\Get(
      *      tags={"Countries"},
      *      summary="Returns the neighbouring countries of a specific country",
-     *      path="/api/v1/countries/{countryCode}/neighbours",
+     *      path="/countries/{countryCode}/neighbours",
      *      @OA\Parameter(
      *         name="countryCode",
      *         in="path",
@@ -26,6 +26,17 @@ class CountryNeighbourController extends Controller
      *             type="string"
      *         )
      *     ),
+     *      @OA\Parameter(
+     *          name="page",
+     *          in="query",
+     *          description="Get a specific page",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="integer",
+     *              example=1
+     *          )
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",

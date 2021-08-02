@@ -17,7 +17,7 @@ class CountryFlagController extends Controller
      * @OA\Get(
      *      tags={"Countries"},
      *      summary="Returns the flag of a specific country",
-     *      path="/api/v1/countries/{countryCode}/flag",
+     *      path="/countries/{countryCode}/flag",
      *      @OA\Parameter(
      *         name="countryCode",
      *         in="path",

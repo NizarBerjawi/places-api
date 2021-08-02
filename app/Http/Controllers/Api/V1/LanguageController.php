@@ -14,7 +14,7 @@ class LanguageController extends Controller
      * @OA\Get(
      *      tags={"Languages"},
      *      summary="Returns a list of paginated languages",
-     *      path="/api/v1/languages",
+     *      path="/languages",
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -53,10 +53,21 @@ class LanguageController extends Controller
      *              )
      *          )
      *      ),
+     *      @OA\Parameter(
+     *          name="page",
+     *          in="query",
+     *          description="Get a specific page",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="integer",
+     *              example=1
+     *          )
+     *      ),
      * )
      * @OA\Tag(
-     *     name="Flags",
-     *     description="Everything about flags"
+     *     name="Languages",
+     *     description="Everything about languages"
      * )
      *
      * @param \App\Filters\LanguageFilter  $filter

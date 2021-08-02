@@ -13,90 +13,6 @@
                 available for download free of charge.
             </blockquote>
 
-            {{-- <h1>Available Resources</h1>
-
-            <table class="table is-striped">
-                <thead>
-                    <th>Resource</th>
-                    <th>Identifier</th>
-                    <th>Example</th>
-                    <th></th>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="is-vcentered">Continent</td>
-                        <td class="is-vcentered">Continent 2 letter code</td>
-                        <td class="is-vcentered">AS, AF, EU...</td>
-                        <td class="is-vcentered"><a class="button is-info is-small"
-                            href="https://www.geonames.org/countries/" target="_blank">Full List</a></td>                    </tr>
-                    <tr>
-                        <td class="is-vcentered">Country</td>
-                        <td class="is-vcentered">ISO-3166 alpha2 code</td>
-                        <td class="is-vcentered">AU, CN, US... </td>
-                        <td class="is-vcentered"><a class="button is-info is-small"
-                                href="https://www.geonames.org/countries/" target="_blank">Full List</a></td>
-                    </tr>
-                    <tr>
-                        <td class="is-vcentered">Place</td>
-                        <td class="is-vcentered">Version 4 UUID</td>
-                        <td class="is-vcentered">000a20ce-69fe-40b1-9f72-30cdecd979d2</td>
-                        <td class="is-vcentered"></td>
-                    </tr>
-                    <tr>
-                        <td class="is-vcentered">Location</td>
-                        <td class="is-vcentered"><strong>N/A</strong><br />You can only query a location in the context of
-                            specific place.</td>
-                        <td class="is-vcentered"></td>
-                        <td class="is-vcentered"></td>
-                    </tr>
-                    <tr>
-                        <td class="is-vcentered">Currency</td>
-                        <td class="is-vcentered">ISO 4217 currency code</td>
-                        <td class="is-vcentered">USD, AUD, EUR...</td>
-                        <td class="is-vcentered"></td>
-                    </tr>
-                    <tr>
-                        <td class="is-vcentered">Language</td>
-                        <td class="is-vcentered"><strong>N/A</strong><br />You can only query some languages in the context
-                            of a specific country.</td>
-                        <td class="is-vcentered"></td>
-                        <td class="is-vcentered"></td>
-                    </tr>
-                    <tr>
-                        <td class="is-vcentered">Time Zone</td>
-                        <td class="is-vcentered">Time zone code.<br /> A camel case version of the time zone.</td>
-                        <td class="is-vcentered">Australia_Sydney, Asia_Shanghai, Europe_London...</td>
-                        <td class="is-vcentered"></td>
-                    </tr>
-                    <tr>
-                        <td class="is-vcentered">Flag</td>
-                        <td class="is-vcentered">ISO-3166 alpha2 Country code</td>
-                        <td class="is-vcentered"></td>
-                        <td class="is-vcentered"></td>
-                    </tr>
-                    <tr>
-                        <td class="is-vcentered">Feature Class</td>
-                        <td class="is-vcentered">Feature class code</td>
-                        <td class="is-vcentered">A, H, L...</td>
-                        <td class="is-vcentered">
-                            <a class="button is-info is-small" href="https://www.geonames.org/export/codes.html"
-                                target="_blank">Full List</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="is-vcentered">Feature Code</td>
-                        <td class="is-vcentered">N/A</td>
-                        <td class="is-vcentered">PCLI, PPLA, BDG...</td>
-                        <td class="is-vcentered">
-                            <a class="button is-info is-small" href="https://www.geonames.org/export/codes.html"
-                                target="_blank">
-                                Full List
-                            </a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table> --}}
-
             <h1>Querying Relations</h1>
             <p>You can query a relation by adding the <code>include</code> query parameter to the request.</p>
             <p>Let's say you need to get all
@@ -125,6 +41,13 @@
                 different pages by adding the <code>page</code> query parameter to the request.
             <pre>GET api/v1/featureCodes?page=3</pre>
             <p>The above request will return all the results on the 3rd page</p>
+
+            <h1>Additional Resources</h1>
+
+            <ul>
+                <li><a href="https://www.geonames.org/countries/">Countries</a></li>
+                <li><a href="https://www.geonames.org/export/codes.html">Feature Codes</a></li>
+            </ul>
         </div>
     </section>
 

@@ -14,7 +14,7 @@ class TimeZoneController extends Controller
      * @OA\Get(
      *      tags={"Time Zones"},
      *      summary="Returns a list of paginated time zones",
-     *      path="/api/v1/timeZones",
+     *      path="/timeZones",
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -56,6 +56,17 @@ class TimeZoneController extends Controller
      *              )
      *          )
      *      ),
+     *      @OA\Parameter(
+     *          name="page",
+     *          in="query",
+     *          description="Get a specific page",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="integer",
+     *              example=1
+     *          )
+     *      ),
      * )
      * @OA\Tag(
      *     name="Time Zones",
@@ -77,7 +88,7 @@ class TimeZoneController extends Controller
      *
      * @OA\Get(
      *     tags={"Time Zones"},
-     *     path="/api/v1/timeZones/{timeZoneCode}",
+     *     path="/timeZones/{timeZoneCode}",
      *     operationId="getTimeZoneByCode",
      *     @OA\Property(ref="#/components/schemas/time_zone"),
      *     @OA\Parameter(
