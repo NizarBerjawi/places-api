@@ -87,7 +87,7 @@ class FeatureClassesImport extends GeonamesFileIterator implements ShouldQueue
      */
     private static function loadFeatureClasses()
     {
-        $path = storage_path('app/'.config('geonames.feature_codes_file'));
+        $path = storage_path('app/data/'.config('geonames.feature_codes_file'));
 
         $iterable = (new GeonamesFileIterator($path))->iterable();
 

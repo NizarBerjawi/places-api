@@ -89,7 +89,7 @@ class DownloadGeonamesFile extends GeonamesJob
      */
     private function folderPath()
     {
-        return storage_path('app/data/'.$this->code);
+        return storage_path('app/data/geonames/'.$this->code);
     }
 
     /**

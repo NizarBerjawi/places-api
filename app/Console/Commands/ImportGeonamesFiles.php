@@ -43,24 +43,24 @@ class ImportGeonamesFiles extends Command
     {
         $dispatcher = app()->make(\Illuminate\Contracts\Bus\Dispatcher::class);
         $dispatcher->batch([
-            new ContinentsImport(storage_path('app/'.config('geonames.readme_file'))),
-            new CurrenciesImport(storage_path('app/'.config('geonames.countries_file'))),
-            new CountriesImport(storage_path('app/'.config('geonames.countries_file'))),
-            new TimeZonesImport(storage_path('app/'.config('geonames.time_zones_file'))),
-            new LanguagesImport(storage_path('app/'.config('geonames.language_codes_file'))),
-            new NeighbourCountriesImport(storage_path('app/'.config('geonames.countries_file'))),
-            new FeatureClassesImport(storage_path('app/'.config('geonames.readme_file'))),
-            new FeatureCodesImport(storage_path('app/'.config('geonames.feature_codes_file'))),
-            new FlagsImport(),
-            new CountryLanguageImport(storage_path('app/'.config('geonames.countries_file'))),
-            new CountryCurrencyImport(storage_path('app/'.config('geonames.countries_file'))),
+            new ContinentsImport(storage_path('app/data/'.config('geonames.readme_file'))),
+            new CurrenciesImport(storage_path('app/data/'.config('geonames.countries_file'))),
+            new CountriesImport(storage_path('app/data/'.config('geonames.countries_file'))),
+            new TimeZonesImport(storage_path('app/data/'.config('geonames.time_zones_file'))),
+            new LanguagesImport(storage_path('app/data/'.config('geonames.language_codes_file'))),
+            new NeighbourCountriesImport(storage_path('app/data/'.config('geonames.countries_file'))),
+            new FeatureClassesImport(storage_path('app/data/'.config('geonames.readme_file'))),
+            new FeatureCodesImport(storage_path('app/data/'.config('geonames.feature_codes_file'))),
+            new FlagsImport(storage_path('app/data/'.config('geonames.countries_file'))),
+            new CountryLanguageImport(storage_path('app/data/'.config('geonames.countries_file'))),
+            new CountryCurrencyImport(storage_path('app/data/'.config('geonames.countries_file'))),
         ])->then(function (Batch $batch) {
             if ($batch->finished()) {
                 Country::cursor()
                     ->each(function (Country $country) {
                         $code = $country->iso3166_alpha2;
 
-                        $filepath = storage_path('app/data/'.$code.'/'.$code.'.txt');
+                        $filepath = storage_path('app/data/geonames/'.$code.'/'.$code.'.txt');
 
                         dispatch(new PlacesImport($filepath))
                             ->onQueue('import');

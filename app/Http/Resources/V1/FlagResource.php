@@ -16,7 +16,8 @@ class FlagResource extends JsonResource
     {
         return [
             'country_code' => $this->country_code,
-            'path'         => url($this->path),
+            'filename'     => $this->filename,
+            'url'          => route('flags', ['flag' => $this->filename]),
             'country'      => CountryResource::make($this->whenLoaded('country')),
         ];
     }
