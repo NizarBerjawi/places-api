@@ -30,7 +30,7 @@ class WebController extends Controller
         $filepath = storage_path("app/flags/$flag");
 
         if ($filesystem->missing($filepath)) {
-            throw new NotFoundResourceException();
+            abort(404);
         }
 
         return new BinaryFileResponse($filepath, 200);
