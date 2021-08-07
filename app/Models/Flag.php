@@ -20,9 +20,15 @@ use Illuminate\Database\Eloquent\Model;
  *      description="The two-letter ISO 3166-1 alpha-2 country code that this flag belongs to"
  * )
  * @OA\Property(
- *      property="path",
+ *      property="url",
  *      type="string",
- *      example="http://localhost:8080/storage/flags/AU/au.gif",
+ *      example="http://localhost:8080/storage/flags/AU.gif",
+ *      description="The location of the flag image"
+ * )
+ * @OA\Property(
+ *      property="filename",
+ *      type="string",
+ *      example="AU.gif",
  *      description="The location of the flag image"
  * )
  */
@@ -48,7 +54,7 @@ class Flag extends Model
      * @var array
      */
     protected $fillable = [
-        'path',
+        'filepath', 'filename', 'extension',
     ];
 
     /**

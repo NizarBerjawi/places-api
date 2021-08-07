@@ -14,8 +14,9 @@ class CreateFlagsTable extends Migration
     public function up()
     {
         Schema::create('flags', function (Blueprint $table) {
-            $table->string('path');
             $table->string('country_code')->primary();
+            $table->string('filename')->unique();
+            $table->string('filepath');
         });
 
         Schema::table('flags', function (Blueprint $table) {
