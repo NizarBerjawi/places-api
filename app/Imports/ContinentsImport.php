@@ -95,7 +95,7 @@ class ContinentsImport extends GeonamesFileIterator implements ShouldQueue
      */
     private static function loadContinentCodes()
     {
-        $path = storage_path('app/'.config('geonames.countries_file'));
+        $path = storage_path('app/data/'.config('geonames.countries_file'));
 
         $codes = (new CountriesFileIterator($path))
             ->iterable()

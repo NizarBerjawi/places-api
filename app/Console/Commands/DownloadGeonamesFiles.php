@@ -39,7 +39,7 @@ class DownloadGeonamesFiles extends Command
     public function handle()
     {
         $filesystem = new Filesystem();
-        $filesystem->ensureDirectoryExists(storage_path('app'));
+        $filesystem->ensureDirectoryExists(storage_path('app/data'));
 
         $dispatcher = app()->make(\Illuminate\Contracts\Bus\Dispatcher::class);
         $dispatcher->batch([
@@ -50,7 +50,7 @@ class DownloadGeonamesFiles extends Command
             new DownloadTimezonesFile,
         ])->then(function (Batch $batch) {
             if ($batch->finished()) {
-                $path = storage_path('app/'.config('geonames.countries_file'));
+                $path = storage_path('app/data/'.config('geonames.countries_file'));
 
                 (new CountriesFileIterator($path))
                     ->iterable()

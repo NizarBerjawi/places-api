@@ -69,6 +69,6 @@ class DeleteModificationsFile extends GeonamesJob
      */
     public function filepath()
     {
-        return storage_path('app/'.$this->filename());
+        return storage_path('app/data/'.$this->filename());
     }
 }

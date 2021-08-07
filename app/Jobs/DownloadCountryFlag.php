@@ -96,6 +96,6 @@ class DownloadCountryFlag extends GeonamesJob
      */
     private function folderPath()
     {
-        return storage_path('app/flags/'.$this->code);
+        return storage_path('app/flags/');
     }
 }

@@ -54,7 +54,7 @@ class TimeZone extends Model
      * @var array
      */
     protected $fillable = [
-        'gmt_offset',
+        'gmt_offset', 'country_code',
     ];
 
     /**

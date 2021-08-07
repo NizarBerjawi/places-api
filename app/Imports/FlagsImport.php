@@ -2,15 +2,16 @@
 
 namespace App\Imports;
 
-use App\Models\Country;
+use App\Imports\Iterators\CountriesFileIterator;
 use App\Models\Flag;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Collection;
 
-class FlagsImport implements ShouldQueue
+class FlagsImport extends CountriesFileIterator implements ShouldQueue
 {
     use Batchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -21,17 +22,18 @@ class FlagsImport implements ShouldQueue
      */
     public function handle()
     {
-        $data = Country::query()
-            ->get(['iso3166_alpha2'])
-            ->map(function (Country $country) {
-                $code = $country->iso3166_alpha2;
+        $flags = Collection::make();
 
-                return [
-                    'path'         => 'storage/flags/'.$code.'/'.strtolower($code.'.gif'),
-                    'country_code' => $code,
-                ];
-            });
+        foreach ($this->iterable() as $item) {
+            $code = $item[0];
 
-        Flag::insert($data->all());
+            $flags->push([
+                'country_code' => $code,
+                'filename'     => $code.'.gif',
+                'filepath'     => 'app/flags',
+            ]);
+        }
+
+        Flag::insert($flags->all());
     }
 }
