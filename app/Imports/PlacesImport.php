@@ -23,6 +23,10 @@ class PlacesImport extends GeonamesFileIterator implements ShouldQueue
      */
     public function handle()
     {
+        if ($this->isMissing()) {
+            $this->fail(new \Exception("{$this->filepath} is not found."));
+        }
+
         DB::transaction(function () {
             $this->iterable()
                 ->chunk(500)
@@ -53,7 +57,5 @@ class PlacesImport extends GeonamesFileIterator implements ShouldQueue
                     DB::table('locations')->insert($locations->all());
                 });
         });
-
-        info("{$this->filepath} imported successfully");
     }
 }
