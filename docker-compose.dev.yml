@@ -82,13 +82,11 @@ services:
     networks:
       - api_network
   npm:
+    image: node:14-alpine3.13
     build:
       context: .
-      dockerfile: .docker/utilities/Dockerfile.node
-      args: 
-        GID: ${GUID}
-        UID: ${UID}
-        USER: ${USER}
+    user: node
+    working_dir: /app
     volumes:
         - .:/app
     entrypoint: ["npm"]
