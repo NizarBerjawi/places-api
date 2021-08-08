@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
-use Symfony\Component\Translation\Exception\NotFoundResourceException;
 
 class WebController extends Controller
 {
