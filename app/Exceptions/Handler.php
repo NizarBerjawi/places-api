@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Response;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -105,8 +105,8 @@ class Handler extends ExceptionHandler
      */
     protected function getStatusCode(Throwable $exception)
     {
-        return $exception instanceof HttpExceptionInterface 
-            ? $exception->getStatusCode() 
+        return $exception instanceof HttpExceptionInterface
+            ? $exception->getStatusCode()
             : 500;
     }
 }
