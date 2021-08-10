@@ -2,15 +2,12 @@
 
 namespace App\Exceptions;
 
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Response;
-use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -20,13 +17,7 @@ class Handler extends ExceptionHandler
      *
      * @var array
      */
-    protected $dontReport = [
-        AuthorizationException::class,
-        HttpException::class,
-        ModelNotFoundException::class,
-        ValidationException::class,
-        NotFoundHttpException::class,
-    ];
+    protected $dontReport = [];
 
     /**
      * Report or log an exception.
@@ -54,6 +45,10 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+        if ($request->ajax() || $request->wantsJson()) {
+            return $this->prepareJsonResponse($request, $exception);
+        }
+
         return parent::render($request, $exception);
     }
 
@@ -68,28 +63,31 @@ class Handler extends ExceptionHandler
     {
         $debugEnabled = config('app.debug');
 
+        if ($this->shouldntReport($e)) {
+            return;
+        }
+
         if ($e instanceof QueryException) {
-            if ($debugEnabled) {
-                $message = $e->getMessage();
-            } else {
-                $message = 'Internal Server Error';
-            }
+            $message = 'Internal Server Error';
+            $statusCode = 500;
         }
 
-        if ($e instanceof NotFoundHttpException) {
+        if (
+            $e instanceof NotFoundHttpException ||
+            $e instanceof ModelNotFoundException
+        ) {
             $message = 'The specified resource could not be found';
-        }
-
-        $statusCode = $this->getStatusCode($e);
-
-        if (! isset($message) && ! ($message = $e->getMessage())) {
-            $message = sprintf('%d %s', $statusCode, Response::$statusTexts[$statusCode]);
+            $statusCode = 404;
         }
 
         $errors = [
-            'message' => $message,
-            'status_code' => $statusCode,
+            'message' => $debugEnabled ? $e->getMessage() : $message,
+            'status_code' => $debugEnabled ? $this->getStatusCode($e) : $statusCode,
         ];
+
+        if (empty($errors['message'])) {
+            $errors['message'] = sprintf('%d %s', $statusCode, Response::$statusTexts[$statusCode]);
+        }
 
         if ($debugEnabled) {
             $errors['exception'] = get_class($e);
@@ -107,6 +105,8 @@ class Handler extends ExceptionHandler
      */
     protected function getStatusCode(Throwable $exception)
     {
-        return $exception instanceof HttpExceptionInterface ? $exception->getStatusCode() : 500;
+        return $exception instanceof HttpExceptionInterface 
+            ? $exception->getStatusCode() 
+            : 500;
     }
 }
