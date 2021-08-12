@@ -7,6 +7,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "guzzlehttp/guzzle": "^7.0",
+        "illuminate/routing": "^8.54",
         "laravel/lumen-framework": "^8.0",
         "spatie/laravel-query-builder": "^3.3",
         "zircote/swagger-php": "^3.2"
