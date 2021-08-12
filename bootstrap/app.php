@@ -76,13 +76,9 @@ $app->configure('api');
 | route or middleware that'll be assigned to some specific routes.
 |
 */
-
-// $app->middleware([
-//     App\Http\Middleware\ApiVersion::class
-// ]);
-
 $app->routeMiddleware([
     'api_version' => App\Http\Middleware\ApiVersion::class,
+    'throttle' => App\Http\Middleware\RateLimits::class,
 ]);
 
 /*
@@ -120,7 +116,7 @@ $app->router->group([
 });
 
 $app->router->group([
-    'middleware' => 'api_version:v1',
+    'middleware' => ['api_version:v1', 'throttle:500,1'],
     'namespace'  => 'App\Http\Controllers\Api\V1',
     'prefix'     => 'api/v1' 
 ], function ($router) {
