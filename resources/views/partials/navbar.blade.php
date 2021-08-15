@@ -1,24 +1,41 @@
-<div class="tabs is-centered">
-    <ul>
-        <li>
-            <a href={{ route('home') }} class="navbar-item  {{ request()->routeIs('home') ? 'is-active' : '' }}">
-                Home
-            </a>
-        </li>
-        <li>
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="navbar-brand">
+        <a class="navbar-item is-size-4" href={{ route('home') }}>
+            Places API
+        </a>
+
+        <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
             <a href={{ route('intro') }} class="navbar-item {{ request()->routeIs('intro') ? 'is-active' : '' }}">
                 Introduction
             </a>
-        </li>
-        <li>
+
             <a href={{ route('docs') }} class="navbar-item {{ request()->routeIs('docs') ? 'is-active' : '' }}">
                 Documentation
             </a>
-        </li>
-        <li>
+
             <a href={{ env('GITHUB_URL') }} class="navbar-item" target="_blank">
                 Github
             </a>
-        </li>
-    </ul>
-</div>
+        </div>
+
+        <div class="navbar-end">
+            <div class="navbar-item">
+                <div class="buttons">
+                    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button"
+                                        data-slug="placesApi" data-color="#FFDD00" data-emoji="" data-font="Cookie"
+                                        data-text="Buy me a coffee" data-outline-color="#000000" data-font-color="#000000"
+                                        data-coffee-color="#ffffff"></script>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
