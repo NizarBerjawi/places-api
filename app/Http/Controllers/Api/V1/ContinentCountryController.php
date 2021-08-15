@@ -53,6 +53,41 @@ class ContinentCountryController extends Controller
      *          )
      *      ),
      *      @OA\Parameter(
+     *          name="filter",
+     *          in="query",
+     *          description="Filter countries by certain criteria",
+     *          required=false,
+     *          style="deepObject",
+     *          @OA\Schema(
+     *              type="object",
+     *              enum={
+     *                  "name",
+     *                  "iso3166_alpha2",
+     *                  "iso3166_alpha3",
+     *                  "iso3166_numeric",
+     *                  "population",
+     *                  "area",
+     *                  "phone_code",
+     *                  "area_gt",
+     *                  "area_gte",
+     *                  "area_lt",
+     *                  "area_lte",
+     *                  "area_between",
+     *                  "population_gt",
+     *                  "population_gte",
+     *                  "population_lt",
+     *                  "population_lte",
+     *                  "population_between",
+     *                  "neighbour_of"
+     *              },
+     *              @OA\Property(
+     *                  property="area_lt",
+     *                  type="integer",
+     *                  example="100000"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Parameter(
      *          name="page",
      *          in="query",
      *          description="Get a specific page",
