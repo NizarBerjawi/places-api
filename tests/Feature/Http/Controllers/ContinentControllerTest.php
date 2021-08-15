@@ -174,7 +174,9 @@ class ContinentControllerTest extends TestCase
             ->limit(2)
             ->get();
 
-        $response = $this->get('/api/v1/continents?filter[code]='.$continents->first()->code.'&filter[name]='.$continents->last()->name);
+        $response = $this->get('/api/v1/continents?filter[code]='
+            .$continents->first()->code
+            .'&filter[name]='.$continents->last()->name);
 
         $response->shouldReturnJson();
         $response->seeJsonContains([
