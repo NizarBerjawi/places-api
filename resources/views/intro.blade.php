@@ -40,7 +40,7 @@
             <p>By default, all API results are paginated with a total of 10 results per page. You can fetch the data on
                 different pages by adding the <code>page</code> query parameter to the request.
             <pre>GET api/v1/featureCodes?page=3</pre>
-            <p>The above request will return all the results on the 3rd page</p>
+            <p>The above request will return all the results on the 3rd page.</p>
 
             <h1>Additional Resources</h1>
 
