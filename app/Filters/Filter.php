@@ -2,7 +2,7 @@
 
 namespace App\Filters;
 
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Spatie\QueryBuilder\QueryBuilder;
 
 abstract class Filter
@@ -84,14 +84,14 @@ abstract class Filter
     /**
      * The paginator used to paginate the result.
      *
-     * @return \Illuminate\Pagination\LengthAwarePaginator
+     * @return \Illuminate\Pagination\Paginator
      */
-    public function getPaginator(): LengthAwarePaginator
+    public function getPaginator(): Paginator
     {
         $this->checkBuilder();
 
         return $this->getBuilder()
-            ->paginate(config('geonames.pagination_limit'))
+            ->simplePaginate(config('geonames.pagination_limit'))
             ->appends(request()->query());
     }
 
