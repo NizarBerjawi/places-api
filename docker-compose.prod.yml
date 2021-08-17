@@ -59,6 +59,8 @@ services:
     build:
       context: .
       dockerfile: .docker/Dockerfile.builder
+      args:
+        APP_URL: ${APP_URL}
     image: builder
     container_name: builder
     networks:

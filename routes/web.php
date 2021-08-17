@@ -27,3 +27,8 @@ $router->get('/documentation', [
     'uses' => 'WebController@docs',
     'as' => 'docs',
 ]);
+
+$router->get('/flags/{flag}', [
+    'uses' => 'WebController@flags',
+    'as' => 'flags',
+]);

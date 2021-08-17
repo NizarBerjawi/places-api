@@ -20,9 +20,11 @@ services:
       context: .
       dockerfile: .docker/Dockerfile.dev
       args: 
-        GID: 1001
-        UID: 1001
-        USER: laravel
+        GID: ${GUID}
+        UID: ${UID}
+        USER: ${USER}
+        GIT_EMAIL: ${GIT_EMAIL}
+        GIT_USER: ${GIT_USER}
     container_name: php
     env_file:
       - .env
@@ -55,9 +57,9 @@ services:
       context: .
       dockerfile: .docker/utilities/Dockerfile.composer
       args: 
-        GID: 1001
-        UID: 1001
-        USER: laravel
+        GID: ${GUID}
+        UID: ${UID}
+        USER: ${USER}
     container_name: composer
     volumes:
       - .:/var/www/html
@@ -69,9 +71,9 @@ services:
       context: .
       dockerfile: .docker/Dockerfile.dev
       args: 
-        GID: 1001
-        UID: 1001
-        USER: laravel
+        GID: ${GUID}
+        UID: ${UID}
+        USER: ${USER}
     container_name: artisan
     volumes:
       - .:/var/www/html
@@ -82,13 +84,11 @@ services:
     networks:
       - api_network
   npm:
+    image: node:14-alpine3.13
     build:
       context: .
-      dockerfile: .docker/utilities/Dockerfile.node
-      args:
-        GID: 1001
-        UID: 1001
-        USER: laravel
+    user: node
+    working_dir: /app
     volumes:
         - .:/app
     entrypoint: ["npm"]
@@ -97,9 +97,9 @@ services:
       context: .
       dockerfile: .docker/Dockerfile.dev
       args: 
-        GID: 1001
-        UID: 1001
-        USER: laravel
+        GID: ${GUID}
+        UID: ${UID}
+        USER: ${USER}
     container_name: artisan
     volumes:
       - .:/var/www/html

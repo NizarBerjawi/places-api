@@ -2,15 +2,21 @@
 
 namespace App\Imports;
 
-use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
 use App\Imports\Iterators\GeonamesFileIterator;
 use App\Models\Continent;
+use Illuminate\Bus\Batchable;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 
-class ContinentsImport extends GeonamesFileIterator implements GeonamesImportable
+class ContinentsImport extends GeonamesFileIterator implements ShouldQueue
 {
+    use Batchable, InteractsWithQueue, Queueable, SerializesModels;
+
     /**
      * Continent codes.
      *
@@ -54,7 +60,7 @@ class ContinentsImport extends GeonamesFileIterator implements GeonamesImportabl
      *
      * @return void
      */
-    public function import()
+    public function handle()
     {
         $continents = Collection::make();
 
@@ -89,7 +95,7 @@ class ContinentsImport extends GeonamesFileIterator implements GeonamesImportabl
      */
     private static function loadContinentCodes()
     {
-        $path = storage_path('app/'.config('geonames.countries_file'));
+        $path = storage_path('app/data/'.config('geonames.countries_file'));
 
         $codes = (new CountriesFileIterator($path))
             ->iterable()

@@ -87,6 +87,17 @@ class Country extends Model
     ];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'iso3166_numeric' => 'integer',
+        'population' => 'integer',
+        'area' => 'double',
+    ];
+
+    /**
      * Get the continent that owns this country.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

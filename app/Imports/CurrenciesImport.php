@@ -2,19 +2,25 @@
 
 namespace App\Imports;
 
-use App\Imports\Concerns\GeonamesImportable;
 use App\Imports\Iterators\CountriesFileIterator;
 use App\Models\Currency;
+use Illuminate\Bus\Batchable;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Queue\InteractsWithQueue;
+use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
 
-class CurrenciesImport extends CountriesFileIterator implements GeonamesImportable
+class CurrenciesImport extends CountriesFileIterator implements ShouldQueue
 {
+    use Batchable, InteractsWithQueue, Queueable, SerializesModels;
+
     /**
      * Import the required data into the database.
      *
      * @return void
      */
-    public function import()
+    public function handle()
     {
         $currencies = Collection::make();
 

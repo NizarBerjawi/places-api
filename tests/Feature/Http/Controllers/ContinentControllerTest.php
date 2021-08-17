@@ -28,9 +28,16 @@ class ContinentControllerTest extends TestCase
             'meta' => [
                 'current_page',
                 'from',
+                'last_page',
+                'links' => [[
+                    'url',
+                    'label',
+                    'active',
+                ]],
                 'path',
                 'per_page',
                 'to',
+                'total',
             ],
         ]);
     }
@@ -174,7 +181,9 @@ class ContinentControllerTest extends TestCase
             ->limit(2)
             ->get();
 
-        $response = $this->get('/api/v1/continents?filter[code]='.$continents->first()->code.'&filter[name]='.$continents->last()->name);
+        $response = $this->get('/api/v1/continents?filter[code]='
+            .$continents->first()->code
+            .'&filter[name]='.$continents->last()->name);
 
         $response->shouldReturnJson();
         $response->seeJsonContains([
@@ -205,9 +214,16 @@ class ContinentControllerTest extends TestCase
             'meta' => [
                 'current_page',
                 'from',
+                'last_page',
+                'links' => [[
+                    'url',
+                    'label',
+                    'active',
+                ]],
                 'path',
                 'per_page',
                 'to',
+                'total',
             ],
         ]);
     }
