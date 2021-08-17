@@ -48,7 +48,7 @@ COPY ./resources/src /app/resources/src
 COPY ./webpack.config.js /app/webpack.config.js
 
 COPY --from=composer /app/vendor ./vendor
-COPY --from=documentation /app/openApi.json ./openApi.json
+COPY --from=documentation /app/public/openApi.json ./public/openApi.json
 
 RUN npm ci --verbose
 RUN npm run build
