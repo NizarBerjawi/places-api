@@ -48,6 +48,6 @@ class GenerateDocumentation extends Command
         $content = Generator::scan(['app/Http/Controllers', 'app/Models'])
             ->toJson();
 
-        (new Filesystem)->put(base_path('openApi.json'), $content);
+        (new Filesystem)->put(public_path('openApi.json'), $content);
     }
 }
