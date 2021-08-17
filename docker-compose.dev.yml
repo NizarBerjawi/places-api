@@ -85,8 +85,6 @@ services:
       - api_network
   npm:
     image: node:14-alpine3.13
-    build:
-      context: .
     user: node
     working_dir: /app
     volumes:
