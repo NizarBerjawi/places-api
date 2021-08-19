@@ -43,12 +43,12 @@ class UpdateGeonamesData extends Command
         dispatch_now(new DownloadDeletesFile($date));
 
         $modifications = $this->replace('date', $date, config('geonames.modifications_file'));
-        (new ModificationsImport(storage_path("app/$modifications")))->import();
+        dispatch_now(new ModificationsImport(storage_path("app/data/$modifications")));
 
         $deletes = $this->replace('date', $date, config('geonames.deletes_file'));
-        (new DeletesImport(storage_path("app/$deletes")))->import();
+        dispatch_now(new DeletesImport(storage_path("app/data/$deletes")));
 
-        dispatch_now(new DeleteModificationsFile($date));
-        dispatch_now(new DeleteDeletesFile($date));
+        // dispatch_now(new DeleteModificationsFile($date));
+        // dispatch_now(new DeleteDeletesFile($date));
     }
 }
