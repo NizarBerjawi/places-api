@@ -48,8 +48,25 @@ class ModificationsImport extends GeonamesFileIterator implements ShouldQueue
                     ]);
                 }
 
-                DB::table('places')->upsert($places->all(), ['geoname_id'], ['name', 'population', 'elevation', 'feature_code', 'country_code', 'time_zone']);
-                DB::table('locations')->upsert($locations->all(), ['locationable_id', 'locationable_type'], ['latitude', 'longitude']);
+                DB::table('places')
+                    ->upsert($places->all(), [
+                        'geoname_id',
+                    ], [
+                        'name',
+                        'population',
+                        'elevation',
+                        'feature_code',
+                        'country_code',
+                        'time_zone',
+                    ]);
+                DB::table('locations')
+                    ->upsert($locations->all(), [
+                        'locationable_id',
+                        'locationable_type',
+                    ], [
+                        'latitude',
+                        'longitude',
+                    ]);
             });
     }
 }

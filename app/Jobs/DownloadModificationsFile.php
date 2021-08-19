@@ -27,8 +27,6 @@ class DownloadModificationsFile extends GeonamesJob
      */
     public function handle()
     {
-        $this->log($this > url(), 'warning');
-
         try {
             $response = Http::withOptions([
                 'stream' => true,
