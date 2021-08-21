@@ -5,11 +5,12 @@ namespace App\Jobs;
 use App\Exceptions\FileNotDownloadedException;
 use App\Exceptions\FileNotSavedException;
 use App\Jobs\Traits\HasPlaceholders;
+use Illuminate\Bus\Batchable;
 use Illuminate\Support\Facades\Http;
 
 class DownloadDeletesFile extends GeonamesJob
 {
-    use HasPlaceholders;
+    use Batchable, HasPlaceholders;
 
     public $date;
 
