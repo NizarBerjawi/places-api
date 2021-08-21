@@ -10,6 +10,7 @@ use App\Jobs\DownloadDeletesFile;
 use App\Jobs\DownloadModificationsFile;
 use App\Jobs\Traits\HasPlaceholders;
 use Carbon\Carbon;
+use Illuminate\Bus\Batch;
 use Illuminate\Console\Command;
 
 class UpdateGeonamesData extends Command
@@ -37,18 +38,31 @@ class UpdateGeonamesData extends Command
      */
     public function handle()
     {
+        $dispatcher = app()->make(\Illuminate\Contracts\Bus\Dispatcher::class);
         $date = Carbon::yesterday()->format('Y-m-d');
 
-        dispatch_now(new DownloadModificationsFile($date));
-        dispatch_now(new DownloadDeletesFile($date));
-
+        // Generate the filenames
         $modifications = $this->replace('date', $date, config('geonames.modifications_file'));
-        dispatch_now(new ModificationsImport(storage_path("app/data/$modifications")));
-
         $deletes = $this->replace('date', $date, config('geonames.deletes_file'));
-        dispatch_now(new DeletesImport(storage_path("app/data/$deletes")));
 
-        // dispatch_now(new DeleteModificationsFile($date));
-        // dispatch_now(new DeleteDeletesFile($date));
+        $dispatcher->batch([
+            new DownloadModificationsFile($date),
+            new DownloadDeletesFile($date),
+        ])->then(function (Batch $batch) use ($modifications, $deletes) {
+            if ($batch->finished()) {
+                dispatch(new ModificationsImport(storage_path("app/data/$modifications")))
+                    ->onQueue('update');
+                dispatch(new DeletesImport(storage_path("app/data/$deletes")))
+                    ->onQueue('update');
+            }
+        })
+        ->finally(function (Batch $batch) use ($date) {
+            dispatch(new DeleteModificationsFile($date))
+                ->onQueue('delete');
+            dispatch(new DeleteDeletesFile($date))
+                ->onQueue('delete');
+        })
+        ->onQueue('download')
+        ->dispatch();
     }
 }
