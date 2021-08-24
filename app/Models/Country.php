@@ -114,7 +114,14 @@ class Country extends Model
      */
     public function neighbours()
     {
-        return $this->belongsToMany(self::class, 'country_neighbour', 'neighbour_code', 'country_code', 'iso3166_alpha2', 'iso3166_alpha2');
+        return $this->belongsToMany(
+            self::class,
+            'country_neighbour',
+            'neighbour_code',
+            'country_code',
+            'iso3166_alpha2',
+            'iso3166_alpha2'
+        );
     }
 
     /**
@@ -134,7 +141,13 @@ class Country extends Model
      */
     public function languages()
     {
-        return $this->belongsToMany(Language::class, null, 'country_code', null, 'iso3166_alpha2');
+        return $this->belongsToMany(
+            Language::class,
+            null,
+            'country_code',
+            null,
+            'iso3166_alpha2'
+        );
     }
 
     /**
