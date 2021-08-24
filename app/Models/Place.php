@@ -80,7 +80,7 @@ class Place extends Model
      */
     public function timeZone()
     {
-        return $this->belongsTo(TimeZone::class, 'time_zone', 'time_zone');
+        return $this->belongsTo(TimeZone::class, 'time_zone_code', 'code');
     }
 
     /**

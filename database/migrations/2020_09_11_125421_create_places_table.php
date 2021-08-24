@@ -20,13 +20,13 @@ class CreatePlacesTable extends Migration
             $table->smallInteger('elevation')->nullable();
             $table->string('feature_code')->nullable();
             $table->string('country_code')->nullable();
-            $table->string('time_zone')->nullable();
+            $table->string('time_zone_code')->nullable();
         });
 
         Schema::table('places', function (Blueprint $table) {
             $table->foreign('feature_code')->references('code')->on('feature_codes')->onCascade('delete');
             $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->onCascade('delete');
-            $table->foreign('time_zone')->references('time_zone')->on('time_zones')->onCascade('delete');
+            $table->foreign('time_zone_code')->references('code')->on('time_zones')->onCascade('delete');
         });
     }
 
@@ -40,7 +40,7 @@ class CreatePlacesTable extends Migration
         Schema::table('places', function (Blueprint $table) {
             $table->dropForeign(['feature_code']);
             $table->dropForeign(['country_code']);
-            $table->dropForeign(['time_zone']);
+            $table->dropForeign(['time_zone_code']);
         });
         Schema::dropIfExists('places');
     }
