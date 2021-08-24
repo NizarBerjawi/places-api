@@ -42,7 +42,7 @@ class PlacesImport extends GeonamesFileIterator implements ShouldQueue
                             'elevation'         => (int) $item[15],
                             'feature_code'      => $item[7] ?? null,
                             'country_code'      => $item[8] ?? null,
-                            'time_zone'         => $item[17],
+                            'time_zone_code'    => $item[17] ? str_replace('/', '_', strtolower($item[17])) : null,
                         ]);
 
                         $locations->push([

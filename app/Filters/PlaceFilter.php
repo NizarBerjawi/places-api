@@ -28,6 +28,7 @@ class PlaceFilter extends Filter
             AllowedFilter::exact('name'),
             AllowedFilter::exact('feature_code'),
             AllowedFilter::exact('country_code'),
+            AllowedFilter::exact('time_zone_code'),
             AllowedFilter::scope('population_gt'),
             AllowedFilter::scope('population_gte'),
             AllowedFilter::scope('population_lt'),
@@ -47,6 +48,7 @@ class PlaceFilter extends Filter
             'country',
             'location',
             'feature_code',
+            'time_zone',
         ];
     }
 }
