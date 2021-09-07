@@ -34,6 +34,11 @@ class PlaceFilter extends Filter
             AllowedFilter::scope('population_lt'),
             AllowedFilter::scope('population_lte'),
             AllowedFilter::scope('population_between'),
+            AllowedFilter::scope('elevation_gt'),
+            AllowedFilter::scope('elevation_gte'),
+            AllowedFilter::scope('elevation_lt'),
+            AllowedFilter::scope('elevation_lte'),
+            AllowedFilter::scope('elevation_between'),
         ];
     }
 
