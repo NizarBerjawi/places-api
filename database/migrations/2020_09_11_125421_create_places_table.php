@@ -15,12 +15,12 @@ class CreatePlacesTable extends Migration
     {
         Schema::create('places', function (Blueprint $table) {
             $table->id('geoname_id');
-            $table->string('name');
-            $table->unsignedBigInteger('population')->nullable();
-            $table->smallInteger('elevation')->nullable();
-            $table->string('feature_code')->nullable();
-            $table->string('country_code')->nullable();
-            $table->string('time_zone_code')->nullable();
+            $table->string('name')->index();
+            $table->unsignedBigInteger('population')->index()->nullable();
+            $table->smallInteger('elevation')->index()->nullable();
+            $table->string('feature_code')->index()->nullable();
+            $table->string('country_code')->index()->nullable();
+            $table->string('time_zone_code')->index()->nullable();
         });
 
         Schema::table('places', function (Blueprint $table) {
