@@ -37,7 +37,7 @@ class NeighbourCountriesImport extends CountriesFileIterator implements ShouldQu
             ->iterable()
             ->reject([$this, 'skip'])
             ->flatMap(function (array $data) {
-                $neighbourCodes = Str::of($data[17])->explode(',');
+                $neighbourCodes = Str::of($data[17])->explode(',')->filter();
 
                 return $neighbourCodes->map(function (string $code) use ($data) {
                     return [
