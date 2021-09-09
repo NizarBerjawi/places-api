@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Response;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
+use Spatie\QueryBuilder\Exceptions\InvalidIncludeQuery;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -67,10 +68,7 @@ class Handler extends ExceptionHandler
             return;
         }
 
-        if ($e instanceof QueryException) {
-            $message = 'Internal Server Error';
-            $statusCode = 500;
-        }
+        $statusCode = $this->getStatusCode($e);
 
         if (
             $e instanceof NotFoundHttpException ||
@@ -80,14 +78,23 @@ class Handler extends ExceptionHandler
             $statusCode = 404;
         }
 
-        $errors = [
-            'message' => $debugEnabled ? $e->getMessage() : $message,
-            'status_code' => $debugEnabled ? $this->getStatusCode($e) : $statusCode,
-        ];
-
-        if (empty($errors['message'])) {
-            $errors['message'] = sprintf('%d %s', $statusCode, Response::$statusTexts[$statusCode]);
+        if ($e instanceof InvalidIncludeQuery) {
+            $message = "Requested filter(s) `{$e->unknownIncludes->implode(', ')}` are not allowed.";
+            $statusCode = 404;
         }
+
+        if ($e instanceof QueryException) {
+            $message = 'Internal Server Error';
+        }
+
+        if (! isset($message) && ! ($message = $e->getMessage())) {
+            $message = sprintf('%d %s', $statusCode, Response::$statusTexts[$statusCode]);
+        }
+
+        $errors = [
+            'message' => $message,
+            'status_code' => $statusCode,
+        ];
 
         if ($debugEnabled) {
             $errors['exception'] = get_class($e);
