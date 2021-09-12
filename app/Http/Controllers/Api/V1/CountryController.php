@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Filters\CountryFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CountryResource;
+use App\Pagination\PaginatedResourceResponse;
 
 class CountryController extends Controller
 {
@@ -33,26 +34,26 @@ class CountryController extends Controller
      *              type="object",
      *              enum={
      *                  "name",
-     *                  "iso3166_alpha2",
-     *                  "iso3166_alpha3",
-     *                  "iso3166_numeric",
+     *                  "iso3166Alpha2",
+     *                  "iso3166Alpha3",
+     *                  "iso3166Numeric",
      *                  "population",
      *                  "area",
-     *                  "phone_code",
-     *                  "area_gt",
-     *                  "area_gte",
-     *                  "area_lt",
-     *                  "area_lte",
-     *                  "area_between",
-     *                  "population_gt",
-     *                  "population_gte",
-     *                  "population_lt",
-     *                  "population_lte",
-     *                  "population_between",
-     *                  "neighbour_of"
+     *                  "phoneCode",
+     *                  "areaGt",
+     *                  "areaGte",
+     *                  "areaLt",
+     *                  "areaLte",
+     *                  "areaBetween",
+     *                  "populationGt",
+     *                  "populationGte",
+     *                  "populationLt",
+     *                  "populationLte",
+     *                  "populationBetween",
+     *                  "neighbourOf"
      *              },
      *              @OA\Property(
-     *                  property="area_lt",
+     *                  property="areaLt",
      *                  type="integer",
      *                  example="100000"
      *              )
@@ -61,14 +62,21 @@ class CountryController extends Controller
      *      @OA\Parameter(
      *          name="include",
      *          in="query",
-     *          description="Include related resources",
+     *          description="Include related resources with every country.",
      *          required=false,
      *          explode=false,
      *          @OA\Schema(
      *              type="array",
      *              @OA\Items(
      *                  type="string",
-     *                  enum = {"continent", "timeZones", "flag", "neighbours"},
+     *                  enum = {
+     *                      "continent",
+     *                      "timeZones",
+     *                      "flag",
+     *                      "neighbours",
+     *                      "languages",
+     *                      "currency"
+     *                  },
      *              )
      *          )
      *      ),
@@ -96,7 +104,9 @@ class CountryController extends Controller
     {
         $countries = $filter->getPaginator();
 
-        return CountryResource::collection($countries);
+        return new PaginatedResourceResponse(
+            CountryResource::collection($countries)
+        );
     }
 
     /**
@@ -127,14 +137,14 @@ class CountryController extends Controller
      *      @OA\Parameter(
      *          name="include",
      *          in="query",
-     *          description="Include related resources",
+     *          description="Include resources related to the specified country.",
      *          required=false,
      *          explode=false,
      *          @OA\Schema(
      *              type="array",
      *              @OA\Items(
      *                  type="string",
-     *                  enum = {"continent", "timeZones", "flag", "neighbours"},
+     *                  enum = {"continent", "timeZones", "flag", "neighbours", "languages"},
      *              )
      *          )
      *      ),

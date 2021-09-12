@@ -25,10 +25,10 @@ class LanguageFilter extends Filter
     public function getAllowedFilters() : array
     {
         return [
-            AllowedFilter::exact('iso639_1'),
-            AllowedFilter::exact('iso639_2'),
-            AllowedFilter::exact('iso639_3'),
-            AllowedFilter::scope('country_code', 'by_country'),
+            AllowedFilter::exact('iso639.1', 'iso639_1'),
+            AllowedFilter::exact('iso639.2', 'iso639_2'),
+            AllowedFilter::exact('iso639.3', 'iso639_3'),
+            AllowedFilter::scope('countryCode', 'by_country'),
         ];
     }
 
@@ -39,6 +39,6 @@ class LanguageFilter extends Filter
      */
     public function getAllowedIncludes() : array
     {
-        return [];
+        return ['countries'];
     }
 }

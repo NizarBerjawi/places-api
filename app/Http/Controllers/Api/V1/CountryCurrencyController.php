@@ -41,7 +41,7 @@ class CountryCurrencyController extends Controller
      *      @OA\Parameter(
      *          name="include",
      *          in="query",
-     *          description="Include related resources",
+     *          description="Include resources related to the specified currency.",
      *          required=false,
      *          explode=false,
      *          @OA\Schema(

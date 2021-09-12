@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Filters\FeatureCodeFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\FeatureCodeResource;
+use App\Pagination\PaginatedResourceResponse;
 
 class FeatureCodeController extends Controller
 {
@@ -20,7 +21,7 @@ class FeatureCodeController extends Controller
      *          description="Successful operation",
      *          @OA\JsonContent(
      *              type="array",
-     *              @OA\Items(ref="#/components/schemas/feature_code")
+     *              @OA\Items(ref="#/components/schemas/featureCode")
      *          ),
      *      ),
      *      @OA\Parameter(
@@ -77,7 +78,9 @@ class FeatureCodeController extends Controller
     {
         $featureCodes = $filter->getPaginator();
 
-        return FeatureCodeResource::collection($featureCodes);
+        return new PaginatedResourceResponse(
+            FeatureCodeResource::collection($featureCodes)
+        );
     }
 
     /**
@@ -99,7 +102,7 @@ class FeatureCodeController extends Controller
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/feature_code")
+     *          @OA\JsonContent(ref="#/components/schemas/featureCode")
      *       ),
      *      @OA\Response(
      *          response=404,

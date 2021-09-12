@@ -26,7 +26,7 @@ class FlagFilter extends Filter
     public function getAllowedFilters() : array
     {
         return [
-            AllowedFilter::exact('country_code'),
+            AllowedFilter::exact('countryCode', 'country_code'),
         ];
     }
 

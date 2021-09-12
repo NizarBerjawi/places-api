@@ -27,7 +27,7 @@ class TimeZoneFilter extends Filter
     {
         return [
             AllowedFilter::exact('code'),
-            AllowedFilter::scope('country_code', 'by_country'),
+            AllowedFilter::scope('countryCode', 'by_country'),
         ];
     }
 

@@ -27,23 +27,23 @@ class CountryFilter extends Filter
     {
         return [
             AllowedFilter::exact('name'),
-            AllowedFilter::exact('iso3166_alpha2'),
-            AllowedFilter::exact('iso3166_alpha3'),
-            AllowedFilter::exact('iso3166_numeric'),
+            AllowedFilter::exact('iso3166Alpha2', 'iso3166_alpha2'),
+            AllowedFilter::exact('iso3166Alpha3', 'iso3166_alpha3'),
+            AllowedFilter::exact('iso3166Numeric', 'iso3166_numeric'),
             AllowedFilter::exact('population'),
             AllowedFilter::exact('area'),
-            AllowedFilter::exact('phone_code'),
-            AllowedFilter::scope('area_gt'),
-            AllowedFilter::scope('area_gte'),
-            AllowedFilter::scope('area_lt'),
-            AllowedFilter::scope('area_lte'),
-            AllowedFilter::scope('area_between'),
-            AllowedFilter::scope('population_gt'),
-            AllowedFilter::scope('population_gte'),
-            AllowedFilter::scope('population_lt'),
-            AllowedFilter::scope('population_lte'),
-            AllowedFilter::scope('population_between'),
-            AllowedFilter::scope('neighbour_of'),
+            AllowedFilter::exact('phoneCode', 'phone_code'),
+            AllowedFilter::scope('areaGt'),
+            AllowedFilter::scope('areaGte'),
+            AllowedFilter::scope('areaLt'),
+            AllowedFilter::scope('areaLte'),
+            AllowedFilter::scope('areaBetween'),
+            AllowedFilter::scope('populationGt'),
+            AllowedFilter::scope('populationGte'),
+            AllowedFilter::scope('populationLt'),
+            AllowedFilter::scope('populationLte'),
+            AllowedFilter::scope('populationBetween'),
+            AllowedFilter::scope('neighbourOf'),
         ];
     }
 
@@ -60,6 +60,7 @@ class CountryFilter extends Filter
             AllowedInclude::relationship('flag'),
             AllowedInclude::relationship('neighbours'),
             AllowedInclude::relationship('languages'),
+            AllowedInclude::relationship('currency'),
         ];
     }
 }
