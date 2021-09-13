@@ -29,6 +29,8 @@ class PlaceFilter extends Filter
             AllowedFilter::exact('featureCode', 'feature_code'),
             AllowedFilter::exact('countryCode', 'country_code'),
             AllowedFilter::exact('timeZoneCode', 'timeZone_code'),
+            AllowedFilter::exact('population'),
+            AllowedFilter::exact('elevation'),
             AllowedFilter::scope('populationGt'),
             AllowedFilter::scope('populationGte'),
             AllowedFilter::scope('populationLt'),

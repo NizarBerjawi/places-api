@@ -38,11 +38,13 @@ class CountryPlacesController extends Controller
      *              enum={
      *                  "featureCode",
      *                  "countryCode",
+     *                  "elevation",
      *                  "elevationGt",
      *                  "elevationGte",
      *                  "elevationLt",
      *                  "elevationLte",
      *                  "elevationBetween",
+     *                  "population",
      *                  "populationGt",
      *                  "populationGte",
      *                  "populationLt",
