@@ -6,6 +6,7 @@ use App\Filters\LanguageFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\LanguageResource;
 use App\Models\Country;
+use App\Pagination\PaginatedResourceResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
@@ -26,6 +27,21 @@ class CountryLanguageController extends Controller
      *             type="string"
      *         )
      *     ),
+     *
+     *      @OA\Parameter(
+     *          name="include",
+     *          in="query",
+     *          description="Include resources related to the specified languagev.",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="array",
+     *              @OA\Items(
+     *                  type="string",
+     *                  enum = {"countries"},
+     *              )
+     *          )
+     *      ),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",
@@ -65,6 +81,8 @@ class CountryLanguageController extends Controller
             ->applyScope('byCountry', Arr::wrap($code))
             ->getPaginator();
 
-        return LanguageResource::collection($language);
+        return new PaginatedResourceResponse(
+            LanguageResource::collection($language)
+        );
     }
 }

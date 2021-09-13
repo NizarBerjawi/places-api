@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  *      description="The population of a certain place"
  * )
  * @OA\Property(
- *      property="geoname_id",
+ *      property="geonameId",
  *      type="integer",
  *      example="105480",
  *      description="The Geoname ID of a certain place"

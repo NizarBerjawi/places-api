@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Filters\TimeZoneFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\TimeZoneResource;
+use App\Pagination\PaginatedResourceResponse;
 
 class TimeZoneController extends Controller
 {
@@ -20,7 +21,7 @@ class TimeZoneController extends Controller
      *          description="Successful operation",
      *          @OA\JsonContent(
      *              type="array",
-     *              @OA\Items(ref="#/components/schemas/time_zone")
+     *              @OA\Items(ref="#/components/schemas/timeZone")
      *          ),
      *      ),
      *      @OA\Parameter(
@@ -33,7 +34,7 @@ class TimeZoneController extends Controller
      *              type="object",
      *              enum={
      *                  "code",
-     *                  "country_code"
+     *                  "countryCode"
      *              },
      *              @OA\Property(
      *                  property="code",
@@ -80,7 +81,9 @@ class TimeZoneController extends Controller
     {
         $timeZones = $filter->getPaginator();
 
-        return TimeZoneResource::collection($timeZones);
+        return new PaginatedResourceResponse(
+            TimeZoneResource::collection($timeZones)
+        );
     }
 
     /**
@@ -90,7 +93,7 @@ class TimeZoneController extends Controller
      *     tags={"Time Zones"},
      *     path="/timeZones/{timeZoneCode}",
      *     operationId="getTimeZoneByCode",
-     *     @OA\Property(ref="#/components/schemas/time_zone"),
+     *     @OA\Property(ref="#/components/schemas/timeZone"),
      *     @OA\Parameter(
      *        name="timeZoneCode",
      *        in="path",
@@ -102,7 +105,7 @@ class TimeZoneController extends Controller
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/time_zone")
+     *          @OA\JsonContent(ref="#/components/schemas/timeZone")
      *       ),
      *      @OA\Response(
      *          response=404,

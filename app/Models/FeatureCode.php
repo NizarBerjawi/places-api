@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * Feature Code.
  *
  * @OA\Schema(
- *      schema="feature_code",
+ *      schema="featureCode",
  *      type="object",
  *      title="Feature Code"
  * )
@@ -19,13 +19,13 @@ use Illuminate\Database\Eloquent\Model;
  *      description="The code of the feature code"
  * )
  * @OA\Property(
- *      property="full_description",
+ *      property="fullDescription",
  *      type="string",
  *      example="A former fourth-order administrative division",
  *      description="The full description of the feature code"
  * )
  * @OA\Property(
- *      property="short_description",
+ *      property="shortDescription",
  *      type="string",
  *      example="Historical fourth-order administrative division",
  *      description="The short description of the feature code"

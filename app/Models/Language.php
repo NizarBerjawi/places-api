@@ -20,19 +20,19 @@ use Illuminate\Database\Eloquent\Model;
  *      description="The name of a specific language"
  * )
  * @OA\Property(
- *      property="iso639_1",
+ *      property="iso639-1",
  *      type="string",
  *      example="en",
  *      description="Two-letter language codes, one per language for ISO 639 macrolanguage"
  * )
  * @OA\Property(
- *      property="iso639_2",
+ *      property="iso639-2",
  *      type="string",
  *      example="eng",
  *      description="Three-letter language codes but with some codes derived from English names rather than native names of languages"
  * )
  * @OA\Property(
- *      property="iso639_3",
+ *      property="iso639-3",
  *      type="string",
  *      example="eng",
  *      description="Three-letter language codes but with distinct codes for each variety of an ISO 639 macrolanguage"

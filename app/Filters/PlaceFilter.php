@@ -26,19 +26,19 @@ class PlaceFilter extends Filter
     {
         return [
             AllowedFilter::exact('name'),
-            AllowedFilter::exact('feature_code'),
-            AllowedFilter::exact('country_code'),
-            AllowedFilter::exact('time_zone_code'),
-            AllowedFilter::scope('population_gt'),
-            AllowedFilter::scope('population_gte'),
-            AllowedFilter::scope('population_lt'),
-            AllowedFilter::scope('population_lte'),
-            AllowedFilter::scope('population_between'),
-            AllowedFilter::scope('elevation_gt'),
-            AllowedFilter::scope('elevation_gte'),
-            AllowedFilter::scope('elevation_lt'),
-            AllowedFilter::scope('elevation_lte'),
-            AllowedFilter::scope('elevation_between'),
+            AllowedFilter::exact('featureCode', 'feature_code'),
+            AllowedFilter::exact('countryCode', 'country_code'),
+            AllowedFilter::exact('timeZoneCode', 'timeZone_code'),
+            AllowedFilter::scope('populationGt'),
+            AllowedFilter::scope('populationGte'),
+            AllowedFilter::scope('populationLt'),
+            AllowedFilter::scope('populationLte'),
+            AllowedFilter::scope('populationBetween'),
+            AllowedFilter::scope('elevationGt'),
+            AllowedFilter::scope('elevationGte'),
+            AllowedFilter::scope('elevationLt'),
+            AllowedFilter::scope('elevationLte'),
+            AllowedFilter::scope('elevationBetween'),
         ];
     }
 
@@ -52,8 +52,8 @@ class PlaceFilter extends Filter
         return [
             'country',
             'location',
-            'feature_code',
-            'time_zone',
+            'featureCode',
+            'timeZone',
         ];
     }
 }

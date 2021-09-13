@@ -18,19 +18,19 @@ use Illuminate\Database\Eloquent\Model;
  *      description="The English name of the country"
  * )
  * @OA\Property(
- *      property="iso3166_alpha2",
+ *      property="iso3166Alpha2",
  *      type="string",
  *      example="AU",
  *      description="The two-letter ISO 3166-1 alpha-2 country code"
  * )
  * @OA\Property(
- *      property="iso3166_alpha3",
+ *      property="iso3166Alpha3",
  *      type="string",
  *      example="AUS",
  *      description="The three-letter ISO 3166-1 alpha-3 country code"
  * )
  * @OA\Property(
- *      property="iso3166_numeric",
+ *      property="iso3166Numeric",
  *      type="integer",
  *      example="036",
  *      description="The three-digit ISO 3166-1 numeric country code"
@@ -48,7 +48,7 @@ use Illuminate\Database\Eloquent\Model;
  *      description="The total area of the country"
  * )
  * @OA\Property(
- *      property="phone_code",
+ *      property="phoneCode",
  *      type="string",
  *      example="61",
  *      description="The country calling code"

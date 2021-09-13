@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Filters\CurrencyFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CurrencyResource;
+use App\Pagination\PaginatedResourceResponse;
 
 class CurrencyController extends Controller
 {
@@ -77,7 +78,9 @@ class CurrencyController extends Controller
     {
         $currencies = $filter->getPaginator();
 
-        return CurrencyResource::collection($currencies);
+        return new PaginatedResourceResponse(
+            CurrencyResource::collection($currencies)
+        );
     }
 
     /**

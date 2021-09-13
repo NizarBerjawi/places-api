@@ -6,6 +6,7 @@ use App\Filters\TimeZoneFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\TimeZoneResource;
 use App\Models\Country;
+use App\Pagination\PaginatedResourceResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
@@ -27,6 +28,39 @@ class CountryTimeZoneController extends Controller
      *         )
      *     ),
      *      @OA\Parameter(
+     *          name="filter",
+     *          in="query",
+     *          description="Filter time zones by certain criteria",
+     *          required=false,
+     *          style="deepObject",
+     *          @OA\Schema(
+     *              type="object",
+     *              enum={
+     *                  "code",
+     *                  "countryCode"
+     *              },
+     *              @OA\Property(
+     *                  property="code",
+     *                  type="string",
+     *                  example="asia_tokyo"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="include",
+     *          in="query",
+     *          description="Include related resources with time zone.",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="array",
+     *              @OA\Items(
+     *                  type="string",
+     *                  enum = {"country"},
+     *              )
+     *          )
+     *      ),
+     *      @OA\Parameter(
      *          name="page",
      *          in="query",
      *          description="Get a specific page",
@@ -42,7 +76,7 @@ class CountryTimeZoneController extends Controller
      *          description="Successful operation",
      *          @OA\JsonContent(
      *              type="array",
-     *              @OA\Items(ref="#/components/schemas/time_zone")
+     *              @OA\Items(ref="#/components/schemas/timeZone")
      *          ),
      *      ),
      *      @OA\Response(
@@ -65,6 +99,8 @@ class CountryTimeZoneController extends Controller
             ->applyScope('byCountry', Arr::wrap($code))
             ->getPaginator();
 
-        return TimeZoneResource::collection($timeZones);
+        return new PaginatedResourceResponse(
+            TimeZoneResource::collection($timeZones)
+        );
     }
 }
