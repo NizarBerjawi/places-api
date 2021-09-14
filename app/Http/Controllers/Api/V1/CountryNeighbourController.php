@@ -6,6 +6,7 @@ use App\Filters\CountryFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CountryResource;
 use App\Models\Country;
+use App\Pagination\PaginatedResourceResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
@@ -48,7 +49,62 @@ class CountryNeighbourController extends Controller
      *      @OA\Response(
      *          response=404,
      *          description="Country not found"
-     *       )
+     *       ),
+     *      @OA\Parameter(
+     *          name="filter",
+     *          in="query",
+     *          description="Filter neighbouring countries by certain criteria",
+     *          required=false,
+     *          style="deepObject",
+     *          @OA\Schema(
+     *              type="object",
+     *              enum={
+     *                  "name",
+     *                  "iso3166Alpha2",
+     *                  "iso3166Alpha3",
+     *                  "iso3166Numeric",
+     *                  "population",
+     *                  "area",
+     *                  "phoneCode",
+     *                  "areaGt",
+     *                  "areaGte",
+     *                  "areaLt",
+     *                  "areaLte",
+     *                  "areaBetween",
+     *                  "populationGt",
+     *                  "populationGte",
+     *                  "populationLt",
+     *                  "populationLte",
+     *                  "populationBetween",
+     *                  "neighbourOf"
+     *              },
+     *              @OA\Property(
+     *                  property="areaLt",
+     *                  type="integer",
+     *                  example="100000"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="include",
+     *          in="query",
+     *          description="Include related resources with every neighbouring country.",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="array",
+     *              @OA\Items(
+     *                  type="string",
+     *                  enum = {
+     *                      "continent",
+     *                      "timeZones",
+     *                      "flag",
+     *                      "neighbours",
+     *                      "languages"
+     *                  },
+     *              )
+     *          )
+     *      ),
      * )
      *
      * @param  \App\Filters\CountryFilter  $filter
@@ -65,6 +121,8 @@ class CountryNeighbourController extends Controller
             ->applyScope('neighbourOf', Arr::wrap($code))
             ->getPaginator();
 
-        return CountryResource::collection($countries);
+        return new PaginatedResourceResponse(
+            CountryResource::collection($countries)
+        );
     }
 }

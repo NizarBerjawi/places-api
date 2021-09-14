@@ -6,6 +6,7 @@ use App\Filters\PlaceFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\PlaceResource;
 use App\Models\Country;
+use App\Pagination\PaginatedResourceResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
@@ -35,18 +36,39 @@ class CountryPlacesController extends Controller
      *          @OA\Schema(
      *              type="object",
      *              enum={
-     *                  "feature_code",
-     *                  "country_code",
-     *                  "population_gt",
-     *                  "population_gte",
-     *                  "population_lt",
-     *                  "population_lte",
-     *                  "population_between"
+     *                  "featureCode",
+     *                  "countryCode",
+     *                  "elevation",
+     *                  "elevationGt",
+     *                  "elevationGte",
+     *                  "elevationLt",
+     *                  "elevationLte",
+     *                  "elevationBetween",
+     *                  "population",
+     *                  "populationGt",
+     *                  "populationGte",
+     *                  "populationLt",
+     *                  "populationLte",
+     *                  "populationBetween"
      *              },
      *              @OA\Property(
-     *                  property="population_gt",
+     *                  property="populationGt",
      *                  type="integer",
      *                  example="100000"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="include",
+     *          in="query",
+     *          description="Include related resources",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="array",
+     *              @OA\Items(
+     *                  type="string",
+     *                  enum = {"country", "location", "featureClass", "featureCode", "timeZone"},
      *              )
      *          )
      *      ),
@@ -89,6 +111,8 @@ class CountryPlacesController extends Controller
             ->applyScope('byCountry', Arr::wrap($code))
             ->getPaginator();
 
-        return PlaceResource::collection($places);
+        return new PaginatedResourceResponse(
+            PlaceResource::collection($places)
+        );
     }
 }

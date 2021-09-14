@@ -9,18 +9,18 @@ use Illuminate\Database\Eloquent\Model;
  * Time Zone.
  *
  * @OA\Schema(
- *      schema="time_zone",
+ *      schema="timeZone",
  *      type="object",
  *      title="Time Zone"
  * )
  * @OA\Property(
- *      property="gmt_offset",
+ *      property="gmtOffset",
  *      type="integer",
  *      example="2",
  *      description="The number of hours a place refers to that time zone being three hours "
  * )
  * @OA\Property(
- *      property="time_zone",
+ *      property="timeZone",
  *      type="string",
  *      example="Asia/Tokyo",
  *      description="The time one name"
@@ -83,7 +83,7 @@ class TimeZone extends Model
      */
     public function places()
     {
-        return $this->hasMany(Place::class, 'time_zone', 'time_zone');
+        return $this->hasMany(Place::class, 'time_zone_code', 'code');
     }
 
     /**

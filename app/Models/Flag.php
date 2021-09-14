@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  *      title="Flag"
  * )
  * @OA\Property(
- *      property="country_code",
+ *      property="countryCode",
  *      type="string",
  *      example="AU",
  *      description="The two-letter ISO 3166-1 alpha-2 country code that this flag belongs to"

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Filters\FeatureClassFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\FeatureClassResource;
+use App\Pagination\PaginatedResourceResponse;
 
 class FeatureClassController extends Controller
 {
@@ -20,7 +21,7 @@ class FeatureClassController extends Controller
      *          description="Successful operation",
      *          @OA\JsonContent(
      *              type="array",
-     *              @OA\Items(ref="#/components/schemas/feature_class")
+     *              @OA\Items(ref="#/components/schemas/featureClass")
      *          ),
      *      ),
      *      @OA\Parameter(
@@ -77,7 +78,9 @@ class FeatureClassController extends Controller
     {
         $featureClasses = $filter->getPaginator();
 
-        return FeatureClassResource::collection($featureClasses);
+        return new PaginatedResourceResponse(
+            FeatureClassResource::collection($featureClasses)
+        );
     }
 
     /**
@@ -99,7 +102,7 @@ class FeatureClassController extends Controller
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/feature_class")
+     *          @OA\JsonContent(ref="#/components/schemas/featureClass")
      *       ),
      *      @OA\Response(
      *          response=404,

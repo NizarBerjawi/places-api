@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\Model;
  *      description="The population of a certain place"
  * )
  * @OA\Property(
- *      property="geoname_id",
+ *      property="geonameId",
  *      type="integer",
  *      example="105480",
  *      description="The Geoname ID of a certain place"
@@ -71,6 +71,23 @@ class Place extends Model
     public function featureCode()
     {
         return $this->belongsTo(FeatureCode::class, 'feature_code', 'code');
+    }
+
+    /**
+     * Get the Feature Class that this place belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function featureClass()
+    {
+        return $this->belongsToMany(
+            FeatureClass::class,
+            'feature_codes',
+            'code',
+            'feature_class_code',
+            'feature_code',
+            'code'
+        );
     }
 
     /**

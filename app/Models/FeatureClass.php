@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
  * Feature Class.
  *
  * @OA\Schema(
- *      schema="feature_class",
+ *      schema="featureClass",
  *      type="object",
  *      title="Feature Class"
  * )

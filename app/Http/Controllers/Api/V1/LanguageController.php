@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Filters\LanguageFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\LanguageResource;
+use App\Pagination\PaginatedResourceResponse;
 
 class LanguageController extends Controller
 {
@@ -31,9 +32,9 @@ class LanguageController extends Controller
      *          style="deepObject",
      *          @OA\Schema(
      *              type="object",
-     *              enum={"country_code"},
+     *              enum={"countryCode"},
      *              @OA\Property(
-     *                  property="country_code",
+     *                  property="countryCode",
      *                  type="string",
      *                  example="AU"
      *              )
@@ -49,7 +50,7 @@ class LanguageController extends Controller
      *              type="array",
      *              @OA\Items(
      *                  type="string",
-     *                  enum = {"country"},
+     *                  enum = {"countries"},
      *              )
      *          )
      *      ),
@@ -77,6 +78,8 @@ class LanguageController extends Controller
     {
         $languages = $filter->getPaginator();
 
-        return LanguageResource::collection($languages);
+        return new PaginatedResourceResponse(
+            LanguageResource::collection($languages)
+        );
     }
 }

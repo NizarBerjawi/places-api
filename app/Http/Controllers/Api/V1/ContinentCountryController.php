@@ -6,13 +6,14 @@ use App\Filters\CountryFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CountryResource;
 use App\Models\Continent;
+use App\Pagination\PaginatedResourceResponse;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
 class ContinentCountryController extends Controller
 {
     /**
-     * Display a listing of all countries in a continent.
+     * Display a listing of all countries available in a specified continent.
      *
      * @OA\Get(
      *      tags={"Continents"},
@@ -39,20 +40,6 @@ class ContinentCountryController extends Controller
      *          description="Continent not found"
      *       ),
      *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"continent", "timeZones", "flag", "neighbours"},
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
      *          name="filter",
      *          in="query",
      *          description="Filter countries by certain criteria",
@@ -62,28 +49,49 @@ class ContinentCountryController extends Controller
      *              type="object",
      *              enum={
      *                  "name",
-     *                  "iso3166_alpha2",
-     *                  "iso3166_alpha3",
-     *                  "iso3166_numeric",
+     *                  "iso3166Alpha2",
+     *                  "iso3166Alpha3",
+     *                  "iso3166Numeric",
      *                  "population",
      *                  "area",
-     *                  "phone_code",
-     *                  "area_gt",
-     *                  "area_gte",
-     *                  "area_lt",
-     *                  "area_lte",
-     *                  "area_between",
-     *                  "population_gt",
-     *                  "population_gte",
-     *                  "population_lt",
-     *                  "population_lte",
-     *                  "population_between",
-     *                  "neighbour_of"
+     *                  "phoneCode",
+     *                  "areaGt",
+     *                  "areaGte",
+     *                  "areaLt",
+     *                  "areaLte",
+     *                  "areaBetween",
+     *                  "populationGt",
+     *                  "populationGte",
+     *                  "populationLt",
+     *                  "populationLte",
+     *                  "populationBetween",
+     *                  "neighbourOf"
      *              },
      *              @OA\Property(
-     *                  property="area_lt",
+     *                  property="areaLt",
      *                  type="integer",
      *                  example="100000"
+     *              )
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="include",
+     *          in="query",
+     *          description="Include related resources with every country.",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="array",
+     *              @OA\Items(
+     *                  type="string",
+     *                  enum = {
+     *                      "continent",
+     *                      "timeZones",
+     *                      "flag",
+     *                      "neighbours",
+     *                      "languages",
+     *                      "currency"
+     *                  },
      *              )
      *          )
      *      ),
@@ -114,6 +122,8 @@ class ContinentCountryController extends Controller
             ->applyScope('byContinent', Arr::wrap($code))
             ->getPaginator();
 
-        return CountryResource::collection($countries);
+        return new PaginatedResourceResponse(
+            CountryResource::collection($countries)
+        );
     }
 }

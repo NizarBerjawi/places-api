@@ -15,12 +15,15 @@ class PlaceResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'geoname_id'   => $this->geoname_id,
+            'geonameId'    => $this->geoname_id,
             'name'         => $this->name,
             'population'   => $this->population,
             'elevation'    => $this->elevation,
-            'time_zone'    => TimeZoneResource::make($this->whenLoaded('timeZone')),
-            'feature_code' => FeatureCodeResource::make($this->whenLoaded('featureCode')),
+            'timeZone'     => TimeZoneResource::make($this->whenLoaded('timeZone')),
+            'featureCode'  => FeatureCodeResource::make($this->whenLoaded('featureCode')),
+            'featureClass' => FeatureClassResource::make(
+                $this->whenLoaded('featureClass', $this->featureClass()->first())
+            ),
             'country'      => CountryResource::make($this->whenLoaded('country')),
             'location'     => LocationResource::make($this->whenLoaded('location')),
         ];

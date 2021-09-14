@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Filters\FlagFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\FlagResource;
+use App\Pagination\PaginatedResourceResponse;
 
 class FlagController extends Controller
 {
@@ -31,9 +32,9 @@ class FlagController extends Controller
      *          style="deepObject",
      *          @OA\Schema(
      *              type="object",
-     *              enum={"country_code"},
+     *              enum={"countryCode"},
      *              @OA\Property(
-     *                  property="country_code",
+     *                  property="countryCode",
      *                  type="string",
      *                  example="AU"
      *              )
@@ -77,7 +78,9 @@ class FlagController extends Controller
     {
         $flags = $filter->getPaginator();
 
-        return FlagResource::collection($flags);
+        return new PaginatedResourceResponse(
+            FlagResource::collection($flags)
+        );
     }
 
     /**

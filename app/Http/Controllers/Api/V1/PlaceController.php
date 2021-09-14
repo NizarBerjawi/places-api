@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Filters\PlaceFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\PlaceResource;
+use App\Pagination\PaginatedResourceResponse;
 
 class PlaceController extends Controller
 {
@@ -32,16 +33,23 @@ class PlaceController extends Controller
      *          @OA\Schema(
      *              type="object",
      *              enum={
-     *                  "feature_code",
-     *                  "country_code",
-     *                  "population_gt",
-     *                  "population_gte",
-     *                  "population_lt",
-     *                  "population_lte",
-     *                  "population_between"
+     *                  "featureCode",
+     *                  "countryCode",
+     *                  "elevation",
+     *                  "elevationGt",
+     *                  "elevationGte",
+     *                  "elevationLt",
+     *                  "elevationLte",
+     *                  "elevationBetween",
+     *                  "population",
+     *                  "populationGt",
+     *                  "populationGte",
+     *                  "populationLt",
+     *                  "populationLte",
+     *                  "populationBetween"
      *              },
      *              @OA\Property(
-     *                  property="population_gt",
+     *                  property="populationGt",
      *                  type="integer",
      *                  example="100000"
      *              )
@@ -57,7 +65,7 @@ class PlaceController extends Controller
      *              type="array",
      *              @OA\Items(
      *                  type="string",
-     *                  enum = {"country", "location", "feature_code"},
+     *                  enum = {"country", "location", "featureClass", "featureCode", "timeZone"},
      *              )
      *          )
      *      ),
@@ -85,7 +93,9 @@ class PlaceController extends Controller
     {
         $places = $filter->getPaginator();
 
-        return PlaceResource::collection($places);
+        return new PaginatedResourceResponse(
+            PlaceResource::collection($places)
+        );
     }
 
     /**
@@ -123,7 +133,7 @@ class PlaceController extends Controller
      *              type="array",
      *              @OA\Items(
      *                  type="string",
-     *                  enum = {"country", "location", "feature_code"},
+     *                  enum = {"country", "location", "featureClass", "featureCode", "timeZone"},
      *              )
      *          )
      *      ),

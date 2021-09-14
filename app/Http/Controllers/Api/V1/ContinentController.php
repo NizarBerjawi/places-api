@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Filters\ContinentFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\ContinentResource;
+use App\Pagination\PaginatedResourceResponse;
 
 class ContinentController extends Controller
 {
@@ -26,7 +27,7 @@ class ContinentController extends Controller
      *      @OA\Parameter(
      *          name="filter",
      *          in="query",
-     *          description="Filter continents by name or continent code",
+     *          description="Filter continents by name or code",
      *          required=false,
      *          style="deepObject",
      *          @OA\Schema(
@@ -47,7 +48,7 @@ class ContinentController extends Controller
      *      @OA\Parameter(
      *          name="include",
      *          in="query",
-     *          description="Include related resources",
+     *          description="Include related resources with every continent.",
      *          required=false,
      *          explode=false,
      *          @OA\Schema(
@@ -82,7 +83,9 @@ class ContinentController extends Controller
     {
         $continents = $filter->getPaginator();
 
-        return ContinentResource::collection($continents);
+        return new PaginatedResourceResponse(
+            ContinentResource::collection($continents)
+        );
     }
 
     /**
@@ -104,14 +107,14 @@ class ContinentController extends Controller
      *     @OA\Parameter(
      *          name="include",
      *          in="query",
-     *          description="Include related resources",
+     *          description="Include resources related to the specified continent.",
      *          required=false,
      *          explode=false,
      *          @OA\Schema(
      *              type="array",
      *              @OA\Items(
      *                  type="string",
-     *                  enum = {"countries"},
+     *                  enum={"countries"},
      *              )
      *          )
      *      ),
