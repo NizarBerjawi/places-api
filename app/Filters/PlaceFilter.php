@@ -54,6 +54,7 @@ class PlaceFilter extends Filter
         return [
             'country',
             'location',
+            'featureClass',
             'featureCode',
             'timeZone',
         ];
