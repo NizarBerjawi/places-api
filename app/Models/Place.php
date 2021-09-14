@@ -74,6 +74,23 @@ class Place extends Model
     }
 
     /**
+     * Get the Feature Class that this place belongs to.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function featureClass()
+    {
+        return $this->belongsToMany(
+            FeatureClass::class,
+            'feature_codes',
+            'code',
+            'feature_class_code',
+            'feature_code',
+            'code'
+        );
+    }
+
+    /**
      * Get the Time Zone that this Place belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

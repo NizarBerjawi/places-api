@@ -35,11 +35,13 @@ class PlaceController extends Controller
      *              enum={
      *                  "featureCode",
      *                  "countryCode",
+     *                  "elevation",
      *                  "elevationGt",
      *                  "elevationGte",
      *                  "elevationLt",
      *                  "elevationLte",
      *                  "elevationBetween",
+     *                  "population",
      *                  "populationGt",
      *                  "populationGte",
      *                  "populationLt",
@@ -63,7 +65,7 @@ class PlaceController extends Controller
      *              type="array",
      *              @OA\Items(
      *                  type="string",
-     *                  enum = {"country", "location", "featureCode", "timeZone"},
+     *                  enum = {"country", "location", "featureClass", "featureCode", "timeZone"},
      *              )
      *          )
      *      ),
@@ -131,7 +133,7 @@ class PlaceController extends Controller
      *              type="array",
      *              @OA\Items(
      *                  type="string",
-     *                  enum = {"country", "location", "featureCode", "timeZone"},
+     *                  enum = {"country", "location", "featureClass", "featureCode", "timeZone"},
      *              )
      *          )
      *      ),
