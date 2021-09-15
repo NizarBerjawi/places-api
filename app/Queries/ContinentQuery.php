@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Filters;
+namespace App\Queries;
 
 use App\Models\Continent;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\AllowedSort;
 
-class ContinentFilter extends Filter
+class ContinentQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
@@ -23,7 +24,7 @@ class ContinentFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedFilters() : array
+    public function getAllowedFilters(): array
     {
         return [
             AllowedFilter::exact('name'),
@@ -36,10 +37,18 @@ class ContinentFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedIncludes() : array
+    public function getAllowedIncludes(): array
     {
         return [
             AllowedInclude::relationship('countries'),
+        ];
+    }
+
+    public function getAllowedSorts(): array
+    {
+        return [
+            AllowedSort::field('name'),
+            AllowedSort::field('code'),
         ];
     }
 }

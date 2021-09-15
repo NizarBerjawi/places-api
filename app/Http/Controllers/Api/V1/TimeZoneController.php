@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\TimeZoneFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\TimeZoneResource;
 use App\Pagination\PaginatedResourceResponse;
+use App\Queries\TimeZoneQuery;
 
 class TimeZoneController extends Controller
 {
@@ -74,12 +74,12 @@ class TimeZoneController extends Controller
      *     description="Everything about time zones"
      * )
      *
-     * @param \App\Filters\TimeZoneFilter  $filter
+     * @param \App\Queries\TimeZoneQuery  $query
      * @return \Illuminate\Http\Response
      */
-    public function index(TimeZoneFilter $filter)
+    public function index(TimeZoneQuery $query)
     {
-        $timeZones = $filter->getPaginator();
+        $timeZones = $query->getPaginator();
 
         return new PaginatedResourceResponse(
             TimeZoneResource::collection($timeZones)
@@ -126,13 +126,13 @@ class TimeZoneController extends Controller
      *          )
      *      ),
      * )
-     * @param \App\Filters\TimeZoneFilter  $filter
+     * @param \App\Queries\TimeZoneQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function show(TimeZoneFilter $filter, string $code)
+    public function show(TimeZoneQuery $query, string $code)
     {
-        $timeZone = $filter
+        $timeZone = $query
             ->getBuilder()
             ->where('code', $code)
             ->firstOrFail();

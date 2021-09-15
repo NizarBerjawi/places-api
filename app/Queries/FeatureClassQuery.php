@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Filters;
+namespace App\Queries;
 
 use App\Models\FeatureClass;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\AllowedSort;
 
-class FeatureClassFilter extends Filter
+class FeatureClassQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
@@ -23,7 +24,7 @@ class FeatureClassFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedFilters() : array
+    public function getAllowedFilters(): array
     {
         return [
             AllowedFilter::exact('code'),
@@ -35,10 +36,18 @@ class FeatureClassFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedIncludes() : array
+    public function getAllowedIncludes(): array
     {
         return [
             AllowedInclude::relationship('featureCodes'),
+        ];
+    }
+
+    public function getAllowedSorts(): array
+    {
+        return [
+            AllowedSort::field('code'),
+            AllowedSort::field('description'),
         ];
     }
 }

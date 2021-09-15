@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\ContinentFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\ContinentResource;
 use App\Pagination\PaginatedResourceResponse;
+use App\Queries\ContinentQuery;
 
 class ContinentController extends Controller
 {
@@ -76,12 +76,12 @@ class ContinentController extends Controller
      *     description="Everything about continents"
      * )
      *
-     * @param \App\Filters\ContinentFilter  $filter
+     * @param \App\Queries\ContinentQuery  $query
      * @return \Illuminate\Http\Response
      */
-    public function index(ContinentFilter $filter)
+    public function index(ContinentQuery $query)
     {
-        $continents = $filter->getPaginator();
+        $continents = $query->getPaginator();
 
         return new PaginatedResourceResponse(
             ContinentResource::collection($continents)
@@ -128,13 +128,13 @@ class ContinentController extends Controller
      *          description="Continent not found"
      *       ),
      * )
-     * @param \App\Filters\ContinentFilter  $filter
+     * @param \App\Queries\ContinentQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function show(ContinentFilter $filter, string $code)
+    public function show(ContinentQuery $query, string $code)
     {
-        $continent = $filter
+        $continent = $query
             ->getBuilder()
             ->where('code', $code)
             ->firstOrFail();

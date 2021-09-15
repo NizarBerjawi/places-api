@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\LanguageFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\LanguageResource;
 use App\Models\Country;
 use App\Pagination\PaginatedResourceResponse;
+use App\Queries\LanguageQuery;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
@@ -67,17 +67,17 @@ class CountryLanguageController extends Controller
      *       )
      * )
      *
-     * @param  \App\Filters\LanguageFilter  $filter
+     * @param  \App\Queries\LanguageQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function index(LanguageFilter $filter, string $code)
+    public function index(LanguageQuery $query, string $code)
     {
         if (! Country::where('iso3166_alpha2', $code)->exists()) {
             throw (new ModelNotFoundException())->setModel(Country::class);
         }
 
-        $language = $filter
+        $language = $query
             ->applyScope('byCountry', Arr::wrap($code))
             ->getPaginator();
 

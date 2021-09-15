@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\FeatureCodeFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\FeatureCodeResource;
 use App\Pagination\PaginatedResourceResponse;
+use App\Queries\FeatureCodeQuery;
 
 class FeatureCodeController extends Controller
 {
@@ -71,12 +71,12 @@ class FeatureCodeController extends Controller
      *     description="Everything about feature codes"
      * )
      *
-     * @param  \App\Filters\FeatureCodeFilter  $filter
+     * @param  \App\Queries\FeatureCodeQuery  $query
      * @return \Illuminate\Http\Response
      */
-    public function index(FeatureCodeFilter $filter)
+    public function index(FeatureCodeQuery $query)
     {
-        $featureCodes = $filter->getPaginator();
+        $featureCodes = $query->getPaginator();
 
         return new PaginatedResourceResponse(
             FeatureCodeResource::collection($featureCodes)
@@ -123,13 +123,13 @@ class FeatureCodeController extends Controller
      *          )
      *      ),
      * )
-     * @param  \App\Filters\FeatureCodeFilter  $filter
+     * @param  \App\Queries\FeatureCodeQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function show(FeatureCodeFilter $filter, string $code)
+    public function show(FeatureCodeQuery $query, string $code)
     {
-        $featureCode = $filter
+        $featureCode = $query
             ->getBuilder()
             ->where('code', $code)
             ->firstOrFail();

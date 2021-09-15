@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\LocationFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\LocationResource;
 use App\Models\Place;
+use App\Queries\LocationQuery;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
@@ -48,17 +48,17 @@ class PlaceLocationController extends Controller
      *          description="Place not found"
      *       ),
      * )
-     * @param \App\Filters\PlaceFilter  $filter
+     * @param \App\Queries\PlaceQuery  $query
      * @param int $geonameId
      * @return \Illuminate\Http\Response
      */
-    public function index(LocationFilter $filter, $geonameId)
+    public function index(LocationQuery $query, $geonameId)
     {
         if (! Place::where('geoname_id', $geonameId)->exists()) {
             throw (new ModelNotFoundException())->setModel(Country::class);
         }
 
-        $location = $filter
+        $location = $query
             ->applyScope('byPlace', Arr::wrap($geonameId))
             ->getBuilder()
             ->first();
