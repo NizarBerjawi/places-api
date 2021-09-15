@@ -19,7 +19,7 @@ class CreateCountriesTable extends Migration
             $table->smallInteger('iso3166_numeric')->unique();
             $table->string('name', 255);
             $table->unsignedBigInteger('population');
-            $table->unsignedDouble('area');
+            $table->unsignedDouble('area')->nullable();
             $table->string('phone_code')->nullable();
             $table->string('continent_code');
         });
