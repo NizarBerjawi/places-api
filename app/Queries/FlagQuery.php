@@ -5,6 +5,7 @@ namespace App\Queries;
 use App\Models\Flag;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\AllowedSort;
 
 class FlagQuery extends Query
 {
@@ -45,7 +46,8 @@ class FlagQuery extends Query
     public function getAllowedSorts(): array
     {
         return [
-            'country_code', 'filename', 'url',
+            AllowedSort::field('country_code'),
+            AllowedSort::field('filename'),
         ];
     }
 }

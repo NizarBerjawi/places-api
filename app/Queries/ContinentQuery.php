@@ -5,6 +5,7 @@ namespace App\Queries;
 use App\Models\Continent;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\AllowedSort;
 
 class ContinentQuery extends Query
 {
@@ -45,6 +46,9 @@ class ContinentQuery extends Query
 
     public function getAllowedSorts(): array
     {
-        return ['name', 'code'];
+        return [
+            AllowedSort::field('name'),
+            AllowedSort::field('code'),
+        ];
     }
 }

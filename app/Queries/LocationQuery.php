@@ -38,8 +38,6 @@ class LocationQuery extends Query
 
     public function getAllowedSorts(): array
     {
-        return [
-            'latitude', 'longitude',
-        ];
+        return [];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Queries;
 use App\Models\TimeZone;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\AllowedSort;
 
 class TimeZoneQuery extends Query
 {
@@ -46,7 +47,9 @@ class TimeZoneQuery extends Query
     public function getAllowedSorts(): array
     {
         return [
-            'gmtOffset', 'code', 'time_zone',
+            AllowedSort::field('gmtOffset', 'gmt_offset'),
+            AllowedSort::field('code'),
+            AllowedSort::field('timeZone', 'time_zone'),
         ];
     }
 }

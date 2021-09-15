@@ -4,6 +4,8 @@ namespace App\Queries;
 
 use App\Models\Language;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\AllowedSort;
 
 class LanguageQuery extends Query
 {
@@ -39,13 +41,18 @@ class LanguageQuery extends Query
      */
     public function getAllowedIncludes(): array
     {
-        return ['countries'];
+        return [
+            AllowedInclude::relationship('countries'),
+        ];
     }
 
     public function getAllowedSorts(): array
     {
         return [
-            'name', 'iso639.1', 'iso639.2', 'iso639.3',
+            AllowedSort::field('name'),
+            AllowedSort::field('iso639.1'),
+            AllowedSort::field('iso639.2'),
+            AllowedSort::field('iso639.3'),
         ];
     }
 }

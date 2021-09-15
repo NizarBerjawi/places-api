@@ -4,6 +4,8 @@ namespace App\Queries;
 
 use App\Models\Place;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\AllowedSort;
 
 class PlaceQuery extends Query
 {
@@ -52,23 +54,23 @@ class PlaceQuery extends Query
     public function getAllowedIncludes(): array
     {
         return [
-            'country',
-            'location',
-            'featureClass',
-            'featureCode',
-            'timeZone',
+            AllowedInclude::relationship('country'),
+            AllowedInclude::relationship('location'),
+            AllowedInclude::relationship('featureClass', 'feature_class'),
+            AllowedInclude::relationship('featureCode', 'feature_code'),
+            AllowedInclude::relationship('timeZone', 'time_zone'),
         ];
     }
 
     public function getAllowedSorts(): array
     {
         return [
-            'name',
-            'feature_code',
-            'country_code',
-            'time_zone_code',
-            'population',
-            'elevation',
+            AllowedSort::field('name'),
+            AllowedSort::field('featureCode', 'feature_code'),
+            AllowedSort::field('countryCode', 'country_code'),
+            AllowedSort::field('timeZoneCode', 'time_zone_code'),
+            AllowedSort::field('population'),
+            AllowedSort::field('elevation'),
         ];
     }
 }

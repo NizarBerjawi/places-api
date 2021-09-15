@@ -5,6 +5,7 @@ namespace App\Queries;
 use App\Models\Currency;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\AllowedSort;
 
 class CurrencyQuery extends Query
 {
@@ -45,6 +46,9 @@ class CurrencyQuery extends Query
 
     public function getAllowedSorts(): array
     {
-        return ['code', 'name'];
+        return [
+            AllowedSort::field('code'),
+            AllowedSort::field('name'),
+        ];
     }
 }

@@ -5,6 +5,7 @@ namespace App\Queries;
 use App\Models\Country;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\AllowedSort;
 
 class CountryQuery extends Query
 {
@@ -67,13 +68,13 @@ class CountryQuery extends Query
     public function getAllowedSorts(): array
     {
         return [
-            'name',
-            'iso3166Alpha2',
-            'iso3166Alpha3',
-            'iso3166Numeric',
-            'population',
-            'area',
-            'phoneCode',
+            AllowedSort::field('name'),
+            AllowedSort::field('iso3166Alpha2', 'iso3166_alpha2'),
+            AllowedSort::field('iso3166Alpha3', 'iso3166_alpha3'),
+            AllowedSort::field('iso3166Numeric', 'iso3166_numeric'),
+            AllowedSort::field('population'),
+            AllowedSort::field('area'),
+            AllowedSort::field('phoneCode', 'phone_code'),
         ];
     }
 }

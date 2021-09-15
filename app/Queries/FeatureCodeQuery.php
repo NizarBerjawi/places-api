@@ -5,6 +5,7 @@ namespace App\Queries;
 use App\Models\FeatureCode;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\AllowedSort;
 
 class FeatureCodeQuery extends Query
 {
@@ -45,9 +46,7 @@ class FeatureCodeQuery extends Query
     public function getAllowedSorts(): array
     {
         return [
-            'code',
-            'short_description',
-            'full_description',
+            AllowedSort::field('code'),
         ];
     }
 }
