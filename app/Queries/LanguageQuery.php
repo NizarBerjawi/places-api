@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters;
+namespace App\Queries;
 
 use App\Models\Language;
 use Spatie\QueryBuilder\AllowedFilter;
 
-class LanguageFilter extends Filter
+class LanguageQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
@@ -22,7 +22,7 @@ class LanguageFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedFilters() : array
+    public function getAllowedFilters(): array
     {
         return [
             AllowedFilter::exact('iso639.1', 'iso639_1'),
@@ -37,8 +37,15 @@ class LanguageFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedIncludes() : array
+    public function getAllowedIncludes(): array
     {
         return ['countries'];
+    }
+
+    public function getAllowedSorts(): array
+    {
+        return [
+            'name', 'iso639.1', 'iso639.2', 'iso639.3',
+        ];
     }
 }

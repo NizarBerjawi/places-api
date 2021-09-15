@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\FlagFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\FlagResource;
 use App\Pagination\PaginatedResourceResponse;
+use App\Queries\FlagQuery;
 
 class FlagController extends Controller
 {
@@ -71,12 +71,12 @@ class FlagController extends Controller
      *     description="Everything about flags"
      * )
      *
-     * @param \App\Filters\FlagFilter  $filter
+     * @param \App\Queries\FlagQuery  $query
      * @return \Illuminate\Http\Response
      */
-    public function index(FlagFilter $filter)
+    public function index(FlagQuery $query)
     {
-        $flags = $filter->getPaginator();
+        $flags = $query->getPaginator();
 
         return new PaginatedResourceResponse(
             FlagResource::collection($flags)
@@ -123,13 +123,13 @@ class FlagController extends Controller
      *          )
      *      ),
      * )
-     * @param \App\Filters\FlagFilter  $filter
+     * @param \App\Queries\FlagQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function show(FlagFilter $filter, string $code)
+    public function show(FlagQuery $query, string $code)
     {
-        $flag = $filter
+        $flag = $query
             ->getBuilder()
             ->where('country_code', $code)
             ->firstOrFail();

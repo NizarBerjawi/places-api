@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\CurrencyFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CurrencyResource;
 use App\Pagination\PaginatedResourceResponse;
+use App\Queries\CurrencyQuery;
 
 class CurrencyController extends Controller
 {
@@ -71,12 +71,12 @@ class CurrencyController extends Controller
      *     description="Everything about currencies"
      * )
      *
-     * @param  \App\Filters\CurrencyFilter  $filter
+     * @param  \App\Queries\CurrencyQuery  $query
      * @return \Illuminate\Http\Response
      */
-    public function index(CurrencyFilter $filter)
+    public function index(CurrencyQuery $query)
     {
-        $currencies = $filter->getPaginator();
+        $currencies = $query->getPaginator();
 
         return new PaginatedResourceResponse(
             CurrencyResource::collection($currencies)
@@ -123,13 +123,13 @@ class CurrencyController extends Controller
      *          )
      *      ),
      * )
-     * @param  \App\Filters\CurrencyFilter  $filter
+     * @param  \App\Queries\CurrencyQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function show(CurrencyFilter $filter, string $code)
+    public function show(CurrencyQuery $query, string $code)
     {
-        $currency = $filter
+        $currency = $query
             ->getBuilder()
             ->where('code', $code)
             ->firstOrFail();

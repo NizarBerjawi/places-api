@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\PlaceFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\PlaceResource;
 use App\Pagination\PaginatedResourceResponse;
+use App\Queries\PlaceQuery;
 
 class PlaceController extends Controller
 {
@@ -86,12 +86,12 @@ class PlaceController extends Controller
      *     description="Everything about places"
      * )
      *
-     * @param \App\Filters\PlaceFilter  $filter
+     * @param \App\Queries\PlaceQuery  $query
      * @return \Illuminate\Http\Response
      */
-    public function index(PlaceFilter $filter)
+    public function index(PlaceQuery $query)
     {
-        $places = $filter->getPaginator();
+        $places = $query->getPaginator();
 
         return new PaginatedResourceResponse(
             PlaceResource::collection($places)
@@ -138,13 +138,13 @@ class PlaceController extends Controller
      *          )
      *      ),
      * )
-     * @param \App\Filters\PlaceFilter  $filter
+     * @param \App\Queries\PlaceQuery  $query
      * @param string $uuid
      * @return \Illuminate\Http\Response
      */
-    public function show(PlaceFilter $filter, $geonameId)
+    public function show(PlaceQuery $query, $geonameId)
     {
-        $place = $filter
+        $place = $query
             ->getBuilder()
             ->where('geoname_id', $geonameId)
             ->firstOrFail();

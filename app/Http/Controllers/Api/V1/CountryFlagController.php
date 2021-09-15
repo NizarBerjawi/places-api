@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\FlagFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\FlagResource;
 use App\Models\Country;
+use App\Queries\FlagQuery;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
@@ -54,17 +54,17 @@ class CountryFlagController extends Controller
      *      ),
      * )
      *
-     * @param  \App\Filters\FlagFilter  $filter
+     * @param  \App\Queries\FlagQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function index(FlagFilter $filter, string $code)
+    public function index(FlagQuery $query, string $code)
     {
         if (! Country::where('iso3166_alpha2', $code)->exists()) {
             throw (new ModelNotFoundException())->setModel(Country::class);
         }
 
-        $flag = $filter
+        $flag = $query
             ->applyScope('byCountry', Arr::wrap($code))
             ->getBuilder()
             ->first();

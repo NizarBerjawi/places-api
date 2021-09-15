@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filters;
+namespace App\Queries;
 
-use App\Models\FeatureCode;
+use App\Models\Continent;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
 
-class FeatureCodeFilter extends Filter
+class ContinentQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
@@ -15,7 +15,7 @@ class FeatureCodeFilter extends Filter
      */
     public function modelClass(): string
     {
-        return FeatureCode::class;
+        return Continent::class;
     }
 
     /**
@@ -23,9 +23,10 @@ class FeatureCodeFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedFilters() : array
+    public function getAllowedFilters(): array
     {
         return [
+            AllowedFilter::exact('name'),
             AllowedFilter::exact('code'),
         ];
     }
@@ -35,10 +36,15 @@ class FeatureCodeFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedIncludes() : array
+    public function getAllowedIncludes(): array
     {
         return [
-            AllowedInclude::relationship('featureClass'),
+            AllowedInclude::relationship('countries'),
         ];
+    }
+
+    public function getAllowedSorts(): array
+    {
+        return ['name', 'code'];
     }
 }

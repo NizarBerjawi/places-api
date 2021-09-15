@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters;
+namespace App\Queries;
 
 use App\Models\Place;
 use Spatie\QueryBuilder\AllowedFilter;
 
-class PlaceFilter extends Filter
+class PlaceQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
@@ -22,13 +22,13 @@ class PlaceFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedFilters() : array
+    public function getAllowedFilters(): array
     {
         return [
             AllowedFilter::exact('name'),
             AllowedFilter::exact('featureCode', 'feature_code'),
             AllowedFilter::exact('countryCode', 'country_code'),
-            AllowedFilter::exact('timeZoneCode', 'timeZone_code'),
+            AllowedFilter::exact('timeZoneCode', 'time_zone_code'),
             AllowedFilter::exact('population'),
             AllowedFilter::exact('elevation'),
             AllowedFilter::scope('populationGt'),
@@ -49,7 +49,7 @@ class PlaceFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedIncludes() : array
+    public function getAllowedIncludes(): array
     {
         return [
             'country',
@@ -57,6 +57,18 @@ class PlaceFilter extends Filter
             'featureClass',
             'featureCode',
             'timeZone',
+        ];
+    }
+
+    public function getAllowedSorts(): array
+    {
+        return [
+            'name',
+            'feature_code',
+            'country_code',
+            'time_zone_code',
+            'population',
+            'elevation',
         ];
     }
 }

@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Filters;
+namespace App\Queries;
 
-use App\Models\Continent;
+use App\Models\Currency;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
 
-class ContinentFilter extends Filter
+class CurrencyQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
@@ -15,7 +15,7 @@ class ContinentFilter extends Filter
      */
     public function modelClass(): string
     {
-        return Continent::class;
+        return Currency::class;
     }
 
     /**
@@ -23,11 +23,11 @@ class ContinentFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedFilters() : array
+    public function getAllowedFilters(): array
     {
         return [
-            AllowedFilter::exact('name'),
             AllowedFilter::exact('code'),
+            AllowedFilter::partial('name'),
         ];
     }
 
@@ -36,10 +36,15 @@ class ContinentFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedIncludes() : array
+    public function getAllowedIncludes(): array
     {
         return [
             AllowedInclude::relationship('countries'),
         ];
+    }
+
+    public function getAllowedSorts(): array
+    {
+        return ['code', 'name'];
     }
 }
