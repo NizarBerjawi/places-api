@@ -38,6 +38,7 @@ class PlacesImport extends GeonamesFileIterator implements ShouldQueue
                         $places->push([
                             'geoname_id'     => $item[0],
                             'name'           => $item[1],
+                            'asciiName'      => $item[2],
                             'population'     => max((int) $item[14], 0),
                             'elevation'      => (int) $item[15],
                             'dem'            => (int) $item[16],
