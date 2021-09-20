@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filters;
+namespace App\Queries;
 
 use App\Models\Location;
 
-class LocationFilter extends Filter
+class LocationQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
@@ -21,7 +21,7 @@ class LocationFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedFilters() : array
+    public function getAllowedFilters(): array
     {
         return [];
     }
@@ -31,7 +31,12 @@ class LocationFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedIncludes() : array
+    public function getAllowedIncludes(): array
+    {
+        return [];
+    }
+
+    public function getAllowedSorts(): array
     {
         return [];
     }

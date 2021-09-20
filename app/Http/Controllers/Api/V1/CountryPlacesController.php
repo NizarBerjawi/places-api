@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\PlaceFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\PlaceResource;
 use App\Models\Country;
 use App\Pagination\PaginatedResourceResponse;
+use App\Queries\PlaceQuery;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
@@ -97,17 +97,17 @@ class CountryPlacesController extends Controller
      *       )
      * )
      *
-     * @param  \App\Filters\FlagFilter  $filter
+     * @param  \App\Queries\FlagQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function index(PlaceFilter $filter, string $code)
+    public function index(PlaceQuery $query, string $code)
     {
         if (! Country::where('iso3166_alpha2', $code)->exists()) {
             throw (new ModelNotFoundException())->setModel(Country::class);
         }
 
-        $places = $filter
+        $places = $query
             ->applyScope('byCountry', Arr::wrap($code))
             ->getPaginator();
 

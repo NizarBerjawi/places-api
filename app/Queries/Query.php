@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters;
+namespace App\Queries;
 
 use Illuminate\Pagination\Paginator;
 use Spatie\QueryBuilder\QueryBuilder;
 
-abstract class Filter
+abstract class Query
 {
     /**
      * An instance of the query builder.
@@ -23,7 +23,7 @@ abstract class Filter
     protected $isInitialized;
 
     /**
-     * Instantiate the Filter.
+     * Instantiate the Query.
      *
      * @return void
      */
@@ -54,6 +54,13 @@ abstract class Filter
     abstract public function getAllowedIncludes(): array;
 
     /**
+     * The allowed fields to sort by.
+     *
+     * @return array
+     */
+    abstract public function getAllowedSorts(): array;
+
+    /**
      * Apply a scope to the builder.
      *
      * @param string $scope
@@ -78,7 +85,8 @@ abstract class Filter
 
         return $this->builder
             ->allowedFilters($this->getAllowedFilters())
-            ->allowedIncludes($this->getAllowedIncludes());
+            ->allowedIncludes($this->getAllowedIncludes())
+            ->allowedSorts($this->getAllowedSorts());
     }
 
     /**
@@ -115,7 +123,7 @@ abstract class Filter
     protected function checkBuilder()
     {
         if (! $this->isInitialized) {
-            throw new \Exception('Filter not initialized');
+            throw new \Exception('Query not initialized');
         }
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\FeatureClassFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\FeatureClassResource;
 use App\Pagination\PaginatedResourceResponse;
+use App\Queries\FeatureClassQuery;
 
 class FeatureClassController extends Controller
 {
@@ -71,12 +71,12 @@ class FeatureClassController extends Controller
      *     description="Everything about feature classes"
      * )
      *
-     * @param  \App\Filters\FeatureClassFilter  $filter
+     * @param  \App\Queries\FeatureClassQuery  $query
      * @return \Illuminate\Http\Response
      */
-    public function index(FeatureClassFilter $filter)
+    public function index(FeatureClassQuery $query)
     {
-        $featureClasses = $filter->getPaginator();
+        $featureClasses = $query->getPaginator();
 
         return new PaginatedResourceResponse(
             FeatureClassResource::collection($featureClasses)
@@ -123,13 +123,13 @@ class FeatureClassController extends Controller
      *          )
      *      ),
      * )
-     * @param  \App\Filters\FeatureClassFilter  $filter
+     * @param  \App\Queries\FeatureClassQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function show(FeatureClassFilter $filter, string $code)
+    public function show(FeatureClassQuery $query, string $code)
     {
-        $featureClass = $filter
+        $featureClass = $query
             ->getBuilder()
             ->where('code', $code)
             ->firstOrFail();

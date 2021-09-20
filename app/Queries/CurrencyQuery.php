@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Filters;
+namespace App\Queries;
 
 use App\Models\Currency;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\AllowedSort;
 
-class CurrencyFilter extends Filter
+class CurrencyQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
@@ -23,7 +24,7 @@ class CurrencyFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedFilters() : array
+    public function getAllowedFilters(): array
     {
         return [
             AllowedFilter::exact('code'),
@@ -36,10 +37,18 @@ class CurrencyFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedIncludes() : array
+    public function getAllowedIncludes(): array
     {
         return [
             AllowedInclude::relationship('countries'),
+        ];
+    }
+
+    public function getAllowedSorts(): array
+    {
+        return [
+            AllowedSort::field('code'),
+            AllowedSort::field('name'),
         ];
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\CountryFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CountryResource;
 use App\Pagination\PaginatedResourceResponse;
+use App\Queries\CountryQuery;
 
 class CountryController extends Controller
 {
@@ -97,12 +97,12 @@ class CountryController extends Controller
      *     description="Everything about countries"
      * )
      *
-     * @param  \App\Filters\CountryFilter  $filter
+     * @param  \App\Queries\CountryQuery  $query
      * @return \Illuminate\Http\Response
      */
-    public function index(CountryFilter $filter)
+    public function index(CountryQuery $query)
     {
-        $countries = $filter->getPaginator();
+        $countries = $query->getPaginator();
 
         return new PaginatedResourceResponse(
             CountryResource::collection($countries)
@@ -149,13 +149,13 @@ class CountryController extends Controller
      *          )
      *      ),
      * )
-     * @param  \App\Filters\CountryFilter  $filter
+     * @param  \App\Queries\CountryQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function show(CountryFilter $filter, string $code)
+    public function show(CountryQuery $query, string $code)
     {
-        $country = $filter
+        $country = $query
             ->getBuilder()
             ->where('iso3166_alpha2', $code)
             ->firstOrFail();

@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Filters;
+namespace App\Queries;
 
 use App\Models\Country;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\AllowedSort;
 
-class CountryFilter extends Filter
+class CountryQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
@@ -23,7 +24,7 @@ class CountryFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedFilters() : array
+    public function getAllowedFilters(): array
     {
         return [
             AllowedFilter::exact('name'),
@@ -52,7 +53,7 @@ class CountryFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedIncludes() : array
+    public function getAllowedIncludes(): array
     {
         return [
             AllowedInclude::relationship('continent'),
@@ -61,6 +62,19 @@ class CountryFilter extends Filter
             AllowedInclude::relationship('neighbours'),
             AllowedInclude::relationship('languages'),
             AllowedInclude::relationship('currency'),
+        ];
+    }
+
+    public function getAllowedSorts(): array
+    {
+        return [
+            AllowedSort::field('name'),
+            AllowedSort::field('iso3166Alpha2', 'iso3166_alpha2'),
+            AllowedSort::field('iso3166Alpha3', 'iso3166_alpha3'),
+            AllowedSort::field('iso3166Numeric', 'iso3166_numeric'),
+            AllowedSort::field('population'),
+            AllowedSort::field('area'),
+            AllowedSort::field('phoneCode', 'phone_code'),
         ];
     }
 }

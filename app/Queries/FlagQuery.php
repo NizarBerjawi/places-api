@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Filters;
+namespace App\Queries;
 
 use App\Models\Flag;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\AllowedSort;
 
-class FlagFilter extends Filter
+class FlagQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
@@ -23,7 +24,7 @@ class FlagFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedFilters() : array
+    public function getAllowedFilters(): array
     {
         return [
             AllowedFilter::exact('countryCode', 'country_code'),
@@ -35,10 +36,18 @@ class FlagFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedIncludes() : array
+    public function getAllowedIncludes(): array
     {
         return [
             AllowedInclude::relationship('country'),
+        ];
+    }
+
+    public function getAllowedSorts(): array
+    {
+        return [
+            AllowedSort::field('country_code'),
+            AllowedSort::field('filename'),
         ];
     }
 }

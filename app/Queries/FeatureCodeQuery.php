@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Filters;
+namespace App\Queries;
 
-use App\Models\TimeZone;
+use App\Models\FeatureCode;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\AllowedSort;
 
-class TimeZoneFilter extends Filter
+class FeatureCodeQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
@@ -15,7 +16,7 @@ class TimeZoneFilter extends Filter
      */
     public function modelClass(): string
     {
-        return TimeZone::class;
+        return FeatureCode::class;
     }
 
     /**
@@ -23,11 +24,10 @@ class TimeZoneFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedFilters() : array
+    public function getAllowedFilters(): array
     {
         return [
             AllowedFilter::exact('code'),
-            AllowedFilter::scope('countryCode', 'by_country'),
         ];
     }
 
@@ -36,10 +36,17 @@ class TimeZoneFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedIncludes() : array
+    public function getAllowedIncludes(): array
     {
         return [
-            AllowedInclude::relationship('country'),
+            AllowedInclude::relationship('featureClass'),
+        ];
+    }
+
+    public function getAllowedSorts(): array
+    {
+        return [
+            AllowedSort::field('code'),
         ];
     }
 }

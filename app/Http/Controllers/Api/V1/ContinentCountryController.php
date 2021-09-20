@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\CountryFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CountryResource;
 use App\Models\Continent;
 use App\Pagination\PaginatedResourceResponse;
+use App\Queries\CountryQuery;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
@@ -108,17 +108,17 @@ class ContinentCountryController extends Controller
      *      ),
      * )
      *
-     * @param \App\Filters\CountryFilter  $filter
+     * @param \App\Queries\CountryQuery  $query
      * @param string $code
      * @return \Illuminate\Http\Response
      */
-    public function index(CountryFilter $filter, string $code)
+    public function index(CountryQuery $query, string $code)
     {
         if (! Continent::where('code', $code)->exists()) {
             throw (new ModelNotFoundException)->setModel(Continent::class);
         }
 
-        $countries = $filter
+        $countries = $query
             ->applyScope('byContinent', Arr::wrap($code))
             ->getPaginator();
 

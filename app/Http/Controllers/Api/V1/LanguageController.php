@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\LanguageFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\LanguageResource;
 use App\Pagination\PaginatedResourceResponse;
+use App\Queries\LanguageQuery;
 
 class LanguageController extends Controller
 {
@@ -71,12 +71,12 @@ class LanguageController extends Controller
      *     description="Everything about languages"
      * )
      *
-     * @param \App\Filters\LanguageFilter  $filter
+     * @param \App\Queries\LanguageQuery  $query
      * @return \Illuminate\Http\Response
      */
-    public function index(LanguageFilter $filter)
+    public function index(LanguageQuery $query)
     {
-        $languages = $filter->getPaginator();
+        $languages = $query->getPaginator();
 
         return new PaginatedResourceResponse(
             LanguageResource::collection($languages)

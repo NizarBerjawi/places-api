@@ -1,11 +1,13 @@
 <?php
 
-namespace App\Filters;
+namespace App\Queries;
 
 use App\Models\Place;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedInclude;
+use Spatie\QueryBuilder\AllowedSort;
 
-class PlaceFilter extends Filter
+class PlaceQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
@@ -22,13 +24,13 @@ class PlaceFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedFilters() : array
+    public function getAllowedFilters(): array
     {
         return [
             AllowedFilter::exact('name'),
             AllowedFilter::exact('featureCode', 'feature_code'),
             AllowedFilter::exact('countryCode', 'country_code'),
-            AllowedFilter::exact('timeZoneCode', 'timeZone_code'),
+            AllowedFilter::exact('timeZoneCode', 'time_zone_code'),
             AllowedFilter::exact('population'),
             AllowedFilter::exact('elevation'),
             AllowedFilter::scope('populationGt'),
@@ -49,14 +51,26 @@ class PlaceFilter extends Filter
      *
      * @return array
      */
-    public function getAllowedIncludes() : array
+    public function getAllowedIncludes(): array
     {
         return [
-            'country',
-            'location',
-            'featureClass',
-            'featureCode',
-            'timeZone',
+            AllowedInclude::relationship('country'),
+            AllowedInclude::relationship('location'),
+            AllowedInclude::relationship('featureClass', 'feature_class'),
+            AllowedInclude::relationship('featureCode', 'feature_code'),
+            AllowedInclude::relationship('timeZone', 'time_zone'),
+        ];
+    }
+
+    public function getAllowedSorts(): array
+    {
+        return [
+            AllowedSort::field('name'),
+            AllowedSort::field('featureCode', 'feature_code'),
+            AllowedSort::field('countryCode', 'country_code'),
+            AllowedSort::field('timeZoneCode', 'time_zone_code'),
+            AllowedSort::field('population'),
+            AllowedSort::field('elevation'),
         ];
     }
 }

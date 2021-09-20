@@ -14,7 +14,7 @@ class CreateFeatureCodesTable extends Migration
     public function up()
     {
         Schema::create('feature_codes', function (Blueprint $table) {
-            $table->string('code')->primary();
+            $table->string('code', 10)->primary();
             $table->text('short_description')->nullable();
             $table->text('full_description')->nullable();
             $table->string('feature_class_code');

@@ -13,10 +13,10 @@ use Illuminate\Database\Eloquent\Model;
  *      title="Feature Class"
  * )
  * @OA\Property(
- *      property="name",
+ *      property="code",
  *      type="string",
  *      example="A",
- *      description="The name of the feature class"
+ *      description="The code of the feature class"
  * )
  * @OA\Property(
  *      property="description",
