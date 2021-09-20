@@ -17,6 +17,8 @@ class CreateCountriesTable extends Migration
             $table->string('iso3166_alpha2', 2)->primary();
             $table->string('iso3166_alpha3', 3)->unique();
             $table->smallInteger('iso3166_numeric')->unique();
+            $table->string('fips', 2)->nullable();
+            $table->string('topLevelDomain')->nullable();
             $table->string('name', 255);
             $table->unsignedBigInteger('population');
             $table->unsignedDouble('area')->nullable();

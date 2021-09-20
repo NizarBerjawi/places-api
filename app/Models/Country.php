@@ -80,6 +80,8 @@ class Country extends Model
         'iso3166_alpha2',
         'iso3166_alpha3',
         'iso3166_numeric',
+        'fips',
+        'topLevelDomain',
         'population',
         'area',
         'phone_code',
@@ -94,7 +96,7 @@ class Country extends Model
     protected $casts = [
         'iso3166_numeric' => 'integer',
         'population' => 'integer',
-        'area' => 'double',
+        'area' => 'integer',
     ];
 
     /**

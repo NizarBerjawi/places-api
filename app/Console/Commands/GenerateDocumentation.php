@@ -45,7 +45,7 @@ class GenerateDocumentation extends Command
 
         require_once $path;
 
-        $content = Generator::scan(['app/Http/Controllers', 'app/Models', 'app/Filters'])
+        $content = Generator::scan(['app/Http/Controllers', 'app/Models', 'app/Queries'])
             ->toJson();
 
         (new Filesystem)->put(public_path('openApi.json'), $content);
