@@ -84,6 +84,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Alternate Names file
+    |--------------------------------------------------------------------------
+    |
+    | The name of the alternate names file
+    |
+    */
+    'alternate_names_file' => env('GEONAMES_ALTERNATE_NAMES_FILE', 'alternateNamesV2.zip'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Modifications file
     |--------------------------------------------------------------------------
     |
@@ -151,6 +161,16 @@ return [
     |
     */
     'time_zones_url' => env('GEONAMES_TIME_ZONES_URL', 'http://download.geonames.org/export/dump/timeZones.txt'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Alternate Names file base url
+    |--------------------------------------------------------------------------
+    |
+    | The URL of Alternate Names file
+    |
+    */
+    'alternate_names_url' => env('GEONAMES_ALTERNATE_NAMES_URL', 'http://download.geonames.org/export/dump/alternateNamesV2.zip'),
 
     /*
     |--------------------------------------------------------------------------

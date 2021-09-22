@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Imports\Iterators\CountriesFileIterator;
+use App\Jobs\DownloadAlternateNamesFiles;
 use App\Jobs\DownloadCountriesFile;
 use App\Jobs\DownloadCountryFlag;
 use App\Jobs\DownloadFeatureCodesFile;
@@ -48,6 +49,7 @@ class DownloadGeonamesFiles extends Command
             new DownloadLanguages,
             new DownloadFeatureCodesFile,
             new DownloadTimezonesFile,
+            new DownloadAlternateNamesFiles,
         ])->then(function (Batch $batch) {
             if ($batch->finished()) {
                 $path = storage_path('app/data/'.config('geonames.countries_file'));
