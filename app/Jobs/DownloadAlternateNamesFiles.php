@@ -3,12 +3,13 @@
 namespace App\Jobs;
 
 use App\Exceptions\FileNotDownloadedException;
+use App\Jobs\Traits\Unzippable;
 use Illuminate\Bus\Batchable;
 use Illuminate\Support\Facades\Http;
 
 class DownloadAlternateNamesFiles extends GeonamesJob
 {
-    use Batchable;
+    use Batchable, Unzippable;
 
     /**
      * Execute the job.
@@ -76,24 +77,5 @@ class DownloadAlternateNamesFiles extends GeonamesJob
     private function folderPath()
     {
         return storage_path('app/data/alternateNames');
-    }
-
-    /**
-     * Un Geoname file.
-     *
-     * @return void
-     */
-    private function unzip()
-    {
-        $zip = new \ZipArchive();
-
-        $res = $zip->open($this->filepath());
-
-        if (! $res) {
-            throw new \Exception('Could not unzip file: '.$this->fileName());
-        }
-
-        $zip->extractTo($this->folderPath());
-        $zip->close();
     }
 }
