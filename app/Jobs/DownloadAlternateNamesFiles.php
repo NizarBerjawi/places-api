@@ -25,7 +25,6 @@ class DownloadAlternateNamesFiles extends GeonamesJob
 
             $response = Http::withOptions([
                 'sink' => $this->filepath(),
-                'verify' => false,
             ])->get($this->url());
 
             if ($response->failed()) {
@@ -56,7 +55,7 @@ class DownloadAlternateNamesFiles extends GeonamesJob
      */
     public function filename()
     {
-        return config('geonames.alternate_names_file');
+        return config('geonames.alternate_names_zip_file');
     }
 
     /**
