@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Imports\AlternateNamesImport;
 use App\Imports\ContinentsImport;
 use App\Imports\CountriesImport;
 use App\Imports\CountryCurrencyImport;
@@ -65,6 +66,12 @@ class ImportGeonamesFiles extends Command
                         dispatch(new PlacesImport($filepath))
                             ->onQueue('import');
                     });
+            }
+        })
+        ->finally(function (Batch $batch) {
+            if ($batch->finished()) {
+                dispatch(new AlternateNamesImport(storage_path('app/data/alternateNames/alternateNamesV2.txt')))
+                    ->onQueue('import');
             }
         })
         ->onQueue('import')

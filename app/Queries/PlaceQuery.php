@@ -56,6 +56,7 @@ class PlaceQuery extends Query
         return [
             AllowedInclude::relationship('country'),
             AllowedInclude::relationship('location'),
+            AllowedInclude::relationship('alternateNames'),
             AllowedInclude::relationship('featureClass', 'feature_class'),
             AllowedInclude::relationship('featureCode', 'feature_code'),
             AllowedInclude::relationship('timeZone', 'time_zone'),

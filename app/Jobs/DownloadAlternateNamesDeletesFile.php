@@ -8,7 +8,7 @@ use App\Jobs\Traits\HasPlaceholders;
 use Illuminate\Bus\Batchable;
 use Illuminate\Support\Facades\Http;
 
-class DownloadDeletesFile extends GeonamesJob
+class DownloadAlternateNamesDeletesFile extends GeonamesJob
 {
     use Batchable, HasPlaceholders;
 
@@ -56,7 +56,7 @@ class DownloadDeletesFile extends GeonamesJob
      */
     public function url()
     {
-        $url = config('geonames.deletes_url');
+        $url = config('geonames.alternate_names_deletes_url');
 
         return $this->replace('date', $this->date, $url);
     }
@@ -68,7 +68,7 @@ class DownloadDeletesFile extends GeonamesJob
      */
     public function filename()
     {
-        $filename = config('geonames.deletes_file');
+        $filename = config('geonames.alternate_names_deletes_file');
 
         return $this->replace('date', $this->date, $filename);
     }

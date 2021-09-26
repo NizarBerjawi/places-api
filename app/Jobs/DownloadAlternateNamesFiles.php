@@ -4,29 +4,12 @@ namespace App\Jobs;
 
 use App\Exceptions\FileNotDownloadedException;
 use App\Jobs\Traits\Unzippable;
+use Illuminate\Bus\Batchable;
 use Illuminate\Support\Facades\Http;
 
-class DownloadGeonamesFile extends GeonamesJob
+class DownloadAlternateNamesFiles extends GeonamesJob
 {
-    use Unzippable;
-
-    /**
-     * A country code to download geonames for.
-     *
-     * @var string
-     */
-    public $code;
-
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct(string $code)
-    {
-        parent::__construct();
-        $this->code = $code;
-    }
+    use Batchable, Unzippable;
 
     /**
      * Execute the job.
@@ -62,17 +45,17 @@ class DownloadGeonamesFile extends GeonamesJob
      */
     public function url()
     {
-        return config('geonames.files_url').'/'.$this->filename();
+        return config('geonames.alternate_names_url');
     }
 
     /**
-     * The name of the file.
+     * The name of the language codes file.
      *
      * @return string
      */
     public function filename()
     {
-        return $this->code.'.zip';
+        return config('geonames.alternate_names_zip_file');
     }
 
     /**
@@ -82,7 +65,7 @@ class DownloadGeonamesFile extends GeonamesJob
      */
     public function filepath()
     {
-        return $this->folderPath().'/'.$this->fileName();
+        return $this->folderPath().'/'.$this->filename();
     }
 
     /**
@@ -92,6 +75,6 @@ class DownloadGeonamesFile extends GeonamesJob
      */
     private function folderPath()
     {
-        return storage_path('app/data/geonames/'.$this->code);
+        return storage_path('app/data/alternateNames');
     }
 }

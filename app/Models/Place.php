@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 /**
  * Place.
@@ -65,13 +64,6 @@ class Place extends Model
     ];
 
     /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array
-     */
-    protected $appends = ['alternateNames'];
-
-    /**
      * Get the Feature Code that this Place belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -129,18 +121,14 @@ class Place extends Model
     }
 
     /**
-     * Get the array representation of the alternate names.
+     * Get the alternate names belonging to this place.
      *
      * @param string $value
      * @return array
      */
-    public function getAlternateNamesAttribute($value)
+    public function alternateNames()
     {
-        if (! $value) {
-            return null;
-        }
-
-        return Str::of($value)->explode(',')->filter()->all();
+        return $this->hasMany(AlternateName::class, 'geoname_id');
     }
 
     /**
