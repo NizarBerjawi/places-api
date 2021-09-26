@@ -84,6 +84,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Alternate Names file
+    |--------------------------------------------------------------------------
+    |
+    | The name of the alternate names file
+    |
+    */
+    'alternate_names_zip_file' => env('GEONAMES_ALTERNATE_NAMES_ZIP_FILE', 'alternateNamesV2.zip'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Modifications file
     |--------------------------------------------------------------------------
     |
@@ -101,6 +111,26 @@ return [
     |
     */
     'deletes_file' => env('GEONAMES_DELETES_FILE', 'deletes-<<date>>.txt'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Alternate Names modifications file
+    |--------------------------------------------------------------------------
+    |
+    | The name of the alternate names modifications file
+    |
+    */
+    'alternate_names_modifications_file' => env('GEONAMES_ALTERNATE_NAMES_MODIFICATIONS_FILE', 'alternateNamesModifications-<<date>>.txt'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Alternate Names deletes file
+    |--------------------------------------------------------------------------
+    |
+    | The name of the alternate names deletes file
+    |
+    */
+    'alternate_names_deletes_file' => env('GEONAMES_ALTERNATE_NAMES_DELETES_FILE', 'alternateNamesDeletes-<<date>>.txt'),
 
     /*
     |--------------------------------------------------------------------------
@@ -154,13 +184,23 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Alternate Names file base url
+    |--------------------------------------------------------------------------
+    |
+    | The URL of Alternate Names file
+    |
+    */
+    'alternate_names_url' => env('GEONAMES_ALTERNATE_NAMES_URL', 'http://download.geonames.org/export/dump/alternateNamesV2.zip'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Modifications file base url
     |--------------------------------------------------------------------------
     |
     | The URL of Modifications file
     |
     */
-    'modifications_url' => env('GEONAMES_MODIFICATIONS_URL', 'http://download.geonames.org/export/dump/modifications.txt'),
+    'modifications_url' => env('GEONAMES_MODIFICATIONS_URL', 'https://download.geonames.org/export/dump/modifications-<<date>>.txt'),
 
     /*
     |--------------------------------------------------------------------------
@@ -170,5 +210,25 @@ return [
     | The URL of Deletes file
     |
     */
-    'deletes_url' => env('GEONAMES_DELETES_URL', 'http://download.geonames.org/export/dump/deletes.txt'),
+    'deletes_url' => env('GEONAMES_DELETES_URL', 'https://download.geonames.org/export/dump/deletes-<<date>>.txt'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Modifications file base url
+    |--------------------------------------------------------------------------
+    |
+    | The URL of Modifications file
+    |
+    */
+    'alternate_names_modifications_url' => env('GEONAMES_ALTERNATE_NAMES_MODIFICATIONS_URL', 'https://download.geonames.org/export/dump/alternateNamesModifications-<<date>>.txt'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Deletes file base url
+    |--------------------------------------------------------------------------
+    |
+    | The URL of Deletes file
+    |
+    */
+    'alternate_names_deletes_url' => env('GEONAMES_ALTERNATE_NAMES_DELETES_URL', 'https://download.geonames.org/export/dump/alternateNamesDeletes-<<date>>.txt'),
 ];

@@ -44,6 +44,7 @@ class CreatePlacesTable extends Migration
             $table->dropForeign(['country_code']);
             $table->dropForeign(['time_zone_code']);
         });
+
         Schema::dropIfExists('places');
     }
 }

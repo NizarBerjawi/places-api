@@ -80,6 +80,6 @@ class DownloadModificationsFile extends GeonamesJob
      */
     public function filepath()
     {
-        return storage_path('app/data/'.$this->filename());
+        return storage_path('app/data/updates/'.$this->filename());
     }
 }
