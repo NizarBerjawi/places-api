@@ -65,5 +65,6 @@ $router->group(['prefix' => 'places'], function () use ($router) {
     $router->get('/', ['uses' => 'PlaceController@index']);
     $router->get('/{geonameId}', ['uses' => 'PlaceController@show']);
 
+    $router->get('/{geonameId}/alternateNames', ['uses' => 'PlaceAlternateNameController@index']);
     $router->get('/{geonameId}/location', ['uses' => 'PlaceLocationController@index']);
 });
