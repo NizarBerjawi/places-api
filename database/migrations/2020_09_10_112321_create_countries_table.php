@@ -14,6 +14,7 @@ class CreateCountriesTable extends Migration
     public function up()
     {
         Schema::create('countries', function (Blueprint $table) {
+            $table->integer('geoname_id')->unique()->nullable();
             $table->string('iso3166_alpha2', 2)->primary();
             $table->string('iso3166_alpha3', 3)->unique();
             $table->smallInteger('iso3166_numeric')->unique();

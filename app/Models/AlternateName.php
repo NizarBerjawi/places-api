@@ -7,23 +7,30 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @OA\Schema(
- *      schema="continent",
+ *      schema="alternateName",
  *      type="object",
- *      title="Continent"
+ *      title="Alternate Name"
  * )
  *
  * @OA\Property(
  *      property="code",
- *      type="string",
- *      example="OC",
- *      description="The two letter continent code"
+ *      type="name",
+ *      example="Sydney",
+ *      description="The name of the place."
  * )
  *
  * @OA\Property(
- *      property="name",
- *      type="string",
- *      example="Oceania",
- *      description="The name of the continent"
+ *      property="isPreferredName",
+ *      type="boolean",
+ *      example="true",
+ *      description="Determines if the alternate name is official/preferred."
+ * )
+ *
+ * @OA\Property(
+ *      property="isShortName",
+ *      type="boolean",
+ *      example="true",
+ *      description="Determines if the alternate name is a short name."
  * )
  */
 class AlternateName extends Model
@@ -44,7 +51,7 @@ class AlternateName extends Model
      */
     public function place()
     {
-        return $this->belongsTo(Place::class);
+        return $this->belongsTo(Place::class, 'geoname_id', 'geoname_id');
     }
 
     /**
@@ -64,10 +71,22 @@ class AlternateName extends Model
      * @param array $languages
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeByLanguage(Builder $query, array $languages)
+    public function scopeByLanguageCode(Builder $query, ...$languages)
     {
         return $query->whereHas('language', function (Builder $query) use ($languages) {
             $query->whereIn('iso639_1', $languages);
         });
+    }
+
+    /**
+     * Get alternate name by their parent geoname ID.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param array $languages
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByGeonameId(Builder $query, int $geonameId)
+    {
+        return $query->where('geoname_id', $geonameId);
     }
 }

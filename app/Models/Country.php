@@ -100,6 +100,21 @@ class Country extends Model
     ];
 
     /**
+     * Get the country's population.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getPopulationAttribute($value)
+    {
+        if (! $this->relationLoaded('place') || empty($this->place)) {
+            return $value;
+        }
+
+        return $this->place->population;
+    }
+
+    /**
      * Get the continent that owns this country.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -160,6 +175,33 @@ class Country extends Model
     public function places()
     {
         return $this->hasMany(Place::class, 'country_code', 'iso3166_alpha2');
+    }
+
+    /**
+     * Get the corresponding place data of the country.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function place()
+    {
+        return $this->hasOne(Place::class, 'geoname_id', 'geoname_id');
+    }
+
+    /**
+     * Get the alternate names belonging to this country.
+     *
+     * @param string $value
+     * @return array
+     */
+    public function alternateNames()
+    {
+        return $this->hasManyThrough(
+            AlternateName::class,
+            Place::class,
+            'geoname_id',
+            'geoname_id',
+            'geoname_id'
+        );
     }
 
     /**
