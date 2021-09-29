@@ -51,7 +51,7 @@ class AlternateName extends Model
      */
     public function place()
     {
-        return $this->belongsTo(Place::class);
+        return $this->belongsTo(Place::class, 'geoname_id', 'geoname_id');
     }
 
     /**

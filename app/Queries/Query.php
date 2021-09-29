@@ -74,6 +74,13 @@ abstract class Query
         return $this;
     }
 
+    public function apply(callable $callable)
+    {
+        $callable($this->builder);
+
+        return $this;
+    }
+
     /**
      * The query builder used to apply the filters.
      *

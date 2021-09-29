@@ -62,6 +62,8 @@ class CountryQuery extends Query
             AllowedInclude::relationship('neighbours'),
             AllowedInclude::relationship('languages'),
             AllowedInclude::relationship('currency'),
+            AllowedInclude::relationship('alternateNames'),
+            AllowedInclude::relationship('place'),
         ];
     }
 
