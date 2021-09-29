@@ -105,7 +105,7 @@ class CountryController extends Controller
     {
         $countries = $query
             ->apply(function (QueryBuilder $builder) {
-                // return $builder->with('place');
+                return $builder->with('place');
             })
             ->getPaginator();
 
@@ -161,11 +161,12 @@ class CountryController extends Controller
     public function show(CountryQuery $query, string $code)
     {
         $country = $query
-            ->apply(function (QueryBuilder $builder) {
-                return $builder->with('place');
+            ->apply(function (QueryBuilder $builder) use ($code) {
+                return $builder
+                    ->where('iso3166_alpha2', $code)
+                    ->with('place');
             })
             ->getBuilder()
-            ->where('iso3166_alpha2', $code)
             ->firstOrFail();
 
         return new CountryResource($country);
