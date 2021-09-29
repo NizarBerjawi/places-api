@@ -22,13 +22,13 @@ class CountryResource extends JsonResource
             'population'     => $this->population,
             'area'           => $this->area,
             'phoneCode'      => $this->phone_code,
+            'currency'       => CurrencyResource::make($this->whenLoaded('currency')),
             'continent'      => ContinentResource::make($this->whenLoaded('continent')),
-            'timeZones'      => TimeZoneResource::collection($this->whenLoaded('timeZones')),
             'flag'           => FlagResource::make($this->whenLoaded('flag')),
+            'timeZones'      => TimeZoneResource::collection($this->whenLoaded('timeZones')),
             'neighbours'     => self::collection($this->whenLoaded('neighbours')),
             'languages'      => LanguageResource::collection($this->whenLoaded('languages')),
-            'currency'       => CurrencyResource::make($this->whenLoaded('currency')),
-
+            'alternateNames' => AlternateNameResource::collection($this->whenLoaded('alternateNames')),
         ];
     }
 }
