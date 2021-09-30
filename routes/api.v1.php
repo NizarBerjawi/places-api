@@ -23,6 +23,7 @@ $router->group(['prefix' => 'countries'], function () use ($router) {
     $router->get('/{code}/places', ['uses' => 'CountryPlacesController@index']);
     $router->get('/{code}/timeZones', ['uses' => 'CountryTimeZoneController@index']);
     $router->get('/{code}/neighbours', ['uses' => 'CountryNeighbourController@index']);
+    $router->get('/{code}/alternateNames', ['uses' => 'CountryAlternateNamesController@index']);
 });
 
 $router->group(['prefix' => 'continents'], function () use ($router) {
