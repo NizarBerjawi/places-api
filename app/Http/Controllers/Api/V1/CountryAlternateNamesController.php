@@ -7,7 +7,7 @@ use App\Http\Resources\V1\AlternateNameResource;
 use App\Models\Country;
 use App\Queries\AlternateNameQuery;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Support\Arr;
 
 class CountryAlternateNamesController extends Controller
 {
@@ -69,18 +69,16 @@ class CountryAlternateNamesController extends Controller
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function index(AlternateNameQuery $query, string $code)
+    public function index(AlternateNameQuery $query, string $countryCode)
     {
-        if (! Country::where('iso3166_alpha2', $code)->exists()) {
+        if (! Country::where('iso3166_alpha2', $countryCode)->exists()) {
             throw (new ModelNotFoundException())->setModel(Country::class);
         }
 
-        $country = Country::find($code);
-
         $alternateNames = $query
-            ->apply(function (QueryBuilder $builder) use ($country) {
-                $builder->where('geoname_id', $country->geoname_id);
-            })
+            ->applyScope('byGeonameId', Arr::wrap(
+                Country::find($countryCode)->geoname_id
+            ))
             ->getPaginator();
 
         return AlternateNameResource::collection($alternateNames);

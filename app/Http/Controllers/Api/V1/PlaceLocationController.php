@@ -61,7 +61,7 @@ class PlaceLocationController extends Controller
         $location = $query
             ->applyScope('byPlace', Arr::wrap($geonameId))
             ->getBuilder()
-            ->first();
+            ->firstOrFail();
 
         return LocationResource::make($location);
     }

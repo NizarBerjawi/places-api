@@ -45,7 +45,7 @@ class AlternateName extends Model
     ];
 
     /**
-     * Get the countries that belong to this continent.
+     * Get the place that this alternate name belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

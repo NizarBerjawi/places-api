@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\FeatureCodeResource;
 use App\Pagination\PaginatedResourceResponse;
 use App\Queries\FeatureCodeQuery;
+use Illuminate\Support\Arr;
 
 class FeatureCodeController extends Controller
 {
@@ -124,16 +125,16 @@ class FeatureCodeController extends Controller
      *      ),
      * )
      * @param  \App\Queries\FeatureCodeQuery  $query
-     * @param  string $code
+     * @param  string $featureCodeCode
      * @return \Illuminate\Http\Response
      */
-    public function show(FeatureCodeQuery $query, string $code)
+    public function show(FeatureCodeQuery $query, string $featureCodeCode)
     {
         $featureCode = $query
+            ->applyScope('byFeatureCodeCode', Arr::wrap($featureCodeCode))
             ->getBuilder()
-            ->where('code', $code)
             ->firstOrFail();
 
-        return new FeatureCodeResource($featureCode);
+        return FeatureCodeResource::make($featureCode);
     }
 }

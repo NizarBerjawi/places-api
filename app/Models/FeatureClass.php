@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -61,5 +62,17 @@ class FeatureClass extends Model
             'feature_code',
             'code'
         );
+    }
+
+    /**
+     * Get a feature class by feature class code.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $featureClassCode
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByFeatureClassCode(Builder $query, string $featureClassCode)
+    {
+        return $query->where('code', $featureClassCode);
     }
 }

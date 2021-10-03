@@ -132,6 +132,18 @@ class Place extends Model
     }
 
     /**
+     * Get places scoped by geoname id.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param int  $geonameId
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByGeonameId(Builder $query, int $geonameId)
+    {
+        return $query->where('geoname_id', $geonameId);
+    }
+
+    /**
      * Get places scoped by country.
      *
      * @param \Illuminate\Database\Eloquent\Builder $query

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\TimeZoneResource;
 use App\Pagination\PaginatedResourceResponse;
 use App\Queries\TimeZoneQuery;
+use Illuminate\Support\Arr;
 
 class TimeZoneController extends Controller
 {
@@ -130,11 +131,11 @@ class TimeZoneController extends Controller
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function show(TimeZoneQuery $query, string $code)
+    public function show(TimeZoneQuery $query, string $timeZoneCode)
     {
         $timeZone = $query
+            ->applyScope('byTimeZoneCode', Arr::wrap($timeZoneCode))
             ->getBuilder()
-            ->where('code', $code)
             ->firstOrFail();
 
         return new TimeZoneResource($timeZone);

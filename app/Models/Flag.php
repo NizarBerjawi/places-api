@@ -74,10 +74,8 @@ class Flag extends Model
      * @param  string $countryCode
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
-    public function scopeByCountry(Builder $query, string $countryCode)
+    public function scopeByCountryCode(Builder $query, string $countryCode)
     {
-        return $query->whereHas('country', function (Builder $query) use ($countryCode) {
-            return $query->where('country_code', $countryCode);
-        });
+        return $query->where('country_code', $countryCode);
     }
 }

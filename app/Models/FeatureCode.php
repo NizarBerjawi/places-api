@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -76,5 +77,10 @@ class FeatureCode extends Model
     public function places()
     {
         return $this->hasMany(Place::class, 'feature_code', 'code');
+    }
+
+    public function scopeByFeatureCodeCode(Builder $query, $featureCodeCode)
+    {
+        return $query->where('code', $featureCodeCode);
     }
 }

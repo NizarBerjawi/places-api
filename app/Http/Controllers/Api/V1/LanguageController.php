@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\LanguageResource;
 use App\Pagination\PaginatedResourceResponse;
 use App\Queries\LanguageQuery;
+use Illuminate\Support\Arr;
 
 class LanguageController extends Controller
 {
@@ -81,5 +82,59 @@ class LanguageController extends Controller
         return new PaginatedResourceResponse(
             LanguageResource::collection($languages)
         );
+    }
+
+    /**
+     * Display a specified language.
+     *
+     * @OA\Get(
+     *     tags={"Languages"},
+     *     path="/laguage/{languageCode}",
+     *     operationId="getLanguageByCode",
+     *     @OA\Property(ref="#/components/schemas/language"),
+     *     @OA\Parameter(
+     *        name="languageCode",
+     *        in="path",
+     *        required=true,
+     *        @OA\Schema(
+     *            type="string"
+     *        )
+     *     ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/language")
+     *       ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Language not found"
+     *       ),
+     *      @OA\Parameter(
+     *          name="include",
+     *          in="query",
+     *          description="Include related resources",
+     *          required=false,
+     *          explode=false,
+     *          @OA\Schema(
+     *              type="array",
+     *              @OA\Items(
+     *                  type="string",
+     *                  enum = {"countries"},
+     *              )
+     *          )
+     *      ),
+     * )
+     * @param \App\Queries\FlagQuery  $query
+     * @param  string $code
+     * @return \Illuminate\Http\Response
+     */
+    public function show(LanguageQuery $query, string $languageCode)
+    {
+        $language = $query
+            ->applyScope('byLanguageCode', Arr::wrap($languageCode))
+            ->getBuilder()
+            ->firstOrFail();
+
+        return LanguageResource::make($language);
     }
 }

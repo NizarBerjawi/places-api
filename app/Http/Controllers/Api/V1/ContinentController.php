@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\ContinentResource;
 use App\Pagination\PaginatedResourceResponse;
 use App\Queries\ContinentQuery;
+use Illuminate\Support\Arr;
 
 class ContinentController extends Controller
 {
@@ -129,14 +130,14 @@ class ContinentController extends Controller
      *       ),
      * )
      * @param \App\Queries\ContinentQuery  $query
-     * @param  string $code
+     * @param  string $continentCode
      * @return \Illuminate\Http\Response
      */
-    public function show(ContinentQuery $query, string $code)
+    public function show(ContinentQuery $query, string $continentCode)
     {
         $continent = $query
+            ->applyScope('byContinentCode', Arr::wrap($continentCode))
             ->getBuilder()
-            ->where('code', $code)
             ->firstOrFail();
 
         return new ContinentResource($continent);

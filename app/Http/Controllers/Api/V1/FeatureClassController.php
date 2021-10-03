@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\FeatureClassResource;
 use App\Pagination\PaginatedResourceResponse;
 use App\Queries\FeatureClassQuery;
+use Illuminate\Support\Arr;
 
 class FeatureClassController extends Controller
 {
@@ -124,16 +125,16 @@ class FeatureClassController extends Controller
      *      ),
      * )
      * @param  \App\Queries\FeatureClassQuery  $query
-     * @param  string $code
+     * @param  string $featureClassCode
      * @return \Illuminate\Http\Response
      */
-    public function show(FeatureClassQuery $query, string $code)
+    public function show(FeatureClassQuery $query, string $featureClassCode)
     {
         $featureClass = $query
+            ->applyScope('byFeatureClassCode', Arr::wrap($featureClassCode))
             ->getBuilder()
-            ->where('code', $code)
             ->firstOrFail();
 
-        return new FeatureClassResource($featureClass);
+        return FeatureClassResource::make($featureClass);
     }
 }

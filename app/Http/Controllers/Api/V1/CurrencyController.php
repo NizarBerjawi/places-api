@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CurrencyResource;
 use App\Pagination\PaginatedResourceResponse;
 use App\Queries\CurrencyQuery;
+use Illuminate\Support\Arr;
 
 class CurrencyController extends Controller
 {
@@ -127,11 +128,11 @@ class CurrencyController extends Controller
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function show(CurrencyQuery $query, string $code)
+    public function show(CurrencyQuery $query, string $currencyCode)
     {
         $currency = $query
+            ->applyScope('byCurrencyCode', Arr::wrap($currencyCode))
             ->getBuilder()
-            ->where('code', $code)
             ->firstOrFail();
 
         return new CurrencyResource($currency);

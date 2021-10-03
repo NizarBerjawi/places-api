@@ -109,17 +109,17 @@ class ContinentCountryController extends Controller
      * )
      *
      * @param \App\Queries\CountryQuery  $query
-     * @param string $code
+     * @param string $continentCode
      * @return \Illuminate\Http\Response
      */
-    public function index(CountryQuery $query, string $code)
+    public function index(CountryQuery $query, string $continentCode)
     {
-        if (! Continent::where('code', $code)->exists()) {
+        if (! Continent::where('code', $continentCode)->exists()) {
             throw (new ModelNotFoundException)->setModel(Continent::class);
         }
 
         $countries = $query
-            ->applyScope('byContinent', Arr::wrap($code))
+            ->applyScope('byContinentCode', Arr::wrap($continentCode))
             ->getPaginator();
 
         return new PaginatedResourceResponse(

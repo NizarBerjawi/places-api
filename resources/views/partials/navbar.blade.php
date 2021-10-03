@@ -20,10 +20,6 @@
             <a href={{ route('docs') }} class="navbar-item {{ request()->routeIs('docs') ? 'is-active' : '' }}">
                 Documentation
             </a>
-
-            <a href={{ env('GITHUB_URL') }} class="navbar-item" target="_blank">
-                Github
-            </a>
         </div>
 
         <div class="navbar-end">

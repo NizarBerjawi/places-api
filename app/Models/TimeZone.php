@@ -97,4 +97,16 @@ class TimeZone extends Model
     {
         return $query->where('country_code', $countryCode);
     }
+
+    /**
+     * Get a time zones by code.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $timeZoneCode
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByTimeZoneCode(Builder $query, string $timeZoneCode)
+    {
+        return $query->where('code', $timeZoneCode);
+    }
 }

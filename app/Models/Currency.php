@@ -65,4 +65,16 @@ class Currency extends Model
             $query->where('iso3166_alpha2', $countryCode);
         });
     }
+
+    /**
+     * Get a currency by its currency code.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $currencyCode
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByCurrencyCode(Builder $query, string $currencyCode)
+    {
+        return $query->where('code', $currencyCode);
+    }
 }

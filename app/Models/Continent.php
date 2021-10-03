@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -58,5 +59,17 @@ class Continent extends Model
     public function countries()
     {
         return $this->hasMany(Country::class, 'continent_code');
+    }
+
+    /**
+     * Get a continent scoped by continent code.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $continentCode
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByContinentCode(Builder $query, $continentCode)
+    {
+        return $query->where('code', $continentCode);
     }
 }

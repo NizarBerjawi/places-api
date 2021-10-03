@@ -76,4 +76,16 @@ class Language extends Model
                 $query->where('iso3166_alpha2', $countryCode);
             });
     }
+
+    /**
+     * Get langauge by ISO639-3 code.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $languageCode
+     * @return \Illuminate\Database\Eloquent\Builder  $query
+     */
+    public function scopeByLanguageCode(Builder $query, string $languageCode)
+    {
+        return $query->where('iso639_3', $languageCode);
+    }
 }

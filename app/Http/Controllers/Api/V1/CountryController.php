@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CountryResource;
 use App\Pagination\PaginatedResourceResponse;
 use App\Queries\CountryQuery;
-use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Support\Arr;
 
 class CountryController extends Controller
 {
@@ -103,11 +103,7 @@ class CountryController extends Controller
      */
     public function index(CountryQuery $query)
     {
-        $countries = $query
-            ->apply(function (QueryBuilder $builder) {
-                return $builder->with('place');
-            })
-            ->getPaginator();
+        $countries = $query->getPaginator();
 
         return new PaginatedResourceResponse(
             CountryResource::collection($countries)
@@ -155,17 +151,13 @@ class CountryController extends Controller
      *      ),
      * )
      * @param  \App\Queries\CountryQuery  $query
-     * @param  string $code
+     * @param  string $countryCode
      * @return \Illuminate\Http\Response
      */
-    public function show(CountryQuery $query, string $code)
+    public function show(CountryQuery $query, string $countryCode)
     {
         $country = $query
-            ->apply(function (QueryBuilder $builder) use ($code) {
-                return $builder
-                    ->where('iso3166_alpha2', $code)
-                    ->with('place');
-            })
+            ->applyScope('byCountryCode', Arr::wrap($countryCode))
             ->getBuilder()
             ->firstOrFail();
 

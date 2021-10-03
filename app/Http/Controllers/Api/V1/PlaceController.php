@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\PlaceResource;
 use App\Pagination\PaginatedResourceResponse;
 use App\Queries\PlaceQuery;
+use Illuminate\Support\Arr;
 
 class PlaceController extends Controller
 {
@@ -145,8 +146,8 @@ class PlaceController extends Controller
     public function show(PlaceQuery $query, $geonameId)
     {
         $place = $query
+            ->applyScope('byGeonameId', Arr::wrap($geonameId))
             ->getBuilder()
-            ->where('geoname_id', $geonameId)
             ->firstOrFail();
 
         return PlaceResource::make($place);

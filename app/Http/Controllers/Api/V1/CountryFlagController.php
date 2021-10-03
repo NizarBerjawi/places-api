@@ -58,16 +58,16 @@ class CountryFlagController extends Controller
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function index(FlagQuery $query, string $code)
+    public function index(FlagQuery $query, string $countryCode)
     {
-        if (! Country::where('iso3166_alpha2', $code)->exists()) {
+        if (! Country::where('iso3166_alpha2', $countryCode)->exists()) {
             throw (new ModelNotFoundException())->setModel(Country::class);
         }
 
         $flag = $query
-            ->applyScope('byCountry', Arr::wrap($code))
+            ->applyScope('byCountryCode', Arr::wrap($countryCode))
             ->getBuilder()
-            ->first();
+            ->firstOrFail();
 
         return FlagResource::make($flag);
     }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\FlagResource;
 use App\Pagination\PaginatedResourceResponse;
 use App\Queries\FlagQuery;
+use Illuminate\Support\Arr;
 
 class FlagController extends Controller
 {
@@ -127,13 +128,13 @@ class FlagController extends Controller
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function show(FlagQuery $query, string $code)
+    public function show(FlagQuery $query, string $countryCode)
     {
         $flag = $query
+            ->applyScope('byCountryCode', Arr::wrap($countryCode))
             ->getBuilder()
-            ->where('country_code', $code)
             ->firstOrFail();
 
-        return new FlagResource($flag);
+        return FlagResource::make($flag);
     }
 }

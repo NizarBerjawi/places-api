@@ -111,14 +111,14 @@ class CountryNeighbourController extends Controller
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function index(CountryQuery $query, string $code)
+    public function index(CountryQuery $query, string $countryCode)
     {
-        if (! Country::where('iso3166_alpha2', $code)->exists()) {
+        if (! Country::where('iso3166_alpha2', $countryCode)->exists()) {
             throw (new ModelNotFoundException())->setModel(Country::class);
         }
 
         $countries = $query
-            ->applyScope('neighbourOf', Arr::wrap($code))
+            ->applyScope('neighbourOf', Arr::wrap($countryCode))
             ->getPaginator();
 
         return new PaginatedResourceResponse(

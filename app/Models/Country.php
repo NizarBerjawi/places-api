@@ -71,6 +71,13 @@ class Country extends Model
     protected $keyType = 'string';
 
     /**
+     * The relations to eager load on every query.
+     *
+     * @var array
+     */
+    protected $with = ['place'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -238,11 +245,21 @@ class Country extends Model
      * @param string $continentCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeByContinent(Builder $query, $continentCode)
+    public function scopeByContinentCode(Builder $query, string $continentCode)
     {
-        return $query->whereHas('continent', function (Builder $query) use ($continentCode) {
-            $query->where('continent_code', $continentCode);
-        });
+        return $query->where('continent_code', $continentCode);
+    }
+
+    /**
+     * Get Countries by country code.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $countryCode
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByCountryCode(Builder $query, string $countryCode)
+    {
+        return $query->where('iso3166_alpha2', $countryCode);
     }
 
     /**
