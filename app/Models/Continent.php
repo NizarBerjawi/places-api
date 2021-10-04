@@ -9,21 +9,19 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Schema(
  *      schema="continent",
  *      type="object",
- *      title="Continent"
- * )
- *
- * @OA\Property(
- *      property="code",
- *      type="string",
- *      example="OC",
- *      description="The two letter continent code"
- * )
- *
- * @OA\Property(
- *      property="name",
- *      type="string",
- *      example="Oceania",
- *      description="The name of the continent"
+ *      title="Continent",
+ *      @OA\Property(
+ *          property="code",
+ *          type="string",
+ *          example="OC",
+ *          description="The two letter continent code"
+ *      ),
+ *      @OA\Property(
+ *           property="name",
+ *           type="string",
+ *           example="Oceania",
+ *           description="The name of the continent"
+ *      )
  * )
  */
 class Continent extends Model

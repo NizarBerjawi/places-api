@@ -22,6 +22,43 @@ class CountryQuery extends Query
     /**
      * The attributes we can use to filter.
      *
+     * @OA\Parameter(
+     *     parameter="countryFilter",
+     *     name="filter",
+     *     in="query",
+     *     description="Filter countries by certain criteria",
+     *     required=false,
+     *     style="deepObject",
+     *     @OA\Schema(
+     *         type="object",
+     *         enum={
+     *             "name",
+     *             "iso3166Alpha2",
+     *             "iso3166Alpha3",
+     *             "iso3166Numeric",
+     *             "population",
+     *             "area",
+     *             "phoneCode",
+     *             "areaGt",
+     *             "areaGte",
+     *             "areaLt",
+     *             "areaLte",
+     *             "areaBetween",
+     *             "populationGt",
+     *             "populationGte",
+     *             "populationLt",
+     *             "populationLte",
+     *             "populationBetween",
+     *             "neighbourOf"
+     *         },
+     *         @OA\Property(
+     *             property="areaLt",
+     *             type="integer",
+     *             example="100000"
+     *         )
+     *     )
+     * )
+     *
      * @return array
      */
     public function getAllowedFilters(): array
@@ -51,6 +88,30 @@ class CountryQuery extends Query
     /**
      * The relations that we can include.
      *
+     * @OA\Parameter(
+     *     parameter="countryInclude",
+     *     name="include",
+     *     in="query",
+     *     description="Include related resources with every country.",
+     *     required=false,
+     *     explode=false,
+     *     @OA\Schema(
+     *         type="array",
+     *         @OA\Items(
+     *             type="string",
+     *             enum = {
+     *                 "continent",
+     *                 "timeZones",
+     *                 "flag",
+     *                 "neighbours",
+     *                 "languages",
+     *                 "currency",
+     *                 "alternateNames"
+     *             },
+     *         )
+     *     )
+     * )
+     *
      * @return array
      */
     public function getAllowedIncludes(): array
@@ -63,10 +124,38 @@ class CountryQuery extends Query
             AllowedInclude::relationship('languages'),
             AllowedInclude::relationship('currency'),
             AllowedInclude::relationship('alternateNames'),
-            AllowedInclude::relationship('place'),
         ];
     }
 
+    /**
+     * The relations that we can sort by.
+     *
+     * @OA\Parameter(
+     *     parameter="countrySort",
+     *     name="sort",
+     *     in="query",
+     *     description="Sort the result set by certain properties.",
+     *     required=false,
+     *     explode=false,
+     *     @OA\Schema(
+     *         type="array",
+     *         @OA\Items(
+     *             type="string",
+     *             enum = {
+     *                 "name",
+     *                 "iso3166Alpha2",
+     *                 "iso3166Alpha3",
+     *                 "iso3166Numeric",
+     *                 "population",
+     *                 "area",
+     *                 "phoneCode"
+     *             },
+     *         )
+     *     )
+     * )
+     *
+     * @return array
+     */
     public function getAllowedSorts(): array
     {
         return [

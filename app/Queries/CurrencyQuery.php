@@ -44,6 +44,11 @@ class CurrencyQuery extends Query
         ];
     }
 
+    /**
+     * The relations that we can sort by.
+     *
+     * @return array
+     */
     public function getAllowedSorts(): array
     {
         return [

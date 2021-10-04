@@ -25,41 +25,9 @@ class ContinentController extends Controller
      *              @OA\Items(ref="#/components/schemas/continent")
      *          ),
      *      ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter continents by name or code",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={"code", "name"},
-     *              @OA\Property(
-     *                  property="code",
-     *                  type="string",
-     *                  example="OC"
-     *              ),
-     *              @OA\Property(
-     *                  property="name",
-     *                  type="string",
-     *                  example="Oceania"
-     *              ),
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources with every continent.",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"countries"},
-     *              )
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/continentFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/continentInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/continentSort"),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",
@@ -105,20 +73,9 @@ class ContinentController extends Controller
      *            type="string"
      *        )
      *     ),
-     *     @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include resources related to the specified continent.",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum={"countries"},
-     *              )
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/continentFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/continentInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/continentSort"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",

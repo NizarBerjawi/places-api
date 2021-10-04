@@ -25,62 +25,9 @@ class CountryController extends Controller
      *              @OA\Items(ref="#/components/schemas/country")
      *          ),
      *      ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter countries by certain criteria",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={
-     *                  "name",
-     *                  "iso3166Alpha2",
-     *                  "iso3166Alpha3",
-     *                  "iso3166Numeric",
-     *                  "population",
-     *                  "area",
-     *                  "phoneCode",
-     *                  "areaGt",
-     *                  "areaGte",
-     *                  "areaLt",
-     *                  "areaLte",
-     *                  "areaBetween",
-     *                  "populationGt",
-     *                  "populationGte",
-     *                  "populationLt",
-     *                  "populationLte",
-     *                  "populationBetween",
-     *                  "neighbourOf"
-     *              },
-     *              @OA\Property(
-     *                  property="areaLt",
-     *                  type="integer",
-     *                  example="100000"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources with every country.",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {
-     *                      "continent",
-     *                      "timeZones",
-     *                      "flag",
-     *                      "neighbours",
-     *                      "languages",
-     *                      "currency"
-     *                  },
-     *              )
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/countryFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/countryInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/countrySort"),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",
