@@ -101,12 +101,12 @@ abstract class Query
      *
      * @return \Illuminate\Pagination\Paginator
      */
-    public function getPaginator(): Paginator
+    public function getPaginator()
     {
         $this->checkBuilder();
 
         return $this->getBuilder()
-            ->simplePaginate(config('geonames.pagination_limit'))
+            ->jsonPaginate()
             ->appends(request()->query());
     }
 
