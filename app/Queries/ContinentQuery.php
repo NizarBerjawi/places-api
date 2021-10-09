@@ -36,23 +36,17 @@ class ContinentQuery extends Query
      *             property="code",
      *             type="string",
      *             example="OC"
-     *         ),
-     *         @OA\Property(
-     *             property="name",
-     *             type="string",
-     *             example="Oceania"
-     *         ),
+     *         )
      *     )
      * )
-     *
      *
      * @return array
      */
     public function getAllowedFilters(): array
     {
         return [
-            AllowedFilter::exact('name'),
             AllowedFilter::exact('code'),
+            AllowedFilter::exact('name'),
         ];
     }
 
@@ -70,7 +64,7 @@ class ContinentQuery extends Query
      *         type="array",
      *         @OA\Items(
      *             type="string",
-     *             enum = {"countries"},
+     *             enum = {"countries", "alternateNames"},
      *         )
      *     )
      * )
@@ -81,6 +75,7 @@ class ContinentQuery extends Query
     {
         return [
             AllowedInclude::relationship('countries'),
+            AllowedInclude::relationship('alternateNames'),
         ];
     }
 

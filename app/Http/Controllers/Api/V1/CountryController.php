@@ -64,38 +64,17 @@ class CountryController extends Controller
      *     tags={"Countries"},
      *     path="/countries/{countryCode}",
      *     operationId="getCountryByCode",
-     *     @OA\Property(ref="#/components/schemas/country"),
-     *     @OA\Parameter(
-     *        name="countryCode",
-     *        in="path",
-     *        required=true,
-     *        @OA\Schema(
-     *            type="string"
-     *        )
-     *     ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/country")
-     *       ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Country not found"
-     *       ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include resources related to the specified country.",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"continent", "timeZones", "flag", "neighbours", "languages"},
-     *              )
-     *          )
+     *     @OA\Parameter(ref="#/components/parameters/countryCode"),
+     *     @OA\Parameter(ref="#/components/parameters/countryInclude"),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/country")
      *      ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Country not found"
+     *      )
      * )
      * @param  \App\Queries\CountryQuery  $query
      * @param  string $countryCode

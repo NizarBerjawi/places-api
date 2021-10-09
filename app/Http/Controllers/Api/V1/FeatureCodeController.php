@@ -17,44 +17,9 @@ class FeatureCodeController extends Controller
      *      tags={"Feature Codes"},
      *      summary="Returns a list of paginated feature codes",
      *      path="/featureCodes",
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(
-     *              type="array",
-     *              @OA\Items(ref="#/components/schemas/featureCode")
-     *          ),
-     *      ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter feature codes by certain criteria",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={"code"},
-     *              @OA\Property(
-     *                  property="code",
-     *                  type="string",
-     *                  example="ADM1"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"featureClass"},
-     *              )
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/featureCodeFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/featureCodeInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/featureCodeSort"),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",
@@ -65,6 +30,14 @@ class FeatureCodeController extends Controller
      *              type="integer",
      *              example=1
      *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/featureCode")
+     *          ),
      *      ),
      * )
      * @OA\Tag(
@@ -92,6 +65,7 @@ class FeatureCodeController extends Controller
      *     path="/featureCodes/{featureCodeCode}",
      *     operationId="getFeatureCodeByCode",
      *     @OA\Property(ref="#/components/schemas/featureCode"),
+     *     @OA\Parameter(ref="#/components/parameters/featureCodeInclude"),
      *     @OA\Parameter(
      *        name="featureCodeCode",
      *        in="path",
@@ -108,21 +82,7 @@ class FeatureCodeController extends Controller
      *      @OA\Response(
      *          response=404,
      *          description="Feature code not found"
-     *       ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"featureClass"},
-     *              )
-     *          )
-     *      ),
+     *       )
      * )
      * @param  \App\Queries\FeatureCodeQuery  $query
      * @param  string $featureCodeCode

@@ -40,12 +40,12 @@ class CountryLanguageImport extends CountriesFileIterator implements ShouldQueue
                 ->orWhereIn('iso639_2', $languageCodes)
                 ->orWhereIn('iso639_3', $languageCodes)
                 ->distinct()
-                ->get('id');
+                ->get('iso639_3');
 
             foreach ($languages as $language) {
                 $countryLanguages->push([
                     'country_code' => $item[0],
-                    'language_id'  => $language->id,
+                    'language_code'  => $language->iso639_3,
                 ]);
             }
         }

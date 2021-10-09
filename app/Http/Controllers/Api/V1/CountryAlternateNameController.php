@@ -5,11 +5,12 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\AlternateNameResource;
 use App\Models\Country;
+use App\Pagination\PaginatedResourceResponse;
 use App\Queries\AlternateNameQuery;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
-class CountryAlternateNamesController extends Controller
+class CountryAlternateNameController extends Controller
 {
     /**
      * Display the alternate names of a country.
@@ -18,40 +19,10 @@ class CountryAlternateNamesController extends Controller
      *      tags={"Countries"},
      *      summary="Returns the alternate names of a specific country",
      *      path="/countries/{countryCode}/alternateNames",
-     *      @OA\Parameter(
-     *         name="countryCode",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(
-     *              type="array",
-     *              @OA\Items(ref="#/components/schemas/alternateName")
-     *          ),
-     *      ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Country not found"
-     *       ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include resources related to the specified alternate name.",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"place", "country", "language"},
-     *              )
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/countryCode"),
+     *      @OA\Parameter(ref="#/components/parameters/alternateNameFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/alternateNameInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/alternateNameSort"),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",
@@ -63,6 +34,18 @@ class CountryAlternateNamesController extends Controller
      *              example=1
      *          )
      *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/alternateName")
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Alternate name not found"
+     *       )
      * )
      *
      * @param  \App\Queries\CurrencyQuery  $query
@@ -81,6 +64,8 @@ class CountryAlternateNamesController extends Controller
             ))
             ->getPaginator();
 
-        return AlternateNameResource::collection($alternateNames);
+        return new PaginatedResourceResponse(
+            AlternateNameResource::collection($alternateNames)
+        );
     }
 }

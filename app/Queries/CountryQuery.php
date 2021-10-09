@@ -106,7 +106,8 @@ class CountryQuery extends Query
      *                 "neighbours",
      *                 "languages",
      *                 "currency",
-     *                 "alternateNames"
+     *                 "alternateNames",
+     *                 "location"
      *             },
      *         )
      *     )
@@ -124,6 +125,7 @@ class CountryQuery extends Query
             AllowedInclude::relationship('languages'),
             AllowedInclude::relationship('currency'),
             AllowedInclude::relationship('alternateNames'),
+            AllowedInclude::relationship('location'),
         ];
     }
 
@@ -148,7 +150,14 @@ class CountryQuery extends Query
      *                 "iso3166Numeric",
      *                 "population",
      *                 "area",
-     *                 "phoneCode"
+     *                 "phoneCode",
+     *                 "-name",
+     *                 "-iso3166Alpha2",
+     *                 "-iso3166Alpha3",
+     *                 "-iso3166Numeric",
+     *                 "-population",
+     *                 "-area",
+     *                 "-phoneCode"
      *             },
      *         )
      *     )

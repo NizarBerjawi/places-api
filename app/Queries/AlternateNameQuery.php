@@ -22,6 +22,21 @@ class AlternateNameQuery extends Query
     /**
      * The attributes we can use to filter.
      *
+     * @OA\Parameter(
+     *     parameter="alternateNameFilter",
+     *     name="filter",
+     *     in="query",
+     *     description="Filter alternate names by certain criteria",
+     *     required=false,
+     *     explode=false,
+     *     @OA\Schema(
+     *         type="array",
+     *         @OA\Items(
+     *             type="string",
+     *             enum = {"name", "isPreferredName", "isShortName", "languageCodes"},
+     *         )
+     *     )
+     * )
      * @return array
      */
     public function getAllowedFilters(): array
@@ -37,30 +52,65 @@ class AlternateNameQuery extends Query
     /**
      * The relations that we can include.
      *
+     * @OA\Parameter(
+     *     parameter="alternateNameInclude",
+     *     name="include",
+     *     in="query",
+     *     description="Include resources related to the specified alternate name.",
+     *     required=false,
+     *     explode=false,
+     *     @OA\Schema(
+     *         type="array",
+     *         @OA\Items(
+     *             type="string",
+     *             enum = {"language"},
+     *         )
+     *     )
+     * )
+     *
      * @return array
      */
     public function getAllowedIncludes(): array
     {
         return [
             AllowedInclude::relationship('language'),
-            AllowedInclude::relationship('place'),
         ];
     }
 
     /**
      * The relations that we can sort by.
      *
+     * @OA\Parameter(
+     *     parameter="alternateNameSort",
+     *     name="sort",
+     *     in="query",
+     *     description="Sort the result set by certain properties.",
+     *     required=false,
+     *     explode=false,
+     *     @OA\Schema(
+     *         type="array",
+     *         @OA\Items(
+     *             type="string",
+     *             enum = {
+     *                  "name",
+     *                  "isPreferredName",
+     *                  "isShortName",
+     *                  "-name",
+     *                  "-isPreferredName",
+     *                  "-isShortName"
+
+     *             },
+     *         )
+     *     )
+     * )
      * @return array
      */
     public function getAllowedSorts(): array
     {
         return [
             AllowedSort::field('name'),
-            AllowedSort::field('featureCode', 'feature_code'),
-            AllowedSort::field('countryCode', 'country_code'),
-            AllowedSort::field('timeZoneCode', 'time_zone_code'),
-            AllowedSort::field('population'),
-            AllowedSort::field('elevation'),
+            AllowedSort::field('isPreferredName', 'is_preferred_name'),
+            AllowedSort::field('isShortName', 'is_short_name'),
         ];
     }
 }

@@ -19,29 +19,10 @@ class ContinentCountryController extends Controller
      *      tags={"Continents"},
      *      summary="Returns a list of paginated countries in a specific continent",
      *      path="/continents/{continentCode}/countries",
-     *      @OA\Parameter(
-     *         name="continentCode",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
+     *      @OA\Parameter(ref="#/components/parameters/continentCode"),
      *      @OA\Parameter(ref="#/components/parameters/countryFilter"),
      *      @OA\Parameter(ref="#/components/parameters/countryInclude"),
      *      @OA\Parameter(ref="#/components/parameters/countrySort"),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(
-     *              type="array",
-     *              @OA\Items(ref="#/components/schemas/country")
-     *          ),
-     *      ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Continent not found"
-     *       ),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",
@@ -53,6 +34,18 @@ class ContinentCountryController extends Controller
      *              example=1
      *          )
      *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/country")
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Continent not found"
+     *      )
      * )
      *
      * @param \App\Queries\CountryQuery  $query

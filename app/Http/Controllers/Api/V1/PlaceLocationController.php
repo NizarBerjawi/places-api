@@ -18,35 +18,27 @@ class PlaceLocationController extends Controller
      *     tags={"Places"},
      *     path="/places/{geonameId}/location",
      *     operationId="getLocationByPlace",
-     *     @OA\Property(ref="#/components/schemas/Place"),
+     *     @OA\Parameter(ref="#/components/parameters/geonameId"),
      *     @OA\Parameter(
-     *        name="geonameId",
-     *        in="path",
-     *        required=true,
-     *        @OA\Schema(
-     *            type="string"
-     *        )
+     *         name="page",
+     *         in="query",
+     *         description="Get a specific page",
+     *         required=false,
+     *         explode=false,
+     *         @OA\Schema(
+     *             type="integer",
+     *             example=1
+     *         )
      *     ),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/location")
-     *       ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Place not found"
-     *       ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/location")
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Place not found"
+     *     ),
      * )
      * @param \App\Queries\PlaceQuery  $query
      * @param int $geonameId

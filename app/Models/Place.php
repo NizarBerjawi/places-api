@@ -11,37 +11,60 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Schema(
  *      schema="place",
  *      type="object",
- *      title="Place"
- * )
- * @OA\Property(
- *      property="elevation",
- *      type="integer",
- *      example="2209",
- *      description="The elevation of a place in meters"
- * )
- * @OA\Property(
- *      property="name",
- *      type="string",
- *      example="Mount Townsend",
- *      description="The name of a place"
- * )
- * @OA\Property(
- *      property="population",
- *      type="integer",
- *      example="0",
- *      description="The population of a certain place"
- * )
- * @OA\Property(
- *      property="geonameId",
- *      type="integer",
- *      example="105480",
- *      description="The Geoname ID of a certain place"
+ *      title="Place",
+ *      @OA\Property(
+ *           property="geonameId",
+ *           type="integer",
+ *           example="105480",
+ *           description="The Geoname ID of a certain place"
+ *      ),
+ *      @OA\Property(
+ *           property="name",
+ *           type="string",
+ *           example="Jāl Jahlān",
+ *           description="The name of a place"
+ *      ),
+ *      @OA\Property(
+ *           property="asciiName",
+ *           type="string",
+ *           example="Jal Jahlan",
+ *           description="The ASCII name of a place"
+ *      ),
+ *      @OA\Property(
+ *           property="population",
+ *           type="integer",
+ *           example="0",
+ *           description="The population of a certain place"
+ *      ),
+ *      @OA\Property(
+ *           property="elevation",
+ *           type="integer",
+ *           example="0",
+ *           description="The elevation of a place in meters"
+ *      ),
+ *      @OA\Property(
+ *           property="dem",
+ *           type="integer",
+ *           example="79",
+ *           description="The digital elevation model of a place in meters"
+ *      ),
  * )
  */
 class Place extends Model
 {
     /**
      * The primary key for the model.
+     *
+     * @OA\Parameter(
+     *    parameter="geonameId",
+     *    name="geonameId",
+     *    in="path",
+     *    required=true,
+     *    description="The Geoname ID of the place",
+     *    @OA\Schema(
+     *        type="string"
+     *    )
+     * )
      *
      * @var string
      */

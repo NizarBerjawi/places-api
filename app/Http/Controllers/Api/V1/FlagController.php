@@ -25,36 +25,9 @@ class FlagController extends Controller
      *              @OA\Items(ref="#/components/schemas/flag")
      *          ),
      *      ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter flags by certain criteria",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={"countryCode"},
-     *              @OA\Property(
-     *                  property="countryCode",
-     *                  type="string",
-     *                  example="AU"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"country"},
-     *              )
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/flagFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/flagInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/flagSort"),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",
@@ -92,37 +65,17 @@ class FlagController extends Controller
      *     path="/flags/{countryCode}",
      *     operationId="getFlagByCode",
      *     @OA\Property(ref="#/components/schemas/flag"),
-     *     @OA\Parameter(
-     *        name="countryCode",
-     *        in="path",
-     *        required=true,
-     *        @OA\Schema(
-     *            type="string"
-     *        )
+     *     @OA\Parameter(ref="#/components/parameters/countryCode"),
+     *     @OA\Parameter(ref="#/components/parameters/flagInclude"),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/flag")
      *     ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/flag")
-     *       ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Flag not found"
-     *       ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"country"},
-     *              )
-     *          )
-     *      ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Flag not found"
+     *     )
      * )
      * @param \App\Queries\FlagQuery  $query
      * @param  string $code

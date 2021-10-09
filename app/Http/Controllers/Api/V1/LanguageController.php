@@ -25,36 +25,9 @@ class LanguageController extends Controller
      *              @OA\Items(ref="#/components/schemas/language")
      *          ),
      *      ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter languages by certain criteria",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={"countryCode"},
-     *              @OA\Property(
-     *                  property="countryCode",
-     *                  type="string",
-     *                  example="AU"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"countries"},
-     *              )
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/languageFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/languageInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/languageSort"),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",
@@ -89,17 +62,10 @@ class LanguageController extends Controller
      *
      * @OA\Get(
      *     tags={"Languages"},
-     *     path="/laguage/{languageCode}",
+     *     path="/languages/{languageCode}",
      *     operationId="getLanguageByCode",
-     *     @OA\Property(ref="#/components/schemas/language"),
-     *     @OA\Parameter(
-     *        name="languageCode",
-     *        in="path",
-     *        required=true,
-     *        @OA\Schema(
-     *            type="string"
-     *        )
-     *     ),
+     *     @OA\Parameter(ref="#/components/parameters/languageCode"),
+     *     @OA\Parameter(ref="#/components/parameters/languageInclude"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -108,21 +74,7 @@ class LanguageController extends Controller
      *      @OA\Response(
      *          response=404,
      *          description="Language not found"
-     *       ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"countries"},
-     *              )
-     *          )
-     *      ),
+     *       )
      * )
      * @param \App\Queries\FlagQuery  $query
      * @param  string $code

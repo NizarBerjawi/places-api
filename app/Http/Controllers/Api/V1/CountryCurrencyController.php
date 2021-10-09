@@ -18,14 +18,6 @@ class CountryCurrencyController extends Controller
      *      tags={"Countries"},
      *      summary="Returns the currency of a specific country",
      *      path="/countries/{countryCode}/currency",
-     *      @OA\Parameter(
-     *         name="countryCode",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -38,20 +30,10 @@ class CountryCurrencyController extends Controller
      *          response=404,
      *          description="Country not found"
      *       ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include resources related to the specified currency.",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"countries"},
-     *              )
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/countryCode"),
+     *      @OA\Parameter(ref="#/components/parameters/currencyFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/currencyInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/currencySort"),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",

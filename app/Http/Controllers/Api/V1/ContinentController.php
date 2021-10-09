@@ -65,26 +65,17 @@ class ContinentController extends Controller
      *     path="/continents/{continentCode}",
      *     operationId="getContinentByCode",
      *     @OA\Property(ref="#/components/schemas/continent"),
-     *     @OA\Parameter(
-     *        name="continentCode",
-     *        in="path",
-     *        required=true,
-     *        @OA\Schema(
-     *            type="string"
-     *        )
+     *     @OA\Parameter(ref="#/components/parameters/continentCode"),
+     *     @OA\Parameter(ref="#/components/parameters/continentInclude"),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/continent")
      *     ),
-     *      @OA\Parameter(ref="#/components/parameters/continentFilter"),
-     *      @OA\Parameter(ref="#/components/parameters/continentInclude"),
-     *      @OA\Parameter(ref="#/components/parameters/continentSort"),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/continent")
-     *       ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Continent not found"
-     *       ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Continent not found"
+     *     ),
      * )
      * @param \App\Queries\ContinentQuery  $query
      * @param  string $continentCode

@@ -29,6 +29,18 @@ class Continent extends Model
     /**
      * The primary key for the model.
      *
+     * @OA\Parameter(
+     *    parameter="continentCode",
+     *    name="continentCode",
+     *    in="path",
+     *    required=true,
+     *    description="The code of the continent",
+     *    example="EU",
+     *    @OA\Schema(
+     *        type="string"
+     *    )
+     * )
+     *
      * @var string
      */
     protected $primaryKey = 'code';
@@ -57,6 +69,31 @@ class Continent extends Model
     public function countries()
     {
         return $this->hasMany(Country::class, 'continent_code');
+    }
+
+    /**
+     * Get the corresponding place data of the continent.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function place()
+    {
+        return $this->hasOne(Place::class, 'geoname_id', 'geoname_id');
+    }
+
+    /**
+     * Get the alternate names belonging to this continent.
+     *
+     * @param string $value
+     * @return array
+     */
+    public function alternateNames()
+    {
+        return $this->hasMany(
+            AlternateName::class,
+            'geoname_id',
+            'geoname_id',
+        );
     }
 
     /**

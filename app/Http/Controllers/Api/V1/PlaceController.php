@@ -25,51 +25,9 @@ class PlaceController extends Controller
      *              @OA\Items(ref="#/components/schemas/place")
      *          ),
      *      ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter places by certain criteria",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={
-     *                  "featureCode",
-     *                  "countryCode",
-     *                  "elevation",
-     *                  "elevationGt",
-     *                  "elevationGte",
-     *                  "elevationLt",
-     *                  "elevationLte",
-     *                  "elevationBetween",
-     *                  "population",
-     *                  "populationGt",
-     *                  "populationGte",
-     *                  "populationLt",
-     *                  "populationLte",
-     *                  "populationBetween"
-     *              },
-     *              @OA\Property(
-     *                  property="populationGt",
-     *                  type="integer",
-     *                  example="100000"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"country", "location", "featureClass", "featureCode", "timeZone"},
-     *              )
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/placeFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/placeInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/placeSort"),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",
@@ -107,6 +65,9 @@ class PlaceController extends Controller
      *     path="/places/{geonameId}",
      *     operationId="getPlaceByGeonameId",
      *     @OA\Property(ref="#/components/schemas/Place"),
+     *     @OA\Parameter(ref="#/components/parameters/placeFilter"),
+     *     @OA\Parameter(ref="#/components/parameters/placeInclude"),
+     *     @OA\Parameter(ref="#/components/parameters/placeSort"),
      *     @OA\Parameter(
      *        name="geonameId",
      *        in="path",
@@ -123,21 +84,7 @@ class PlaceController extends Controller
      *      @OA\Response(
      *          response=404,
      *          description="Place not found"
-     *       ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"country", "location", "featureClass", "featureCode", "timeZone"},
-     *              )
-     *          )
-     *      ),
+     *       )
      * )
      * @param \App\Queries\PlaceQuery  $query
      * @param string $uuid

@@ -22,6 +22,39 @@ class PlaceQuery extends Query
     /**
      * The attributes we can use to filter.
      *
+     * @OA\Parameter(
+     *     parameter="placeFilter",
+     *     name="filter",
+     *     in="query",
+     *     description="Filter places by certain criteria",
+     *     required=false,
+     *     style="deepObject",
+     *     @OA\Schema(
+     *         type="object",
+     *         enum={
+     *             "featureCode",
+     *             "countryCode",
+     *             "elevation",
+     *             "elevationGt",
+     *             "elevationGte",
+     *             "elevationLt",
+     *             "elevationLte",
+     *             "elevationBetween",
+     *             "population",
+     *             "populationGt",
+     *             "populationGte",
+     *             "populationLt",
+     *             "populationLte",
+     *             "populationBetween"
+     *         },
+     *         @OA\Property(
+     *             property="populationGt",
+     *             type="integer",
+     *             example="100000"
+     *         )
+     *     )
+     * )
+     *
      * @return array
      */
     public function getAllowedFilters(): array
@@ -49,6 +82,29 @@ class PlaceQuery extends Query
     /**
      * The relations that we can include.
      *
+     * @OA\Parameter(
+     *     parameter="placeInclude",
+     *     name="include",
+     *     in="query",
+     *     description="Include related resources",
+     *     required=false,
+     *     explode=false,
+     *     @OA\Schema(
+     *         type="array",
+     *         @OA\Items(
+     *             type="string",
+     *             enum = {
+     *                  "country",
+     *                  "location",
+     *                  "alternateNames",
+     *                  "featureClass",
+     *                  "featureCode",
+     *                  "timeZone",
+     *             },
+     *         )
+     *     )
+     * )
+     *
      * @return array
      */
     public function getAllowedIncludes(): array
@@ -65,6 +121,35 @@ class PlaceQuery extends Query
 
     /**
      * The relations that we can sort by.
+     *
+     * @OA\Parameter(
+     *     parameter="placeSort",
+     *     name="sort",
+     *     in="query",
+     *     description="Sort the result set by certain properties.",
+     *     required=false,
+     *     explode=false,
+     *     @OA\Schema(
+     *         type="array",
+     *         @OA\Items(
+     *             type="string",
+     *             enum = {
+     *                 "name",
+     *                 "featureCode",
+     *                 "countryCode",
+     *                 "timeZoneCode",
+     *                 "population",
+     *                 "elevation",
+     *                 "-name",
+     *                 "-featureCode",
+     *                 "-countryCode",
+     *                 "-timeZoneCode",
+     *                 "-population",
+     *                 "-elevation"
+     *             },
+     *         )
+     *     )
+     * )
      *
      * @return array
      */

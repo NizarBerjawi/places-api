@@ -57,8 +57,7 @@ class ImportGeonamesFiles extends Command
             new CountryCurrencyImport(storage_path('app/data/'.config('geonames.countries_file'))),
         ])->then(function (Batch $batch) {
             if ($batch->finished()) {
-                Country::where('iso3166_alpha2', 'AU')
-                ->cursor()
+                Country::cursor()
                     ->each(function (Country $country) {
                         $code = $country->iso3166_alpha2;
 

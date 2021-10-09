@@ -19,59 +19,10 @@ class CountryPlacesController extends Controller
      *      tags={"Countries"},
      *      summary="Returns the places available in a specific country",
      *      path="/countries/{countryCode}/places",
-     *      @OA\Parameter(
-     *         name="countryCode",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter places by certain criteria",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={
-     *                  "featureCode",
-     *                  "countryCode",
-     *                  "elevation",
-     *                  "elevationGt",
-     *                  "elevationGte",
-     *                  "elevationLt",
-     *                  "elevationLte",
-     *                  "elevationBetween",
-     *                  "population",
-     *                  "populationGt",
-     *                  "populationGte",
-     *                  "populationLt",
-     *                  "populationLte",
-     *                  "populationBetween"
-     *              },
-     *              @OA\Property(
-     *                  property="populationGt",
-     *                  type="integer",
-     *                  example="100000"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"country", "location", "featureClass", "featureCode", "timeZone"},
-     *              )
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/countryCode"),
+     *      @OA\Parameter(ref="#/components/parameters/placeFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/placeInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/placeSort"),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",

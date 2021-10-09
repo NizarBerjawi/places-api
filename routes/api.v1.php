@@ -23,7 +23,7 @@ $router->group(['prefix' => 'countries'], function () use ($router) {
     $router->get('/{countryCode}/places', ['uses' => 'CountryPlacesController@index']);
     $router->get('/{countryCode}/timeZones', ['uses' => 'CountryTimeZoneController@index']);
     $router->get('/{countryCode}/neighbours', ['uses' => 'CountryNeighbourController@index']);
-    $router->get('/{countryCode}/alternateNames', ['uses' => 'CountryAlternateNamesController@index']);
+    $router->get('/{countryCode}/alternateNames', ['uses' => 'CountryAlternateNameController@index']);
 });
 
 $router->group(['prefix' => 'continents'], function () use ($router) {
@@ -31,6 +31,7 @@ $router->group(['prefix' => 'continents'], function () use ($router) {
     $router->get('/{continentCode}', ['uses' => 'ContinentController@show']);
 
     $router->get('/{continentCode}/countries', ['uses' => 'ContinentCountryController@index']);
+    $router->get('/{continentCode}/alternateNames', ['uses' => 'ContinentAlternateNameController@index']);
 });
 
 $router->group(['prefix' => 'currencies'], function () use ($router) {

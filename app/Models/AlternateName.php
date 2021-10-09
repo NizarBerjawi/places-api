@@ -9,28 +9,25 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Schema(
  *      schema="alternateName",
  *      type="object",
- *      title="Alternate Name"
- * )
- *
- * @OA\Property(
- *      property="code",
- *      type="name",
- *      example="Sydney",
- *      description="The name of the place."
- * )
- *
- * @OA\Property(
- *      property="isPreferredName",
- *      type="boolean",
- *      example="true",
- *      description="Determines if the alternate name is official/preferred."
- * )
- *
- * @OA\Property(
- *      property="isShortName",
- *      type="boolean",
- *      example="true",
- *      description="Determines if the alternate name is a short name."
+ *      title="Alternate Name",
+ *      @OA\Property(
+ *           property="code",
+ *           type="name",
+ *           example="Sydney",
+ *           description="The name of the place."
+ *      ),
+ *      @OA\Property(
+ *           property="isPreferredName",
+ *           type="boolean",
+ *           example="true",
+ *           description="Determines if the alternate name is official/preferred."
+ *      ),
+ *      @OA\Property(
+ *           property="isShortName",
+ *           type="boolean",
+ *           example="true",
+ *           description="Determines if the alternate name is a short name."
+ *      )
  * )
  */
 class AlternateName extends Model

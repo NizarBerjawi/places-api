@@ -6,7 +6,7 @@ trait HasPlaceholders
 {
     /**
      * Parse a string and return an array of all the
-     * placeholders availlable in it.
+     * placeholders available in it.
      *
      * @param string $text
      * @return array

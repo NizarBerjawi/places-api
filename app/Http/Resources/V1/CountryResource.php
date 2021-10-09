@@ -22,6 +22,7 @@ class CountryResource extends JsonResource
             'population'     => $this->population,
             'area'           => $this->area,
             'phoneCode'      => $this->phone_code,
+            'location'       => LocationResource::make($this->whenLoaded('location')),
             'currency'       => CurrencyResource::make($this->whenLoaded('currency')),
             'continent'      => ContinentResource::make($this->whenLoaded('continent')),
             'flag'           => FlagResource::make($this->whenLoaded('flag')),
