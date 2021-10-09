@@ -2,7 +2,7 @@
 
 namespace App\Queries;
 
-use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\QueryBuilder;
 
 abstract class Query
@@ -99,15 +99,13 @@ abstract class Query
     /**
      * The paginator used to paginate the result.
      *
-     * @return \Illuminate\Pagination\Paginator
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getPaginator(): Paginator
+    public function getPaginator(): LengthAwarePaginator
     {
         $this->checkBuilder();
 
-        return $this->getBuilder()
-            ->simplePaginate(config('geonames.pagination_limit'))
-            ->appends(request()->query());
+        return $this->getBuilder()->jsonPaginate();
     }
 
     /**
