@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\FeatureClassResource;
 use App\Pagination\PaginatedResourceResponse;
 use App\Queries\FeatureClassQuery;
+use Illuminate\Support\Arr;
 
 class FeatureClassController extends Controller
 {
@@ -24,36 +25,9 @@ class FeatureClassController extends Controller
      *              @OA\Items(ref="#/components/schemas/featureClass")
      *          ),
      *      ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter feature classes by certain criteria",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={"code"},
-     *              @OA\Property(
-     *                  property="code",
-     *                  type="string",
-     *                  example="A"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"featureCodes"},
-     *              )
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/featureClassFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/featureClassInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/featureClassSort"),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",
@@ -90,50 +64,29 @@ class FeatureClassController extends Controller
      *     tags={"Feature Classes"},
      *     path="/featureClasses/{featureClassCode}",
      *     operationId="getFeatureClassByCode",
-     *     @OA\Property(ref="#/components/schemas/featureClass"),
-     *     @OA\Parameter(
-     *        name="featureClassCode",
-     *        in="path",
-     *        required=true,
-     *        @OA\Schema(
-     *            type="string"
-     *        )
+     *     @OA\Parameter(ref="#/components/parameters/featureClassCode"),
+     *     @OA\Parameter(ref="#/components/parameters/featureClassInclude"),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/featureClass")
      *     ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/featureClass")
-     *       ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Feature class not found"
-     *       ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"featureCodes"},
-     *              )
-     *          )
-     *      ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Feature class not found"
+     *     )
      * )
      * @param  \App\Queries\FeatureClassQuery  $query
-     * @param  string $code
+     * @param  string $featureClassCode
      * @return \Illuminate\Http\Response
      */
-    public function show(FeatureClassQuery $query, string $code)
+    public function show(FeatureClassQuery $query, string $featureClassCode)
     {
         $featureClass = $query
+            ->applyScope('byFeatureClassCode', Arr::wrap($featureClassCode))
             ->getBuilder()
-            ->where('code', $code)
             ->firstOrFail();
 
-        return new FeatureClassResource($featureClass);
+        return FeatureClassResource::make($featureClass);
     }
 }

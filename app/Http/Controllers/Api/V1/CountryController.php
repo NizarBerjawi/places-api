@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CountryResource;
 use App\Pagination\PaginatedResourceResponse;
 use App\Queries\CountryQuery;
-use Spatie\QueryBuilder\QueryBuilder;
+use Illuminate\Support\Arr;
 
 class CountryController extends Controller
 {
@@ -25,62 +25,9 @@ class CountryController extends Controller
      *              @OA\Items(ref="#/components/schemas/country")
      *          ),
      *      ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter countries by certain criteria",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={
-     *                  "name",
-     *                  "iso3166Alpha2",
-     *                  "iso3166Alpha3",
-     *                  "iso3166Numeric",
-     *                  "population",
-     *                  "area",
-     *                  "phoneCode",
-     *                  "areaGt",
-     *                  "areaGte",
-     *                  "areaLt",
-     *                  "areaLte",
-     *                  "areaBetween",
-     *                  "populationGt",
-     *                  "populationGte",
-     *                  "populationLt",
-     *                  "populationLte",
-     *                  "populationBetween",
-     *                  "neighbourOf"
-     *              },
-     *              @OA\Property(
-     *                  property="areaLt",
-     *                  type="integer",
-     *                  example="100000"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources with every country.",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {
-     *                      "continent",
-     *                      "timeZones",
-     *                      "flag",
-     *                      "neighbours",
-     *                      "languages",
-     *                      "currency"
-     *                  },
-     *              )
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/countryFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/countryInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/countrySort"),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",
@@ -103,11 +50,7 @@ class CountryController extends Controller
      */
     public function index(CountryQuery $query)
     {
-        $countries = $query
-            ->apply(function (QueryBuilder $builder) {
-                return $builder->with('place');
-            })
-            ->getPaginator();
+        $countries = $query->getPaginator();
 
         return new PaginatedResourceResponse(
             CountryResource::collection($countries)
@@ -121,51 +64,26 @@ class CountryController extends Controller
      *     tags={"Countries"},
      *     path="/countries/{countryCode}",
      *     operationId="getCountryByCode",
-     *     @OA\Property(ref="#/components/schemas/country"),
-     *     @OA\Parameter(
-     *        name="countryCode",
-     *        in="path",
-     *        required=true,
-     *        @OA\Schema(
-     *            type="string"
-     *        )
-     *     ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/country")
-     *       ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Country not found"
-     *       ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include resources related to the specified country.",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"continent", "timeZones", "flag", "neighbours", "languages"},
-     *              )
-     *          )
+     *     @OA\Parameter(ref="#/components/parameters/countryCode"),
+     *     @OA\Parameter(ref="#/components/parameters/countryInclude"),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/country")
      *      ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Country not found"
+     *      )
      * )
      * @param  \App\Queries\CountryQuery  $query
-     * @param  string $code
+     * @param  string $countryCode
      * @return \Illuminate\Http\Response
      */
-    public function show(CountryQuery $query, string $code)
+    public function show(CountryQuery $query, string $countryCode)
     {
         $country = $query
-            ->apply(function (QueryBuilder $builder) use ($code) {
-                return $builder
-                    ->where('iso3166_alpha2', $code)
-                    ->with('place');
-            })
+            ->applyScope('byCountryCode', Arr::wrap($countryCode))
             ->getBuilder()
             ->firstOrFail();
 

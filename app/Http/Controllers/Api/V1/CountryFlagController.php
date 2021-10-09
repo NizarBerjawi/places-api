@@ -18,14 +18,10 @@ class CountryFlagController extends Controller
      *      tags={"Countries"},
      *      summary="Returns the flag of a specific country",
      *      path="/countries/{countryCode}/flag",
-     *      @OA\Parameter(
-     *         name="countryCode",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
+     *      @OA\Parameter(ref="#/components/parameters/countryCode"),
+     *      @OA\Parameter(ref="#/components/parameters/flagFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/flagInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/flagSort"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -37,37 +33,23 @@ class CountryFlagController extends Controller
      *      @OA\Response(
      *          response=404,
      *          description="Country not found"
-     *       ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include resources related to the specified flag.",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"country"},
-     *              )
-     *          )
-     *      ),
+     *       )
      * )
      *
      * @param  \App\Queries\FlagQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function index(FlagQuery $query, string $code)
+    public function index(FlagQuery $query, string $countryCode)
     {
-        if (! Country::where('iso3166_alpha2', $code)->exists()) {
+        if (! Country::where('iso3166_alpha2', $countryCode)->exists()) {
             throw (new ModelNotFoundException())->setModel(Country::class);
         }
 
         $flag = $query
-            ->applyScope('byCountry', Arr::wrap($code))
+            ->applyScope('byCountryCode', Arr::wrap($countryCode))
             ->getBuilder()
-            ->first();
+            ->firstOrFail();
 
         return FlagResource::make($flag);
     }

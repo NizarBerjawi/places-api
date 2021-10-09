@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\TimeZoneResource;
 use App\Pagination\PaginatedResourceResponse;
 use App\Queries\TimeZoneQuery;
+use Illuminate\Support\Arr;
 
 class TimeZoneController extends Controller
 {
@@ -24,39 +25,9 @@ class TimeZoneController extends Controller
      *              @OA\Items(ref="#/components/schemas/timeZone")
      *          ),
      *      ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter time zones by certain criteria",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={
-     *                  "code",
-     *                  "countryCode"
-     *              },
-     *              @OA\Property(
-     *                  property="code",
-     *                  type="string",
-     *                  example="asia_tokyo"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"country"},
-     *              )
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/timeZoneFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/timeZoneInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/timeZoneSort"),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",
@@ -93,48 +64,29 @@ class TimeZoneController extends Controller
      *     tags={"Time Zones"},
      *     path="/timeZones/{timeZoneCode}",
      *     operationId="getTimeZoneByCode",
-     *     @OA\Property(ref="#/components/schemas/timeZone"),
-     *     @OA\Parameter(
-     *        name="timeZoneCode",
-     *        in="path",
-     *        required=true,
-     *        @OA\Schema(
-     *            type="string"
-     *        )
+     *     @OA\Parameter(ref="#/components/parameters/timeZoneCode"),
+     *     @OA\Parameter(ref="#/components/parameters/timeZoneFilter"),
+     *     @OA\Parameter(ref="#/components/parameters/timeZoneInclude"),
+     *     @OA\Parameter(ref="#/components/parameters/timeZoneSort"),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/timeZone")
      *     ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/timeZone")
-     *       ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Time zone not found"
-     *       ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"country"},
-     *              )
-     *          )
-     *      ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Time zone not found"
+     *     )
      * )
      * @param \App\Queries\TimeZoneQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function show(TimeZoneQuery $query, string $code)
+    public function show(TimeZoneQuery $query, string $timeZoneCode)
     {
         $timeZone = $query
+            ->applyScope('byTimeZoneCode', Arr::wrap($timeZoneCode))
             ->getBuilder()
-            ->where('code', $code)
             ->firstOrFail();
 
         return new TimeZoneResource($timeZone);

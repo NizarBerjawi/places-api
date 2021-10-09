@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\ContinentResource;
 use App\Pagination\PaginatedResourceResponse;
 use App\Queries\ContinentQuery;
+use Illuminate\Support\Arr;
 
 class ContinentController extends Controller
 {
@@ -24,41 +25,9 @@ class ContinentController extends Controller
      *              @OA\Items(ref="#/components/schemas/continent")
      *          ),
      *      ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter continents by name or code",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={"code", "name"},
-     *              @OA\Property(
-     *                  property="code",
-     *                  type="string",
-     *                  example="OC"
-     *              ),
-     *              @OA\Property(
-     *                  property="name",
-     *                  type="string",
-     *                  example="Oceania"
-     *              ),
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources with every continent.",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"countries"},
-     *              )
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/continentFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/continentInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/continentSort"),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",
@@ -96,47 +65,27 @@ class ContinentController extends Controller
      *     path="/continents/{continentCode}",
      *     operationId="getContinentByCode",
      *     @OA\Property(ref="#/components/schemas/continent"),
-     *     @OA\Parameter(
-     *        name="continentCode",
-     *        in="path",
-     *        required=true,
-     *        @OA\Schema(
-     *            type="string"
-     *        )
+     *     @OA\Parameter(ref="#/components/parameters/continentCode"),
+     *     @OA\Parameter(ref="#/components/parameters/continentInclude"),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/continent")
      *     ),
-     *     @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include resources related to the specified continent.",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum={"countries"},
-     *              )
-     *          )
-     *      ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/continent")
-     *       ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Continent not found"
-     *       ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Continent not found"
+     *     ),
      * )
      * @param \App\Queries\ContinentQuery  $query
-     * @param  string $code
+     * @param  string $continentCode
      * @return \Illuminate\Http\Response
      */
-    public function show(ContinentQuery $query, string $code)
+    public function show(ContinentQuery $query, string $continentCode)
     {
         $continent = $query
+            ->applyScope('byContinentCode', Arr::wrap($continentCode))
             ->getBuilder()
-            ->where('code', $code)
             ->firstOrFail();
 
         return new ContinentResource($continent);

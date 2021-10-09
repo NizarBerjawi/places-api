@@ -22,6 +22,22 @@ class FlagQuery extends Query
     /**
      * The attributes we can use to filter.
      *
+     * @OA\Parameter(
+     *     parameter="flagFilter",
+     *     name="sort",
+     *     in="query",
+     *     description="Sort the result set by certain properties.",
+     *     required=false,
+     *     explode=false,
+     *     @OA\Schema(
+     *         type="array",
+     *         @OA\Items(
+     *             type="string",
+     *             enum = {"countryCode"},
+     *         )
+     *     )
+     * )
+     *
      * @return array
      */
     public function getAllowedFilters(): array
@@ -34,6 +50,22 @@ class FlagQuery extends Query
     /**
      * The relations that we can include.
      *
+     * @OA\Parameter(
+     *     parameter="flagInclude",
+     *     name="include",
+     *     in="query",
+     *     description="Include resources related to the specified flag.",
+     *     required=false,
+     *     explode=false,
+     *     @OA\Schema(
+     *         type="array",
+     *         @OA\Items(
+     *             type="string",
+     *             enum = {"country"},
+     *         )
+     *     )
+     * )
+     *
      * @return array
      */
     public function getAllowedIncludes(): array
@@ -43,11 +75,31 @@ class FlagQuery extends Query
         ];
     }
 
+    /**
+     * The relations that we can sort by.
+
+     * @OA\Parameter(
+     *     parameter="flagSort",
+     *     name="sort",
+     *     in="query",
+     *     description="Sort the result set by certain properties.",
+     *     required=false,
+     *     explode=false,
+     *     @OA\Schema(
+     *         type="array",
+     *         @OA\Items(
+     *             type="string",
+     *             enum = {"countryCode", "-countryCode"},
+     *         )
+     *     )
+     * )
+     *
+     * @return array
+     */
     public function getAllowedSorts(): array
     {
         return [
-            AllowedSort::field('country_code'),
-            AllowedSort::field('filename'),
+            AllowedSort::field('countryCode', 'country_code'),
         ];
     }
 }
