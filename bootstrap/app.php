@@ -37,7 +37,7 @@ $app->withEloquent();
 | your own bindings here if you like or you can make another file.
 |
 */
-if ($app->environment() === 'local' && env('APP_DEBUG')) {
+if ($app->environment() === 'local') {
     $app->register(Laravel\Tinker\TinkerServiceProvider::class);
 }
 
@@ -65,6 +65,8 @@ $app->configure('app');
 $app->configure('logging');
 $app->configure('geonames');
 $app->configure('api');
+$app->configure('json-api-paginate');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -92,11 +94,8 @@ $app->routeMiddleware([
 |
 */
 
-// $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
-// $app->register(App\Providers\EventServiceProvider::class);
-
 $app->register(\Spatie\QueryBuilder\QueryBuilderServiceProvider::class);
+$app->register(\App\Providers\JsonApiPaginateServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

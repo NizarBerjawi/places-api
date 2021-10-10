@@ -15,51 +15,53 @@
 
 $router->group(['prefix' => 'countries'], function () use ($router) {
     $router->get('/', ['uses' => 'CountryController@index']);
-    $router->get('/{code}', ['uses' => 'CountryController@show']);
+    $router->get('/{countryCode}', ['uses' => 'CountryController@show']);
 
-    $router->get('/{code}/flag', ['uses' => 'CountryFlagController@index']);
-    $router->get('/{code}/currency', ['uses' => 'CountryCurrencyController@index']);
-    $router->get('/{code}/languages', ['uses' => 'CountryLanguageController@index']);
-    $router->get('/{code}/places', ['uses' => 'CountryPlacesController@index']);
-    $router->get('/{code}/timeZones', ['uses' => 'CountryTimeZoneController@index']);
-    $router->get('/{code}/neighbours', ['uses' => 'CountryNeighbourController@index']);
-    $router->get('/{code}/alternateNames', ['uses' => 'CountryAlternateNamesController@index']);
+    $router->get('/{countryCode}/flag', ['uses' => 'CountryFlagController@index']);
+    $router->get('/{countryCode}/currency', ['uses' => 'CountryCurrencyController@index']);
+    $router->get('/{countryCode}/languages', ['uses' => 'CountryLanguageController@index']);
+    $router->get('/{countryCode}/places', ['uses' => 'CountryPlacesController@index']);
+    $router->get('/{countryCode}/timeZones', ['uses' => 'CountryTimeZoneController@index']);
+    $router->get('/{countryCode}/neighbours', ['uses' => 'CountryNeighbourController@index']);
+    $router->get('/{countryCode}/alternateNames', ['uses' => 'CountryAlternateNameController@index']);
 });
 
 $router->group(['prefix' => 'continents'], function () use ($router) {
     $router->get('/', ['uses' => 'ContinentController@index']);
-    $router->get('/{code}', ['uses' => 'ContinentController@show']);
+    $router->get('/{continentCode}', ['uses' => 'ContinentController@show']);
 
-    $router->get('/{code}/countries', ['uses' => 'ContinentCountryController@index']);
+    $router->get('/{continentCode}/countries', ['uses' => 'ContinentCountryController@index']);
+    $router->get('/{continentCode}/alternateNames', ['uses' => 'ContinentAlternateNameController@index']);
 });
 
 $router->group(['prefix' => 'currencies'], function () use ($router) {
     $router->get('/', ['uses' => 'CurrencyController@index']);
-    $router->get('/{code}', ['uses' => 'CurrencyController@show']);
+    $router->get('/{currencyCode}', ['uses' => 'CurrencyController@show']);
 });
 
 $router->group(['prefix' => 'featureClasses'], function () use ($router) {
     $router->get('/', ['uses' => 'FeatureClassController@index']);
-    $router->get('/{code}', ['uses' => 'FeatureClassController@show']);
+    $router->get('/{featureClassCode}', ['uses' => 'FeatureClassController@show']);
 });
 
 $router->group(['prefix' => 'featureCodes'], function () use ($router) {
     $router->get('/', ['uses' => 'FeatureCodeController@index']);
-    $router->get('/{code}', ['uses' => 'FeatureCodeController@show']);
+    $router->get('/{featureCodeCode}', ['uses' => 'FeatureCodeController@show']);
 });
 
 $router->group(['prefix' => 'timeZones'], function () use ($router) {
     $router->get('/', ['uses' => 'TimeZoneController@index']);
-    $router->get('/{code}', ['uses' => 'TimeZoneController@show']);
+    $router->get('/{timeZoneCode}', ['uses' => 'TimeZoneController@show']);
 });
 
 $router->group(['prefix' => 'flags'], function () use ($router) {
     $router->get('/', ['uses' => 'FlagController@index']);
-    $router->get('/{code}', ['uses' => 'FlagController@show']);
+    $router->get('/{countryCode}', ['uses' => 'FlagController@show']);
 });
 
 $router->group(['prefix' => 'languages'], function () use ($router) {
     $router->get('/', ['uses' => 'LanguageController@index']);
+    $router->get('/{languageCode}', ['uses' => 'LanguageController@show']);
 });
 
 $router->group(['prefix' => 'places'], function () use ($router) {

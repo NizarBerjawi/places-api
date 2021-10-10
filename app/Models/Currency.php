@@ -9,23 +9,48 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Schema(
  *      schema="currency",
  *      type="object",
- *      title="Currency"
- * )
- * @OA\Property(
- *      property="name",
- *      type="string",
- *      example="Dollar",
- *      description="The name of the currency"
- * )
- * @OA\Property(
- *      property="code",
- *      type="string",
- *      example="AUD",
- *      description="The code of the currency"
+ *      title="Currency",
+ *      @OA\Property(
+ *           property="name",
+ *           type="string",
+ *           example="Dollar",
+ *           description="The name of the currency"
+ *      ),
+ *      @OA\Property(
+ *           property="code",
+ *           type="string",
+ *           example="AUD",
+ *           description="The code of the currency"
+ *      )
  * )
  */
 class Currency extends Model
 {
+    /**
+     * The primary key for the model.
+     *
+     * @OA\Parameter(
+     *    parameter="currencyCode",
+     *    name="currencyCode",
+     *    in="path",
+     *    required=true,
+     *    description="The ISO 4217 code of the currency",
+     *    @OA\Schema(
+     *        type="string"
+     *    )
+     * )
+     *
+     * @var string
+     */
+    protected $primaryKey = 'code';
+
+    /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -64,5 +89,17 @@ class Currency extends Model
         return $query->whereHas('countries', function (Builder $query) use ($countryCode) {
             $query->where('iso3166_alpha2', $countryCode);
         });
+    }
+
+    /**
+     * Get a currency by its currency code.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $currencyCode
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByCurrencyCode(Builder $query, string $currencyCode)
+    {
+        return $query->where('code', $currencyCode);
     }
 }

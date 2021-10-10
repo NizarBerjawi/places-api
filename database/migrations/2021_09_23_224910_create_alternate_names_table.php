@@ -16,15 +16,14 @@ class CreateAlternateNamesTable extends Migration
         Schema::create('alternate_names', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('geoname_id');
-            $table->unsignedBigInteger('language_id');
+            $table->string('language_code');
             $table->string('name');
             $table->boolean('is_preferred_name')->default(false);
             $table->boolean('is_short_name')->default(false);
         });
 
         Schema::table('alternate_names', function (Blueprint $table) {
-            $table->foreign('geoname_id')->references('geoname_id')->on('places')->onCascade('delete');
-            $table->foreign('language_id')->references('id')->on('languages')->onCascade('delete');
+            $table->foreign('language_code')->references('iso639_3')->on('languages')->onCascade('delete');
         });
     }
 
@@ -36,7 +35,6 @@ class CreateAlternateNamesTable extends Migration
     public function down()
     {
         Schema::table('alternate_names', function (Blueprint $table) {
-            $table->dropForeign(['geoname_id']);
             $table->dropForeign(['language_id']);
         });
 

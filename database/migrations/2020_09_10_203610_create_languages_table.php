@@ -14,10 +14,9 @@ class CreateLanguagesTable extends Migration
     public function up()
     {
         Schema::create('languages', function (Blueprint $table) {
-            $table->id();
             $table->string('iso639_1')->nullable()->unique();
             $table->string('iso639_2')->nullable()->unique();
-            $table->string('iso639_3')->nullable()->unique();
+            $table->string('iso639_3')->primary();
             $table->string('name');
         });
     }

@@ -19,14 +19,10 @@ class CountryNeighbourController extends Controller
      *      tags={"Countries"},
      *      summary="Returns the neighbouring countries of a specific country",
      *      path="/countries/{countryCode}/neighbours",
-     *      @OA\Parameter(
-     *         name="countryCode",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
+     *      @OA\Parameter(ref="#/components/parameters/countryCode"),
+     *      @OA\Parameter(ref="#/components/parameters/countryFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/countryInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/countrySort"),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",
@@ -49,76 +45,21 @@ class CountryNeighbourController extends Controller
      *      @OA\Response(
      *          response=404,
      *          description="Country not found"
-     *       ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter neighbouring countries by certain criteria",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={
-     *                  "name",
-     *                  "iso3166Alpha2",
-     *                  "iso3166Alpha3",
-     *                  "iso3166Numeric",
-     *                  "population",
-     *                  "area",
-     *                  "phoneCode",
-     *                  "areaGt",
-     *                  "areaGte",
-     *                  "areaLt",
-     *                  "areaLte",
-     *                  "areaBetween",
-     *                  "populationGt",
-     *                  "populationGte",
-     *                  "populationLt",
-     *                  "populationLte",
-     *                  "populationBetween",
-     *                  "neighbourOf"
-     *              },
-     *              @OA\Property(
-     *                  property="areaLt",
-     *                  type="integer",
-     *                  example="100000"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources with every neighbouring country.",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {
-     *                      "continent",
-     *                      "timeZones",
-     *                      "flag",
-     *                      "neighbours",
-     *                      "languages"
-     *                  },
-     *              )
-     *          )
-     *      ),
+     *      )
      * )
      *
      * @param  \App\Queries\CountryQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function index(CountryQuery $query, string $code)
+    public function index(CountryQuery $query, string $countryCode)
     {
-        if (! Country::where('iso3166_alpha2', $code)->exists()) {
+        if (! Country::where('iso3166_alpha2', $countryCode)->exists()) {
             throw (new ModelNotFoundException())->setModel(Country::class);
         }
 
         $countries = $query
-            ->applyScope('neighbourOf', Arr::wrap($code))
+            ->applyScope('neighbourOf', Arr::wrap($countryCode))
             ->getPaginator();
 
         return new PaginatedResourceResponse(

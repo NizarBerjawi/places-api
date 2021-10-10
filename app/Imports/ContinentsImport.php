@@ -80,8 +80,9 @@ class ContinentsImport extends GeonamesFileIterator implements ShouldQueue
             }
 
             $continents->push([
-                'code' => $code,
-                'name' => $name,
+                'geoname_id' => $geonameId,
+                'code'       => $code,
+                'name'       => $name,
             ]);
         }
 

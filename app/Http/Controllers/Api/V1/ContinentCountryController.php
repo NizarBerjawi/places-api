@@ -19,82 +19,10 @@ class ContinentCountryController extends Controller
      *      tags={"Continents"},
      *      summary="Returns a list of paginated countries in a specific continent",
      *      path="/continents/{continentCode}/countries",
-     *      @OA\Parameter(
-     *         name="continentCode",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(
-     *              type="array",
-     *              @OA\Items(ref="#/components/schemas/country")
-     *          ),
-     *      ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Continent not found"
-     *       ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter countries by certain criteria",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={
-     *                  "name",
-     *                  "iso3166Alpha2",
-     *                  "iso3166Alpha3",
-     *                  "iso3166Numeric",
-     *                  "population",
-     *                  "area",
-     *                  "phoneCode",
-     *                  "areaGt",
-     *                  "areaGte",
-     *                  "areaLt",
-     *                  "areaLte",
-     *                  "areaBetween",
-     *                  "populationGt",
-     *                  "populationGte",
-     *                  "populationLt",
-     *                  "populationLte",
-     *                  "populationBetween",
-     *                  "neighbourOf"
-     *              },
-     *              @OA\Property(
-     *                  property="areaLt",
-     *                  type="integer",
-     *                  example="100000"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources with every country.",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {
-     *                      "continent",
-     *                      "timeZones",
-     *                      "flag",
-     *                      "neighbours",
-     *                      "languages",
-     *                      "currency"
-     *                  },
-     *              )
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/continentCode"),
+     *      @OA\Parameter(ref="#/components/parameters/countryFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/countryInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/countrySort"),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",
@@ -106,20 +34,32 @@ class ContinentCountryController extends Controller
      *              example=1
      *          )
      *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/country")
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Continent not found"
+     *      )
      * )
      *
      * @param \App\Queries\CountryQuery  $query
-     * @param string $code
+     * @param string $continentCode
      * @return \Illuminate\Http\Response
      */
-    public function index(CountryQuery $query, string $code)
+    public function index(CountryQuery $query, string $continentCode)
     {
-        if (! Continent::where('code', $code)->exists()) {
+        if (! Continent::where('code', $continentCode)->exists()) {
             throw (new ModelNotFoundException)->setModel(Continent::class);
         }
 
         $countries = $query
-            ->applyScope('byContinent', Arr::wrap($code))
+            ->applyScope('byContinentCode', Arr::wrap($continentCode))
             ->getPaginator();
 
         return new PaginatedResourceResponse(

@@ -14,11 +14,11 @@ use Illuminate\Support\Arr;
 class PlaceAlternateNameController extends Controller
 {
     /**
-     * Display a location of a specific place.
+     * Display the alternate names of a place.
      *
      * @OA\Get(
      *     tags={"Places"},
-     *     path="/places/{geonameId}/names",
+     *     path="/places/{geonameId}/alternateNames",
      *     operationId="getAlternateNamesForPlace",
      *     @OA\Property(ref="#/components/schemas/AlternateName"),
      *     @OA\Parameter(

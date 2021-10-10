@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CurrencyResource;
 use App\Pagination\PaginatedResourceResponse;
 use App\Queries\CurrencyQuery;
+use Illuminate\Support\Arr;
 
 class CurrencyController extends Controller
 {
@@ -24,36 +25,9 @@ class CurrencyController extends Controller
      *              @OA\Items(ref="#/components/schemas/currency")
      *          ),
      *      ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter currencies by certain criteria",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={"code", "name"},
-     *              @OA\Property(
-     *                  property="code",
-     *                  type="string",
-     *                  example="AUD"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"countries"},
-     *              )
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/currencyFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/currencyInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/currencySort"),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",
@@ -90,48 +64,27 @@ class CurrencyController extends Controller
      *     tags={"Currencies"},
      *     path="/currencies/{currencyCode}",
      *     operationId="getCurrencyByCode",
-     *     @OA\Property(ref="#/components/schemas/currency"),
-     *     @OA\Parameter(
-     *        name="currencyCode",
-     *        in="path",
-     *        required=true,
-     *        @OA\Schema(
-     *            type="string"
-     *        )
+     *     @OA\Parameter(ref="#/components/parameters/currencyCode"),
+     *     @OA\Parameter(ref="#/components/parameters/currencyInclude"),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/currency")
      *     ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/currency")
-     *       ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Currency not found"
-     *       ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"countries"},
-     *              )
-     *          )
-     *      ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Currency not found"
+     *     )
      * )
      * @param  \App\Queries\CurrencyQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function show(CurrencyQuery $query, string $code)
+    public function show(CurrencyQuery $query, string $currencyCode)
     {
         $currency = $query
+            ->applyScope('byCurrencyCode', Arr::wrap($currencyCode))
             ->getBuilder()
-            ->where('code', $code)
             ->firstOrFail();
 
         return new CurrencyResource($currency);

@@ -3,26 +3,26 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\V1\PlaceResource;
+use App\Http\Resources\V1\AlternateNameResource;
 use App\Models\Country;
 use App\Pagination\PaginatedResourceResponse;
-use App\Queries\PlaceQuery;
+use App\Queries\AlternateNameQuery;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
-class CountryPlacesController extends Controller
+class CountryAlternateNameController extends Controller
 {
     /**
-     * Display the places available in a country.
+     * Display the alternate names of a country.
      *
      * @OA\Get(
      *      tags={"Countries"},
-     *      summary="Returns the places available in a specific country",
-     *      path="/countries/{countryCode}/places",
+     *      summary="Returns the alternate names of a specific country",
+     *      path="/countries/{countryCode}/alternateNames",
      *      @OA\Parameter(ref="#/components/parameters/countryCode"),
-     *      @OA\Parameter(ref="#/components/parameters/placeFilter"),
-     *      @OA\Parameter(ref="#/components/parameters/placeInclude"),
-     *      @OA\Parameter(ref="#/components/parameters/placeSort"),
+     *      @OA\Parameter(ref="#/components/parameters/alternateNameFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/alternateNameInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/alternateNameSort"),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",
@@ -39,31 +39,33 @@ class CountryPlacesController extends Controller
      *          description="Successful operation",
      *          @OA\JsonContent(
      *              type="array",
-     *              @OA\Items(ref="#/components/schemas/place")
+     *              @OA\Items(ref="#/components/schemas/alternateName")
      *          ),
      *      ),
      *      @OA\Response(
      *          response=404,
-     *          description="Country not found"
+     *          description="Alternate name not found"
      *       )
      * )
      *
-     * @param  \App\Queries\FlagQuery  $query
+     * @param  \App\Queries\CurrencyQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function index(PlaceQuery $query, string $countryCode)
+    public function index(AlternateNameQuery $query, string $countryCode)
     {
         if (! Country::where('iso3166_alpha2', $countryCode)->exists()) {
             throw (new ModelNotFoundException())->setModel(Country::class);
         }
 
-        $places = $query
-            ->applyScope('byCountry', Arr::wrap($countryCode))
+        $alternateNames = $query
+            ->applyScope('byGeonameId', Arr::wrap(
+                Country::find($countryCode)->geoname_id
+            ))
             ->getPaginator();
 
         return new PaginatedResourceResponse(
-            PlaceResource::collection($places)
+            AlternateNameResource::collection($alternateNames)
         );
     }
 }

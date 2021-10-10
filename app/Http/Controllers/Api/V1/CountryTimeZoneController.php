@@ -19,47 +19,10 @@ class CountryTimeZoneController extends Controller
      *      tags={"Countries"},
      *      summary="Returns the Time Zones available in a specific country",
      *      path="/countries/{countryCode}/timeZones",
-     *      @OA\Parameter(
-     *         name="countryCode",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter time zones by certain criteria",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={
-     *                  "code",
-     *                  "countryCode"
-     *              },
-     *              @OA\Property(
-     *                  property="code",
-     *                  type="string",
-     *                  example="asia_tokyo"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources with time zone.",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"country"},
-     *              )
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/countryCode"),
+     *      @OA\Parameter(ref="#/components/parameters/timeZoneFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/timeZoneInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/timeZoneSort"),
      *      @OA\Parameter(
      *          name="page",
      *          in="query",
@@ -82,21 +45,21 @@ class CountryTimeZoneController extends Controller
      *      @OA\Response(
      *          response=404,
      *          description="Country not found"
-     *       )
+     *      )
      * )
      *
      * @param  \App\Queries\TimeZoneQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function index(TimeZoneQuery $query, string $code)
+    public function index(TimeZoneQuery $query, string $countryCode)
     {
-        if (! Country::where('iso3166_alpha2', $code)->exists()) {
+        if (! Country::where('iso3166_alpha2', $countryCode)->exists()) {
             throw (new ModelNotFoundException())->setModel(Country::class);
         }
 
         $timeZones = $query
-            ->applyScope('byCountry', Arr::wrap($code))
+            ->applyScope('byCountry', Arr::wrap($countryCode))
             ->getPaginator();
 
         return new PaginatedResourceResponse(

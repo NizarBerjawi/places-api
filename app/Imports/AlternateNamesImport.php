@@ -3,6 +3,7 @@
 namespace App\Imports;
 
 use App\Imports\Iterators\GeonamesFileIterator;
+use App\Models\Continent;
 use App\Models\Language;
 use App\Models\Place;
 use Illuminate\Bus\Batchable;
@@ -25,27 +26,25 @@ class AlternateNamesImport extends GeonamesFileIterator implements ShouldQueue
      */
     public function handle()
     {
-        $languages = Language::query()
-            ->whereNotNull('iso639_1')
-            ->get();
-
         $this->iterable()
             ->chunk(500)
-            ->each(function (LazyCollection $chunk) use ($languages) {
+            ->each(function (LazyCollection $chunk) {
                 $alternateNames = Collection::make();
 
                 foreach ($chunk as $item) {
+                    $geonameId = $item[1];
                     $isoLanguage = $item[2] ?? null;
 
                     if (strlen($isoLanguage) !== 2) {
                         continue;
                     }
 
-                    if (empty($item[1])) {
+                    if (empty($geonameId)) {
                         continue;
                     }
 
-                    $language = $languages
+                    $language = Language::select('iso639_3')
+                        ->whereNotNull('iso639_1')
                         ->where('iso639_1', $isoLanguage)
                         ->first();
 
@@ -53,13 +52,16 @@ class AlternateNamesImport extends GeonamesFileIterator implements ShouldQueue
                         continue;
                     }
 
-                    if (Place::where('geoname_id', $item[1])->doesntExist()) {
+                    $isPlace = Place::where('geoname_id', $geonameId)->exists();
+                    $isContinent = Continent::where('geoname_id', $geonameId)->exists();
+
+                    if (! $isContinent && ! $isPlace) {
                         continue;
                     }
 
                     $alternateNames->push([
                         'geoname_id' => $item[1],
-                        'language_id' => $language->id,
+                        'language_code' => $language->iso639_3,
                         'name' => $item[3],
                         'is_preferred_name' => (bool) $item[4],
                         'is_short_name' => (bool) $item[5],

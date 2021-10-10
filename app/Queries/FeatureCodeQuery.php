@@ -22,6 +22,24 @@ class FeatureCodeQuery extends Query
     /**
      * The attributes we can use to filter.
      *
+     * @OA\Parameter(
+     *     parameter="featureCodeFilter",
+     *     name="filter",
+     *     in="query",
+     *     description="Filter feature codes by certain criteria",
+     *     required=false,
+     *     style="deepObject",
+     *     @OA\Schema(
+     *         type="object",
+     *         enum={"code"},
+     *         @OA\Property(
+     *             property="code",
+     *             type="string",
+     *             example="ADM1"
+     *         )
+     *     )
+     * )
+     *
      * @return array
      */
     public function getAllowedFilters(): array
@@ -34,6 +52,22 @@ class FeatureCodeQuery extends Query
     /**
      * The relations that we can include.
      *
+     * @OA\Parameter(
+     *     parameter="featureCodeInclude",
+     *     name="include",
+     *     in="query",
+     *     description="Include related resources",
+     *     required=false,
+     *     explode=false,
+     *     @OA\Schema(
+     *         type="array",
+     *         @OA\Items(
+     *             type="string",
+     *             enum = {"featureClass"},
+     *         )
+     *     )
+     * )
+     *
      * @return array
      */
     public function getAllowedIncludes(): array
@@ -43,6 +77,27 @@ class FeatureCodeQuery extends Query
         ];
     }
 
+    /**
+     * The relations that we can sort by.
+     *
+     * @OA\Parameter(
+     *     parameter="featureCodeSort",
+     *     name="sort",
+     *     in="query",
+     *     description="Sort the result set by certain properties.",
+     *     required=false,
+     *     explode=false,
+     *     @OA\Schema(
+     *         type="array",
+     *         @OA\Items(
+     *             type="string",
+     *             enum = {"code", "-code"},
+     *         )
+     *     )
+     * )
+     *
+     * @return array
+     */
     public function getAllowedSorts(): array
     {
         return [
