@@ -156,7 +156,7 @@ class PlaceQuery extends Query
     public function getAllowedSorts(): array
     {
         return [
-            AllowedSort::field('name'),
+            AllowedSort::field('name', 'ascii_name'),
             AllowedSort::field('featureCode', 'feature_code'),
             AllowedSort::field('countryCode', 'country_code'),
             AllowedSort::field('timeZoneCode', 'time_zone_code'),

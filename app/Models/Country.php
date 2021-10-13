@@ -261,7 +261,7 @@ class Country extends Model
             Location::class,
             Place::class,
             'geoname_id',
-            'locationable_id',
+            'geoname_id',
             'geoname_id'
         );
     }

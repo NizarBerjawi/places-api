@@ -10,7 +10,7 @@ use App\Queries\PlaceQuery;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
-class CountryPlacesController extends Controller
+class CountryPlaceController extends Controller
 {
     /**
      * Display the places available in a country.
