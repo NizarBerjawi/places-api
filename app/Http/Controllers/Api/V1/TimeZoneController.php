@@ -17,6 +17,10 @@ class TimeZoneController extends Controller
      *      tags={"Time Zones"},
      *      summary="Returns a list of paginated time zones",
      *      path="/timeZones",
+     *      @OA\Parameter(ref="#/components/parameters/timeZoneFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/timeZoneInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/timeZoneSort"),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -24,20 +28,6 @@ class TimeZoneController extends Controller
      *              type="array",
      *              @OA\Items(ref="#/components/schemas/timeZone")
      *          ),
-     *      ),
-     *      @OA\Parameter(ref="#/components/parameters/timeZoneFilter"),
-     *      @OA\Parameter(ref="#/components/parameters/timeZoneInclude"),
-     *      @OA\Parameter(ref="#/components/parameters/timeZoneSort"),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
      *      ),
      * )
      * @OA\Tag(

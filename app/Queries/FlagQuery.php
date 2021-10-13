@@ -28,12 +28,14 @@ class FlagQuery extends Query
      *     in="query",
      *     description="Sort the result set by certain properties.",
      *     required=false,
-     *     explode=false,
+     *     style="deepObject",
      *     @OA\Schema(
-     *         type="array",
-     *         @OA\Items(
+     *         type="object",
+     *         enum = {"countryCode"},
+     *         @OA\Property(
+     *             property="countryCode",
      *             type="string",
-     *             enum = {"countryCode"},
+     *             example="AU"
      *         )
      *     )
      * )

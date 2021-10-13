@@ -23,17 +23,7 @@ class CountryAlternateNameController extends Controller
      *      @OA\Parameter(ref="#/components/parameters/alternateNameFilter"),
      *      @OA\Parameter(ref="#/components/parameters/alternateNameInclude"),
      *      @OA\Parameter(ref="#/components/parameters/alternateNameSort"),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",

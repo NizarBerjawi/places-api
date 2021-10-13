@@ -17,6 +17,10 @@ class FlagController extends Controller
      *      tags={"Flags"},
      *      summary="Returns a list of paginated flags",
      *      path="/flags",
+     *      @OA\Parameter(ref="#/components/parameters/flagFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/flagInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/flagSort"),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -24,20 +28,6 @@ class FlagController extends Controller
      *              type="array",
      *              @OA\Items(ref="#/components/schemas/flag")
      *          ),
-     *      ),
-     *      @OA\Parameter(ref="#/components/parameters/flagFilter"),
-     *      @OA\Parameter(ref="#/components/parameters/flagInclude"),
-     *      @OA\Parameter(ref="#/components/parameters/flagSort"),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
      *      ),
      * )
      * @OA\Tag(

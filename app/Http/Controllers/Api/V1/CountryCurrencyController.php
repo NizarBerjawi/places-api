@@ -18,6 +18,11 @@ class CountryCurrencyController extends Controller
      *      tags={"Countries"},
      *      summary="Returns the currency of a specific country",
      *      path="/countries/{countryCode}/currency",
+     *      @OA\Parameter(ref="#/components/parameters/countryCode"),
+     *      @OA\Parameter(ref="#/components/parameters/currencyFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/currencyInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/currencySort"),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -29,22 +34,7 @@ class CountryCurrencyController extends Controller
      *      @OA\Response(
      *          response=404,
      *          description="Country not found"
-     *       ),
-     *      @OA\Parameter(ref="#/components/parameters/countryCode"),
-     *      @OA\Parameter(ref="#/components/parameters/currencyFilter"),
-     *      @OA\Parameter(ref="#/components/parameters/currencyInclude"),
-     *      @OA\Parameter(ref="#/components/parameters/currencySort"),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
-     *      ),
+     *       )
      * )
      *
      * @param  \App\Queries\CurrencyQuery  $query

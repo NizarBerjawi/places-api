@@ -98,6 +98,29 @@ abstract class Query
     /**
      * The paginator used to paginate the result.
      *
+     * @OA\Parameter(
+     *     parameter="pagination",
+     *     name="page",
+     *     in="query",
+     *     description="Paginate the data",
+     *     required=false,
+     *     style="deepObject",
+     *     @OA\Schema(
+     *         type="object",
+     *         enum = {"number", "size"},
+     *         @OA\Property(
+     *             property="number",
+     *             type="integer",
+     *             example="1"
+     *         ),
+     *         @OA\Property(
+     *             property="size",
+     *             type="integer",
+     *             example="10"
+     *         ),
+     *     )
+     * )
+     *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
     public function getPaginator()

@@ -23,17 +23,7 @@ class CountryTimeZoneController extends Controller
      *      @OA\Parameter(ref="#/components/parameters/timeZoneFilter"),
      *      @OA\Parameter(ref="#/components/parameters/timeZoneInclude"),
      *      @OA\Parameter(ref="#/components/parameters/timeZoneSort"),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
