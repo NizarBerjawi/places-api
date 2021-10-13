@@ -17,6 +17,10 @@ class LanguageController extends Controller
      *      tags={"Languages"},
      *      summary="Returns a list of paginated languages",
      *      path="/languages",
+     *      @OA\Parameter(ref="#/components/parameters/languageFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/languageInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/languageSort"),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -24,20 +28,6 @@ class LanguageController extends Controller
      *              type="array",
      *              @OA\Items(ref="#/components/schemas/language")
      *          ),
-     *      ),
-     *      @OA\Parameter(ref="#/components/parameters/languageFilter"),
-     *      @OA\Parameter(ref="#/components/parameters/languageInclude"),
-     *      @OA\Parameter(ref="#/components/parameters/languageSort"),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
      *      ),
      * )
      * @OA\Tag(

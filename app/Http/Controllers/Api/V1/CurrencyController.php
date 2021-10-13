@@ -17,6 +17,10 @@ class CurrencyController extends Controller
      *      tags={"Currencies"},
      *      summary="Returns a list of paginated currencies",
      *      path="/currencies",
+     *      @OA\Parameter(ref="#/components/parameters/currencyFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/currencyInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/currencySort"),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -25,20 +29,6 @@ class CurrencyController extends Controller
      *              @OA\Items(ref="#/components/schemas/currency")
      *          ),
      *      ),
-     *      @OA\Parameter(ref="#/components/parameters/currencyFilter"),
-     *      @OA\Parameter(ref="#/components/parameters/currencyInclude"),
-     *      @OA\Parameter(ref="#/components/parameters/currencySort"),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
-     *      )
      * )
      * @OA\Tag(
      *     name="Currencies",

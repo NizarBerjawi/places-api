@@ -23,17 +23,7 @@ class CountryPlaceController extends Controller
      *      @OA\Parameter(ref="#/components/parameters/placeFilter"),
      *      @OA\Parameter(ref="#/components/parameters/placeInclude"),
      *      @OA\Parameter(ref="#/components/parameters/placeSort"),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",

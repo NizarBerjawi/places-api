@@ -17,6 +17,10 @@ class PlaceController extends Controller
      *      tags={"Places"},
      *      summary="Returns a list of paginated places",
      *      path="/places",
+     *      @OA\Parameter(ref="#/components/parameters/placeFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/placeInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/placeSort"),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -24,20 +28,6 @@ class PlaceController extends Controller
      *              type="array",
      *              @OA\Items(ref="#/components/schemas/place")
      *          ),
-     *      ),
-     *      @OA\Parameter(ref="#/components/parameters/placeFilter"),
-     *      @OA\Parameter(ref="#/components/parameters/placeInclude"),
-     *      @OA\Parameter(ref="#/components/parameters/placeSort"),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
      *      ),
      * )
      * @OA\Tag(
@@ -68,23 +58,16 @@ class PlaceController extends Controller
      *     @OA\Parameter(ref="#/components/parameters/placeFilter"),
      *     @OA\Parameter(ref="#/components/parameters/placeInclude"),
      *     @OA\Parameter(ref="#/components/parameters/placeSort"),
-     *     @OA\Parameter(
-     *        name="geonameId",
-     *        in="path",
-     *        required=true,
-     *        @OA\Schema(
-     *            type="string"
-     *        )
+     *     @OA\Parameter(ref="#/components/parameters/geonameId"),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/place")
      *     ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/place")
-     *       ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Place not found"
-     *       )
+     *     @OA\Response(
+     *         response=404,
+     *         description="Place not found"
+     *     )
      * )
      * @param \App\Queries\PlaceQuery  $query
      * @param string $uuid
