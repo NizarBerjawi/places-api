@@ -11,8 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  *      type="object",
  *      title="Alternate Name",
  *      @OA\Property(
- *           property="code",
- *           type="name",
+ *           property="name",
+ *           type="string",
  *           example="Sydney",
  *           description="The name of the place."
  *      ),

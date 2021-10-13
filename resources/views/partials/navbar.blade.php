@@ -18,7 +18,7 @@
             </a>
 
             <a href={{ route('docs') }} class="navbar-item {{ request()->routeIs('docs') ? 'is-active' : '' }}">
-                Documentation
+                API Docs
             </a>
         </div>
 
