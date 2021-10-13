@@ -69,7 +69,7 @@ class AlternateNamesImport extends GeonamesFileIterator implements ShouldQueue
                 }
 
                 DB::transaction(function () use ($alternateNames) {
-                    DB::table('alternate_names')->insertOrIgnore($alternateNames->all());
+                    DB::table('alternate_names')->insert($alternateNames->all());
                 });
             });
     }

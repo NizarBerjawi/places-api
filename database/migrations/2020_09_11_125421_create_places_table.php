@@ -16,7 +16,7 @@ class CreatePlacesTable extends Migration
         Schema::create('places', function (Blueprint $table) {
             $table->id('geoname_id');
             $table->string('name');
-            $table->string('asciiName')->nullable();
+            $table->string('ascii_name')->index()->nullable();
             $table->unsignedBigInteger('population')->index()->nullable();
             $table->smallInteger('elevation')->index()->nullable();
             $table->smallInteger('dem')->index()->nullable();
