@@ -11,25 +11,25 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Schema(
  *      schema="featureCode",
  *      type="object",
- *      title="Feature Code"
- * )
- * @OA\Property(
- *      property="code",
- *      type="string",
- *      example="ADM4H",
- *      description="The code of the feature code"
- * )
- * @OA\Property(
- *      property="fullDescription",
- *      type="string",
- *      example="A former fourth-order administrative division",
- *      description="The full description of the feature code"
- * )
- * @OA\Property(
- *      property="shortDescription",
- *      type="string",
- *      example="Historical fourth-order administrative division",
- *      description="The short description of the feature code"
+ *      title="Feature Code",
+ *      @OA\Property(
+ *           property="code",
+ *           type="string",
+ *           example="ADM4H",
+ *           description="The code of the feature code"
+ *      ),
+ *      @OA\Property(
+ *           property="fullDescription",
+ *           type="string",
+ *           example="A former fourth-order administrative division",
+ *           description="The full description of the feature code"
+ *      ),
+ *      @OA\Property(
+ *           property="shortDescription",
+ *           type="string",
+ *           example="Historical fourth-order administrative division",
+ *           description="The short description of the feature code"
+ *      )
  * )
  */
 class FeatureCode extends Model

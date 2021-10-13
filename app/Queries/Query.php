@@ -2,6 +2,7 @@
 
 namespace App\Queries;
 
+use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\QueryBuilder;
 
 abstract class Query
@@ -66,14 +67,20 @@ abstract class Query
      * @param array $parameters
      * @return static
      */
-    public function applyScope(string $scope, array $parameters = [])
+    public function applyScope(string $scope, array $parameters = []): self
     {
         $this->builder->scopes([$scope => $parameters]);
 
         return $this;
     }
 
-    public function apply(callable $callable)
+    /**
+     * Append more expressions to the Builder.
+     *
+     * @param callable $callable
+     * @return $this
+     */
+    public function apply(callable $callable): self
     {
         $callable($this->builder);
 
@@ -89,9 +96,12 @@ abstract class Query
     {
         $this->checkBuilder();
 
+        $class = $this->modelClass();
+
         return $this->builder
             ->allowedFilters($this->getAllowedFilters())
             ->allowedIncludes($this->getAllowedIncludes())
+            ->defaultSort((new $class)->getKeyName())
             ->allowedSorts($this->getAllowedSorts());
     }
 
@@ -123,7 +133,7 @@ abstract class Query
      *
      * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getPaginator()
+    public function getPaginator(): LengthAwarePaginator
     {
         $this->checkBuilder();
 
@@ -135,7 +145,7 @@ abstract class Query
      *
      * @return void
      */
-    protected function initializeBuilder()
+    protected function initializeBuilder(): void
     {
         $this->builder = QueryBuilder::for($this->modelClass());
 
@@ -147,7 +157,7 @@ abstract class Query
      *
      * @return void
      */
-    protected function checkBuilder()
+    protected function checkBuilder(): void
     {
         if (! $this->isInitialized) {
             throw new \Exception('Query not initialized');
