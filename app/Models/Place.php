@@ -136,11 +136,11 @@ class Place extends Model
     /**
      * Get the Location of this Place.
      *
-     * @return \Illuminate\Database\Eloquent\Relations\MorphOne
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function location()
     {
-        return $this->morphOne(Location::class, 'locationable');
+        return $this->hasOne(Location::class, 'geoname_id');
     }
 
     /**

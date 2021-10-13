@@ -17,7 +17,7 @@ class PlaceResource extends JsonResource
         return [
             'geonameId'      => $this->geoname_id,
             'name'           => $this->name,
-            'asciiName'      => $this->asciiName,
+            'asciiName'      => $this->ascii_name,
             'population'     => $this->population,
             'elevation'      => $this->elevation,
             'dem'            => $this->dem,

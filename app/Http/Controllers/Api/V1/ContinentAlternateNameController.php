@@ -19,18 +19,6 @@ class ContinentAlternateNameController extends Controller
      *      tags={"Continents"},
      *      summary="Returns the alternate names of a specific continent",
      *      path="/continents/{continentCode}/alternateNames",
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(
-     *              type="array",
-     *              @OA\Items(ref="#/components/schemas/alternateName")
-     *          ),
-     *      ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Alternate name not found"
-     *       ),
      *      @OA\Parameter(ref="#/components/parameters/continentCode"),
      *      @OA\Parameter(ref="#/components/parameters/alternateNameFilter"),
      *      @OA\Parameter(ref="#/components/parameters/alternateNameInclude"),
@@ -46,6 +34,18 @@ class ContinentAlternateNameController extends Controller
      *              example=1
      *          )
      *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(
+     *              type="array",
+     *              @OA\Items(ref="#/components/schemas/alternateName")
+     *          ),
+     *      ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Alternate name not found"
+     *       ),
      * )
      *
      * @param  \App\Queries\CurrencyQuery  $query

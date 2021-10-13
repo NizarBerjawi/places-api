@@ -38,7 +38,7 @@ class PlacesImport extends GeonamesFileIterator implements ShouldQueue
                         $places->push([
                             'geoname_id'     => $item[0],
                             'name'           => $item[1],
-                            'asciiName'      => $item[2],
+                            'ascii_name'     => $item[2],
                             'population'     => max((int) $item[14], 0),
                             'elevation'      => (int) $item[15],
                             'dem'            => (int) $item[16],
@@ -48,10 +48,9 @@ class PlacesImport extends GeonamesFileIterator implements ShouldQueue
                         ]);
 
                         $locations->push([
-                            'latitude'          => $item[4],
-                            'longitude'         => $item[5],
-                            'locationable_type' => \App\Models\Place::class,
-                            'locationable_id'   => $item[0],
+                            'latitude'   => $item[4],
+                            'longitude'  => $item[5],
+                            'geoname_id' => $item[0],
                         ]);
                     }
 
