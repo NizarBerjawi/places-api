@@ -58,7 +58,7 @@ class AlternateName extends Model
      */
     public function language()
     {
-        return $this->belongsTo(Language::class);
+        return $this->belongsTo(Language::class, 'language_code', 'iso639_3');
     }
 
     /**

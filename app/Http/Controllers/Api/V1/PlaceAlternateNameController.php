@@ -17,38 +17,21 @@ class PlaceAlternateNameController extends Controller
      * Display the alternate names of a place.
      *
      * @OA\Get(
-     *     tags={"Places"},
-     *     path="/places/{geonameId}/alternateNames",
-     *     operationId="getAlternateNamesForPlace",
-     *     @OA\Property(ref="#/components/schemas/AlternateName"),
-     *     @OA\Parameter(
-     *        name="geonameId",
-     *        in="path",
-     *        required=true,
-     *        @OA\Schema(
-     *            type="string"
-     *        )
-     *     ),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
-     *      ),
+     *      tags={"Places"},
+     *      path="/places/{geonameId}/alternateNames",
+     *      operationId="getAlternateNamesForPlace",
+     *      @OA\Property(ref="#/components/schemas/AlternateName"),
+     *      @OA\Parameter(ref="#/components/parameters/geonameId"),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
      *          @OA\JsonContent(ref="#/components/schemas/location")
-     *       ),
+     *      ),
      *      @OA\Response(
      *          response=404,
      *          description="Alternate name not found"
-     *       ),
+     *      ),
      * )
      * @param \App\Queries\PlaceQuery  $query
      * @param int $geonameId

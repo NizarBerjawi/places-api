@@ -30,25 +30,25 @@
  *                     @OA\Property(
  *                          property="first",
  *                          type="string",
- *                          example="https://placesapi.dev/api/v1/featureCodes?page=1",
+ *                          example=FIRST,
  *                          description="The first page of the paginated data set."
  *                     ),
  *                     @OA\Property(
  *                          property="last",
- *                          type="null",
- *                          example="https://placesapi.dev/api/v1/featureCodes?page=68",
+ *                          type="string",
+ *                          example=LAST,
  *                          description="The last page in the paginated data set."
  *                     ),
  *                     @OA\Property(
  *                          property="prev",
  *                          type="string",
- *                          example="https://placesapi.dev/api/v1/featureCodes?page=2",
+ *                          example=PREV,
  *                          description="The previous page of the paginated data set."
  *                     ),
  *                     @OA\Property(
  *                          property="next",
  *                          type="string",
- *                          example="https://placesapi.dev/api/v1/featureCodes?page=4",
+ *                          example=NEXT,
  *                          description="The next page in the paginated data set."
  *                     ),
  *                ),
@@ -82,7 +82,7 @@
  *                             @OA\Property(
  *                                  property="url",
  *                                  type="string",
- *                                  example="https://placesapi.dev/api/v1/featureCodes?page[number]=9",
+ *                                  example=PAGE_URL,
  *                                  description="The url to this pagination item."
  *                             ),
  *                             @OA\Property(
@@ -103,7 +103,7 @@
  *                     @OA\Property(
  *                          property="path",
  *                          type="string",
- *                          example="https://placesapi.dev/api/v1/featureClasses",
+ *                          example=PAGE_PATH,
  *                          description="The base path of the data that is being paginated."
  *                     ),
  *                     @OA\Property(

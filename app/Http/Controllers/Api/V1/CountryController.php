@@ -17,6 +17,10 @@ class CountryController extends Controller
      *      tags={"Countries"},
      *      summary="Returns a list of paginated countries",
      *      path="/countries",
+     *      @OA\Parameter(ref="#/components/parameters/countryFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/countryInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/countrySort"),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -24,22 +28,9 @@ class CountryController extends Controller
      *              type="array",
      *              @OA\Items(ref="#/components/schemas/country")
      *          ),
-     *      ),
-     *      @OA\Parameter(ref="#/components/parameters/countryFilter"),
-     *      @OA\Parameter(ref="#/components/parameters/countryInclude"),
-     *      @OA\Parameter(ref="#/components/parameters/countrySort"),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
-     *      ),
+     *      )
      * )
+     *
      * @OA\Tag(
      *     name="Countries",
      *     description="Everything about countries"

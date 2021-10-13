@@ -17,6 +17,10 @@ class FeatureClassController extends Controller
      *      tags={"Feature Classes"},
      *      summary="Returns a list of paginated feature classes",
      *      path="/featureClasses",
+     *      @OA\Parameter(ref="#/components/parameters/featureClassFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/featureClassInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/featureClassSort"),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -25,20 +29,6 @@ class FeatureClassController extends Controller
      *              @OA\Items(ref="#/components/schemas/featureClass")
      *          ),
      *      ),
-     *      @OA\Parameter(ref="#/components/parameters/featureClassFilter"),
-     *      @OA\Parameter(ref="#/components/parameters/featureClassInclude"),
-     *      @OA\Parameter(ref="#/components/parameters/featureClassSort"),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
-     *      )
      * )
      * @OA\Tag(
      *     name="Feature Classes",

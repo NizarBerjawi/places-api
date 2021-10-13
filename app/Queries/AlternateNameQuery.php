@@ -28,12 +28,14 @@ class AlternateNameQuery extends Query
      *     in="query",
      *     description="Filter alternate names by certain criteria",
      *     required=false,
-     *     explode=false,
+     *     style="deepObject",
      *     @OA\Schema(
-     *         type="array",
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {"name", "isPreferredName", "isShortName", "languageCodes"},
+     *         type="object",
+     *         enum = {"name", "isPreferredName", "isShortName", "languageCodes"},
+     *         @OA\Property(
+     *             property="isPreferredName",
+     *             type="boolean",
+     *             example="true"
      *         )
      *     )
      * )

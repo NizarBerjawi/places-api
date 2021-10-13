@@ -28,18 +28,9 @@ class ContinentController extends Controller
      *      @OA\Parameter(ref="#/components/parameters/continentFilter"),
      *      @OA\Parameter(ref="#/components/parameters/continentInclude"),
      *      @OA\Parameter(ref="#/components/parameters/continentSort"),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      * )
+     *
      * @OA\Tag(
      *     name="Continents",
      *     description="Everything about continents"

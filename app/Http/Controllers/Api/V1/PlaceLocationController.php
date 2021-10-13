@@ -19,17 +19,7 @@ class PlaceLocationController extends Controller
      *     path="/places/{geonameId}/location",
      *     operationId="getLocationByPlace",
      *     @OA\Parameter(ref="#/components/parameters/geonameId"),
-     *     @OA\Parameter(
-     *         name="page",
-     *         in="query",
-     *         description="Get a specific page",
-     *         required=false,
-     *         explode=false,
-     *         @OA\Schema(
-     *             type="integer",
-     *             example=1
-     *         )
-     *     ),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",

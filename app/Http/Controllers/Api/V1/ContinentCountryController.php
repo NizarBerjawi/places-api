@@ -23,17 +23,7 @@ class ContinentCountryController extends Controller
      *      @OA\Parameter(ref="#/components/parameters/countryFilter"),
      *      @OA\Parameter(ref="#/components/parameters/countryInclude"),
      *      @OA\Parameter(ref="#/components/parameters/countrySort"),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
