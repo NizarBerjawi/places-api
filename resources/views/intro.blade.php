@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="content">
-            <h1>Intro</h1>
+            <h1>Introduction</h1>
             <p>
                 Places API is a RESTful API based on the <a href="https://www.geonames.org/">Geonames</a> database.
             </p>
