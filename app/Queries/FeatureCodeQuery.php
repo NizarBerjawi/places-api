@@ -31,7 +31,7 @@ class FeatureCodeQuery extends Query
      *     style="deepObject",
      *     @OA\Schema(
      *         type="object",
-     *         enum={"code", 'featureClassCode},
+     *         enum={"code", "featureClassCode"},
      *         @OA\Property(
      *             property="code",
      *             type="string",
