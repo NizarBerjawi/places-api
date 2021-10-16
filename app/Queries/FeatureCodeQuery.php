@@ -31,7 +31,7 @@ class FeatureCodeQuery extends Query
      *     style="deepObject",
      *     @OA\Schema(
      *         type="object",
-     *         enum={"code"},
+     *         enum={"code", 'featureClassCode},
      *         @OA\Property(
      *             property="code",
      *             type="string",
@@ -46,6 +46,7 @@ class FeatureCodeQuery extends Query
     {
         return [
             AllowedFilter::exact('code'),
+            AllowedFilter::exact('featureClassCode', 'feature_class_code'),
         ];
     }
 

@@ -63,10 +63,6 @@
     <div class="github-ribbon">
         <a target="_blank" href="{{ env('GITHUB_URL') }}">Fork me on GitHub</a>
     </div>
-
-    <footer class="footer">
-        @include('partials.footer')
-    </footer>
 </body>
 
 </html>

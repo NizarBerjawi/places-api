@@ -79,8 +79,27 @@ class FeatureCode extends Model
         return $this->hasMany(Place::class, 'feature_code', 'code');
     }
 
-    public function scopeByFeatureCodeCode(Builder $query, $featureCodeCode)
+    /**
+     * Scope Feature Code by its code.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $featureCodeCode
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByFeatureCodeCode(Builder $query, string $featureCodeCode)
     {
         return $query->where('code', $featureCodeCode);
+    }
+
+    /**
+     * Scope Feature Codes by Feature Class Code.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $featureClassCode
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByFeatureClassCode(Builder $query, string $featureClassCode)
+    {
+        return $query->where('feature_class_code', $featureClassCode);
     }
 }
