@@ -45,7 +45,7 @@ class DownloadAlternateNamesFiles extends GeonamesJob
      */
     public function url()
     {
-        return config('geonames.alternate_names_url');
+        return config('geonames.alternate_names_zip_url');
     }
 
     /**

@@ -190,7 +190,7 @@ return [
     | The URL of Alternate Names file
     |
     */
-    'alternate_names_url' => env('GEONAMES_ALTERNATE_NAMES_URL', 'http://download.geonames.org/export/dump/alternateNamesV2.zip'),
+    'alternate_names_zip_url' => env('GEONAMES_ALTERNATE_NAMES_ZIP_URL', 'http://download.geonames.org/export/dump/alternateNamesV2.zip'),
 
     /*
     |--------------------------------------------------------------------------
