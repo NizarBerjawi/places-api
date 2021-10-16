@@ -100,4 +100,9 @@ class FeatureClass extends Model
     {
         return $query->where('code', $featureClassCode);
     }
+
+    public function __toString()
+    {
+        return $this->code.': '.$this->description;
+    }
 }

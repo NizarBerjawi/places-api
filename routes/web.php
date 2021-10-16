@@ -32,3 +32,28 @@ $router->get('/flags/{flag}', [
     'uses' => 'WebController@flags',
     'as' => 'flags',
 ]);
+
+$router->get('/continents', [
+    'uses' => 'WebController@continents',
+    'as' => 'continents',
+]);
+
+$router->get('/countries', [
+    'uses' => 'WebController@countries',
+    'as' => 'countries',
+]);
+
+$router->get('/featureCodes', [
+    'uses' => 'WebController@featureCodes',
+    'as' => 'featureCodes',
+]);
+
+$router->get('/timeZones', [
+    'uses' => 'WebController@timeZones',
+    'as' => 'timeZones',
+]);
+
+$router->get('/languages', [
+    'uses' => 'WebController@languages',
+    'as' => 'languages',
+]);
