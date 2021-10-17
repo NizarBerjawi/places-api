@@ -67,6 +67,8 @@ However, you can also run the api without Docker. In that case, you need:
 1. PHP 7.3 or newer
 2. Composer
 3. Node Package Manager (NPM)
+4. Docker
+5. Docker Compose
 
 ### Development
 
