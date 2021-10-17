@@ -20,7 +20,7 @@ services:
       context: .
       dockerfile: .docker/Dockerfile.dev
       args: 
-        GID: ${GUID}
+        GID: ${GID}
         UID: ${UID}
         USER: ${USER}
         GIT_EMAIL: ${GIT_EMAIL}
@@ -57,7 +57,7 @@ services:
       context: .
       dockerfile: .docker/utilities/Dockerfile.composer
       args: 
-        GID: ${GUID}
+        GID: ${GID}
         UID: ${UID}
         USER: ${USER}
     container_name: composer
@@ -71,7 +71,7 @@ services:
       context: .
       dockerfile: .docker/Dockerfile.dev
       args: 
-        GID: ${GUID}
+        GID: ${GID}
         UID: ${UID}
         USER: ${USER}
     container_name: artisan
@@ -88,7 +88,7 @@ services:
       context: .
       dockerfile: .docker/utilities/Dockerfile.node
       args: 
-        GID: ${GUID}
+        GID: ${GID}
         UID: ${UID}
         USER: ${USER}
     working_dir: /app
@@ -100,7 +100,7 @@ services:
       context: .
       dockerfile: .docker/Dockerfile.dev
       args: 
-        GID: ${GUID}
+        GID: ${GID}
         UID: ${UID}
         USER: ${USER}
     container_name: artisan
