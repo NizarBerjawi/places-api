@@ -118,11 +118,11 @@ Using Docker and docker-compose:
    ```sh
    docker-compose -f docker-compose.dev.yml run --rm artisan geonames:download
    ```
-3. Download Geonames files
+3. Import Geonames files
    ```sh
    docker-compose -f docker-compose.dev.yml run --rm artisan geonames:import
    ```
-> Please note that downloading and importing the data will download ALL the Geonames dump export files and then imports them into the database. This process could take several hours to complete.
+> Please note that downloading and importing the data will download ALL the Geonames dump export files and then imports them into the database. This process could take up to several hours to complete.
 
 <!-- USAGE EXAMPLES -->
 
