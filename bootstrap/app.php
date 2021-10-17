@@ -35,7 +35,7 @@ $app->withEloquent();
 | your own bindings here if you like or you can make another file.
 |
 */
-if ($app->environment() === 'local') {
+if ($app->environment() === 'local' && config('app.debug')) {
     $app->register(Laravel\Tinker\TinkerServiceProvider::class);
 }
 
