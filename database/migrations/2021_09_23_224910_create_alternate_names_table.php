@@ -20,10 +20,12 @@ class CreateAlternateNamesTable extends Migration
             $table->string('name');
             $table->boolean('is_preferred_name')->default(false);
             $table->boolean('is_short_name')->default(false);
+            $table->boolean('is_colloquial')->default(false);
+            $table->boolean('is_historic')->default(false);
         });
 
         Schema::table('alternate_names', function (Blueprint $table) {
-            $table->foreign('language_code')->references('iso639_3')->on('languages')->onCascade('delete');
+            $table->foreign('language_code')->references('iso639_3')->on('languages')->cascadeOnDelete();
         });
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Imports;
 
+use App\Exceptions\ImportFailedException;
 use App\Imports\Iterators\GeonamesFileIterator;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -24,7 +25,9 @@ class PlacesImport extends GeonamesFileIterator implements ShouldQueue
     public function handle()
     {
         if ($this->isMissing()) {
-            $this->fail(new \Exception("{$this->filepath} is not found."));
+            $this->fail(
+                new ImportFailedException("{$this->filepath} could not be imported.")
+            );
         }
 
         DB::transaction(function () {
@@ -48,14 +51,35 @@ class PlacesImport extends GeonamesFileIterator implements ShouldQueue
                         ]);
 
                         $locations->push([
+                            'geoname_id' => $item[0],
                             'latitude'   => $item[4],
                             'longitude'  => $item[5],
-                            'geoname_id' => $item[0],
                         ]);
                     }
 
-                    DB::table('places')->insert($places->all());
-                    DB::table('locations')->insert($locations->all());
+                    DB::table('places')
+                        ->upsert($places->all(), [
+                            'geoname_id',
+                        ], [
+                            'geoname_id',
+                            'name',
+                            'ascii_name',
+                            'population',
+                            'elevation',
+                            'dem',
+                            'feature_code',
+                            'country_code',
+                            'time_zone_code',
+                        ]);
+
+                    DB::table('locations')
+                        ->upsert($locations->all(), [
+                            'geoname_id',
+                        ], [
+                            'geoname_id',
+                            'latitude',
+                            'longitude',
+                        ]);
                 });
         });
     }

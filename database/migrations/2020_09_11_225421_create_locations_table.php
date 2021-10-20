@@ -20,7 +20,7 @@ class CreateLocationsTable extends Migration
         });
 
         Schema::table('locations', function (Blueprint $table) {
-            $table->foreign('geoname_id')->references('geoname_id')->on('places')->onCascade('delete');
+            $table->foreign('geoname_id')->references('geoname_id')->on('places')->cascadeOnDelete();
         });
     }
 

@@ -32,11 +32,11 @@ class DeletesImport extends GeonamesFileIterator implements ShouldQueue
                     $ids->push($item[0]);
                 }
 
-                DB::table('places')
+                DB::table('locations')
                     ->whereIn('geoname_id', $ids)
                     ->delete();
 
-                DB::table('locations')
+                DB::table('places')
                     ->whereIn('geoname_id', $ids)
                     ->delete();
             });

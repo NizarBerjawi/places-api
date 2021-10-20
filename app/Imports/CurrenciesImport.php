@@ -3,13 +3,13 @@
 namespace App\Imports;
 
 use App\Imports\Iterators\CountriesFileIterator;
-use App\Models\Currency;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class CurrenciesImport extends CountriesFileIterator implements ShouldQueue
 {
@@ -47,6 +47,9 @@ class CurrenciesImport extends CountriesFileIterator implements ShouldQueue
             ]);
         }
 
-        Currency::insert($currencies->all());
+        DB::table('currencies')
+            ->upsert($currencies->all(), [
+                'code',
+            ]);
     }
 }

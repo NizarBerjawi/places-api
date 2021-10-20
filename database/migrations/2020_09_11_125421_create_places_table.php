@@ -26,9 +26,9 @@ class CreatePlacesTable extends Migration
         });
 
         Schema::table('places', function (Blueprint $table) {
-            $table->foreign('feature_code')->references('code')->on('feature_codes')->onCascade('delete');
-            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->onCascade('delete');
-            $table->foreign('time_zone_code')->references('code')->on('time_zones')->onCascade('delete');
+            $table->foreign('feature_code')->references('code')->on('feature_codes')->cascadeOnDelete();
+            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->cascadeOnDelete();
+            $table->foreign('time_zone_code')->references('code')->on('time_zones')->cascadeOnDelete();
         });
     }
 
