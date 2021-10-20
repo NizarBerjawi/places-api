@@ -27,6 +27,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('geonames:update')->daily();
+        $schedule->command('geonames:update')->everySixHours();
     }
 }

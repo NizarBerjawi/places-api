@@ -28,24 +28,26 @@ class DownloadDeletesFile extends GeonamesJob
      */
     public function handle()
     {
-        try {
-            $response = Http::withOptions([
-                'stream' => true,
-            ])->get($this->url());
+        $response = Http::withOptions([
+            'stream' => true,
+        ])->get($this->url());
 
-            if ($response->failed()) {
-                throw new FileNotDownloadedException($this->url());
-            }
+        if ($response->failed()) {
+            throw new FileNotDownloadedException($this->url());
+        }
 
-            $saved = $this
-                ->filesystem
-                ->put($this->filepath(), $response->getBody());
+        $body = $response->body();
 
-            if (! $saved) {
-                throw new FileNotSavedException($this->filename());
-            }
-        } catch (\Exception $e) {
-            $this->log($e->getMessage(), 'warning');
+        if (empty($body)) {
+            return;
+        }
+
+        $saved = $this
+            ->filesystem
+            ->put($this->filepath(), $body);
+
+        if (! $saved) {
+            throw new FileNotSavedException($this->filename());
         }
     }
 
@@ -80,6 +82,6 @@ class DownloadDeletesFile extends GeonamesJob
      */
     public function filepath()
     {
-        return storage_path('app/data/updates/'.$this->filename());
+        return storage_path('app/updates/'.$this->filename());
     }
 }

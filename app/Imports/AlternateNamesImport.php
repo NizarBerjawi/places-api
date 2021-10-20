@@ -32,14 +32,15 @@ class AlternateNamesImport extends GeonamesFileIterator implements ShouldQueue
                 $alternateNames = Collection::make();
 
                 foreach ($chunk as $item) {
+                    if (! isset($item[0], $item[1])) {
+                        continue;
+                    }
+
+                    $id = $item[0];
                     $geonameId = $item[1];
                     $isoLanguage = $item[2] ?? null;
 
                     if (strlen($isoLanguage) !== 2) {
-                        continue;
-                    }
-
-                    if (empty($geonameId)) {
                         continue;
                     }
 
@@ -60,16 +61,30 @@ class AlternateNamesImport extends GeonamesFileIterator implements ShouldQueue
                     }
 
                     $alternateNames->push([
-                        'geoname_id' => $item[1],
+                        'id' => $id,
+                        'geoname_id' => $geonameId,
                         'language_code' => $language->iso639_3,
                         'name' => $item[3],
                         'is_preferred_name' => (bool) $item[4],
                         'is_short_name' => (bool) $item[5],
+                        'is_colloquial' => (bool) $item[6],
+                        'is_historic' => (bool) $item[7],
                     ]);
                 }
 
                 DB::transaction(function () use ($alternateNames) {
-                    DB::table('alternate_names')->insert($alternateNames->all());
+                    DB::table('alternate_names')
+                        ->upsert($alternateNames->all(), [
+                            'id',
+                        ], [
+                            'geoname_id',
+                            'language_code',
+                            'name',
+                            'is_preferred_name',
+                            'is_short_name',
+                            'is_colloquial',
+                            'is_historic',
+                        ]);
                 });
             });
     }

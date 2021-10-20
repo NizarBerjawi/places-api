@@ -20,8 +20,8 @@ class CreateCountryCurrencyTable extends Migration
 
         Schema::table('country_currency', function (Blueprint $table) {
             $table->primary(['country_code', 'currency_code']);
-            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->onCascade('delete');
-            $table->foreign('currency_code')->references('code')->on('currencies')->onCascade('delete');
+            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->cascadeOnDelete();
+            $table->foreign('currency_code')->references('code')->on('currencies')->cascadeOnDelete();
         });
     }
 

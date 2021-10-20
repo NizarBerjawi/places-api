@@ -16,10 +16,12 @@ class AlternateNameResource extends JsonResource
     {
         return [
             'name'            => $this->name,
-            'language'        => LanguageResource::make($this->whenLoaded('language')),
-            'place'           => PlaceResource::make($this->whenLoaded('place')),
             'isPreferredName' => $this->is_preferred_name,
             'isShortName'     => $this->is_short_name,
+            'isHistoric'      => $this->is_historic,
+            'isColloquial'    => $this->is_colloquial,
+            'language'        => LanguageResource::make($this->whenLoaded('language')),
+            'place'           => PlaceResource::make($this->whenLoaded('place')),
         ];
     }
 }

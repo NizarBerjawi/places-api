@@ -90,6 +90,16 @@ return [
     | The name of the alternate names file
     |
     */
+    'alternate_names_file' => env('GEONAMES_ALTERNATE_NAMES_FILE', 'alternateNamesV2.txt'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Alternate Names ZIP file
+    |--------------------------------------------------------------------------
+    |
+    | The name of the alternate names ZIP file
+    |
+    */
     'alternate_names_zip_file' => env('GEONAMES_ALTERNATE_NAMES_ZIP_FILE', 'alternateNamesV2.zip'),
 
     /*

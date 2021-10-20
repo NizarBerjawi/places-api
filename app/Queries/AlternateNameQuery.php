@@ -31,7 +31,7 @@ class AlternateNameQuery extends Query
      *     style="deepObject",
      *     @OA\Schema(
      *         type="object",
-     *         enum = {"name", "isPreferredName", "isShortName", "languageCodes"},
+     *         enum = {"name", "isPreferredName", "isShortName", "isHistoric", "isColloquial", "languageCodes"},
      *         @OA\Property(
      *             property="isPreferredName",
      *             type="boolean",
@@ -47,6 +47,8 @@ class AlternateNameQuery extends Query
             AllowedFilter::exact('name'),
             AllowedFilter::exact('isPreferredName', 'is_preferred_name'),
             AllowedFilter::exact('isShortName', 'is_short_name'),
+            AllowedFilter::exact('isHistoric', 'is_historic'),
+            AllowedFilter::exact('isColloquial', 'is_colloquial'),
             AllowedFilter::scope('languageCodes', 'byLanguageCode'),
         ];
     }
@@ -97,10 +99,13 @@ class AlternateNameQuery extends Query
      *                  "name",
      *                  "isPreferredName",
      *                  "isShortName",
+     *                  "isHistoric",
+     *                  "isColloquial",
      *                  "-name",
      *                  "-isPreferredName",
-     *                  "-isShortName"
-
+     *                  "-isShortName",
+     *                  "-isHistoric",
+     *                  "-isColloquial",
      *             },
      *         )
      *     )
@@ -113,6 +118,8 @@ class AlternateNameQuery extends Query
             AllowedSort::field('name'),
             AllowedSort::field('isPreferredName', 'is_preferred_name'),
             AllowedSort::field('isShortName', 'is_short_name'),
+            AllowedSort::field('isHistoric', 'is_historic'),
+            AllowedSort::field('isColloquial', 'is_colloquial'),
         ];
     }
 }

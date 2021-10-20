@@ -33,6 +33,9 @@ class TimeZonesImport extends GeonamesFileIterator implements ShouldQueue
             ]);
         }
 
-        DB::table('time_zones')->insert($timeZones->all());
+        DB::table('time_zones')
+            ->upsert($timeZones->all(), [
+                'code',
+            ]);
     }
 }

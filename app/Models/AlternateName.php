@@ -27,6 +27,18 @@ use Illuminate\Database\Eloquent\Model;
  *           type="boolean",
  *           example="true",
  *           description="Determines if the alternate name is a short name."
+ *      ),
+ *      @OA\Property(
+ *           property="isHistoric",
+ *           type="boolean",
+ *           example="true",
+ *           description="Determines if the alternate name is historic and was used in the past."
+ *      ),
+ *      @OA\Property(
+ *           property="isColloquial",
+ *           type="boolean",
+ *           example="true",
+ *           description="Determines if the alternate name is a colloquial or slang term."
  *      )
  * )
  */
@@ -38,7 +50,7 @@ class AlternateName extends Model
      * @var array
      */
     protected $fillable = [
-        'geoname_id', 'language_id', 'name', 'is_preferred_name', 'is_short_name',
+        'geoname_id', 'language_id', 'name', 'is_preferred_name', 'is_short_name', 'is_historic', 'is_colloquial',
     ];
 
     /**

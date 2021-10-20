@@ -3,13 +3,13 @@
 namespace App\Imports;
 
 use App\Imports\Iterators\GeonamesFileIterator;
-use App\Models\FeatureCode;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class FeatureCodesImport extends GeonamesFileIterator implements ShouldQueue
@@ -53,6 +53,9 @@ class FeatureCodesImport extends GeonamesFileIterator implements ShouldQueue
             ]);
         }
 
-        FeatureCode::insert($featureCodes->all());
+        DB::table('feature_codes')
+            ->upsert($featureCodes->all(), [
+                'code',
+            ]);
     }
 }

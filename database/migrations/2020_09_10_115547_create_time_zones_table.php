@@ -21,7 +21,7 @@ class CreateTimeZonesTable extends Migration
         });
 
         Schema::table('time_zones', function (Blueprint $table) {
-            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->onCascade('delete');
+            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->cascadeOnDelete();
         });
     }
 

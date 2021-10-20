@@ -33,29 +33,24 @@ class DownloadCountryFlag extends GeonamesJob
      */
     public function handle()
     {
-        try {
-            $response = Http::withOptions([
-                'stream' => true,
-            ])->get($this->url());
+        $response = Http::withOptions([
+            'stream' => true,
+        ])->get($this->url());
 
-            if ($response->failed()) {
-                throw new FileNotDownloadedException($this->url());
-            }
+        if ($response->failed()) {
+            throw new FileNotDownloadedException($this->url());
+        }
 
-            $this
-                ->filesystem
-                ->ensureDirectoryExists($this->folderPath());
+        $this
+            ->filesystem
+            ->ensureDirectoryExists($this->folderPath());
 
-            $saved = $this
-                ->filesystem
-                ->put($this->filepath(), $response->getBody());
+        $saved = $this
+            ->filesystem
+            ->put($this->filepath(), $response->getBody());
 
-            if (! $saved) {
-                throw new FileNotSavedException($this->filepath());
-            }
-        } catch (\Exception $e) {
-            $this->fail($e);
-            $this->log($e->getMessage(), 'warning');
+        if (! $saved) {
+            throw new FileNotSavedException($this->filepath());
         }
     }
 
