@@ -103,7 +103,7 @@ class AlternateNameQuery extends Query
      *                  "isColloquial",
      *                  "-name",
      *                  "-isPreferredName",
-     *                  "-isShortName"
+     *                  "-isShortName",
      *                  "-isHistoric",
      *                  "-isColloquial",
      *             },

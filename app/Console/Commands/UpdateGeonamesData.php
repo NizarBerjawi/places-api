@@ -71,13 +71,13 @@ class UpdateGeonamesData extends Command
                 $alternateNamesDeletes
             ) {
                 if ($batch->finished()) {
-                    dispatch(new PlacesImport("$basePath/$placesModifications"))->onQueue('update');
-                    dispatch(new DeletesImport("$basePath/$placesDeletes"))->onQueue('update');
-                    dispatch(new AlternateNamesImport("$basePath/$alternateNamesModifications"))->onQueue('update');
-                    dispatch(new AlternateNamesDeletesImport("$basePath/$alternateNamesDeletes"))->onQueue('update');
+                    dispatch(new PlacesImport("$basePath/$placesModifications"))->onQueue('import-updates');
+                    dispatch(new DeletesImport("$basePath/$placesDeletes"))->onQueue('import-updates');
+                    dispatch(new AlternateNamesImport("$basePath/$alternateNamesModifications"))->onQueue('import-updates');
+                    dispatch(new AlternateNamesDeletesImport("$basePath/$alternateNamesDeletes"))->onQueue('import-updates');
                 }
             })
-            ->onQueue('download')
+            ->onQueue('download-updates')
             ->dispatch();
     }
 }
