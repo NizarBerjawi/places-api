@@ -4,13 +4,13 @@ namespace App\Imports;
 
 use App\Imports\Iterators\CountriesFileIterator;
 use App\Models\Continent;
-use App\Models\Country;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class CountriesImport extends CountriesFileIterator implements ShouldQueue
 {
@@ -50,6 +50,9 @@ class CountriesImport extends CountriesFileIterator implements ShouldQueue
             ]);
         }
 
-        Country::insert($countries->all());
+        DB::table('countries')
+            ->upsert($countries->all(), [
+                'geoname_id',
+            ]);
     }
 }

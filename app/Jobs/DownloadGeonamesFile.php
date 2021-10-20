@@ -35,24 +35,19 @@ class DownloadGeonamesFile extends GeonamesJob
      */
     public function handle()
     {
-        try {
-            $this
-                ->filesystem
-                ->ensureDirectoryExists($this->folderPath());
+        $this
+            ->filesystem
+            ->ensureDirectoryExists($this->folderPath());
 
-            $response = Http::withOptions([
-                'sink' => $this->filepath(),
-            ])->get($this->url());
+        $response = Http::withOptions([
+            'sink' => $this->filepath(),
+        ])->get($this->url());
 
-            if ($response->failed()) {
-                throw new FileNotDownloadedException($this->url());
-            }
-
-            $this->unzip();
-        } catch (\Exception $e) {
-            $this->fail($e);
-            $this->log($e->getMessage(), 'warning');
+        if ($response->failed()) {
+            throw new FileNotDownloadedException($this->url());
         }
+
+        $this->unzip();
     }
 
     /**

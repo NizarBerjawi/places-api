@@ -20,8 +20,8 @@ class CreateCountryNeighbourTable extends Migration
 
         Schema::table('country_neighbour', function (Blueprint $table) {
             $table->primary(['country_code', 'neighbour_code']);
-            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->onCascade('delete');
-            $table->foreign('neighbour_code')->references('iso3166_alpha2')->on('countries')->onCascade('delete');
+            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->cascadeOnDelete();
+            $table->foreign('neighbour_code')->references('iso3166_alpha2')->on('countries')->cascadeOnDelete();
         });
     }
 

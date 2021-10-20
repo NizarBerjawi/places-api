@@ -18,6 +18,8 @@ use App\Imports\TimeZonesImport;
 use App\Models\Country;
 use Illuminate\Bus\Batch;
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Bus\Dispatcher;
+use Laravel\Lumen\Application;
 
 class ImportGeonamesFiles extends Command
 {
@@ -42,39 +44,45 @@ class ImportGeonamesFiles extends Command
      */
     public function handle()
     {
-        $dispatcher = app()->make(\Illuminate\Contracts\Bus\Dispatcher::class);
-        $dispatcher->batch([
-            new ContinentsImport(storage_path('app/data/'.config('geonames.readme_file'))),
-            new CurrenciesImport(storage_path('app/data/'.config('geonames.countries_file'))),
-            new CountriesImport(storage_path('app/data/'.config('geonames.countries_file'))),
-            new TimeZonesImport(storage_path('app/data/'.config('geonames.time_zones_file'))),
-            new LanguagesImport(storage_path('app/data/'.config('geonames.language_codes_file'))),
-            new NeighbourCountriesImport(storage_path('app/data/'.config('geonames.countries_file'))),
-            new FeatureClassesImport(storage_path('app/data/'.config('geonames.readme_file'))),
-            new FeatureCodesImport(storage_path('app/data/'.config('geonames.feature_codes_file'))),
-            new FlagsImport(storage_path('app/data/'.config('geonames.countries_file'))),
-            new CountryLanguageImport(storage_path('app/data/'.config('geonames.countries_file'))),
-            new CountryCurrencyImport(storage_path('app/data/'.config('geonames.countries_file'))),
-        ])->then(function (Batch $batch) {
-            if ($batch->finished()) {
-                Country::cursor()
-                    ->each(function (Country $country) {
-                        $code = $country->iso3166_alpha2;
+        $basePath = storage_path('app/data');
 
-                        $filepath = storage_path('app/data/geonames/'.$code.'/'.$code.'.txt');
+        Application::getInstance()
+            ->make(Dispatcher::class)
+            ->batch([
+                new ContinentsImport($basePath.'/'.config('geonames.readme_file')),
+                new CurrenciesImport($basePath.'/'.config('geonames.countries_file')),
+                new CountriesImport($basePath.'/'.config('geonames.countries_file')),
+                new TimeZonesImport($basePath.'/'.config('geonames.time_zones_file')),
+                new LanguagesImport($basePath.'/'.config('geonames.language_codes_file')),
+                new NeighbourCountriesImport($basePath.'/'.config('geonames.countries_file')),
+                new FeatureClassesImport($basePath.'/'.config('geonames.readme_file')),
+                new FeatureCodesImport($basePath.'/'.config('geonames.feature_codes_file')),
+                new FlagsImport($basePath.'/'.config('geonames.countries_file')),
+                new CountryLanguageImport($basePath.'/'.config('geonames.countries_file')),
+                new CountryCurrencyImport($basePath.'/'.config('geonames.countries_file')),
+            ])->then(function (Batch $batch) use ($basePath) {
+                if ($batch->finished()) {
+                    Country::cursor()
+                        ->each(function (Country $country) use ($basePath) {
+                            $code = $country->iso3166_alpha2;
 
-                        dispatch(new PlacesImport($filepath))
-                            ->onQueue('import');
-                    });
-            }
-        })
-        ->finally(function (Batch $batch) {
-            if ($batch->finished()) {
-                dispatch(new AlternateNamesImport(storage_path('app/data/alternateNames/alternateNamesV2.txt')))
-                    ->onQueue('import');
-            }
-        })
-        ->onQueue('import')
-        ->dispatch();
+                            $filepath = $basePath.'/geonames/'.$code.'/'.$code.'.txt';
+
+                            dispatch(new PlacesImport($filepath))
+                                ->onQueue('import-places');
+                        });
+                }
+            })
+            ->finally(function (Batch $batch) use ($basePath) {
+                if ($batch->finished()) {
+                    dispatch(
+                        new AlternateNamesImport(
+                            $basePath.'/alternateNames/'.config('geonames.alternate_names_file')
+                        )
+                    )->onQueue('import-names');
+                }
+            })
+            ->onQueue('import-data')
+            ->dispatch();
     }
 }

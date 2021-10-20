@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\LazyCollection;
 
-class LanguagesImport extends GeonamesFileIterator implements ShouldQueue
+class AlternateNamesDeletesImport extends GeonamesFileIterator implements ShouldQueue
 {
     use Batchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -23,28 +23,18 @@ class LanguagesImport extends GeonamesFileIterator implements ShouldQueue
      */
     public function handle()
     {
-        $this
-            ->iterable()
-            ->skip(1)
-            ->chunk(1000)
+        $this->iterable()
+            ->chunk(500)
             ->each(function (LazyCollection $chunk) {
-                $languages = Collection::make();
+                $ids = Collection::make();
 
                 foreach ($chunk as $item) {
-                    $language = [
-                        'iso639_1'   => $item[2],
-                        'iso639_2'   => $item[1],
-                        'iso639_3'   => $item[0],
-                        'name'       => $item[3],
-                    ];
-
-                    $languages->push($language);
+                    $ids->push($item[0]);
                 }
 
-                DB::table('languages')
-                    ->upsert($languages->all(), [
-                        'iso639_3',
-                    ]);
+                DB::table('alternate_names')
+                    ->whereIn('id', $ids)
+                    ->delete();
             });
     }
 }
