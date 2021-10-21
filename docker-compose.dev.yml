@@ -43,9 +43,9 @@ services:
     image: postgres:13.3-alpine3.13
     restart: always
     environment:
-      - POSTGRES_USER=places_api
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=places_api_database
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DATABASE}
     ports:
       - "5432:5432"
     # volumes:
