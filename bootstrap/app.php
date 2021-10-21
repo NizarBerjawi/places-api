@@ -59,10 +59,10 @@ $app->singleton(
 | the default version. You may register other files below as needed.
 |
 */
-$app->configure('app');
-$app->configure('logging');
-$app->configure('geonames');
 $app->configure('api');
+$app->configure('geonames');
+$app->configure('logging');
+$app->configure('http-logger');
 $app->configure('json-api-paginate');
 
 
@@ -78,6 +78,7 @@ $app->configure('json-api-paginate');
 */
 $app->routeMiddleware([
     'api_version' => App\Http\Middleware\ApiVersion::class,
+    'http-logger' => Spatie\HttpLogger\Middlewares\HttpLogger::class,
     'throttle' => App\Http\Middleware\RateLimits::class,
 ]);
 
@@ -91,9 +92,9 @@ $app->routeMiddleware([
 | totally optional, so you are not required to uncomment this line.
 |
 */
-
+$app->register(\Spatie\HttpLogger\HttpLoggerServiceProvider::class);
 $app->register(\Spatie\QueryBuilder\QueryBuilderServiceProvider::class);
-$app->register(\App\Providers\JsonApiPaginateServiceProvider::class);
+$app->register(\Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -107,13 +108,14 @@ $app->register(\App\Providers\JsonApiPaginateServiceProvider::class);
 */
 
 $app->router->group([
+    'middleware' => ['http-logger'],
     'namespace'  => 'App\Http\Controllers', 
 ], function ($router) {
     require __DIR__.'/../routes/web.php';
 });
 
 $app->router->group([
-    'middleware' => ['api_version:v1', 'throttle:500,1'],
+    'middleware' => ['api_version:v1', 'throttle:500,1', 'http-logger'],
     'namespace'  => 'App\Http\Controllers\Api\V1',
     'prefix'     => 'api/v1' 
 ], function ($router) {
