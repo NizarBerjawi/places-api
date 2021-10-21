@@ -39,6 +39,19 @@ if (! function_exists('asset_path')) {
     }
 }
 
+if (! function_exists('config_path')) {
+    /**
+     * Get the configuration path.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    function config_path($path = '')
+    {
+        return app()->configPath($path);
+    }
+}
+
 if (! function_exists('webpack')) {
     /**
      * Get path to a webpack bundle asset.
