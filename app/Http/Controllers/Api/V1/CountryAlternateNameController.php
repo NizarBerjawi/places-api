@@ -48,11 +48,15 @@ class CountryAlternateNameController extends Controller
             throw (new ModelNotFoundException())->setModel(Country::class);
         }
 
-        $alternateNames = $query
-            ->applyScope('byGeonameId', Arr::wrap(
-                Country::find($countryCode)->geoname_id
-            ))
-            ->getPaginator();
+        $country = Country::find($countryCode);
+
+        if ($country->is_dissolved) {
+            $alternateNames = $query->getPaginator();
+        } else {
+            $alternateNames = $query
+                ->applyScope('byGeonameId', Arr::wrap($country->geoname_id))
+                ->getPaginator();
+        }
 
         return new PaginatedResourceResponse(
             AlternateNameResource::collection($alternateNames)

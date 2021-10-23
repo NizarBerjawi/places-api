@@ -267,6 +267,16 @@ class Country extends Model
     }
 
     /**
+     * Determine if a country is dissolved.
+     *
+     * @return bool
+     */
+    public function getIsDissolvedAttribute()
+    {
+        return in_array($this->iso3166_alpha2, ['AN', 'CS']);
+    }
+
+    /**
      * Get Countries by continent code.
      *
      * @param \Illuminate\Database\Eloquent\Builder  $query
