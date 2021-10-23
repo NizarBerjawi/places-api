@@ -70,61 +70,37 @@ However, you can also run the api without Docker. In that case, you need:
 4. Docker
 5. Docker Compose
 
-### Development
-
-Using Docker and docker-compose:
+### Running the Application locally
 
 1. Clone the repository
    ```sh
    git clone https://github.com/NizarBerjawi/places-api.git
    ```
-2. Create an .env file
+2. Create an .env file and set `APP_ENV=production`
    ```sh
    cp .env.example .env
    ```
-3. Install composer packages
+3. Migrate the database 
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm composer install
+   docker-compose -f docker-compose.prod.yml run --rm php php artisan migrate:fresh  
    ```
-4. Install NPM packages
+4. Download all the file
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm npm install
+   docker-compose -f docker-compose.prod.yml run --rm php php artisan geonames:download  
    ```
-5. Generate Open API spec
+5. Import all the file
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm artisan docs:generate
+   docker-compose -f docker-compose.prod.yml run --rm php php artisan geonames:import  
    ```
-6. Transpile front-end assets
+6. Start the application server
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm npm run build
+   docker-compose -f docker-compose.prod.yml up --build --detach nginx
    ```
-7. Migrate the database
+7. Open the application in a browser
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm artisan migrate
+   http://localhost:80
    ```
-8. Start the application server
-   ```sh
-   docker-compose -f docker-compose.dev.yml up --build nginx
-   ```
-9. Open the application in a browser
-   ```sh
-   http://localhost:8080
-   ```
-#### Import data
-
-1. Start the queue worker
-   ```sh
-   docker-compose -f docker-compose.dev.yml run --rm artisan queue:work --queue=download,import
-   ```
-2. Download Geonames files
-   ```sh
-   docker-compose -f docker-compose.dev.yml run --rm artisan geonames:download
-   ```
-3. Import Geonames files
-   ```sh
-   docker-compose -f docker-compose.dev.yml run --rm artisan geonames:import
-   ```
-> Please note that downloading and importing the data will download ALL the Geonames dump export files and then imports them into the database. This process could take up to several hours to complete.
+> Please note that downloading and importing the data will download ALL the Geonames dump export files and then imports them into the database. Depending on your CPU power, This process could take up to several hours to complete.
 
 <!-- USAGE EXAMPLES -->
 
