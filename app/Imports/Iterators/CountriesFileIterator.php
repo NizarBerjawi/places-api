@@ -11,7 +11,7 @@ class CountriesFileIterator extends BaseIterator
      *
      * @var array
      */
-    const EXCLUDE = ['AN', 'CS'];
+    const EXCLUDE = [];
 
     /**
      * Decide whether a row is a comment or actual data.
