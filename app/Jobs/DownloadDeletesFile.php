@@ -5,11 +5,12 @@ namespace App\Jobs;
 use App\Exceptions\FileNotDownloadedException;
 use App\Exceptions\FileNotSavedException;
 use App\Jobs\Traits\HasPlaceholders;
+use Illuminate\Bus\Batchable;
 use Illuminate\Support\Facades\Http;
 
 class DownloadDeletesFile extends GeonamesJob
 {
-    use HasPlaceholders;
+    use Batchable, HasPlaceholders;
 
     public $date;
 
@@ -27,26 +28,26 @@ class DownloadDeletesFile extends GeonamesJob
      */
     public function handle()
     {
-        $this->log($this > url(), 'warning');
+        $response = Http::withOptions([
+            'stream' => true,
+        ])->get($this->url());
 
-        try {
-            $response = Http::withOptions([
-                'stream' => true,
-            ])->get($this->url());
+        if ($response->failed()) {
+            throw new FileNotDownloadedException($this->url());
+        }
 
-            if ($response->failed()) {
-                throw new FileNotDownloadedException($this->url());
-            }
+        $body = $response->body();
 
-            $saved = $this
-                ->filesystem
-                ->put($this->filepath(), $response->getBody());
+        if (empty($body)) {
+            return;
+        }
 
-            if (! $saved) {
-                throw new FileNotSavedException($this->filename());
-            }
-        } catch (\Exception $e) {
-            $this->log($e->getMessage(), 'warning');
+        $saved = $this
+            ->filesystem
+            ->put($this->filepath(), $body);
+
+        if (! $saved) {
+            throw new FileNotSavedException($this->filename());
         }
     }
 
@@ -81,6 +82,6 @@ class DownloadDeletesFile extends GeonamesJob
      */
     public function filepath()
     {
-        return storage_path('app/data/'.$this->filename());
+        return storage_path('app/updates/'.$this->filename());
     }
 }

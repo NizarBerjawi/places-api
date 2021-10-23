@@ -11,25 +11,25 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Schema(
  *      schema="flag",
  *      type="object",
- *      title="Flag"
- * )
- * @OA\Property(
- *      property="country_code",
- *      type="string",
- *      example="AU",
- *      description="The two-letter ISO 3166-1 alpha-2 country code that this flag belongs to"
- * )
- * @OA\Property(
- *      property="url",
- *      type="string",
- *      example="http://localhost:8080/storage/flags/AU.gif",
- *      description="The location of the flag image"
- * )
- * @OA\Property(
- *      property="filename",
- *      type="string",
- *      example="AU.gif",
- *      description="The location of the flag image"
+ *      title="Flag",
+ *      @OA\Property(
+ *           property="countryCode",
+ *           type="string",
+ *           example="AU",
+ *           description="The two-letter ISO 3166-1 alpha-2 country code that this flag belongs to"
+ *      ),
+ *      @OA\Property(
+ *           property="url",
+ *           type="string",
+ *           example="http://localhost:8080/storage/flags/AU.gif",
+ *           description="The location of the flag image"
+ *      ),
+ *      @OA\Property(
+ *           property="filename",
+ *           type="string",
+ *           example="AU.gif",
+ *           description="The location of the flag image"
+ *      ),
  * )
  */
 class Flag extends Model
@@ -74,10 +74,8 @@ class Flag extends Model
      * @param  string $countryCode
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
-    public function scopeByCountry(Builder $query, string $countryCode)
+    public function scopeByCountryCode(Builder $query, string $countryCode)
     {
-        return $query->whereHas('country', function (Builder $query) use ($countryCode) {
-            return $query->where('country_code', $countryCode);
-        });
+        return $query->where('country_code', $countryCode);
     }
 }

@@ -5,8 +5,6 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url] -->
 
-
-
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
@@ -18,8 +16,6 @@
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Website »</strong></a>
     <br />
 </p>
-
-
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
@@ -35,30 +31,29 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#development">Development</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    <li><a href="#documentation">Documentation</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
+
 ## About The Project
 
 Places API is a RESTful based on the <a href="https://www.geonames.org/">Geonames</a> database. You can use this API to explore the world!
 
 ### Built With
 
-* [Lumen Micro-framework](https://lumen.laravel.com/)
-* [Bulma](https://bulma.io/)
-
+- [Lumen Micro-framework](https://lumen.laravel.com/)
+- [Bulma](https://bulma.io/)
 
 <!-- GETTING STARTED -->
+
 ## Getting Started
 
 To get a local copy up and running follow these simple example steps.
@@ -72,63 +67,66 @@ However, you can also run the api without Docker. In that case, you need:
 1. PHP 7.3 or newer
 2. Composer
 3. Node Package Manager (NPM)
+4. Docker
+5. Docker Compose
 
-### Installation
-
-Using Docker and docker-compose:
+### Running the Application locally
 
 1. Clone the repository
    ```sh
    git clone https://github.com/NizarBerjawi/places-api.git
    ```
-2. Create a .env file
+2. Create an .env file and set `APP_ENV=production`
    ```sh
    cp .env.example .env
    ```
-3. Install composer packages
+3. Migrate the database 
    ```sh
-   docker-compose run --rm composer install
+   docker-compose -f docker-compose.prod.yml run --rm php php artisan migrate:fresh  
    ```
-4. Install NPM packages
+4. Download all the file
    ```sh
-   docker-compose run --rm npm install
+   docker-compose -f docker-compose.prod.yml run --rm php php artisan geonames:download  
    ```
-5. Start the application server
+5. Import all the file
    ```sh
-   docker-compose up --build nginx
+   docker-compose -f docker-compose.prod.yml run --rm php php artisan geonames:import  
    ```
-6. Migrate the database
+6. Start the application server
    ```sh
-   docker-compose run --rm artisan migrate
+   docker-compose -f docker-compose.prod.yml up --build --detach nginx
    ```
-7. Download Geonames files and seed the database
+7. Open the application in a browser
    ```sh
-   docker-compose run --rm artisan db:seed
+   http://localhost:80
    ```
-8. Open the application in a browser
-   ```sh
-   http://localhost:8080
-   ```
-
-
-> Please note that seeding the database will download ALL the Geonames dump export files and then imports them into the database. This process could take several hours to complete.
+> Please note that downloading and importing the data will download ALL the Geonames dump export files and then imports them into the database. Depending on your CPU power, This process could take up to several hours to complete.
 
 <!-- USAGE EXAMPLES -->
+
 ## Usage
 
-For a full details, please refer to the [Documentation](https://example.com).
-   
+For a full details, please refer to the [Documentation](https://placesapi.dev/documentation).
+
 <!-- LICENSE -->
+
 ## License
+
 Distributed under the MIT License. See `LICENSE` for more information.
 
 <!-- CONTACT -->
+
 ## Contact
+
 Nizar El Berjawi - nizarberjawi12@gmail.com
 
 Project Link: [https://github.com/NizarBerjawi/places-api](https://github.com/NizarBerjawi/places-api)
 
 <!-- ACKNOWLEDGEMENTS -->
+
 ## Acknowledgements
-* [GeoNames](https://www.geonames.org/)
-* [Laravel-query-builder](https://spatie.be/docs/laravel-query-builder/v2/introduction)
+
+- [GeoNames](https://www.geonames.org/)
+- [Lumen Micro-framework](https://lumen.laravel.com/)
+- [Laravel-query-builder](https://spatie.be/docs/laravel-query-builder/v2/introduction)
+- [Bulma](https://bulma.io/)

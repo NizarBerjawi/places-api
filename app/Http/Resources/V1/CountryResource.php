@@ -15,19 +15,21 @@ class CountryResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name'            => $this->name,
-            'iso3166_alpha2'  => $this->iso3166_alpha2,
-            'iso3166_alpha3'  => $this->iso3166_alpha3,
-            'iso3166_numeric' => $this->iso3166_numeric,
-            'population'      => $this->population,
-            'area'            => $this->area,
-            'phone_code'      => $this->phone_code,
-            'continent'       => ContinentResource::make($this->whenLoaded('continent')),
-            'time_zones'      => TimeZoneResource::collection($this->whenLoaded('timeZones')),
-            'flag'            => FlagResource::make($this->whenLoaded('flag')),
-            'neighbours'      => self::collection($this->whenLoaded('neighbours')),
-            'languages'       => LanguageResource::collection($this->whenLoaded('languages')),
-
+            'name'           => $this->name,
+            'iso3166Alpha2'  => $this->iso3166_alpha2,
+            'iso3166Alpha3'  => $this->iso3166_alpha3,
+            'iso3166Numeric' => $this->iso3166_numeric,
+            'population'     => $this->population,
+            'area'           => $this->area,
+            'phoneCode'      => $this->phone_code,
+            'location'       => LocationResource::make($this->whenLoaded('location')),
+            'currency'       => CurrencyResource::make($this->whenLoaded('currency')),
+            'continent'      => ContinentResource::make($this->whenLoaded('continent')),
+            'flag'           => FlagResource::make($this->whenLoaded('flag')),
+            'timeZones'      => TimeZoneResource::collection($this->whenLoaded('timeZones')),
+            'neighbours'     => self::collection($this->whenLoaded('neighbours')),
+            'languages'      => LanguageResource::collection($this->whenLoaded('languages')),
+            'alternateNames' => AlternateNameResource::collection($this->whenLoaded('alternateNames')),
         ];
     }
 }

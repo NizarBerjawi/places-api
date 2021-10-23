@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Filters;
+namespace App\Queries;
 
-use Illuminate\Pagination\Paginator;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Spatie\QueryBuilder\QueryBuilder;
 
-abstract class Filter
+abstract class Query
 {
     /**
      * An instance of the query builder.
@@ -23,7 +23,7 @@ abstract class Filter
     protected $isInitialized;
 
     /**
-     * Instantiate the Filter.
+     * Instantiate the Query.
      *
      * @return void
      */
@@ -54,15 +54,35 @@ abstract class Filter
     abstract public function getAllowedIncludes(): array;
 
     /**
+     * The allowed fields to sort by.
+     *
+     * @return array
+     */
+    abstract public function getAllowedSorts(): array;
+
+    /**
      * Apply a scope to the builder.
      *
      * @param string $scope
      * @param array $parameters
      * @return static
      */
-    public function applyScope(string $scope, array $parameters = [])
+    public function applyScope(string $scope, array $parameters = []): self
     {
         $this->builder->scopes([$scope => $parameters]);
+
+        return $this;
+    }
+
+    /**
+     * Append more expressions to the Builder.
+     *
+     * @param callable $callable
+     * @return $this
+     */
+    public function apply(callable $callable): self
+    {
+        $callable($this->builder);
 
         return $this;
     }
@@ -76,23 +96,48 @@ abstract class Filter
     {
         $this->checkBuilder();
 
+        $class = $this->modelClass();
+
         return $this->builder
             ->allowedFilters($this->getAllowedFilters())
-            ->allowedIncludes($this->getAllowedIncludes());
+            ->allowedIncludes($this->getAllowedIncludes())
+            ->defaultSort((new $class)->getKeyName())
+            ->allowedSorts($this->getAllowedSorts());
     }
 
     /**
      * The paginator used to paginate the result.
      *
-     * @return \Illuminate\Pagination\Paginator
+     * @OA\Parameter(
+     *     parameter="pagination",
+     *     name="page",
+     *     in="query",
+     *     description="Paginate the data",
+     *     required=false,
+     *     style="deepObject",
+     *     @OA\Schema(
+     *         type="object",
+     *         enum = {"number", "size"},
+     *         @OA\Property(
+     *             property="number",
+     *             type="integer",
+     *             example="1"
+     *         ),
+     *         @OA\Property(
+     *             property="size",
+     *             type="integer",
+     *             example="10"
+     *         ),
+     *     )
+     * )
+     *
+     * @return \Illuminate\Pagination\LengthAwarePaginator
      */
-    public function getPaginator(): Paginator
+    public function getPaginator(): LengthAwarePaginator
     {
         $this->checkBuilder();
 
-        return $this->getBuilder()
-            ->simplePaginate(config('geonames.pagination_limit'))
-            ->appends(request()->query());
+        return $this->getBuilder()->jsonPaginate();
     }
 
     /**
@@ -100,7 +145,7 @@ abstract class Filter
      *
      * @return void
      */
-    protected function initializeBuilder()
+    protected function initializeBuilder(): void
     {
         $this->builder = QueryBuilder::for($this->modelClass());
 
@@ -112,10 +157,10 @@ abstract class Filter
      *
      * @return void
      */
-    protected function checkBuilder()
+    protected function checkBuilder(): void
     {
         if (! $this->isInitialized) {
-            throw new \Exception('Filter not initialized');
+            throw new \Exception('Query not initialized');
         }
     }
 }

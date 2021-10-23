@@ -26,10 +26,10 @@ class ContinentControllerTest extends TestCase
                 'prev',
             ],
             'meta' => [
-                'current_page',
+                'currentPage',
                 'from',
                 'path',
-                'per_page',
+                'perPage',
                 'to',
             ],
         ]);
@@ -51,7 +51,7 @@ class ContinentControllerTest extends TestCase
         $continentsData = json_decode($this->response->getContent(), true);
 
         $this->assertEquals(
-            Arr::get($continentsData, 'meta.per_page'),
+            Arr::get($continentsData, 'meta.perPage'),
             config('geonames.pagination_limit')
         );
     }
@@ -77,7 +77,7 @@ class ContinentControllerTest extends TestCase
         }
 
         $this->assertEquals(
-            Arr::get($continentsData, 'meta.per_page'),
+            Arr::get($continentsData, 'meta.perPage'),
             config('geonames.pagination_limit')
         );
     }
@@ -174,7 +174,9 @@ class ContinentControllerTest extends TestCase
             ->limit(2)
             ->get();
 
-        $response = $this->get('/api/v1/continents?filter[code]='.$continents->first()->code.'&filter[name]='.$continents->last()->name);
+        $response = $this->get('/api/v1/continents?filter[code]='
+            .$continents->first()->code
+            .'&filter[name]='.$continents->last()->name);
 
         $response->shouldReturnJson();
         $response->seeJsonContains([
@@ -203,10 +205,10 @@ class ContinentControllerTest extends TestCase
                 'prev',
             ],
             'meta' => [
-                'current_page',
+                'currentPage',
                 'from',
                 'path',
-                'per_page',
+                'perPage',
                 'to',
             ],
         ]);

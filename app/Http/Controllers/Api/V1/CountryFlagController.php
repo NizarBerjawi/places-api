@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\FlagFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\FlagResource;
 use App\Models\Country;
+use App\Queries\FlagQuery;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
@@ -18,14 +18,10 @@ class CountryFlagController extends Controller
      *      tags={"Countries"},
      *      summary="Returns the flag of a specific country",
      *      path="/countries/{countryCode}/flag",
-     *      @OA\Parameter(
-     *         name="countryCode",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
+     *      @OA\Parameter(ref="#/components/parameters/countryCode"),
+     *      @OA\Parameter(ref="#/components/parameters/flagFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/flagInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/flagSort"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -37,37 +33,23 @@ class CountryFlagController extends Controller
      *      @OA\Response(
      *          response=404,
      *          description="Country not found"
-     *       ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"country"},
-     *              )
-     *          )
-     *      ),
+     *       )
      * )
      *
-     * @param  \App\Filters\FlagFilter  $filter
+     * @param  \App\Queries\FlagQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function index(FlagFilter $filter, string $code)
+    public function index(FlagQuery $query, string $countryCode)
     {
-        if (! Country::where('iso3166_alpha2', $code)->exists()) {
+        if (! Country::where('iso3166_alpha2', $countryCode)->exists()) {
             throw (new ModelNotFoundException())->setModel(Country::class);
         }
 
-        $flag = $filter
-            ->applyScope('byCountry', Arr::wrap($code))
+        $flag = $query
+            ->applyScope('byCountryCode', Arr::wrap($countryCode))
             ->getBuilder()
-            ->first();
+            ->firstOrFail();
 
         return FlagResource::make($flag);
     }

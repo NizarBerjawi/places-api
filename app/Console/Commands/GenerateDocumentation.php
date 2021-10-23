@@ -43,11 +43,16 @@ class GenerateDocumentation extends Command
             return $this->error('Failed to generate documentation');
         }
 
+        // We import all the constants right before we
+        // initiate scanning of files.
         require_once $path;
 
-        $content = Generator::scan(['app/Http/Controllers', 'app/Models'])
-            ->toJson();
+        $content = Generator::scan([
+            'app/Http/Controllers',
+            'app/Models',
+            'app/Queries',
+        ])->toJson();
 
-        (new Filesystem)->put(base_path('openApi.json'), $content);
+        (new Filesystem)->put(public_path('openApi.json'), $content);
     }
 }

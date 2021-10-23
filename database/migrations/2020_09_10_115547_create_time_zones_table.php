@@ -14,14 +14,14 @@ class CreateTimeZonesTable extends Migration
     public function up()
     {
         Schema::create('time_zones', function (Blueprint $table) {
-            $table->string('time_zone')->primary();
-            $table->string('code')->unique();
+            $table->string('code')->primary();
+            $table->string('time_zone')->unqiue();
             $table->string('country_code', 2);
             $table->float('gmt_offset', 4, 2);
         });
 
         Schema::table('time_zones', function (Blueprint $table) {
-            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->onCascade('delete');
+            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->cascadeOnDelete();
         });
     }
 

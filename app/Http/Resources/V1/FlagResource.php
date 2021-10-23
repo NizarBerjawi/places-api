@@ -15,10 +15,9 @@ class FlagResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'country_code' => $this->country_code,
-            'filename'     => $this->filename,
-            'url'          => route('flags', ['flag' => $this->filename]),
-            'country'      => CountryResource::make($this->whenLoaded('country')),
+            'filename'    => $this->filename,
+            'url'         => route('flags', ['flag' => $this->filename]),
+            'country'     => CountryResource::make($this->whenLoaded('country')),
         ];
     }
 }

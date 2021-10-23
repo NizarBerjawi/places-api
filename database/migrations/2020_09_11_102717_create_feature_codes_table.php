@@ -14,14 +14,14 @@ class CreateFeatureCodesTable extends Migration
     public function up()
     {
         Schema::create('feature_codes', function (Blueprint $table) {
-            $table->string('code')->primary();
+            $table->string('code', 10)->primary();
             $table->text('short_description')->nullable();
             $table->text('full_description')->nullable();
             $table->string('feature_class_code');
         });
 
         Schema::table('feature_codes', function (Blueprint $table) {
-            $table->foreign('feature_class_code')->references('code')->on('feature_classes')->onCascade('delete');
+            $table->foreign('feature_class_code')->references('code')->on('feature_classes')->cascadeOnDelete();
         });
     }
 

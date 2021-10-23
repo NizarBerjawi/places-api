@@ -16,17 +16,19 @@ class CreatePlacesTable extends Migration
         Schema::create('places', function (Blueprint $table) {
             $table->id('geoname_id');
             $table->string('name');
-            $table->unsignedBigInteger('population')->nullable();
-            $table->smallInteger('elevation')->nullable();
-            $table->string('feature_code')->nullable();
-            $table->string('country_code')->nullable();
-            $table->string('time_zone')->nullable();
+            $table->string('ascii_name')->index()->nullable();
+            $table->unsignedBigInteger('population')->index()->nullable();
+            $table->smallInteger('elevation')->index()->nullable();
+            $table->smallInteger('dem')->index()->nullable();
+            $table->string('feature_code')->index()->nullable();
+            $table->string('country_code')->index()->nullable();
+            $table->string('time_zone_code')->index()->nullable();
         });
 
         Schema::table('places', function (Blueprint $table) {
-            $table->foreign('feature_code')->references('code')->on('feature_codes')->onCascade('delete');
-            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->onCascade('delete');
-            $table->foreign('time_zone')->references('time_zone')->on('time_zones')->onCascade('delete');
+            $table->foreign('feature_code')->references('code')->on('feature_codes')->cascadeOnDelete();
+            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->cascadeOnDelete();
+            $table->foreign('time_zone_code')->references('code')->on('time_zones')->cascadeOnDelete();
         });
     }
 
@@ -40,8 +42,9 @@ class CreatePlacesTable extends Migration
         Schema::table('places', function (Blueprint $table) {
             $table->dropForeign(['feature_code']);
             $table->dropForeign(['country_code']);
-            $table->dropForeign(['time_zone']);
+            $table->dropForeign(['time_zone_code']);
         });
+
         Schema::dropIfExists('places');
     }
 }

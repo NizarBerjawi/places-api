@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\PlaceFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\PlaceResource;
+use App\Pagination\PaginatedResourceResponse;
+use App\Queries\PlaceQuery;
+use Illuminate\Support\Arr;
 
 class PlaceController extends Controller
 {
@@ -15,6 +17,10 @@ class PlaceController extends Controller
      *      tags={"Places"},
      *      summary="Returns a list of paginated places",
      *      path="/places",
+     *      @OA\Parameter(ref="#/components/parameters/placeFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/placeInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/placeSort"),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -23,69 +29,22 @@ class PlaceController extends Controller
      *              @OA\Items(ref="#/components/schemas/place")
      *          ),
      *      ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter places by certain criteria",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={
-     *                  "feature_code",
-     *                  "country_code",
-     *                  "population_gt",
-     *                  "population_gte",
-     *                  "population_lt",
-     *                  "population_lte",
-     *                  "population_between"
-     *              },
-     *              @OA\Property(
-     *                  property="population_gt",
-     *                  type="integer",
-     *                  example="100000"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"country", "location", "feature_code"},
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
-     *      ),
      * )
      * @OA\Tag(
      *     name="Places",
      *     description="Everything about places"
      * )
      *
-     * @param \App\Filters\PlaceFilter  $filter
+     * @param \App\Queries\PlaceQuery  $query
      * @return \Illuminate\Http\Response
      */
-    public function index(PlaceFilter $filter)
+    public function index(PlaceQuery $query)
     {
-        $places = $filter->getPaginator();
+        $places = $query->getPaginator();
 
-        return PlaceResource::collection($places);
+        return new PaginatedResourceResponse(
+            PlaceResource::collection($places)
+        );
     }
 
     /**
@@ -96,47 +55,29 @@ class PlaceController extends Controller
      *     path="/places/{geonameId}",
      *     operationId="getPlaceByGeonameId",
      *     @OA\Property(ref="#/components/schemas/Place"),
-     *     @OA\Parameter(
-     *        name="geonameId",
-     *        in="path",
-     *        required=true,
-     *        @OA\Schema(
-     *            type="string"
-     *        )
+     *     @OA\Parameter(ref="#/components/parameters/placeFilter"),
+     *     @OA\Parameter(ref="#/components/parameters/placeInclude"),
+     *     @OA\Parameter(ref="#/components/parameters/placeSort"),
+     *     @OA\Parameter(ref="#/components/parameters/geonameId"),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/place")
      *     ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/place")
-     *       ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Place not found"
-     *       ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"country", "location", "feature_code"},
-     *              )
-     *          )
-     *      ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Place not found"
+     *     )
      * )
-     * @param \App\Filters\PlaceFilter  $filter
+     * @param \App\Queries\PlaceQuery  $query
      * @param string $uuid
      * @return \Illuminate\Http\Response
      */
-    public function show(PlaceFilter $filter, $geonameId)
+    public function show(PlaceQuery $query, $geonameId)
     {
-        $place = $filter
+        $place = $query
+            ->applyScope('byGeonameId', Arr::wrap($geonameId))
             ->getBuilder()
-            ->where('geoname_id', $geonameId)
             ->firstOrFail();
 
         return PlaceResource::make($place);

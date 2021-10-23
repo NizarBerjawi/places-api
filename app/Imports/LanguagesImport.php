@@ -3,13 +3,13 @@
 namespace App\Imports;
 
 use App\Imports\Iterators\GeonamesFileIterator;
-use App\Models\Language;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\LazyCollection;
 
 class LanguagesImport extends GeonamesFileIterator implements ShouldQueue
@@ -41,7 +41,10 @@ class LanguagesImport extends GeonamesFileIterator implements ShouldQueue
                     $languages->push($language);
                 }
 
-                Language::insert($languages->all());
+                DB::table('languages')
+                    ->upsert($languages->all(), [
+                        'iso639_3',
+                    ]);
             });
     }
 }

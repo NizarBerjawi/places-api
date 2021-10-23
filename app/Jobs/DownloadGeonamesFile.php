@@ -3,10 +3,13 @@
 namespace App\Jobs;
 
 use App\Exceptions\FileNotDownloadedException;
+use App\Jobs\Traits\Unzippable;
 use Illuminate\Support\Facades\Http;
 
 class DownloadGeonamesFile extends GeonamesJob
 {
+    use Unzippable;
+
     /**
      * A country code to download geonames for.
      *
@@ -32,24 +35,19 @@ class DownloadGeonamesFile extends GeonamesJob
      */
     public function handle()
     {
-        try {
-            $this
-                ->filesystem
-                ->ensureDirectoryExists($this->folderPath());
+        $this
+            ->filesystem
+            ->ensureDirectoryExists($this->folderPath());
 
-            $response = Http::withOptions([
-                'sink' => $this->filepath(),
-            ])->get($this->url());
+        $response = Http::withOptions([
+            'sink' => $this->filepath(),
+        ])->get($this->url());
 
-            if ($response->failed()) {
-                throw new FileNotDownloadedException($this->url());
-            }
-
-            $this->unzip();
-        } catch (\Exception $e) {
-            $this->fail($e);
-            $this->log($e->getMessage(), 'warning');
+        if ($response->failed()) {
+            throw new FileNotDownloadedException($this->url());
         }
+
+        $this->unzip();
     }
 
     /**
@@ -90,24 +88,5 @@ class DownloadGeonamesFile extends GeonamesJob
     private function folderPath()
     {
         return storage_path('app/data/geonames/'.$this->code);
-    }
-
-    /**
-     * Unzip all downloaded Geoname files.
-     *
-     * @return void
-     */
-    private function unzip()
-    {
-        $zip = new \ZipArchive();
-
-        $res = $zip->open($this->filepath());
-
-        if (! $res) {
-            throw new \Exception('Could not unzip file: '.$this->fileName());
-        }
-
-        $zip->extractTo($this->folderPath());
-        $zip->close();
     }
 }

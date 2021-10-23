@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\CountryFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CountryResource;
 use App\Models\Country;
+use App\Pagination\PaginatedResourceResponse;
+use App\Queries\CountryQuery;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Arr;
 
@@ -18,25 +19,11 @@ class CountryNeighbourController extends Controller
      *      tags={"Countries"},
      *      summary="Returns the neighbouring countries of a specific country",
      *      path="/countries/{countryCode}/neighbours",
-     *      @OA\Parameter(
-     *         name="countryCode",
-     *         in="path",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="string"
-     *         )
-     *     ),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
-     *      ),
+     *      @OA\Parameter(ref="#/components/parameters/countryCode"),
+     *      @OA\Parameter(ref="#/components/parameters/countryFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/countryInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/countrySort"),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -48,23 +35,25 @@ class CountryNeighbourController extends Controller
      *      @OA\Response(
      *          response=404,
      *          description="Country not found"
-     *       )
+     *      )
      * )
      *
-     * @param  \App\Filters\CountryFilter  $filter
+     * @param  \App\Queries\CountryQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function index(CountryFilter $filter, string $code)
+    public function index(CountryQuery $query, string $countryCode)
     {
-        if (! Country::where('iso3166_alpha2', $code)->exists()) {
+        if (! Country::where('iso3166_alpha2', $countryCode)->exists()) {
             throw (new ModelNotFoundException())->setModel(Country::class);
         }
 
-        $countries = $filter
-            ->applyScope('neighbourOf', Arr::wrap($code))
+        $countries = $query
+            ->applyScope('neighbourOf', Arr::wrap($countryCode))
             ->getPaginator();
 
-        return CountryResource::collection($countries);
+        return new PaginatedResourceResponse(
+            CountryResource::collection($countries)
+        );
     }
 }

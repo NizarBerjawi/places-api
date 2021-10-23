@@ -11,23 +11,37 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Schema(
  *      schema="location",
  *      type="object",
- *      title="Location"
- * )
- * @OA\Property(
- *      property="latitude",
- *      type="number",
- *      example="-25.734968",
- *      description="The latitude of a certain place"
- * )
- * @OA\Property(
- *      property="longitude",
- *      type="number",
- *      example="134.489563",
- *      description="The longitude of a certain place"
+ *      title="Location",
+ *      @OA\Property(
+ *           property="latitude",
+ *           type="number",
+ *           example="-25.734968",
+ *           description="The latitude of a certain place"
+ *      ),
+ *      @OA\Property(
+ *           property="longitude",
+ *           type="number",
+ *           example="134.489563",
+ *           description="The longitude of a certain place"
+ *      ),
  * )
  */
 class Location extends Model
 {
+    /**
+     * The primary key for the model.
+     *
+     * @var string
+     */
+    protected $primaryKey = 'geoname_id';
+
+    /**
+     * The "type" of the primary key geoname_id.
+     *
+     * @var string
+     */
+    protected $keyType = 'integer';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -51,13 +65,12 @@ class Location extends Model
      * Get locations by place.
      *
      * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param string $uuid
+     * @param int $geonameId
      * @return \Illuminate\Database\Eloquent\Builder  $query
      */
-    public function scopeByPlace(Builder $query, string $uuid)
+    public function scopeByPlace(Builder $query, int $geonameId)
     {
         return $query
-            ->where('locationable_id', $uuid)
-            ->where('locationable_type', Place::class);
+            ->where('geoname_id', $geonameId);
     }
 }

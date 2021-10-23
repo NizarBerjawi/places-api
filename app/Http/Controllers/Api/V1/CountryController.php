@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\CountryFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\CountryResource;
+use App\Pagination\PaginatedResourceResponse;
+use App\Queries\CountryQuery;
+use Illuminate\Support\Arr;
 
 class CountryController extends Controller
 {
@@ -15,6 +17,10 @@ class CountryController extends Controller
      *      tags={"Countries"},
      *      summary="Returns a list of paginated countries",
      *      path="/countries",
+     *      @OA\Parameter(ref="#/components/parameters/countryFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/countryInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/countrySort"),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -22,81 +28,24 @@ class CountryController extends Controller
      *              type="array",
      *              @OA\Items(ref="#/components/schemas/country")
      *          ),
-     *      ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter countries by certain criteria",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={
-     *                  "name",
-     *                  "iso3166_alpha2",
-     *                  "iso3166_alpha3",
-     *                  "iso3166_numeric",
-     *                  "population",
-     *                  "area",
-     *                  "phone_code",
-     *                  "area_gt",
-     *                  "area_gte",
-     *                  "area_lt",
-     *                  "area_lte",
-     *                  "area_between",
-     *                  "population_gt",
-     *                  "population_gte",
-     *                  "population_lt",
-     *                  "population_lte",
-     *                  "population_between",
-     *                  "neighbour_of"
-     *              },
-     *              @OA\Property(
-     *                  property="area_lt",
-     *                  type="integer",
-     *                  example="100000"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"continent", "timeZones", "flag", "neighbours"},
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
-     *      ),
+     *      )
      * )
+     *
      * @OA\Tag(
      *     name="Countries",
      *     description="Everything about countries"
      * )
      *
-     * @param  \App\Filters\CountryFilter  $filter
+     * @param  \App\Queries\CountryQuery  $query
      * @return \Illuminate\Http\Response
      */
-    public function index(CountryFilter $filter)
+    public function index(CountryQuery $query)
     {
-        $countries = $filter->getPaginator();
+        $countries = $query->getPaginator();
 
-        return CountryResource::collection($countries);
+        return new PaginatedResourceResponse(
+            CountryResource::collection($countries)
+        );
     }
 
     /**
@@ -106,48 +55,27 @@ class CountryController extends Controller
      *     tags={"Countries"},
      *     path="/countries/{countryCode}",
      *     operationId="getCountryByCode",
-     *     @OA\Property(ref="#/components/schemas/country"),
-     *     @OA\Parameter(
-     *        name="countryCode",
-     *        in="path",
-     *        required=true,
-     *        @OA\Schema(
-     *            type="string"
-     *        )
-     *     ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/country")
-     *       ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Country not found"
-     *       ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"continent", "timeZones", "flag", "neighbours"},
-     *              )
-     *          )
+     *     @OA\Parameter(ref="#/components/parameters/countryCode"),
+     *     @OA\Parameter(ref="#/components/parameters/countryInclude"),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/country")
      *      ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Country not found"
+     *      )
      * )
-     * @param  \App\Filters\CountryFilter  $filter
-     * @param  string $code
+     * @param  \App\Queries\CountryQuery  $query
+     * @param  string $countryCode
      * @return \Illuminate\Http\Response
      */
-    public function show(CountryFilter $filter, string $code)
+    public function show(CountryQuery $query, string $countryCode)
     {
-        $country = $filter
+        $country = $query
+            ->applyScope('byCountryCode', Arr::wrap($countryCode))
             ->getBuilder()
-            ->where('iso3166_alpha2', $code)
             ->firstOrFail();
 
         return new CountryResource($country);

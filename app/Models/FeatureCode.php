@@ -2,33 +2,34 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
  * Feature Code.
  *
  * @OA\Schema(
- *      schema="feature_code",
+ *      schema="featureCode",
  *      type="object",
- *      title="Feature Code"
- * )
- * @OA\Property(
- *      property="code",
- *      type="string",
- *      example="ADM4H",
- *      description="The code of the feature code"
- * )
- * @OA\Property(
- *      property="full_description",
- *      type="string",
- *      example="A former fourth-order administrative division",
- *      description="The full description of the feature code"
- * )
- * @OA\Property(
- *      property="short_description",
- *      type="string",
- *      example="Historical fourth-order administrative division",
- *      description="The short description of the feature code"
+ *      title="Feature Code",
+ *      @OA\Property(
+ *           property="code",
+ *           type="string",
+ *           example="ADM4H",
+ *           description="The code of the feature code"
+ *      ),
+ *      @OA\Property(
+ *           property="fullDescription",
+ *           type="string",
+ *           example="A former fourth-order administrative division",
+ *           description="The full description of the feature code"
+ *      ),
+ *      @OA\Property(
+ *           property="shortDescription",
+ *           type="string",
+ *           example="Historical fourth-order administrative division",
+ *           description="The short description of the feature code"
+ *      )
  * )
  */
 class FeatureCode extends Model
@@ -76,5 +77,29 @@ class FeatureCode extends Model
     public function places()
     {
         return $this->hasMany(Place::class, 'feature_code', 'code');
+    }
+
+    /**
+     * Scope Feature Code by its code.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $featureCodeCode
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByFeatureCodeCode(Builder $query, string $featureCodeCode)
+    {
+        return $query->where('code', $featureCodeCode);
+    }
+
+    /**
+     * Scope Feature Codes by Feature Class Code.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string $featureClassCode
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByFeatureClassCode(Builder $query, string $featureClassCode)
+    {
+        return $query->where('feature_class_code', $featureClassCode);
     }
 }

@@ -14,18 +14,21 @@ class CreateCountriesTable extends Migration
     public function up()
     {
         Schema::create('countries', function (Blueprint $table) {
+            $table->integer('geoname_id')->unique()->nullable();
             $table->string('iso3166_alpha2', 2)->primary();
             $table->string('iso3166_alpha3', 3)->unique();
             $table->smallInteger('iso3166_numeric')->unique();
+            $table->string('fips', 2)->nullable();
+            $table->string('topLevelDomain')->nullable();
             $table->string('name', 255);
             $table->unsignedBigInteger('population');
-            $table->unsignedDouble('area');
+            $table->unsignedDouble('area')->nullable();
             $table->string('phone_code')->nullable();
             $table->string('continent_code');
         });
 
         Schema::table('countries', function (Blueprint $table) {
-            $table->foreign('continent_code')->references('code')->on('continents')->onCascade('delete');
+            $table->foreign('continent_code')->references('code')->on('continents')->cascadeOnDelete();
         });
     }
 

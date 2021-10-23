@@ -11,6 +11,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ContinentsImport extends GeonamesFileIterator implements ShouldQueue
@@ -80,12 +81,16 @@ class ContinentsImport extends GeonamesFileIterator implements ShouldQueue
             }
 
             $continents->push([
-                'code' => $code,
-                'name' => $name,
+                'geoname_id' => $geonameId,
+                'code'       => $code,
+                'name'       => $name,
             ]);
         }
 
-        Continent::insert($continents->all());
+        DB::table('continents')
+            ->upsert($continents->all(), [
+                'geoname_id',
+            ]);
     }
 
     /**

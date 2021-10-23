@@ -18,24 +18,20 @@ class DownloadCountriesFile extends GeonamesJob
      */
     public function handle()
     {
-        try {
-            $response = Http::withOptions([
-                'stream' => true,
-            ])->get($this->url());
+        $response = Http::withOptions([
+            'stream' => true,
+        ])->get($this->url());
 
-            if ($response->failed()) {
-                throw new FileNotDownloadedException($this->url());
-            }
+        if ($response->failed()) {
+            throw new FileNotDownloadedException($this->url());
+        }
 
-            $saved = $this
-                ->filesystem
-                ->put($this->filepath(), $response->getBody());
+        $saved = $this
+            ->filesystem
+            ->put($this->filepath(), $response->getBody());
 
-            if (! $saved) {
-                throw new FileNotSavedException($this->filepath());
-            }
-        } catch (\Exception $e) {
-            $this->log($e->getMessage(), 'warning');
+        if (! $saved) {
+            throw new FileNotSavedException($this->filepath());
         }
     }
 

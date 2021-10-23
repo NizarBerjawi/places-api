@@ -3,7 +3,6 @@
 namespace App\Imports;
 
 use App\Imports\Iterators\GeonamesFileIterator;
-use App\Models\Place;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -33,13 +32,12 @@ class DeletesImport extends GeonamesFileIterator implements ShouldQueue
                     $ids->push($item[0]);
                 }
 
-                DB::table('places')
-                    ->whereIn('geoname_id', $ids->all())
+                DB::table('locations')
+                    ->whereIn('geoname_id', $ids)
                     ->delete();
 
-                DB::table('locations')
-                    ->where('locationable_type', Place::class)
-                    ->whereIn('locationable_id', $ids)
+                DB::table('places')
+                    ->whereIn('geoname_id', $ids)
                     ->delete();
             });
     }

@@ -9,27 +9,27 @@ use Illuminate\Database\Eloquent\Model;
  * Time Zone.
  *
  * @OA\Schema(
- *      schema="time_zone",
+ *      schema="timeZone",
  *      type="object",
- *      title="Time Zone"
- * )
- * @OA\Property(
- *      property="gmt_offset",
- *      type="integer",
- *      example="2",
- *      description="The number of hours a place refers to that time zone being three hours "
- * )
- * @OA\Property(
- *      property="time_zone",
- *      type="string",
- *      example="Asia/Tokyo",
- *      description="The time one name"
- * )
- * @OA\Property(
- *      property="code",
- *      type="string",
- *      example="asia_tokyo",
- *      description="The time zone name"
+ *      title="Time Zone",
+ *      @OA\Property(
+ *           property="gmtOffset",
+ *           type="integer",
+ *           example="2",
+ *           description="The number of hours a place refers to that time zone being three hours "
+ *      ),
+ *      @OA\Property(
+ *           property="timeZone",
+ *           type="string",
+ *           example="Asia/Tokyo",
+ *           description="The time zone name"
+ *      ),
+ *      @OA\Property(
+ *           property="code",
+ *           type="string",
+ *           example="asia_tokyo",
+ *           description="The time zone code"
+ *      )
  * )
  */
 class TimeZone extends Model
@@ -37,9 +37,21 @@ class TimeZone extends Model
     /**
      * The primary key for the model.
      *
+     * @OA\Parameter(
+     *    parameter="timeZoneCode",
+     *    name="timeZoneCode",
+     *    in="path",
+     *    required=true,
+     *    description="The code of the time zone",
+     *    example="asia_tokyo",
+     *    @OA\Schema(
+     *        type="string"
+     *    )
+     * )
+     *
      * @var string
      */
-    protected $primaryKey = 'time_zone';
+    protected $primaryKey = 'code';
 
     /**
      * The "type" of the primary key time_zone.
@@ -83,7 +95,7 @@ class TimeZone extends Model
      */
     public function places()
     {
-        return $this->hasMany(Place::class, 'time_zone', 'time_zone');
+        return $this->hasMany(Place::class, 'time_zone_code', 'code');
     }
 
     /**
@@ -96,5 +108,17 @@ class TimeZone extends Model
     public function scopeByCountry(Builder $query, string $countryCode)
     {
         return $query->where('country_code', $countryCode);
+    }
+
+    /**
+     * Get a time zones by code.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder  $query
+     * @param string $timeZoneCode
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByTimeZoneCode(Builder $query, string $timeZoneCode)
+    {
+        return $query->where('code', $timeZoneCode);
     }
 }

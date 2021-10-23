@@ -20,7 +20,7 @@ services:
       context: .
       dockerfile: .docker/Dockerfile.dev
       args: 
-        GID: ${GUID}
+        GID: ${GID}
         UID: ${UID}
         USER: ${USER}
         GIT_EMAIL: ${GIT_EMAIL}
@@ -43,9 +43,9 @@ services:
     image: postgres:13.3-alpine3.13
     restart: always
     environment:
-      - POSTGRES_USER=places_api
-      - POSTGRES_PASSWORD=secret
-      - POSTGRES_DB=places_api_database
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_DATABASE}
     ports:
       - "5432:5432"
     # volumes:
@@ -57,13 +57,14 @@ services:
       context: .
       dockerfile: .docker/utilities/Dockerfile.composer
       args: 
-        GID: ${GUID}
+        GID: ${GID}
         UID: ${UID}
         USER: ${USER}
     container_name: composer
     volumes:
       - .:/var/www/html
     working_dir: /var/www/html
+    entrypoint: ['composer']
     networks:
       - api_network
   artisan:
@@ -71,7 +72,7 @@ services:
       context: .
       dockerfile: .docker/Dockerfile.dev
       args: 
-        GID: ${GUID}
+        GID: ${GID}
         UID: ${UID}
         USER: ${USER}
     container_name: artisan
@@ -84,8 +85,13 @@ services:
     networks:
       - api_network
   npm:
-    image: node:14-alpine3.13
-    user: node
+    build:
+      context: .
+      dockerfile: .docker/utilities/Dockerfile.node
+      args: 
+        GID: ${GID}
+        UID: ${UID}
+        USER: ${USER}
     working_dir: /app
     volumes:
         - .:/app
@@ -95,7 +101,7 @@ services:
       context: .
       dockerfile: .docker/Dockerfile.dev
       args: 
-        GID: ${GUID}
+        GID: ${GID}
         UID: ${UID}
         USER: ${USER}
     container_name: artisan

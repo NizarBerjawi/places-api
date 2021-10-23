@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Imports\Iterators\CountriesFileIterator;
+use App\Jobs\DownloadAlternateNamesFiles;
 use App\Jobs\DownloadCountriesFile;
 use App\Jobs\DownloadCountryFlag;
 use App\Jobs\DownloadFeatureCodesFile;
@@ -12,8 +13,10 @@ use App\Jobs\DownloadLanguages;
 use App\Jobs\DownloadTimezonesFile;
 use Illuminate\Bus\Batch;
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Arr;
+use Laravel\Lumen\Application;
 
 class DownloadGeonamesFiles extends Command
 {
@@ -38,30 +41,40 @@ class DownloadGeonamesFiles extends Command
      */
     public function handle()
     {
-        $filesystem = new Filesystem();
-        $filesystem->ensureDirectoryExists(storage_path('app/data'));
+        $basePath = storage_path('app/data');
 
-        $dispatcher = app()->make(\Illuminate\Contracts\Bus\Dispatcher::class);
-        $dispatcher->batch([
-            new DownloadCountriesFile,
-            new DownloadInfoFile,
-            new DownloadLanguages,
-            new DownloadFeatureCodesFile,
-            new DownloadTimezonesFile,
-        ])->then(function (Batch $batch) {
-            if ($batch->finished()) {
-                $path = storage_path('app/data/'.config('geonames.countries_file'));
+        (new Filesystem)
+            ->ensureDirectoryExists($basePath);
 
-                (new CountriesFileIterator($path))
-                    ->iterable()
-                    ->each(function (array $row) {
-                        $code = Arr::get($row, 0);
-                        dispatch(new DownloadCountryFlag($code))->onQueue('download');
-                        dispatch(new DownloadGeonamesFile($code))->onQueue('download');
-                    });
-            }
-        })
-        ->onQueue('download')
-        ->dispatch();
+        Application::getInstance()
+            ->make(Dispatcher::class)
+            ->batch([
+                new DownloadCountriesFile,
+                new DownloadInfoFile,
+                new DownloadLanguages,
+                new DownloadFeatureCodesFile,
+                new DownloadTimezonesFile,
+                new DownloadAlternateNamesFiles,
+            ])->then(function (Batch $batch) use ($basePath) {
+                if ($batch->finished()) {
+                    $path = $basePath.'/'.config('geonames.countries_file');
+
+                    (new CountriesFileIterator($path))
+                        ->iterable()
+                        ->each(function (array $row) {
+                            $countryCode = Arr::first($row);
+
+                            dispatch(
+                                new DownloadCountryFlag($countryCode)
+                            )->onQueue('download-flags');
+
+                            dispatch(
+                                new DownloadGeonamesFile($countryCode)
+                            )->onQueue('download-places');
+                        });
+                }
+            })
+            ->onQueue('download-data')
+            ->dispatch();
     }
 }

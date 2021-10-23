@@ -34,6 +34,7 @@ class CountryCurrencyImport extends CountriesFileIterator implements ShouldQueue
             ]);
         }
 
-        DB::table('country_currency')->insert($countryCurrencies->all());
+        DB::table('country_currency')
+            ->insert($countryCurrencies->all());
     }
 }

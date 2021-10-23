@@ -22,12 +22,12 @@ class ContinentCountryControllerTest extends TestCase
             'data' => [
                 [
                     'name',
-                    'iso3166_alpha2',
-                    'iso3166_alpha3',
-                    'iso3166_numeric',
+                    'iso3166Alpha2',
+                    'iso3166Alpha3',
+                    'iso3166Numeric',
                     'population',
                     'area',
-                    'phone_code',
+                    'phoneCode',
                 ],
             ],
             'links' => [
@@ -37,10 +37,10 @@ class ContinentCountryControllerTest extends TestCase
                 'prev',
             ],
             'meta' => [
-                'current_page',
+                'currentPage',
                 'from',
                 'path',
-                'per_page',
+                'perPage',
                 'to',
             ],
         ]);
@@ -72,7 +72,7 @@ class ContinentCountryControllerTest extends TestCase
         $countriesData = json_decode($this->response->getContent(), true);
 
         $this->assertEquals(
-            Arr::get($countriesData, 'meta.per_page'),
+            Arr::get($countriesData, 'meta.perPage'),
             config('geonames.pagination_limit')
         );
     }
@@ -106,7 +106,7 @@ class ContinentCountryControllerTest extends TestCase
         }
 
         $this->assertEquals(
-            Arr::get($countriesData, 'meta.per_page'),
+            Arr::get($countriesData, 'meta.perPage'),
             config('geonames.pagination_limit')
         );
     }

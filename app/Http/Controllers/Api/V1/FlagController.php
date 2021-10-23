@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\FlagFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\FlagResource;
+use App\Pagination\PaginatedResourceResponse;
+use App\Queries\FlagQuery;
+use Illuminate\Support\Arr;
 
 class FlagController extends Controller
 {
@@ -15,6 +17,10 @@ class FlagController extends Controller
      *      tags={"Flags"},
      *      summary="Returns a list of paginated flags",
      *      path="/flags",
+     *      @OA\Parameter(ref="#/components/parameters/flagFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/flagInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/flagSort"),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -23,61 +29,22 @@ class FlagController extends Controller
      *              @OA\Items(ref="#/components/schemas/flag")
      *          ),
      *      ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter flags by certain criteria",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={"country_code"},
-     *              @OA\Property(
-     *                  property="country_code",
-     *                  type="string",
-     *                  example="AU"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"country"},
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
-     *      ),
      * )
      * @OA\Tag(
      *     name="Flags",
      *     description="Everything about flags"
      * )
      *
-     * @param \App\Filters\FlagFilter  $filter
+     * @param \App\Queries\FlagQuery  $query
      * @return \Illuminate\Http\Response
      */
-    public function index(FlagFilter $filter)
+    public function index(FlagQuery $query)
     {
-        $flags = $filter->getPaginator();
+        $flags = $query->getPaginator();
 
-        return FlagResource::collection($flags);
+        return new PaginatedResourceResponse(
+            FlagResource::collection($flags)
+        );
     }
 
     /**
@@ -88,49 +55,29 @@ class FlagController extends Controller
      *     path="/flags/{countryCode}",
      *     operationId="getFlagByCode",
      *     @OA\Property(ref="#/components/schemas/flag"),
-     *     @OA\Parameter(
-     *        name="countryCode",
-     *        in="path",
-     *        required=true,
-     *        @OA\Schema(
-     *            type="string"
-     *        )
+     *     @OA\Parameter(ref="#/components/parameters/countryCode"),
+     *     @OA\Parameter(ref="#/components/parameters/flagInclude"),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/flag")
      *     ),
-     *      @OA\Response(
-     *          response=200,
-     *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/flag")
-     *       ),
-     *      @OA\Response(
-     *          response=404,
-     *          description="Flag not found"
-     *       ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"country"},
-     *              )
-     *          )
-     *      ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Flag not found"
+     *     )
      * )
-     * @param \App\Filters\FlagFilter  $filter
+     * @param \App\Queries\FlagQuery  $query
      * @param  string $code
      * @return \Illuminate\Http\Response
      */
-    public function show(FlagFilter $filter, string $code)
+    public function show(FlagQuery $query, string $countryCode)
     {
-        $flag = $filter
+        $flag = $query
+            ->applyScope('byCountryCode', Arr::wrap($countryCode))
             ->getBuilder()
-            ->where('country_code', $code)
             ->firstOrFail();
 
-        return new FlagResource($flag);
+        return FlagResource::make($flag);
     }
 }

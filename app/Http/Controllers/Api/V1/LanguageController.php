@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\LanguageFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\LanguageResource;
+use App\Pagination\PaginatedResourceResponse;
+use App\Queries\LanguageQuery;
+use Illuminate\Support\Arr;
 
 class LanguageController extends Controller
 {
@@ -15,6 +17,10 @@ class LanguageController extends Controller
      *      tags={"Languages"},
      *      summary="Returns a list of paginated languages",
      *      path="/languages",
+     *      @OA\Parameter(ref="#/components/parameters/languageFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/languageInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/languageSort"),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
@@ -23,60 +29,54 @@ class LanguageController extends Controller
      *              @OA\Items(ref="#/components/schemas/language")
      *          ),
      *      ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter languages by certain criteria",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={"country_code"},
-     *              @OA\Property(
-     *                  property="country_code",
-     *                  type="string",
-     *                  example="AU"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"country"},
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
-     *      ),
      * )
      * @OA\Tag(
      *     name="Languages",
      *     description="Everything about languages"
      * )
      *
-     * @param \App\Filters\LanguageFilter  $filter
+     * @param \App\Queries\LanguageQuery  $query
      * @return \Illuminate\Http\Response
      */
-    public function index(LanguageFilter $filter)
+    public function index(LanguageQuery $query)
     {
-        $languages = $filter->getPaginator();
+        $languages = $query->getPaginator();
 
-        return LanguageResource::collection($languages);
+        return new PaginatedResourceResponse(
+            LanguageResource::collection($languages)
+        );
+    }
+
+    /**
+     * Display a specified language.
+     *
+     * @OA\Get(
+     *     tags={"Languages"},
+     *     path="/languages/{languageCode}",
+     *     operationId="getLanguageByCode",
+     *     @OA\Parameter(ref="#/components/parameters/languageCode"),
+     *     @OA\Parameter(ref="#/components/parameters/languageInclude"),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Successful operation",
+     *          @OA\JsonContent(ref="#/components/schemas/language")
+     *       ),
+     *      @OA\Response(
+     *          response=404,
+     *          description="Language not found"
+     *       )
+     * )
+     * @param \App\Queries\FlagQuery  $query
+     * @param  string $code
+     * @return \Illuminate\Http\Response
+     */
+    public function show(LanguageQuery $query, string $languageCode)
+    {
+        $language = $query
+            ->applyScope('byLanguageCode', Arr::wrap($languageCode))
+            ->getBuilder()
+            ->firstOrFail();
+
+        return LanguageResource::make($language);
     }
 }

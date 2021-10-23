@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Response;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
+use Spatie\QueryBuilder\Exceptions\InvalidIncludeQuery;
+use Spatie\QueryBuilder\Exceptions\InvalidQuery;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -45,11 +47,7 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        if ($request->ajax() || $request->wantsJson()) {
-            return $this->prepareJsonResponse($request, $exception);
-        }
-
-        return parent::render($request, $exception);
+        return $this->prepareJsonResponse($request, $exception);
     }
 
     /**
@@ -67,11 +65,6 @@ class Handler extends ExceptionHandler
             return;
         }
 
-        if ($e instanceof QueryException) {
-            $message = 'Internal Server Error';
-            $statusCode = 500;
-        }
-
         if (
             $e instanceof NotFoundHttpException ||
             $e instanceof ModelNotFoundException
@@ -80,14 +73,30 @@ class Handler extends ExceptionHandler
             $statusCode = 404;
         }
 
-        $errors = [
-            'message' => $debugEnabled ? $e->getMessage() : $message,
-            'status_code' => $debugEnabled ? $this->getStatusCode($e) : $statusCode,
-        ];
-
-        if (empty($errors['message'])) {
-            $errors['message'] = sprintf('%d %s', $statusCode, Response::$statusTexts[$statusCode]);
+        if ($e instanceof InvalidQuery) {
+            $message = $e->getMessage();
+            $statusCode = 404;
         }
+
+        if ($e instanceof InvalidIncludeQuery) {
+            $message = "Requested include(s) `{$e->unknownIncludes->implode(', ')}` are not allowed.";
+            $statusCode = 404;
+        }
+
+        if ($e instanceof QueryException) {
+            $message = 'Internal Server Error';
+            $statusCode = 500;
+        }
+
+        if (! isset($message)) {
+            $statusCode = $this->getStatusCode($e);
+            $message = sprintf('%s', Response::$statusTexts[$statusCode]);
+        }
+
+        $errors = [
+            'message' => $message,
+            'status_code' => $statusCode,
+        ];
 
         if ($debugEnabled) {
             $errors['exception'] = get_class($e);

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api\V1;
 
-use App\Filters\FeatureCodeFilter;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\FeatureCodeResource;
+use App\Pagination\PaginatedResourceResponse;
+use App\Queries\FeatureCodeQuery;
+use Illuminate\Support\Arr;
 
 class FeatureCodeController extends Controller
 {
@@ -15,54 +17,17 @@ class FeatureCodeController extends Controller
      *      tags={"Feature Codes"},
      *      summary="Returns a list of paginated feature codes",
      *      path="/featureCodes",
+     *      @OA\Parameter(ref="#/components/parameters/featureCodeFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/featureCodeInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/featureCodeSort"),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
      *          @OA\JsonContent(
      *              type="array",
-     *              @OA\Items(ref="#/components/schemas/feature_code")
+     *              @OA\Items(ref="#/components/schemas/featureCode")
      *          ),
-     *      ),
-     *      @OA\Parameter(
-     *          name="filter",
-     *          in="query",
-     *          description="Filter feature codes by certain criteria",
-     *          required=false,
-     *          style="deepObject",
-     *          @OA\Schema(
-     *              type="object",
-     *              enum={"code"},
-     *              @OA\Property(
-     *                  property="code",
-     *                  type="string",
-     *                  example="ADM1"
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"featureClass"},
-     *              )
-     *          )
-     *      ),
-     *      @OA\Parameter(
-     *          name="page",
-     *          in="query",
-     *          description="Get a specific page",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="integer",
-     *              example=1
-     *          )
      *      ),
      * )
      * @OA\Tag(
@@ -70,14 +35,16 @@ class FeatureCodeController extends Controller
      *     description="Everything about feature codes"
      * )
      *
-     * @param  \App\Filters\FeatureCodeFilter  $filter
+     * @param  \App\Queries\FeatureCodeQuery  $query
      * @return \Illuminate\Http\Response
      */
-    public function index(FeatureCodeFilter $filter)
+    public function index(FeatureCodeQuery $query)
     {
-        $featureCodes = $filter->getPaginator();
+        $featureCodes = $query->getPaginator();
 
-        return FeatureCodeResource::collection($featureCodes);
+        return new PaginatedResourceResponse(
+            FeatureCodeResource::collection($featureCodes)
+        );
     }
 
     /**
@@ -88,6 +55,7 @@ class FeatureCodeController extends Controller
      *     path="/featureCodes/{featureCodeCode}",
      *     operationId="getFeatureCodeByCode",
      *     @OA\Property(ref="#/components/schemas/featureCode"),
+     *     @OA\Parameter(ref="#/components/parameters/featureCodeInclude"),
      *     @OA\Parameter(
      *        name="featureCodeCode",
      *        in="path",
@@ -99,38 +67,24 @@ class FeatureCodeController extends Controller
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
-     *          @OA\JsonContent(ref="#/components/schemas/feature_code")
+     *          @OA\JsonContent(ref="#/components/schemas/featureCode")
      *       ),
      *      @OA\Response(
      *          response=404,
      *          description="Feature code not found"
-     *       ),
-     *      @OA\Parameter(
-     *          name="include",
-     *          in="query",
-     *          description="Include related resources",
-     *          required=false,
-     *          explode=false,
-     *          @OA\Schema(
-     *              type="array",
-     *              @OA\Items(
-     *                  type="string",
-     *                  enum = {"featureClass"},
-     *              )
-     *          )
-     *      ),
+     *       )
      * )
-     * @param  \App\Filters\FeatureCodeFilter  $filter
-     * @param  string $code
+     * @param  \App\Queries\FeatureCodeQuery  $query
+     * @param  string $featureCodeCode
      * @return \Illuminate\Http\Response
      */
-    public function show(FeatureCodeFilter $filter, string $code)
+    public function show(FeatureCodeQuery $query, string $featureCodeCode)
     {
-        $featureCode = $filter
+        $featureCode = $query
+            ->applyScope('byFeatureCodeCode', Arr::wrap($featureCodeCode))
             ->getBuilder()
-            ->where('code', $code)
             ->firstOrFail();
 
-        return new FeatureCodeResource($featureCode);
+        return FeatureCodeResource::make($featureCode);
     }
 }
