@@ -57,13 +57,8 @@
             <section class="section">
 
                 <div class="columns">
-                    @hasSection('menu')
-                        <div class="column is-2">
-                            @yield('menu')
-                        </div>
-                    @endif
 
-                    <div class="column is-10 @sectionMissing('menu') is-offset-1 @endif">
+                    <div class="column is-10 is-offset-1">
                         <div class="content">
                             @yield('content')
                         </div>

@@ -57,11 +57,3 @@ $router->get('/languages', [
     'uses' => 'WebController@languages',
     'as' => 'languages',
 ]);
-
-$router->group(['namespace' => '\Rap2hpoutre\LaravelLogViewer'], function () use ($router) {
-    $router->get('logs', [
-        'uses' => 'LogViewerController@index',
-        'as'   => 'logs',
-        'middleware' => ['simple-auth'],
-    ]);
-});
