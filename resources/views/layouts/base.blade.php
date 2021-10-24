@@ -41,6 +41,7 @@
             background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.15));
             bottom: 45px;
         }
+
     </style>
 </head>
 
@@ -49,16 +50,30 @@
         @include('partials.navbar')
     </header>
 
+
     <main>
+
         <div class="container">
-            <div class="column is-10 is-offset-1">
-                @yield('content')
-            </div>
+            <section class="section">
+
+                <div class="columns">
+                    @hasSection('menu')
+                        <div class="column is-2">
+                            @yield('menu')
+                        </div>
+                    @endif
+
+                    <div class="column is-10 @sectionMissing('menu') is-offset-1 @endif">
+                        <div class="content">
+                            @yield('content')
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
     </main>
 
     @yield('scripts')
-
 
     <div class="github-ribbon">
         <a target="_blank" href="{{ env('GITHUB_URL') }}">Fork me on GitHub</a>
