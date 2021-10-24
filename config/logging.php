@@ -37,7 +37,7 @@ return [
     'channels' => [
         'http-requests' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/requests.log'),
+            'path' => storage_path('logs/http/requests.log'),
             'level' => 'info',
         ],
 
@@ -55,7 +55,7 @@ return [
 
         'daily' => [
             'driver' => 'daily',
-            'path' => storage_path('logs/lumen.log'),
+            'path' => storage_path('logs/app/lumen.log'),
             'level' => 'debug',
             'days' => 14,
         ],
