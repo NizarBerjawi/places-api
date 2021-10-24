@@ -38,28 +38,29 @@
 
             <h4>Conventions</h4>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Operator</th>
-                        <th>Description</th>
-                        <th>Example</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>OR</td>
-                        <td>comma-separated filters</td>
-                        <td><code>?filter[featureCode]=ADM1,ADM2,ADM3</code></td>
-                    </tr>
-                    <tr>
-                        <td>AND</td>
-                        <td>separate filters</td>
-                        <td><code>?filter[featureCode]=MT&filter[countryCode]=FR&filter[elevationGt]=3000</code></td>
-                    </tr>
-                </tbody>
-            </table>
-
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Operator</th>
+                            <th>Description</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>OR</td>
+                            <td>comma-separated filters</td>
+                            <td><code>?filter[featureCode]=ADM1,ADM2,ADM3</code></td>
+                        </tr>
+                        <tr>
+                            <td>AND</td>
+                            <td>separate filters</td>
+                            <td><code>?filter[featureCode]=MT&filter[countryCode]=FR&filter[elevationGt]=3000</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <p>Some of the available endpoints allow you to scope results using comparison operators. For example:</p>
 
             <pre>GET /api/v1/countries/AU/places?filter[featureCode]=ADM1&filter[populationGte]=2000000</pre>
@@ -68,42 +69,56 @@
                 2000000.
             <p>
 
-            <table>
-                <thead>
-                    <tr>
-                        <th>Operator</th>
-                        <th>Description</th>
-                        <th>Example</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><b>Gt</b></td>
-                        <td>greater than</td>
-                        <td><code>?filter[popultionGt]=1000000</code> </td>
-                    </tr>
-                    <tr>
-                        <td><b>Lt</b></td>
-                        <td>less than</td>
-                        <td><code>?filter[popultionLt]=1000000</code></td>
-                    </tr>
-                    <tr>
-                        <td><b>Gte</b></td>
-                        <td>greater than or equal</td>
-                        <td><code>?filter[popultionGte]=1000000</code></td>
-                    </tr>
-                    <tr>
-                        <td><b>Lte</b></td>
-                        <td>less than or equal</td>
-                        <td><code>?filter[popultionLte]=1000000</code></td>
-                    </tr>
-                    <tr>
-                        <td><b>Between</b></td>
-                        <td>between</td>
-                        <td><code>?filter[popultionBetween]=100000,350000</code></td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Operator</th>
+                            <th>Description</th>
+                            <th>Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>Gt</b></td>
+                            <td>greater than</td>
+                            <td><code>?filter[popultionGt]=1000000</code> </td>
+                        </tr>
+                        <tr>
+                            <td><b>Lt</b></td>
+                            <td>less than</td>
+                            <td><code>?filter[popultionLt]=1000000</code></td>
+                        </tr>
+                        <tr>
+                            <td><b>Gte</b></td>
+                            <td>greater than or equal</td>
+                            <td><code>?filter[popultionGte]=1000000</code></td>
+                        </tr>
+                        <tr>
+                            <td><b>Lte</b></td>
+                            <td>less than or equal</td>
+                            <td><code>?filter[popultionLte]=1000000</code></td>
+                        </tr>
+                        <tr>
+                            <td><b>Between</b></td>
+                            <td>between</td>
+                            <td><code>?filter[popultionBetween]=100000,350000</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h1>Sorting</h1>
+            <p>All API results are sorted by their primary key by default. However, you are free to change the sort criteria
+                by adding the <code>sort</code> query parameter to the request.
+            <pre>GET /api/v1/countries?sort=population</pre>
+            <p>The above request will return all the countries sorted by <code>population</code> in ascending order.</p>
+            <p>To sort in descending order, simply add a <code>-</code> to the sort paramter.</p>
+            <pre>GET /api/v1/countries?sort=-population</pre>
+            <p>The above request will return all the countries sorted by <code>population</code> in descending order.</p>
+            
+            <p>It is also possible to sort by multiple criteria by adding comma-separated sort parameters.</p>
+            <pre>GET /api/v1/countries?sort=population,iso3166Alpha2</pre>
 
 
             <h1>Pagination</h1>
