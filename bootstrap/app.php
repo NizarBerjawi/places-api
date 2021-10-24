@@ -23,6 +23,7 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
+$app->withFacades();
 $app->withEloquent();
 
 /*
@@ -77,9 +78,10 @@ $app->configure('json-api-paginate');
 |
 */
 $app->routeMiddleware([
-    'api_version' => App\Http\Middleware\ApiVersion::class,
+    'api-version' => App\Http\Middleware\ApiVersion::class,
     'http-logger' => Spatie\HttpLogger\Middlewares\HttpLogger::class,
     'throttle' => App\Http\Middleware\RateLimits::class,
+    'simple-auth' => App\Http\Middleware\SimpleAuth::class
 ]);
 
 /*
@@ -95,6 +97,7 @@ $app->routeMiddleware([
 $app->register(\Spatie\HttpLogger\HttpLoggerServiceProvider::class);
 $app->register(\Spatie\QueryBuilder\QueryBuilderServiceProvider::class);
 $app->register(\Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::class);
+$app->register(\Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -115,7 +118,7 @@ $app->router->group([
 });
 
 $app->router->group([
-    'middleware' => ['api_version:v1', 'throttle:500,1', 'http-logger'],
+    'middleware' => ['api-version:v1', 'throttle:500,1', 'http-logger'],
     'namespace'  => 'App\Http\Controllers\Api\V1',
     'prefix'     => 'api/v1' 
 ], function ($router) {

@@ -9,6 +9,7 @@
         "guzzlehttp/guzzle": "^7.0",
         "illuminate/routing": "^8.54",
         "laravel/lumen-framework": "^8.0",
+        "rap2hpoutre/laravel-log-viewer": "^1.7",
         "spatie/laravel-http-logger": "^1.7",
         "spatie/laravel-json-api-paginate": "^1.10",
         "spatie/laravel-query-builder": "^3.3",
