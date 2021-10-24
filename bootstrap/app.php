@@ -23,7 +23,6 @@ $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
 
-$app->withFacades();
 $app->withEloquent();
 
 /*
@@ -81,7 +80,6 @@ $app->routeMiddleware([
     'api-version' => App\Http\Middleware\ApiVersion::class,
     'http-logger' => Spatie\HttpLogger\Middlewares\HttpLogger::class,
     'throttle' => App\Http\Middleware\RateLimits::class,
-    'simple-auth' => App\Http\Middleware\SimpleAuth::class
 ]);
 
 /*
@@ -97,7 +95,6 @@ $app->routeMiddleware([
 $app->register(\Spatie\HttpLogger\HttpLoggerServiceProvider::class);
 $app->register(\Spatie\QueryBuilder\QueryBuilderServiceProvider::class);
 $app->register(\Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::class);
-$app->register(\Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

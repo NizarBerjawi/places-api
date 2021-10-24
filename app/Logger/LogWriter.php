@@ -5,9 +5,9 @@ namespace App\Logger;
 use Illuminate\Http\Request;
 use Illuminate\Log\LogManager;
 use Laravel\Lumen\Application;
-use Spatie\HttpLogger\DefaultLogWriter;
+use Spatie\HttpLogger\LogWriter as HttpLoggerLogWriter;
 
-class LogWriter extends DefaultLogWriter
+class LogWriter implements HttpLoggerLogWriter
 {
     public function logRequest(Request $request)
     {
@@ -17,5 +17,18 @@ class LogWriter extends DefaultLogWriter
         $logger
             ->channel('http-requests')
             ->info($message);
+    }
+
+    public function getMessage(Request $request)
+    {
+        return [
+            'method' => strtoupper($request->getMethod()),
+            'uri' => $request->getPathInfo(),
+        ];
+    }
+
+    protected function formatMessage(array $message)
+    {
+        return "{$message['method']} {$message['uri']}";
     }
 }
