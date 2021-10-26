@@ -92,11 +92,15 @@ However, you can also run the api without Docker. In that case, you need:
    ```sh
    docker-compose -f docker-compose.prod.yml run --rm php php artisan geonames:import  
    ```
-6. Start the application server
+6. Start the queue worker
+  ```sh
+  docker-compose -f docker-compose.prod.yml run --rm php php artisan queue:work --queue=download-data,download-places,download-names,import-data,import-places,import-names
+  ```
+7. Start the application server
    ```sh
    docker-compose -f docker-compose.prod.yml up --build --detach nginx
    ```
-7. Open the application in a browser
+8. Open the application in a browser
    ```sh
    http://localhost:80
    ```
