@@ -47,6 +47,9 @@ class NeighbourCountriesImport extends CountriesFileIterator implements ShouldQu
                 });
             });
 
-        DB::table('country_neighbour')->insert($data->all());
+        DB::table('country_neighbour')
+            ->upsert($data->all(), [
+                'neighbour_code', 'country_code',
+            ]);
     }
 }

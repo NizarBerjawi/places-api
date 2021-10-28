@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * @OA\Schema(
@@ -94,6 +95,27 @@ class Continent extends Model
             'geoname_id',
             'geoname_id',
         );
+    }
+
+    /**
+     * Returns non-existing Continent IDs from an array of IDs.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param array  $ids
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeGetMissing(Builder $query, array $ids)
+    {
+        $params = '('.implode('),(', $ids).')';
+
+        $missingQuery = DB::query()
+            ->select('t.geoname_id')
+            ->fromRaw("(values $params) as t(geoname_id)")
+            ->leftJoin('continents', 't.geoname_id', '=', 'continents.geoname_id')
+            ->whereNull('continents.geoname_id')
+            ->distinct();
+
+        return $query->setQuery($missingQuery);
     }
 
     /**
