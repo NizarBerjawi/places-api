@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 /**
  * Place.
@@ -152,6 +153,27 @@ class Place extends Model
     public function alternateNames()
     {
         return $this->hasMany(AlternateName::class, 'geoname_id');
+    }
+
+    /**
+     * Returns non-existing Place IDs from an array of IDs.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param array  $ids
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeGetMissing(Builder $query, array $ids)
+    {
+        $params = '('.implode('),(', $ids).')';
+
+        $missingQuery = DB::query()
+            ->select('t.geoname_id')
+            ->fromRaw("(values $params) as t(geoname_id)")
+            ->leftJoin('places', 't.geoname_id', '=', 'places.geoname_id')
+            ->whereNull('places.geoname_id')
+            ->distinct();
+
+        return $query->setQuery($missingQuery);
     }
 
     /**

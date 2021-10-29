@@ -51,7 +51,10 @@ class CountryLanguageImport extends CountriesFileIterator implements ShouldQueue
         }
 
         DB::table('country_language')
-            ->insert($countryLanguages->all());
+            ->upsert($countryLanguages->all(), [
+                'country_code',
+                'language_code',
+            ]);
     }
 
     /**
