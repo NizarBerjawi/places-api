@@ -120,6 +120,7 @@ $rules = [
         'elements' => ['method', 'property']
     ],
     'whitespace_after_comma_in_array' => true,
+    'method_chaining_indentation' => true
 ];
 
 $finder = PhpCsFixer\Finder::create()
