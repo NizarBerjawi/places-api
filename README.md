@@ -1,10 +1,3 @@
-<!-- [![Contributors][contributors-shield]][contributors-url]
-[![Forks][forks-shield]][forks-url]
-[![Stargazers][stars-shield]][stars-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url] -->
-
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
@@ -13,7 +6,7 @@
   <p align="center">
     A RESTful places API built using Lumen micro-framework.
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Website »</strong></a>
+    <a href="172-105-254-141.ip.linodeusercontent.com"><strong>API »</strong></a>
     <br />
 </p>
 
@@ -35,6 +28,7 @@
       </ul>
     </li>
     <li><a href="#documentation">Documentation</a></li>
+    <li><a href="#like-my-work">Like My Work?</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="#acknowledgements">Acknowledgements</a></li>
@@ -115,13 +109,19 @@ However, you can also run the api without Docker. In that case, you need:
 
 ## Documentation
 
-For a full details, please refer to the [Documentation](https://placesapi.dev/documentation).
+For a full details, please refer to the [Documentation](http://172-105-254-141.ip.linodeusercontent.com/documentation).
+
+## Like My Work?
+
+If you like my work and find that this project helps, please support! 
+
+[!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png)](https://www.buymeacoffee.com/placesApi)
 
 <!-- LICENSE -->
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
+Distributed under the MIT License. See [LICENSE.txt](https://github.com/NizarBerjawi/places-api/blob/master/LICENSE.txt) for more information.
 
 <!-- CONTACT -->
 

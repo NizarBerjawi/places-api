@@ -108,14 +108,14 @@ $app->register(\Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::class);
 */
 
 $app->router->group([
-    'middleware' => ['http-logger'],
+    'middleware' => ['http-logger', 'throttle:100,1'],
     'namespace'  => 'App\Http\Controllers', 
 ], function ($router) {
     require __DIR__.'/../routes/web.php';
 });
 
 $app->router->group([
-    'middleware' => ['api-version:v1', 'throttle:500,1', 'http-logger'],
+    'middleware' => ['api-version:v1', 'throttle:100,1', 'http-logger'],
     'namespace'  => 'App\Http\Controllers\Api\V1',
     'prefix'     => 'api/v1' 
 ], function ($router) {
