@@ -130,6 +130,12 @@
             <p> You can control the number of items per page using the <code>page[size]</code> query parameter.</p>
             <pre>GET /api/v1/featureCodes?page[number]=3&page[size]=5</pre>
 
+            <h1>Rate-Limiting</h1>
+            <p>At this point in time, users can make a <code>100</code> requests per minute to the API before getting rate-limited.</p>
+
+            <p>You can determine how many requests you have remaining by inspecting the Response Headers of your Request:</p>
+
+            <pre>X-RateLimit-Limit: 100&#010;X-RateLimit-Remaining: 65</pre>
 
             <h1>Additional Resources</h1>
 
