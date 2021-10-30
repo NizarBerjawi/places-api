@@ -84,18 +84,18 @@ However, you can also run the api without Docker. In that case, you need:
    ```sh
    docker-compose -f docker-compose.prod.yml run --rm php php artisan migrate:fresh  
    ```
-4. Download all the file
+4. Push the file download jobs to the queue
    ```sh
    docker-compose -f docker-compose.prod.yml run --rm php php artisan geonames:download  
    ```
-5. Import all the file
+5. Push the file import jobs to the queue
    ```sh
    docker-compose -f docker-compose.prod.yml run --rm php php artisan geonames:import  
    ```
 6. Start the queue worker
-  ```sh
-  docker-compose -f docker-compose.prod.yml run --rm php php artisan queue:work --queue=download-data,download-places,download-names,import-data,import-places,import-names
-  ```
+   ```sh
+   docker-compose -f docker-compose.prod.yml run --rm php php artisan queue:work --stop-when-empty --queue=download-data,download-places,download-flags,download-names,import-data,import-places,import-names
+   ```
 7. Start the application server
    ```sh
    docker-compose -f docker-compose.prod.yml up --build --detach nginx
