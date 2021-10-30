@@ -94,7 +94,7 @@ However, you can also run the api without Docker. In that case, you need:
    ```
 6. Start the queue worker
    ```sh
-   docker-compose -f docker-compose.prod.yml run --rm php php artisan queue:work --stop-when-empty --queue=download-data,download-places,download-flags,download-names,import-data,import-places,import-names
+   docker-compose -f docker-compose.prod.yml run --rm php php artisan queue:work --stop-when-empty --queue=download-data,import-data,download-places,import-places,download-flags,download-names,import-names
    ```
 7. Start the application server
    ```sh
