@@ -6,7 +6,7 @@
   <p align="center">
     A RESTful places API built using Lumen micro-framework.
     <br />
-    <a href="172-105-254-141.ip.linodeusercontent.com"><strong>API »</strong></a>
+    <a href="http://172-105-254-141.ip.linodeusercontent.com"><strong>API »</strong></a>
     <br />
 </p>
 
