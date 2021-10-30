@@ -27,6 +27,7 @@ RUN chmod -R ug+rwx ./storage && \
   find . -type f -exec chmod 644 {} \; && \
   find . -type d -exec chmod 755 {} \;
 
+COPY --from=builder --chown=www-data:www-data /app/public ./public
 COPY --from=builder --chown=www-data:www-data /app/vendor ./vendor
 
 USER www-data
