@@ -31,7 +31,7 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#development">Development</a></li>
+        <li><a href="#running-the-application">Running the Application</a></li>
       </ul>
     </li>
     <li><a href="#documentation">Documentation</a></li>
@@ -70,13 +70,13 @@ However, you can also run the api without Docker. In that case, you need:
 4. Docker
 5. Docker Compose
 
-### Running the Application locally
+### Running the Application
 
 1. Clone the repository
    ```sh
    git clone https://github.com/NizarBerjawi/places-api.git
    ```
-2. Create an .env file and set `APP_ENV=production`
+2. Create an .env file then set `APP_ENV=production` and `APP_URL=http://localhost:80`
    ```sh
    cp .env.example .env
    ```
@@ -108,7 +108,7 @@ However, you can also run the api without Docker. In that case, you need:
 
 <!-- USAGE EXAMPLES -->
 
-## Usage
+## Documentation
 
 For a full details, please refer to the [Documentation](https://placesapi.dev/documentation).
 
@@ -122,9 +122,9 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 ## Contact
 
-Nizar El Berjawi - nizarberjawi12@gmail.com
+If you find any issues, please contact the developer:
 
-Project Link: [https://github.com/NizarBerjawi/places-api](https://github.com/NizarBerjawi/places-api)
+Nizar El Berjawi - nizarberjawi12@gmail.com
 
 <!-- ACKNOWLEDGEMENTS -->
 
@@ -132,5 +132,3 @@ Project Link: [https://github.com/NizarBerjawi/places-api](https://github.com/Ni
 
 - [GeoNames](https://www.geonames.org/)
 - [Lumen Micro-framework](https://lumen.laravel.com/)
-- [Laravel-query-builder](https://spatie.be/docs/laravel-query-builder/v2/introduction)
-- [Bulma](https://bulma.io/)
