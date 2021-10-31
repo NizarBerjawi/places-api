@@ -11,6 +11,7 @@ services:
     restart: always
     volumes:
       - .docker/certbot/www/:/var/www/certbot/:ro
+      - .docker/certbot/conf/:/etc/nginx/ssl/:ro
     depends_on:
       - builder
       - php
@@ -71,6 +72,7 @@ services:
     image: certbot/certbot
     volumes:
       - .docker/certbot/www/:/var/www/certbot/:rw
+      - .docker/certbot/conf/:/etc/letsencrypt/:rw
 # Docker Networks
 networks:
   api_network:
