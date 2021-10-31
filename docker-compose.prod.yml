@@ -8,11 +8,15 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    restart: always
+    volumes:
+      - .docker/certbot/www/:/var/www/certbot/:ro
     depends_on:
       - builder
       - php
       - postgres
       - supervisor
+      - certbot
     networks:
       - api_network
   php:
@@ -63,6 +67,10 @@ services:
     container_name: builder
     networks:
       - api_network
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - .docker/certbot/www/:/var/www/certbot/:rw
 # Docker Networks
 networks:
   api_network:
