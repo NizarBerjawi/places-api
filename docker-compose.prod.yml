@@ -12,6 +12,7 @@ services:
     volumes:
       - .docker/certbot/www/:/var/www/certbot/:ro
       - .docker/certbot/conf/:/etc/nginx/ssl/:ro
+      - nginx:/etc/nginx/http.d
     depends_on:
       - builder
       - php
@@ -73,6 +74,7 @@ services:
     volumes:
       - .docker/certbot/www/:/var/www/certbot/:rw
       - .docker/certbot/conf/:/etc/letsencrypt/:rw
+      - nginx:/etc/nginx/http.d
 # Docker Networks
 networks:
   api_network:
@@ -81,3 +83,4 @@ networks:
 volumes:
   dbData:
   storage:
+  nginx:
