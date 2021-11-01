@@ -9,9 +9,6 @@ services:
       - "80:80"
       - "443:443"
     restart: always
-    volumes:
-      # - .docker/certbot/www/:/var/www/certbot/:ro
-      - .docker/certbot/conf/:/etc/nginx/ssl/:ro
     depends_on:
       - builder
       - php
@@ -65,18 +62,6 @@ services:
         APP_URL: ${APP_URL}
     image: builder
     container_name: builder
-    networks:
-      - api_network
-  certbot:
-    build:
-      context: .
-      dockerfile: .docker/nginx/Dockerfile.nginx
-    entrypoint: ['certbot']
-    volumes:
-      # - .docker/certbot/www/:/var/www/certbot/:rw
-      - .docker/certbot/conf/:/etc/letsencrypt/:rw
-    depends_on:
-      - nginx
     networks:
       - api_network
 # Docker Networks
