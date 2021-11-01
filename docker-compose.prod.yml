@@ -72,4 +72,3 @@ networks:
 volumes:
   dbData:
   storage:
-  nginx:
