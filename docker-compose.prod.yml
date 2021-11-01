@@ -8,6 +8,10 @@ services:
     ports:
       - "80:80"
       - "443:443"
+    restart: always
+    volumes:
+      - .docker/certbot/www/:/var/www/certbot/:ro
+      - .docker/certbot/conf/:/etc/nginx/ssl/:ro
     depends_on:
       - builder
       - php
@@ -63,6 +67,13 @@ services:
     container_name: builder
     networks:
       - api_network
+  certbot:
+    image: certbot/certbot
+    volumes:
+      - .docker/certbot/www/:/var/www/certbot/:rw
+      - .docker/certbot/conf/:/etc/letsencrypt/:rw
+    depends_on:
+      - nginx
 # Docker Networks
 networks:
   api_network:

@@ -70,38 +70,54 @@ However, you can also run the api without Docker. In that case, you need:
    ```sh
    git clone https://github.com/NizarBerjawi/places-api.git
    ```
-2. Create an .env file then set `APP_ENV=production` and `APP_URL=http://localhost:80`
+2. Create an .env file
    ```sh
    cp .env.example .env
    ```
-3. Migrate the database 
+3. Install composer packages
    ```sh
-   docker-compose -f docker-compose.prod.yml run --rm php php artisan migrate:fresh  
+   docker-compose -f docker-compose.dev.yml run --rm composer install  
    ```
-4. Push the file download jobs to the queue
+4. Install npm packages
    ```sh
-   docker-compose -f docker-compose.prod.yml run --rm php php artisan geonames:download 
+   docker-compose -f docker-compose.dev.yml run --rm npm install  
+   ```
+5. Generate Open API spec
+   ```sh
+   docker-compose -f docker-compose.dev.yml run --rm artisan docs:generate  
+   ```
+4. Build assets
+   ```sh
+   docker-compose -f docker-compose.dev.yml run --rm npm run build  
+   ```
+5. Migrate the database 
+   ```sh
+   docker-compose -f docker-compose.dev.yml run --rm artisan migrate  
+   ```
+6. Push the file download jobs to the queue
+   ```sh
+   docker-compose -f docker-compose.dev.yml run --rm artisan geonames:download 
    ```
    Then process the queue:
    ```sh
-   docker-compose -f docker-compose.prod.yml run --rm php php artisan queue:work --stop-when-empty --queue=download-data,download-places,download-flags,download-names 
+   docker-compose -f docker-compose.dev.yml run --rm artisan queue:work --stop-when-empty --queue=download-data,download-places,download-flags,download-names 
    ```
 
-5. When all the files have been downloaded, push the file import jobs to the queue
+7. When all the files have been downloaded, push the file import jobs to the queue
    ```sh
-   docker-compose -f docker-compose.prod.yml run --rm php php artisan geonames:import  
+   docker-compose -f docker-compose.dev.yml run --rm php php artisan geonames:import  
    ```
    Then process the queue:
    ```sh
-   docker-compose -f docker-compose.prod.yml run --rm php php artisan queue:work --stop-when-empty --queue=import-data,import-places,import-names 
+   docker-compose -f docker-compose.dev.yml run --rm artisan queue:work --stop-when-empty --queue=import-data,import-places,import-names 
    ```
-6. Start the application server
+8. Start the application server
    ```sh
-   docker-compose -f docker-compose.prod.yml up --build --detach nginx
+   docker-compose -f docker-compose.dev.yml up --build nginx
    ```
-7. Open the application in a browser
+9. Open the application in a browser
    ```sh
-   http://localhost:80
+   http://localhost:8080
    ```
 > Please note that downloading and importing the data will download ALL the Geonames dump export files and then imports them into the database. Depending on your CPU power, This process could take up to several hours to complete.
 
