@@ -5,9 +5,9 @@ namespace App\Logger;
 use Illuminate\Http\Request;
 use Illuminate\Log\LogManager;
 use Laravel\Lumen\Application;
-use Spatie\HttpLogger\LogWriter as HttpLoggerLogWriter;
+use Spatie\HttpLogger\DefaultLogWriter;
 
-class LogWriter implements HttpLoggerLogWriter
+class LogWriter extends DefaultLogWriter
 {
     public function logRequest(Request $request)
     {
@@ -24,11 +24,15 @@ class LogWriter implements HttpLoggerLogWriter
         return [
             'method' => strtoupper($request->getMethod()),
             'uri' => $request->getPathInfo(),
+            'headers' => $request->headers->all(),
+            'ip' => $request->getClientIp(),
         ];
     }
 
     protected function formatMessage(array $message)
     {
-        return "{$message['method']} {$message['uri']}";
+        $headersAsJson = json_encode($message['headers']);
+
+        return "{$message['method']} {$message['uri']} - IP: {$message['ip']} - Headers: {$headersAsJson}";
     }
 }
