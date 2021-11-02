@@ -6,7 +6,7 @@
   <p align="center">
     A RESTful places API built using Lumen micro-framework.
     <br />
-    <a href="http://172-105-254-141.ip.linodeusercontent.com"><strong>API »</strong></a>
+    <a href="https://www.placesapi.dev"><strong>API »</strong></a>
     <br />
 </p>
 
@@ -125,7 +125,7 @@ However, you can also run the api without Docker. In that case, you need:
 
 ## Documentation
 
-For a full details, please refer to the [Documentation](http://172-105-254-141.ip.linodeusercontent.com/documentation).
+For a full details, please refer to the [Documentation](https://www.placesapi.dev/documentation).
 
 ## Like My Work?
 
