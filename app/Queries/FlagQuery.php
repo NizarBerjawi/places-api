@@ -24,7 +24,7 @@ class FlagQuery extends Query
      *
      * @OA\Parameter(
      *     parameter="flagFilter",
-     *     name="sort",
+     *     name="filter",
      *     in="query",
      *     description="Sort the result set by certain properties.",
      *     required=false,
