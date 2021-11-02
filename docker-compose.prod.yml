@@ -16,6 +16,9 @@ services:
       - supervisor
     networks:
       - api_network
+    volumes: 
+      - nginx:/etc/nginx/http.d
+      - certs:/etc/letsencrypt
   php:
     build:
       context: .
@@ -72,3 +75,5 @@ networks:
 volumes:
   dbData:
   storage:
+  nginx:
+  certs:
