@@ -23,7 +23,7 @@ class DownloadFeatureCodesFile extends GeonamesJob
         ])->get($this->url());
 
         if ($response->failed()) {
-            throw new FileNotDownloadedException($this->url());
+            $this->fail(new FileNotDownloadedException($this->url()));
         }
 
         $saved = $this
@@ -31,7 +31,7 @@ class DownloadFeatureCodesFile extends GeonamesJob
             ->put($this->filepath(), $response->getBody());
 
         if (! $saved) {
-            throw new FileNotSavedException($this->filepath());
+            $this->fail(new FileNotSavedException($this->filepath()));
         }
     }
 

@@ -23,8 +23,6 @@
                     @endforeach
                 @endif
             @endforeach
-
-
         </ul>
     </nav>
 @endif

@@ -27,7 +27,7 @@ class DownloadAlternateNamesFiles extends GeonamesJob
         ])->get($this->url());
 
         if ($response->failed()) {
-            throw new FileNotDownloadedException($this->url());
+            $this->fail(new FileNotDownloadedException($this->url()));
         }
 
         $this->unzip();

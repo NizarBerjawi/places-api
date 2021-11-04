@@ -27,8 +27,6 @@
                 </table>
                 {{ $languages->links('partials.pagination') }}
             </article>
-
         </div>
     </section>
-
 @endsection
