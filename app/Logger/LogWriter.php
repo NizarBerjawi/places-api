@@ -24,15 +24,12 @@ class LogWriter extends DefaultLogWriter
         return [
             'method' => strtoupper($request->getMethod()),
             'uri' => $request->getPathInfo(),
-            'headers' => $request->headers->all(),
             'ip' => $request->getClientIp(),
         ];
     }
 
     protected function formatMessage(array $message)
     {
-        $headersAsJson = json_encode($message['headers']);
-
-        return "{$message['method']} {$message['uri']} - IP: {$message['ip']} - Headers: {$headersAsJson}";
+        return "{$message['method']} {$message['uri']} - IP: {$message['ip']}";
     }
 }
