@@ -17,6 +17,7 @@ use Illuminate\Console\Command;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
 use Laravel\Lumen\Application;
+use Throwable;
 
 class UpdateGeonamesData extends Command
 {
@@ -77,6 +78,10 @@ class UpdateGeonamesData extends Command
                     dispatch(new AlternateNamesDeletesImport("$basePath/$alternateNamesDeletes"))->onQueue('import-updates');
                 }
             })
+            ->catch(function (Batch $batch, Throwable $e) {
+                app()->make(\Illuminate\Mail\Mailer::class)->to('nizarberjawi12@gmail.com')->send(new \App\Mail\GeonamesUpdateFailed());
+            })
+            ->name('Update Geonames')
             ->onQueue('download-updates')
             ->dispatch();
     }
