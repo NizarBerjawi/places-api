@@ -25,8 +25,6 @@
                 </table>
                 {{ $timeZones->links('partials.pagination') }}
             </article>
-
         </div>
     </section>
-
 @endsection

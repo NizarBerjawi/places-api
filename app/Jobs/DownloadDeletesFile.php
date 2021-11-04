@@ -33,7 +33,7 @@ class DownloadDeletesFile extends GeonamesJob
         ])->get($this->url());
 
         if ($response->failed()) {
-            throw new FileNotDownloadedException($this->url());
+            $this->fail(new FileNotDownloadedException($this->url()));
         }
 
         $body = $response->body();
@@ -47,7 +47,7 @@ class DownloadDeletesFile extends GeonamesJob
             ->put($this->filepath(), $body);
 
         if (! $saved) {
-            throw new FileNotSavedException($this->filename());
+            $this->fail(new FileNotSavedException($this->filename()));
         }
     }
 
