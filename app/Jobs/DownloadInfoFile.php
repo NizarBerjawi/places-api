@@ -23,7 +23,7 @@ class DownloadInfoFile extends GeonamesJob
         ])->get($this->url());
 
         if ($response->failed()) {
-            $this->fail(new FileNotDownloadedException($this->url()));
+            return $this->fail(new FileNotDownloadedException($this->url()));
         }
 
         $saved = $this
@@ -31,7 +31,7 @@ class DownloadInfoFile extends GeonamesJob
             ->put($this->filepath(), $response->getBody());
 
         if (! $saved) {
-            $this->fail(new FileNotSavedException($this->filename()));
+            return $this->fail(new FileNotSavedException($this->filename()));
         }
     }
 

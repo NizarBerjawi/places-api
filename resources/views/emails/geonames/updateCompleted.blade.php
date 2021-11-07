@@ -1,9 +1,6 @@
 @component('mail::message')
 
-Something went wrong during Geonames update process.
-
-The following error occured:
-    {{ $exception->getMessage() }}
+Places API database was successfully updated with new Geonames data.
 
 Summary:
 @component('mail::table')

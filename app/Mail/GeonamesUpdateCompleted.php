@@ -6,9 +6,8 @@ use Illuminate\Bus\Batch;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Throwable;
 
-class GeonamesUpdateFailed extends Mailable
+class GeonamesUpdateCompleted extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -18,20 +17,14 @@ class GeonamesUpdateFailed extends Mailable
     public $batch;
 
     /**
-     * @var \Throwable
-     */
-    public $exception;
-
-    /**
      * Create a new message instance.
      *
      * @param  \App\Models\Order  $order
      * @return void
      */
-    public function __construct(Batch $batch, Throwable $e)
+    public function __construct(Batch $batch)
     {
         $this->batch = $batch;
-        $this->exception = $e;
     }
 
     /**
@@ -41,9 +34,8 @@ class GeonamesUpdateFailed extends Mailable
      */
     public function build()
     {
-        return $this->markdown('emails.geonames.updateFailed', [
+        return $this->markdown('emails.geonames.updateCompleted', [
             'batch' => $this->batch,
-            'exception' => $this->exception,
         ]);
     }
 }
