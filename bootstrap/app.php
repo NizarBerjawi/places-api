@@ -60,11 +60,15 @@ $app->singleton(
 |
 */
 $app->configure('api');
-$app->configure('geonames');
+$app->configure('mail');
 $app->configure('logging');
+$app->configure('geonames');
 $app->configure('http-logger');
 $app->configure('json-api-paginate');
 
+$app->alias('mailer', Illuminate\Mail\Mailer::class);
+$app->alias('mailer', Illuminate\Contracts\Mail\Mailer::class);
+$app->alias('mailer', Illuminate\Contracts\Mail\MailQueue::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -95,6 +99,7 @@ $app->routeMiddleware([
 $app->register(\Spatie\HttpLogger\HttpLoggerServiceProvider::class);
 $app->register(\Spatie\QueryBuilder\QueryBuilderServiceProvider::class);
 $app->register(\Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::class);
+$app->register(Illuminate\Mail\MailServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
