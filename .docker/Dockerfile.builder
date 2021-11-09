@@ -22,7 +22,7 @@ RUN composer dump-autoload \
 ###########################
 ## Generate OpenAPI Spec ##
 ###########################
-FROM php:7.3-fpm-alpine3.13 as documentation
+FROM php:8-fpm-alpine3.13 as documentation
 
 # Because .env file variables are not available during
 # build, we have to explicitly set APP_URL environment

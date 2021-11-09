@@ -1,7 +1,7 @@
 ##############################
 ## Build COMPOSER container ##
 ##############################
-FROM php:7.3-cli-alpine
+FROM php:8-cli-alpine
 
 ARG USER
 ARG GID

@@ -1,7 +1,7 @@
 ################################
 ## Build supervisor container ##
 ################################
-FROM php:7.3-alpine3.13
+FROM php:8-alpine3.13
 
 LABEL maintainer="Nizar El Berjawi <nizarberjawi12@gmail.com>"
 
@@ -18,7 +18,7 @@ RUN apk --update add --no-cache \
     pdo_pgsql \
     zip
 
-COPY .docker/php /etc/php7
+COPY .docker/app /usr/local/etc
     
 COPY .docker/supervisor/conf.d /etc/supervisor/conf.d
 COPY .docker/supervisor/supervisord.conf /etc/supervisord.conf
