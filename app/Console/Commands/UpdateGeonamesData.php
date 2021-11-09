@@ -11,12 +11,16 @@ use App\Jobs\DownloadAlternateNamesModificationsFile;
 use App\Jobs\DownloadDeletesFile;
 use App\Jobs\DownloadModificationsFile;
 use App\Jobs\Traits\HasPlaceholders;
+use App\Mail\GeonamesUpdateCompleted;
+use App\Mail\GeonamesUpdateFailed;
 use Carbon\Carbon;
 use Illuminate\Bus\Batch;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Mail\Mailer;
 use Laravel\Lumen\Application;
+use Throwable;
 
 class UpdateGeonamesData extends Command
 {
@@ -56,26 +60,32 @@ class UpdateGeonamesData extends Command
         $alternateNamesModifications = $this->replace('date', $date, config('geonames.alternate_names_modifications_file'));
         $alternateNamesDeletes = $this->replace('date', $date, config('geonames.alternate_names_deletes_file'));
 
-        Application::getInstance()
+        $app = Application::getInstance();
+
+        $app
             ->make(Dispatcher::class)
             ->batch([
                 new DownloadModificationsFile($date),
+                new PlacesImport("$basePath/$placesModifications"),
                 new DownloadDeletesFile($date),
+                new DeletesImport("$basePath/$placesDeletes"),
                 new DownloadAlternateNamesModificationsFile($date),
+                new AlternateNamesImport("$basePath/$alternateNamesModifications"),
                 new DownloadAlternateNamesDeletesFile($date),
-            ])->then(function (Batch $batch) use (
-                $basePath,
-                $placesModifications,
-                $placesDeletes,
-                $alternateNamesModifications,
-                $alternateNamesDeletes
-            ) {
+                new AlternateNamesDeletesImport("$basePath/$alternateNamesDeletes"),
+            ])->then(function (Batch $batch) {
                 if ($batch->finished()) {
-                    dispatch(new PlacesImport("$basePath/$placesModifications"))->onQueue('import-updates');
-                    dispatch(new DeletesImport("$basePath/$placesDeletes"))->onQueue('import-updates');
-                    dispatch(new AlternateNamesImport("$basePath/$alternateNamesModifications"))->onQueue('import-updates');
-                    dispatch(new AlternateNamesDeletesImport("$basePath/$alternateNamesDeletes"))->onQueue('import-updates');
+                    Application::getInstance()
+                        ->make(Mailer::class)
+                        ->to(config('mail.mailers.smtp.username'))
+                        ->send(new GeonamesUpdateCompleted($batch));
                 }
+            })
+            ->catch(function (Batch $batch, Throwable $e) {
+                Application::getInstance()
+                    ->make(Mailer::class)
+                    ->to(config('mail.mailers.smtp.username'))
+                    ->send(new GeonamesUpdateFailed($batch, $e));
             })
             ->onQueue('download-updates')
             ->dispatch();
