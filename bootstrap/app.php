@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/../vendor/autoload.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 (new Laravel\Lumen\Bootstrap\LoadEnvironmentVariables(
     dirname(__DIR__)
@@ -24,6 +24,7 @@ $app = new Laravel\Lumen\Application(
 );
 
 $app->withEloquent();
+$app->withFacades();
 
 /*
 |--------------------------------------------------------------------------
@@ -63,6 +64,7 @@ $app->configure('api');
 $app->configure('mail');
 $app->configure('logging');
 $app->configure('geonames');
+$app->configure('responsecache');
 $app->configure('http-logger');
 $app->configure('json-api-paginate');
 
@@ -84,6 +86,7 @@ $app->routeMiddleware([
     'api-version' => App\Http\Middleware\ApiVersion::class,
     'http-logger' => Spatie\HttpLogger\Middlewares\HttpLogger::class,
     'throttle' => App\Http\Middleware\RateLimits::class,
+    'cache' => Spatie\ResponseCache\Middlewares\CacheResponse::class
 ]);
 
 /*
@@ -99,6 +102,7 @@ $app->routeMiddleware([
 $app->register(\Spatie\HttpLogger\HttpLoggerServiceProvider::class);
 $app->register(\Spatie\QueryBuilder\QueryBuilderServiceProvider::class);
 $app->register(\Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::class);
+$app->register(\Spatie\ResponseCache\ResponseCacheServiceProvider::class);
 $app->register(Illuminate\Mail\MailServiceProvider::class);
 
 /*
@@ -114,17 +118,17 @@ $app->register(Illuminate\Mail\MailServiceProvider::class);
 
 $app->router->group([
     'middleware' => ['http-logger', 'throttle:100,1'],
-    'namespace'  => 'App\Http\Controllers', 
+    'namespace'  => 'App\Http\Controllers',
 ], function ($router) {
-    require __DIR__.'/../routes/web.php';
+    require __DIR__ . '/../routes/web.php';
 });
 
 $app->router->group([
     'middleware' => ['api-version:v1', 'throttle:100,1', 'http-logger'],
     'namespace'  => 'App\Http\Controllers\Api\V1',
-    'prefix'     => 'api/v1' 
+    'prefix'     => 'api/v1'
 ], function ($router) {
-    require __DIR__.'/../routes/api.v1.php';
+    require __DIR__ . '/../routes/api.v1.php';
 });
 
 return $app;
