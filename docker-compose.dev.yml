@@ -32,7 +32,8 @@ services:
       - .:/var/www/html
       - .docker/app/php-fpm.conf:/usr/local/etc/php-fpm.conf
       - .docker/app/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
-      - .docker/app/php:/usr/local/etc/php
+      - .docker/app/php/php.ini-production:/usr/local/etc/php/php.ini-production
+      - .docker/app/php/php.ini-development:/usr/local/etc/php/php.ini-development
     working_dir: /var/www/html
     tty: true
     expose:

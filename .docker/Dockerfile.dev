@@ -23,6 +23,7 @@ RUN apk add --no-cache \
     libzip-dev \
     postgresql-dev && \
   docker-php-ext-install \
+    pdo \
     pgsql \
     pdo_pgsql \
     zip
