@@ -4,7 +4,7 @@ return [
     /*
      * Determine if the response cache middleware should be enabled.
      */
-    'enabled' => env('RESPONSE_CACHE_ENABLED', false),
+    'enabled' => env('RESPONSE_CACHE_ENABLED', true),
 
     /*
      *  The given class will determinate if a request should be cached. The
@@ -13,7 +13,7 @@ return [
      *  You can provide your own class given that it implements the
      *  CacheProfile interface.
      */
-    'cache_profile' => Spatie\ResponseCache\CacheProfiles\CacheAllSuccessfulGetRequests::class,
+    'cache_profile' => App\Cache\CacheAllSuccessfulGetRequests::class,
 
     /*
      * When using the default CacheRequestFilter this setting controls the
@@ -32,7 +32,7 @@ return [
      * This setting determines the name of the http header that contains
      * the time at which the response was cached
      */
-    'cache_time_header_name' => env('RESPONSE_CACHE_HEADER_NAME', 'laravel-responsecache'),
+    'cache_time_header_name' => env('RESPONSE_CACHE_HEADER_NAME', 'lumen-responsecache'),
 
     /*
      * Here you may define the cache store that should be used to store
@@ -45,9 +45,7 @@ return [
      * Here you may define replacers that dynamically replace content from the response.
      * Each replacer must implement the Replacer interface.
      */
-    'replacers' => [
-        \Spatie\ResponseCache\Replacers\CsrfTokenReplacer::class,
-    ],
+    'replacers' => [],
 
     /*
      * If the cache driver you configured supports tags, you may specify a tag name

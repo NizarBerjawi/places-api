@@ -24,7 +24,6 @@ $app = new Laravel\Lumen\Application(
 );
 
 $app->withEloquent();
-$app->withFacades();
 
 /*
 |--------------------------------------------------------------------------
@@ -117,14 +116,14 @@ $app->register(Illuminate\Mail\MailServiceProvider::class);
 */
 
 $app->router->group([
-    'middleware' => ['http-logger', 'throttle:100,1'],
+    'middleware' => ['http-logger', 'throttle:100,1', 'cache'],
     'namespace'  => 'App\Http\Controllers',
 ], function ($router) {
     require __DIR__ . '/../routes/web.php';
 });
 
 $app->router->group([
-    'middleware' => ['api-version:v1', 'throttle:100,1', 'http-logger'],
+    'middleware' => ['api-version:v1', 'throttle:100,1', 'http-logger', 'cache'],
     'namespace'  => 'App\Http\Controllers\Api\V1',
     'prefix'     => 'api/v1'
 ], function ($router) {
