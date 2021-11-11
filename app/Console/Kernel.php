@@ -29,6 +29,9 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('geonames:update')
             ->withoutOverlapping()
-            ->twiceDaily(12, 22);
+            ->dailyAt('22:00');
+
+        $schedule->command('responsecache:clear')
+            ->dailyAt('22:30');
     }
 }
