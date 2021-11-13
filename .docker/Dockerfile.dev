@@ -8,8 +8,6 @@ LABEL maintainer="Nizar El Berjawi <nizarberjawi12@gmail.com>"
 ARG USER
 ARG GID
 ARG UID
-ARG GIT_USER
-ARG GIT_EMAIL
 
 WORKDIR /var/www/html/
 
@@ -37,9 +35,6 @@ RUN adduser \
   --disabled-password ${USER}
 
 RUN chown -R ${USER}:${USER} .
-
-RUN git config --global user.email "$GIT_EMAIL"
-RUN git config --global user.name "$GIT_USER"
 
 EXPOSE 9000
 
