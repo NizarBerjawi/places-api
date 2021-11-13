@@ -23,8 +23,6 @@ services:
         GID: ${GID}
         UID: ${UID}
         USER: ${USER}
-        GIT_EMAIL: ${GIT_EMAIL}
-        GIT_USER: ${GIT_USER}
     container_name: php
     env_file:
       - .env

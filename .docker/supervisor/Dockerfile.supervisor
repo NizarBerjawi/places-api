@@ -1,24 +1,21 @@
 ################################
 ## Build supervisor container ##
 ################################
-FROM php:8-alpine3.13
+FROM php:8-cli-alpine
 
 LABEL maintainer="Nizar El Berjawi <nizarberjawi12@gmail.com>"
 
 RUN echo "UTC" > /etc/timezone
 RUN apk --update add --no-cache \
-    zip \
     curl \
-    unzip \
     supervisor \
-    libzip-dev \
     postgresql-dev && \
   docker-php-ext-install \
     pgsql \
-    pdo_pgsql \
-    zip
+    pdo_pgsql
 
-COPY .docker/app /usr/local/etc
+
+# COPY .docker/app /usr/local/etc
     
 COPY .docker/supervisor/conf.d /etc/supervisor/conf.d
 COPY .docker/supervisor/supervisord.conf /etc/supervisord.conf
