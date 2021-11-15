@@ -23,7 +23,7 @@ class LogWriter extends DefaultLogWriter
     {
         return [
             'method' => strtoupper($request->getMethod()),
-            'uri' => $request->getRequestUri(),
+            'uri' => $request->fullUrl(),
             'ip' => $request->getClientIp(),
         ];
     }
