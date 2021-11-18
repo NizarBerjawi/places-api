@@ -2,8 +2,10 @@
 
 namespace App\Exceptions;
 
+use App\Logger\LogWriter;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Spatie\QueryBuilder\Exceptions\InvalidIncludeQuery;
@@ -49,6 +51,10 @@ class Handler extends ExceptionHandler
     {
         if ($request->ajax() || $request->wantsJson() || $request->is('api/*')) {
             return $this->prepareJsonResponse($request, $exception);
+        }
+
+        if ($exception instanceof NotFoundHttpException) {
+            $this->logNotFoundRoutes($request);
         }
 
         return parent::render($request, $exception);
@@ -121,5 +127,18 @@ class Handler extends ExceptionHandler
         return $exception instanceof HttpExceptionInterface
             ? $exception->getStatusCode()
             : 500;
+    }
+
+    /**
+     * Log any unidentified routes.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Throwable  $e
+     * @return void
+     */
+    protected function logNotFoundRoutes(Request $request)
+    {
+        $writer = new LogWriter();
+        $writer->logRequest($request);
     }
 }

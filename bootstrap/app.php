@@ -81,6 +81,11 @@ $app->alias('mailer', Illuminate\Contracts\Mail\MailQueue::class);
 | route or middleware that'll be assigned to some specific routes.
 |
 */
+
+$app->middleware([
+    \Bepsvpt\SecureHeaders\SecureHeadersMiddleware::class,
+]);
+
 $app->routeMiddleware([
     'api-version' => App\Http\Middleware\ApiVersion::class,
     'http-logger' => Spatie\HttpLogger\Middlewares\HttpLogger::class,
@@ -102,7 +107,8 @@ $app->register(\Spatie\HttpLogger\HttpLoggerServiceProvider::class);
 $app->register(\Spatie\QueryBuilder\QueryBuilderServiceProvider::class);
 $app->register(\Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::class);
 $app->register(\Spatie\ResponseCache\ResponseCacheServiceProvider::class);
-$app->register(Illuminate\Mail\MailServiceProvider::class);
+$app->register(\Illuminate\Mail\MailServiceProvider::class);
+$app->register(\Bepsvpt\SecureHeaders\SecureHeadersServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
@@ -123,7 +129,7 @@ $app->router->group([
 });
 
 $app->router->group([
-    'middleware' => ['api-version:v1', 'throttle:100,1', 'http-logger', 'cache'],
+    'middleware' => ['http-logger', 'throttle:100,1', 'cache', 'api-version:v1'],
     'namespace'  => 'App\Http\Controllers\Api\V1',
     'prefix'     => 'api/v1'
 ], function ($router) {
