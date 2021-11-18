@@ -6,6 +6,7 @@
     "type": "project",
     "require": {
         "php": "^7.3|^8.0",
+        "bepsvpt/secure-headers": "^7.1",
         "guzzlehttp/guzzle": "^7.0",
         "illuminate/mail": "^8.69",
         "illuminate/routing": "^8.54",
