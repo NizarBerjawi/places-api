@@ -63,6 +63,7 @@ $app->configure('api');
 $app->configure('mail');
 $app->configure('cors');
 $app->configure('logging');
+$app->configure('services');
 $app->configure('geonames');
 $app->configure('http-logger');
 $app->configure('responsecache');
