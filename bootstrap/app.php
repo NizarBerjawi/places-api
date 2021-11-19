@@ -61,10 +61,12 @@ $app->singleton(
 */
 $app->configure('api');
 $app->configure('mail');
+$app->configure('cors');
 $app->configure('logging');
 $app->configure('geonames');
-$app->configure('responsecache');
 $app->configure('http-logger');
+$app->configure('responsecache');
+$app->configure('secure-headers');
 $app->configure('json-api-paginate');
 
 $app->alias('mailer', Illuminate\Mail\Mailer::class);
@@ -84,13 +86,14 @@ $app->alias('mailer', Illuminate\Contracts\Mail\MailQueue::class);
 
 $app->middleware([
     \Bepsvpt\SecureHeaders\SecureHeadersMiddleware::class,
+    \Fruitcake\Cors\HandleCors::class,
 ]);
 
 $app->routeMiddleware([
     'api-version' => App\Http\Middleware\ApiVersion::class,
     'http-logger' => Spatie\HttpLogger\Middlewares\HttpLogger::class,
     'throttle' => App\Http\Middleware\RateLimits::class,
-    'cache' => Spatie\ResponseCache\Middlewares\CacheResponse::class
+    'cache' => Spatie\ResponseCache\Middlewares\CacheResponse::class,
 ]);
 
 /*
@@ -108,6 +111,7 @@ $app->register(\Spatie\QueryBuilder\QueryBuilderServiceProvider::class);
 $app->register(\Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::class);
 $app->register(\Spatie\ResponseCache\ResponseCacheServiceProvider::class);
 $app->register(\Illuminate\Mail\MailServiceProvider::class);
+$app->register(\Fruitcake\Cors\CorsServiceProvider::class);
 $app->register(\Bepsvpt\SecureHeaders\SecureHeadersServiceProvider::class);
 
 /*
