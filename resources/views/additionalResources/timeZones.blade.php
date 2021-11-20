@@ -1,12 +1,12 @@
 @extends('layouts.base')
 
 @section('content')
-    <section class="section">
-        <div class="content">
-            <article class="panel pb-4">
-                <p class="panel-heading">Time Zones</p>
-                
-                <table class='table is-fullwidth'>
+    <div class="content">
+        <article class="panel pb-4">
+            <p class="panel-heading">Time Zones</p>
+
+            <div class="table-container">
+                <table class='table'>
                     <tr>
                         <th>Code</th>
                         <th>Time Zone</th>
@@ -23,8 +23,9 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $timeZones->links('partials.pagination') }}
-            </article>
-        </div>
-    </section>
+            </div>
+
+            {{ $timeZones->onEachSide(1)->links('partials.pagination') }}
+        </article>
+    </div>
 @endsection

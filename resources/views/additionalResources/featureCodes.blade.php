@@ -1,22 +1,29 @@
 @extends('layouts.base')
 
 @section('content')
-    <section class="section">
-        <div class="content">
-            <article class="panel pb-4">
-                <p class="panel-heading">Feature Codes</p>
-                <p class="panel-tabs">
-                    <a href={{ route('featureCodes') }}
-                        class="{{ !request()->has('filter') ? 'is-active' : '' }}">All</a>
-                    @foreach ($featureClasses as $featureClass)
-                        <a href="{{ route('featureCodes') . '?filter[featureClassCode]=' . $featureClass->code }}"
-                            class="{{ $featureClass->code === \Illuminate\Support\Arr::get(request()->get('filter'), 'featureClassCode') ? 'is-active' : '' }}"">
-                                            {{ $featureClass->code }}
-                                </a>
-                              @endforeach
-                </p>
+    <div class="content">
+        <article class="panel pb-4">
+            <p class="panel-heading">Feature Codes</p>
+            <p class="panel-tabs">
+                <a href={{ route('featureCodes') }} @class([
+                    'is-active' => !request()->has('filter'),
+                ])>
+                    All
+                </a>
 
-                <table class='table is-fullwidth'>
+                @foreach ($featureClasses as $featureClass)
+                    <a href="{{ route('featureCodes', ['filter' => ['featureClassCode' => $featureClass->code]]) }}"
+                        @class([
+                            'is-active' =>
+                                $featureClass->code === request()->input('filter.featureClassCode'),
+                        ])>
+                        {{ $featureClass->code }}
+                    </a>
+                @endforeach
+            </p>
+
+            <div class="table-container">
+                <table class='table'>
                     <tr class="is-selected has-text-centered has-text-weight-bold">
                         <td colspan="3">
                             {{ $selectedFeatureClass ?? 'ALL' }}
@@ -38,8 +45,9 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $featureCodes->links('partials.pagination') }}
-            </article>
-        </div>
-    </section>
+            </div>
+            
+            {{ $featureCodes->onEachSide(1)->links('partials.pagination') }}
+        </article>
+    </div>
 @endsection

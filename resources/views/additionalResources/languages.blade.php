@@ -1,12 +1,12 @@
 @extends('layouts.base')
 
 @section('content')
-    <section class="section">
-        <div class="content">
-            <article class="panel pb-4">
-                <p class="panel-heading">Languages</p>
-                
-                <table class='table is-fullwidth'>
+    <div class="content">
+        <article class="panel pb-4">
+            <p class="panel-heading">Languages</p>
+
+            <div class="table-container">
+                <table class='table'>
                     <tr>
                         <th>Name</th>
                         <th>ISO639-1</th>
@@ -25,8 +25,9 @@
                         @endforeach
                     </tbody>
                 </table>
-                {{ $languages->links('partials.pagination') }}
-            </article>
-        </div>
-    </section>
+            </div>
+            
+            {{ $languages->onEachSide(1)->links('partials.pagination') }}
+        </article>
+    </div>
 @endsection
