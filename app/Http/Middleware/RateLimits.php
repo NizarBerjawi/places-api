@@ -16,6 +16,6 @@ class RateLimits extends ThrottleRequests
      */
     protected function resolveRequestSignature($request)
     {
-        return $request->fingerprint();
+        return sha1($request->ip());
     }
 }
