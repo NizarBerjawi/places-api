@@ -6,3 +6,7 @@
 .swagger-ui .info .title small.version-stamp pre.version {
     background-color: #89bf04 !important;
 }
+
+.swagger-ui .wrapper {
+    padding: 0;
+}

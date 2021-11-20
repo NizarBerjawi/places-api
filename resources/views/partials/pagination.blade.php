@@ -1,6 +1,6 @@
 @if ($paginator->hasPages())
     <nav class="pagination is-centered" role="navigation" aria-label="pagination">
-        <ul class="pagination-list">
+        <ul class="pagination-list m-0">
             {{-- Pagination Elements --}}
             @foreach ($elements as $element)
                 {{-- "Three Dots" Separator --}}
