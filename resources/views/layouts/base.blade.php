@@ -42,6 +42,11 @@
             bottom: 45px;
         }
 
+        .bmc-btn {
+            height: 40px !important;
+            font-size: 24px !important;
+        }
+
     </style>
 </head>
 
@@ -50,22 +55,8 @@
         @include('partials.navbar')
     </header>
 
-
     <main>
-
-        <div class="container">
-            <section class="section">
-
-                <div class="columns">
-
-                    <div class="column is-10 is-offset-1">
-                        <div class="content">
-                            @yield('content')
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
+        @yield('content')
     </main>
 
     @yield('scripts')
