@@ -31,7 +31,7 @@
                                 </table>
                             </div>
 
-                            {{ $languages->onEachSide(1)->links('partials.pagination') }}
+                            {{ $languages->links('partials.pagination') }}
                         </article>
                     </div>
                 </div>

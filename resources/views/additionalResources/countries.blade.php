@@ -27,7 +27,7 @@
                                 </table>
                             </div>
 
-                            {{ $countries->onEachSide(1)->links('partials.pagination') }}
+                            {{ $countries->links('partials.pagination') }}
                         </article>
                     </div>
                 </div>
