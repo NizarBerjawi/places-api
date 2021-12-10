@@ -141,9 +141,11 @@
                         <pre>GET /api/v1/featureCodes?page[number]=3</pre>
                         <p>The above request will return all the results on the 3rd page.</p>
 
-                        <p> You can control the number of items per page using the <code>page[size]</code> query parameter.
+                        <p>You can control the number of items per page using the <code>page[size]</code> query parameter.
                         </p>
                         <pre>GET /api/v1/featureCodes?page[number]=3&page[size]=5</pre>
+
+                        <p>To improve the performance of the API, some pagination meta data is not computed</p>
 
                         <h1>Rate-Limiting</h1>
                         <p>At this point in time, users can make a <code>100</code> requests per minute to the API before

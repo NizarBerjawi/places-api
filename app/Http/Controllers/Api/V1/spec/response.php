@@ -26,7 +26,7 @@
  *                @OA\Property(
  *                     property="links",
  *                     type="object",
- *                     description="Determines if the alternate name is official/preferred.",
+ *                     description="Display the links to other pages of the response",
  *                     @OA\Property(
  *                          property="first",
  *                          type="string",
@@ -37,7 +37,7 @@
  *                          property="last",
  *                          type="string",
  *                          example=LAST,
- *                          description="The last page in the paginated data set."
+ *                          description="The last page in the paginated data set. For performance reasons, this is always null"
  *                     ),
  *                     @OA\Property(
  *                          property="prev",
@@ -55,7 +55,7 @@
  *                @OA\Property(
  *                     property="meta",
  *                     type="object",
- *                     description="Determines if the alternate name is official/preferred.",
+ *                     description="Meta data related to paginated responses",
  *                     @OA\Property(
  *                          property="currentPage",
  *                          type="integer",
@@ -68,38 +68,6 @@
  *                          example="21",
  *                          description="The index of the first item on the current page relative to all the data set."
  *                     ),
- *                     @OA\Property(
- *                          property="lastPage",
- *                          type="integer",
- *                          example="21",
- *                          description="The last possible page in this data set."
- *                     ),
- *                     @OA\Property(
- *                         property="links",
- *                         type="array",
- *                         description="",
- *                         @OA\Items(
- *                             @OA\Property(
- *                                  property="url",
- *                                  type="string",
- *                                  example=PAGE_URL,
- *                                  description="The url to this pagination item."
- *                             ),
- *                             @OA\Property(
- *                                  property="label",
- *                                  type="string",
- *                                  example="10",
- *                                  description="The pagination label."
- *                             ),
- *                             @OA\Property(
- *                                  property="active",
- *                                  type="boolean",
- *                                  example="true",
- *                                  description="Determines whether the current URL is active or not."
- *                             ),
- *                         )
- *
- *                      ),
  *                     @OA\Property(
  *                          property="path",
  *                          type="string",
@@ -117,13 +85,7 @@
  *                          type="integer",
  *                          example="30",
  *                          description="The index of the last item on the current page relative to all the data set."
- *                     ),
- *                     @OA\Property(
- *                          property="total",
- *                          type="integer",
- *                          example="680",
- *                          description="The count of all the items in the data set regardless of pagination."
- *                     ),
+ *                     )
  *                )
  *           )
  *      }

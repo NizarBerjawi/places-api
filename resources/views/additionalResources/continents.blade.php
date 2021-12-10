@@ -27,7 +27,7 @@
                                 </table>
                             </div>
 
-                            {{ $continents->onEachSide(1)->links('partials.pagination') }}
+                            {{ $continents->links('partials.pagination') }}
                         </article>
                     </div>
                 </div>

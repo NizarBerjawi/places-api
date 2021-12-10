@@ -2,7 +2,7 @@
 
 namespace App\Queries;
 
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\AbstractPaginator;
 use Spatie\QueryBuilder\QueryBuilder;
 
 abstract class Query
@@ -131,9 +131,9 @@ abstract class Query
      *     )
      * )
      *
-     * @return \Illuminate\Pagination\LengthAwarePaginator
+     * @return \Illuminate\Pagination\AbstractPaginator
      */
-    public function getPaginator(): LengthAwarePaginator
+    public function getPaginator(): AbstractPaginator
     {
         $this->checkBuilder();
 

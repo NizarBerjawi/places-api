@@ -29,7 +29,7 @@
                                 </table>
                             </div>
 
-                            {{ $timeZones->onEachSide(1)->links('partials.pagination') }}
+                            {{ $timeZones->links('partials.pagination') }}
                         </article>
                     </div>
                 </div>
