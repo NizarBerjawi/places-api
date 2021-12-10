@@ -1,28 +1,27 @@
 @if ($paginator->hasPages())
-    <nav class="pagination is-centered" role="navigation" aria-label="pagination">
+<nav class="pagination is-centered" role="navigation" aria-label="pagination">
         <ul class="pagination-list m-0">
-            {{-- Pagination Elements --}}
-            @foreach ($elements as $element)
-                {{-- "Three Dots" Separator --}}
-                @if (is_string($element))
-                    <li>
-                        <span class="pagination-ellipsis">{{ $element }}</span>
-                    </li>
-                @endif
+            {{-- Previous Page Link --}}
+            @if ($paginator->onFirstPage())
+                <li class="pagination-previous is-disabled" aria-disabled="true">
+                    <span>@lang('Prev')</span>
+                </li>
+            @else
+                <li class="pagination-previous">
+                    <a href="{{ $paginator->previousPageUrl() }}" rel="prev">@lang('Prev')</a>
+                </li>
+            @endif
 
-                {{-- Array Of Links --}}
-                @if (is_array($element))
-                    @foreach ($element as $page => $url)
-                        @if ($page == $paginator->currentPage())
-                            <li class="pagination-link is-current" aria-current="page"><span>{{ $page }}</span></li>
-                        @else
-                            <li>
-                                <a href="{{ $url }}" class="pagination-link">{{ $page }}</a>
-                            </li>
-                        @endif
-                    @endforeach
-                @endif
-            @endforeach
+            {{-- Next Page Link --}}
+            @if ($paginator->hasMorePages())
+                <li class="pagination-next">
+                    <a href="{{ $paginator->nextPageUrl() }}" rel="next">@lang('Next')</a>
+                </li>
+            @else
+                <li class="pagination-next is-disabled" aria-disabled="true">
+                    <span>@lang('Next')</span>
+                </li>
+            @endif
         </ul>
     </nav>
 @endif

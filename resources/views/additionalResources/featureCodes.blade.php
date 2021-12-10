@@ -51,7 +51,7 @@
                                 </table>
                             </div>
 
-                            {{ $featureCodes->onEachSide(1)->links('partials.pagination') }}
+                            {{ $featureCodes->links('partials.pagination') }}
                         </article>
                     </div>
                 </div>
