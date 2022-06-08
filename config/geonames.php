@@ -134,6 +134,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Shapes zip file
+    |--------------------------------------------------------------------------
+    |
+    | The name of the shapes zip file
+    |
+    */
+    'shapes_zip_file' => env('GEONAMES_SHAPES_ZIP_FILE', 'shapes_all_low.zip'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Alternate Names deletes file
     |--------------------------------------------------------------------------
     |
@@ -201,6 +211,16 @@ return [
     |
     */
     'alternate_names_zip_url' => env('GEONAMES_ALTERNATE_NAMES_ZIP_URL', 'http://download.geonames.org/export/dump/alternateNamesV2.zip'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Alternate Names file base url
+    |--------------------------------------------------------------------------
+    |
+    | The URL of Alternate Names file
+    |
+    */
+    'shapes_zip_url' => env('GEONAMES_SHAPES_URL', 'http://download.geonames.org/export/dump/shapes_all_low.zip'),
 
     /*
     |--------------------------------------------------------------------------
