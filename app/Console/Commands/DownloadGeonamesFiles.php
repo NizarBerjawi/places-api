@@ -10,6 +10,7 @@ use App\Jobs\DownloadFeatureCodesFile;
 use App\Jobs\DownloadGeonamesFile;
 use App\Jobs\DownloadInfoFile;
 use App\Jobs\DownloadLanguages;
+use App\Jobs\DownloadShapesFile;
 use App\Jobs\DownloadTimezonesFile;
 use Illuminate\Bus\Batch;
 use Illuminate\Console\Command;
@@ -55,6 +56,7 @@ class DownloadGeonamesFiles extends Command
                 new DownloadFeatureCodesFile,
                 new DownloadTimezonesFile,
                 new DownloadAlternateNamesFiles,
+                new DownloadShapesFile,
             ])->then(function (Batch $batch) use ($basePath) {
                 if ($batch->finished()) {
                     $path = $basePath.'/'.config('geonames.countries_file');
