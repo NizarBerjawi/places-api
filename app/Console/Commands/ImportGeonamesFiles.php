@@ -14,6 +14,7 @@ use App\Imports\FlagsImport;
 use App\Imports\LanguagesImport;
 use App\Imports\NeighbourCountriesImport;
 use App\Imports\PlacesImport;
+use App\Imports\ShapesImport;
 use App\Imports\TimeZonesImport;
 use App\Models\Country;
 use Illuminate\Bus\Batch;
@@ -60,6 +61,7 @@ class ImportGeonamesFiles extends Command
                 new FlagsImport($basePath.'/'.config('geonames.countries_file')),
                 new CountryLanguageImport($basePath.'/'.config('geonames.countries_file')),
                 new CountryCurrencyImport($basePath.'/'.config('geonames.countries_file')),
+                new ShapesImport($basePath.'/shapes/'.config('geonames.shapes_file')),
             ])->then(function (Batch $batch) use ($basePath) {
                 if ($batch->finished()) {
                     Country::cursor()
