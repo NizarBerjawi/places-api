@@ -267,6 +267,16 @@ class Country extends Model
     }
 
     /**
+     * Get the geometry of this Country.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function geometry()
+    {
+        return $this->belongsTo(Geometry::class, 'geoname_id');
+    }
+
+    /**
      * Determine if a country is dissolved.
      *
      * @return bool
