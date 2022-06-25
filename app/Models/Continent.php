@@ -83,6 +83,23 @@ class Continent extends Model
     }
 
     /**
+     * Get the geometries of all the countries in the continent.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function geometries()
+    {
+        return $this->hasManyThrough(
+            Geometry::class,
+            Country::class,
+            'continent_code',
+            'country_code',
+            null,
+            'iso3166_alpha2',
+        );
+    }
+
+    /**
      * Get the alternate names belonging to this continent.
      *
      * @param string $value

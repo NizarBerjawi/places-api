@@ -14,13 +14,12 @@ class CreatePlacesShapesTable extends Migration
     public function up()
     {
         Schema::create('places_shapes', function (Blueprint $table) {
-            $table->unsignedBigInteger('geoname_id')->primary();
+            $table->string('country_code')->primary();
             $table->json('geometry');
-            $table->timestamps();
         });
 
         Schema::table('places_shapes', function (Blueprint $table) {
-            $table->foreign('geoname_id')->references('geoname_id')->on('countries')->cascadeOnDelete();
+            $table->foreign('country_code')->references('iso3166_alpha2')->on('countries')->cascadeOnDelete();
         });
     }
 
@@ -32,7 +31,7 @@ class CreatePlacesShapesTable extends Migration
     public function down()
     {
         Schema::table('places_shapes', function (Blueprint $table) {
-            $table->dropForeign(['geoname_id']);
+            $table->dropForeign(['country_code']);
         });
         Schema::dropIfExists('places_shapes');
     }

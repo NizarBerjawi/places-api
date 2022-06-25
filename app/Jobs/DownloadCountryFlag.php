@@ -35,6 +35,7 @@ class DownloadCountryFlag extends GeonamesJob
     {
         $response = Http::withOptions([
             'stream' => true,
+            'verify' => false,
         ])->get($this->url());
 
         if ($response->failed()) {
