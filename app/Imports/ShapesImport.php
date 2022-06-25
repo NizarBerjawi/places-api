@@ -4,6 +4,7 @@ namespace App\Imports;
 
 use App\Exceptions\ImportFailedException;
 use App\Imports\Iterators\GeonamesFileIterator;
+use App\Models\Country;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -37,17 +38,23 @@ class ShapesImport extends GeonamesFileIterator implements ShouldQueue
                     continue;
                 }
 
+                $country = Country::where('geoname_id', $row[0])->first();
+
+                if (! $country) {
+                    continue;
+                }
+
                 $shapes->push([
-                    'geoname_id' => $row[0],
+                    'country_code' => $country->iso3166_alpha2,
                     'geometry' => $row[1],
                 ]);
             }
 
             DB::table('places_shapes')
                 ->upsert($shapes->all(), [
-                    'geoname_id',
+                    'country_code',
                 ], [
-                    'geoname_id',
+                    'country_code',
                     'geometry',
                 ]);
         });

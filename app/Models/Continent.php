@@ -93,9 +93,9 @@ class Continent extends Model
             Geometry::class,
             Country::class,
             'continent_code',
-            'geoname_id',
+            'country_code',
             null,
-            'geoname_id',
+            'iso3166_alpha2',
         );
     }
 

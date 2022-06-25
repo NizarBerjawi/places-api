@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\Model;
  *      @OA\Property(
  *           property="geometry",
  *           type="string",
- *           example="{"type":"MultiPolygon","coordinates":[[[[6.531,-0.002],[6.53,-0.011],[6.523,-0.014]]]]}",
+ *           example="{'type':'MultiPolygon','coordinates':[[[[6.531,-0.002],[6.53,-0.011],[6.523,-0.014]]]]}",
  *           description="A Geometry object represents points, curves, and surfaces in coordinate space."
  *      ),
  * )
@@ -26,7 +27,14 @@ class Geometry extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'geoname_id';
+    protected $primaryKey = 'country_code';
+
+    /**
+     * The "type" of the primary key ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
 
     /**
      * The table associated with the model.
@@ -45,13 +53,22 @@ class Geometry extends Model
     ];
 
     /**
+     * The attributes that should be cast.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'geometry' => 'array',
+    ];
+
+    /**
      * Get the country that this geometry belongs to.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
     public function country()
     {
-        return $this->hasOne(Country::class, 'geoname_id');
+        return $this->hasOne(Country::class, 'iso3166_alpha2');
     }
 
     /**
@@ -64,10 +81,22 @@ class Geometry extends Model
         return $this->hasOneThrough(
             Continent::class,
             Country::class,
-            'geoname_id',
+            'iso3166_alpha2',
             'code',
-            'geoname_id',
+            'country_code',
             'continent_code',
         );
+    }
+
+    /**
+     * Get a Geometry by country code.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder $query
+     * @param  string $countryCode
+     * @return \Illuminate\Database\Eloquent\Builder $query
+     */
+    public function scopeByCountryCode(Builder $query, string $countryCode)
+    {
+        return $query->where('country_code', $countryCode);
     }
 }
