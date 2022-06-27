@@ -6,18 +6,61 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Flag.
+ * Geometry.
  *
  * @OA\Schema(
  *      schema="geometry",
  *      type="object",
  *      title="Geometry",
  *      @OA\Property(
- *           property="geometry",
+ *           property="type",
  *           type="string",
- *           example="{'type':'MultiPolygon','coordinates':[[[[6.531,-0.002],[6.53,-0.011],[6.523,-0.014]]]]}",
- *           description="A Geometry object represents points, curves, and surfaces in coordinate space."
+ *           example="Polygon",
+ *           description="The type of the GeoJSON object."
  *      ),
+ *      @OA\Property(
+ *           property="coordinates",
+ *           type="string",
+ *           example="[[[[6.531,-0.002],[6.53,-0.011],[6.523,-0.014]]]]",
+ *           description="Coordinates represent points, curves, and surfaces in coordinate space."
+ *      ),
+ * )
+ *
+ * @OA\Schema(
+ *      schema="feature",
+ *      type="object",
+ *      title="Feature",
+ *      @OA\Property(
+ *           property="type",
+ *           type="string",
+ *           example="Feature",
+ *           description="The type of the GeoJSON object."
+ *      ),
+ *      @OA\Property(
+ *           property="properties",
+ *           ref="#/components/schemas/country"
+ *      ),
+ *      @OA\Property(
+ *           property="geometry",
+ *           ref="#/components/schemas/geometry"
+ *      )
+ * )
+ *
+ * @OA\Schema(
+ *      schema="featureCollection",
+ *      type="object",
+ *      title="Feature Collection",
+ *      @OA\Property(
+ *           property="type",
+ *           type="string",
+ *           example="FeatureCollection",
+ *           description="The type of the GeoJSON object."
+ *      ),
+ *      @OA\Property(
+ *           property="features",
+ *           type="array",
+ *           @OA\Items(ref="#/components/schemas/feature")
+ *      )
  * )
  */
 class Geometry extends Model

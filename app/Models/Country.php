@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * Country.
+ *
  * @OA\Schema(
  *      schema="country",
  *      type="object",

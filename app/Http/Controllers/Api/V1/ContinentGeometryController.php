@@ -22,7 +22,7 @@ class ContinentGeometryController extends Controller
      *          description="Successful operation",
      *          @OA\JsonContent(
      *              type="array",
-     *              @OA\Items(ref="#/components/schemas/geometryCollection")
+     *              @OA\Items(ref="#/components/schemas/featureCollection")
      *          ),
      *      ),
      *      @OA\Response(

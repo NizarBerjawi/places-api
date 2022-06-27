@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * Alternate Name.
+ *
  * @OA\Schema(
  *      schema="alternateName",
  *      type="object",
