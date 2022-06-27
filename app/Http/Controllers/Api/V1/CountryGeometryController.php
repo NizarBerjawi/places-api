@@ -3,9 +3,10 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\V1\GeometryResource;
+use App\Http\Resources\V1\GeometryCollection;
 use App\Models\Country;
 use App\Queries\GeometryQuery;
+use Illuminate\Support\Arr;
 
 class CountryGeometryController extends Controller
 {
@@ -22,7 +23,7 @@ class CountryGeometryController extends Controller
      *          description="Successful operation",
      *          @OA\JsonContent(
      *              type="array",
-     *              @OA\Items(ref="#/components/schemas/geometry")
+     *              @OA\Items(ref="#/components/schemas/featureCollection")
      *          ),
      *      ),
      *      @OA\Response(
@@ -42,6 +43,6 @@ class CountryGeometryController extends Controller
             ->with('geometry')
             ->firstOrFail();
 
-        return GeometryResource::make($country->geometry);
+        return GeometryCollection::make(Arr::wrap($country->geometry));
     }
 }

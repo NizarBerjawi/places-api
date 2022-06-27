@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 /**
+ * Continent.
+ *
  * @OA\Schema(
  *      schema="continent",
  *      type="object",
