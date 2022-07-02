@@ -2,7 +2,7 @@
 
 namespace App\Queries;
 
-use Illuminate\Pagination\AbstractPaginator;
+use Illuminate\Contracts\Pagination\CursorPaginator;
 use Spatie\QueryBuilder\QueryBuilder;
 
 abstract class Query
@@ -131,9 +131,9 @@ abstract class Query
      *     )
      * )
      *
-     * @return \Illuminate\Pagination\AbstractPaginator
+     * @return \Illuminate\Pagination\CursorPaginator
      */
-    public function getPaginator(): AbstractPaginator
+    public function getPaginator(): CursorPaginator
     {
         $this->checkBuilder();
 
