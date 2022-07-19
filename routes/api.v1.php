@@ -73,3 +73,7 @@ $router->group(['prefix' => 'places'], function () use ($router) {
     $router->get('/{geonameId}/alternateNames', ['uses' => 'PlaceAlternateNameController@index']);
     $router->get('/{geonameId}/location', ['uses' => 'PlaceLocationController@index']);
 });
+
+$router->group(['prefix' => 'statistics'], function () use ($router) {
+    $router->get('/', ['uses' => 'StatisticsController@index']);
+});
