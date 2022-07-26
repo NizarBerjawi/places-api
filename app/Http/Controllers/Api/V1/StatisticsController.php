@@ -11,6 +11,7 @@ use App\Models\Place;
 use App\Models\TimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Pluralizer;
 
 class StatisticsController extends Controller
 {
@@ -44,44 +45,21 @@ class StatisticsController extends Controller
      */
     public function index(Request $request)
     {
-        return new JsonResource([
-                [
-                    'key' => 'continents',
-                    'description' => 'Continents',
-                    'value' => Continent::count(),
+        $classes = [
+            Continent::class, Country::class, Place::class, Language::class, TimeZone::class, Currency::class,
+        ];
+
+        return new JsonResource(
+            array_map(function ($class) {
+                $className = class_basename($class);
+                $plural = Pluralizer::plural($className);
+
+                return [
+                    'key' => strtolower($plural),
+                    'description' => "{$plural}",
+                    'value' => $class::count(),
                     'type' => 'count',
-                ],
-                [
-                    'key' => 'countries',
-                    'description' => 'Countries',
-                    'value' => Country::count(),
-                    'type' => 'count',
-                ],
-                [
-                    'key' => 'places',
-                    'description' => 'Places',
-                    'value' => Place::count(),
-                    'type' => 'count',
-                ],
-                [
-                    'key' => 'languages',
-                    'description' => 'Languages',
-                    'value' => Language::count(),
-                    'type' => 'count',
-                ],
-                [
-                    'key' => 'timeZones',
-                    'description' => 'Time Zones',
-                    'value' => TimeZone::count(),
-                    'type' => 'count',
-                ],
-                [
-                    'key' => 'currencies',
-                    'description' => 'Currencies',
-                    'value' => Currency::count(),
-                    'type' => 'count',
-                ],
-            ]
-        );
+                ];
+            }, $classes));
     }
 }
