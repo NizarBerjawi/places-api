@@ -46,7 +46,12 @@ class StatisticsController extends Controller
     public function index(Request $request)
     {
         $classes = [
-            Continent::class, Country::class, Place::class, Language::class, TimeZone::class, Currency::class,
+            Continent::class,
+            Country::class,
+            Place::class,
+            Language::class,
+            TimeZone::class,
+            Currency::class,
         ];
 
         return new JsonResource(
@@ -60,6 +65,7 @@ class StatisticsController extends Controller
                     'value' => $class::count(),
                     'type' => 'count',
                 ];
-            }, $classes));
+            }, $classes)
+        );
     }
 }
