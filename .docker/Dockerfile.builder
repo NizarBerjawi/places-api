@@ -1,7 +1,10 @@
 ##########################
 ## Install PHP packages ##
 ##########################
-FROM composer:2 as composer
+FROM php:8.1.11-cli-alpine3.16 as vendor
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+
 WORKDIR /app
 
 COPY composer.* /app/
@@ -22,7 +25,7 @@ RUN composer dump-autoload \
 ###########################
 ## Generate OpenAPI Spec ##
 ###########################
-FROM php:8-fpm-alpine3.13 as documentation
+FROM php:8.1.11-cli-alpine3.16 as documentation
 
 # Because .env file variables are not available during
 # build, we have to explicitly set APP_URL environment
@@ -33,22 +36,35 @@ ENV APP_URL ${APP_URL}
 WORKDIR /app
 
 COPY . . 
-COPY --from=composer /app/vendor ./vendor
+COPY --from=vendor /app/vendor ./vendor
 
 RUN php artisan docs:generate
 
 #############################
 ## Bundle front-end assets ##
 #############################
-FROM node:14-alpine3.13 as builder
+FROM node:16.17.1-alpine3.16 as node
+
 WORKDIR /app
 
 COPY ./package.json ./package-lock.json /app/
 COPY ./resources/src /app/resources/src
 COPY ./webpack.config.js /app/webpack.config.js
 
-COPY --from=composer /app/vendor ./vendor
 COPY --from=documentation /app/public/openApi.json ./public/openApi.json
 
 RUN npm ci --verbose
 RUN npm run build
+
+#########################
+## Final builder image ##
+#########################
+FROM php:8.1.11-cli-alpine3.16 as builder
+
+WORKDIR /app
+
+COPY . .
+
+COPY --from=documentation /app/public/openApi.json ./public/openApi.json
+COPY --from=vendor /app/vendor ./vendor
+COPY --from=node /app/public/dist ./public/dist

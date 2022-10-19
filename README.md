@@ -39,7 +39,7 @@
 
 ## About The Project
 
-Places API is a RESTful based on the <a href="https://www.geonames.org/">Geonames</a> database. You can use this API to explore the world!
+Places API is a RESTful api based on the <a href="https://www.geonames.org/">Geonames</a> database. You can use this API to explore the world!
 
 ### Built With
 
@@ -56,7 +56,7 @@ To get a local copy up and running follow these simple example steps.
 
 We recommend running the project using Docker and Docker Compose.
 
-However, you can also run the api without Docker. In that case, you need:
+You will need:
 
 1. PHP 7.3 or newer
 2. Composer
@@ -76,44 +76,44 @@ However, you can also run the api without Docker. In that case, you need:
    ```
 3. Install composer packages
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm composer install  
+   docker compose -f docker-compose.dev.yml run --rm composer install  
    ```
 4. Install npm packages
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm npm install  
+   docker compose -f docker-compose.dev.yml run --rm npm install  
    ```
 5. Generate Open API spec
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm artisan docs:generate  
+   docker compose -f docker-compose.dev.yml run --rm artisan docs:generate  
    ```
 4. Build assets
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm npm run build  
+   docker compose -f docker-compose.dev.yml run --rm npm run build  
    ```
 5. Migrate the database 
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm artisan migrate  
+   docker compose -f docker-compose.dev.yml run --rm artisan migrate  
    ```
 6. Push the file download jobs to the queue
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm artisan geonames:download 
+   docker compose -f docker-compose.dev.yml run --rm artisan geonames:download 
    ```
    Then process the queue:
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm artisan queue:work --stop-when-empty --queue=download-data,download-places,download-flags,download-names 
+   docker compose -f docker-compose.dev.yml run --rm artisan queue:work --stop-when-empty --queue=download-data,download-places,download-flags,download-names 
    ```
 
 7. When all the files have been downloaded, push the file import jobs to the queue
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm php php artisan geonames:import  
+   docker compose -f docker-compose.dev.yml run --rm php php artisan geonames:import  
    ```
    Then process the queue:
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm artisan queue:work --stop-when-empty --queue=import-data,import-places,import-names 
+   docker compose -f docker-compose.dev.yml run --rm artisan queue:work --stop-when-empty --queue=import-data,import-places,import-names 
    ```
 8. Start the application server
    ```sh
-   docker-compose -f docker-compose.dev.yml up --build nginx
+   docker compose -f docker-compose.dev.yml up --build nginx
    ```
 9. Open the application in a browser
    ```sh
