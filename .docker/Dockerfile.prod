@@ -1,3 +1,6 @@
+#################################
+## Build application container ##
+#################################
 FROM php:8.1.11-fpm-alpine3.16
 
 LABEL maintainer="Nizar El Berjawi <nizarberjawi12@gmail.com>"

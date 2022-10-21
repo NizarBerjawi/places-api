@@ -1,5 +1,5 @@
 #################################
-## Build application container ##
+## Build development container ##
 #################################
 FROM php:8.1.11-fpm-alpine3.16
 
@@ -8,9 +8,6 @@ LABEL maintainer="Nizar El Berjawi <nizarberjawi12@gmail.com>"
 ARG USER
 ARG GID
 ARG UID
-
-ENV NVM_DIR /usr/local/nvm
-ENV NODE_VERSION 16.8.0
 
 WORKDIR /var/www/html/
 
@@ -38,8 +35,6 @@ RUN adduser \
   --uid ${UID} \
   --shell /bin/sh \
   --disabled-password ${USER}
-
-RUN chown -R ${USER}:${USER} .
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
