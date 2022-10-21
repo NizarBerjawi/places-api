@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * Country.
+ *
  * @OA\Schema(
  *      schema="country",
  *      type="object",
@@ -264,6 +266,16 @@ class Country extends Model
             'geoname_id',
             'geoname_id'
         );
+    }
+
+    /**
+     * Get the Geometry of this Country.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function geometry()
+    {
+        return $this->belongsTo(Geometry::class, 'iso3166_alpha2');
     }
 
     /**

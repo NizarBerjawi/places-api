@@ -4,27 +4,13 @@ namespace App\Jobs;
 
 use App\Exceptions\FileNotDownloadedException;
 use App\Exceptions\FileNotSavedException;
+use App\Jobs\Traits\Unzippable;
+use Illuminate\Bus\Batchable;
 use Illuminate\Support\Facades\Http;
 
-class DownloadCountryFlag extends GeonamesJob
+class DownloadShapesFile extends GeonamesJob
 {
-    /**
-     * A country code to download flag image for.
-     *
-     * @var string
-     */
-    public $code;
-
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct(string $code)
-    {
-        parent::__construct();
-        $this->code = $code;
-    }
+    use Batchable, Unzippable;
 
     /**
      * Execute the job.
@@ -33,18 +19,17 @@ class DownloadCountryFlag extends GeonamesJob
      */
     public function handle()
     {
+        $this
+            ->filesystem
+            ->ensureDirectoryExists($this->folderPath());
+
         $response = Http::withOptions([
             'stream' => true,
-            'verify' => false,
         ])->get($this->url());
 
         if ($response->failed()) {
             return $this->fail(new FileNotDownloadedException($this->url()));
         }
-
-        $this
-            ->filesystem
-            ->ensureDirectoryExists($this->folderPath());
 
         $saved = $this
             ->filesystem
@@ -53,26 +38,28 @@ class DownloadCountryFlag extends GeonamesJob
         if (! $saved) {
             return $this->fail(new FileNotSavedException($this->filepath()));
         }
+
+        $this->unzip();
     }
 
     /**
-     * Get the url of the flag.
+     * The location of the file.
      *
      * @return string
      */
     public function url()
     {
-        return config('geonames.flags_url').'/'.strtolower($this->filename());
+        return config('geonames.shapes_zip_url');
     }
 
     /**
-     * Get the flag filename.
+     * The name of the countries file.
      *
      * @return string
      */
     public function filename()
     {
-        return $this->code.'.gif';
+        return config('geonames.shapes_zip_file');
     }
 
     /**
@@ -82,7 +69,7 @@ class DownloadCountryFlag extends GeonamesJob
      */
     public function filepath()
     {
-        return $this->folderPath().'/'.$this->filename();
+        return storage_path('app/data/'.$this->filename());
     }
 
     /**
@@ -92,6 +79,6 @@ class DownloadCountryFlag extends GeonamesJob
      */
     private function folderPath()
     {
-        return storage_path('app/flags/');
+        return storage_path('app/data/shapes');
     }
 }

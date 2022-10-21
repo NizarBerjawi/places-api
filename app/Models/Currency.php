@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 
 /**
+ * Currency.
+ *
  * @OA\Schema(
  *      schema="currency",
  *      type="object",

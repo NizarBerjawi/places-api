@@ -39,7 +39,7 @@
 
 ## About The Project
 
-Places API is a RESTful based on the <a href="https://www.geonames.org/">Geonames</a> database. You can use this API to explore the world!
+Places API is a RESTful api based on the <a href="https://www.geonames.org/">Geonames</a> database. You can use this API to explore the world!
 
 ### Built With
 
@@ -56,7 +56,7 @@ To get a local copy up and running follow these simple example steps.
 
 We recommend running the project using Docker and Docker Compose.
 
-However, you can also run the api without Docker. In that case, you need:
+You will need:
 
 1. PHP 7.3 or newer
 2. Composer
@@ -74,52 +74,64 @@ However, you can also run the api without Docker. In that case, you need:
    ```sh
    cp .env.example .env
    ```
-3. Install composer packages
+3. Open an interactive shell inside the application docker container
+
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm composer install  
+   docker compose -f docker-compose.dev.yml run --rm app sh
    ```
-4. Install npm packages
+4. Install composer packages
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm npm install  
+   composer install
    ```
-5. Generate Open API spec
+5. Install npm packages
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm artisan docs:generate  
+   npm install
    ```
-4. Build assets
+6. Generate Open API spec
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm npm run build  
+   php artisan docs:generate
    ```
-5. Migrate the database 
+7. Build assets
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm artisan migrate  
+   npm run build
    ```
-6. Push the file download jobs to the queue
+8. Migrate the database
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm artisan geonames:download 
+   php artisan migrate
    ```
-   Then process the queue:
+At this point you can already start up the application, however there won't be any data in the database.
+To start the application without data, exit the interactive shell and jump to step `11` below, otherwise just keep on going through the steps below.
+
+> Please note that downloading and importing the data will download ALL the Geonames dump export files and then imports them into the database. Depending on your CPU power, This process could take up to several hours to complete.
+
+9. Push the file download jobs to the queue
+
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm artisan queue:work --stop-when-empty --queue=download-data,download-places,download-flags,download-names 
+   php artisan geonames:download
    ```
 
-7. When all the files have been downloaded, push the file import jobs to the queue
+   Then process the queue:
+
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm php php artisan geonames:import  
+   php artisan queue:work --stop-when-empty --queue=download-data,download-places,download-flags,download-names
+   ```
+
+10. When all the files have been downloaded, push the file import jobs to the queue
+   ```sh
+   php artisan geonames:import
    ```
    Then process the queue:
    ```sh
-   docker-compose -f docker-compose.dev.yml run --rm artisan queue:work --stop-when-empty --queue=import-data,import-places,import-names 
+   php artisan queue:work --stop-when-empty --queue=import-data,import-places,import-names
    ```
-8. Start the application server
-   ```sh
-   docker-compose -f docker-compose.dev.yml up --build nginx
-   ```
-9. Open the application in a browser
-   ```sh
-   http://localhost:8080
-   ```
-> Please note that downloading and importing the data will download ALL the Geonames dump export files and then imports them into the database. Depending on your CPU power, This process could take up to several hours to complete.
+11. Start the application server
+    ```sh
+    docker compose -f docker-compose.dev.yml up --build nginx
+    ```
+12. Open the application in a browser
+    ```sh
+    http://localhost:8080
+    ```
 
 <!-- USAGE EXAMPLES -->
 
@@ -129,7 +141,7 @@ For a full details, please refer to the [Documentation](https://www.placesapi.de
 
 ## Like My Work?
 
-If you like my work and find that this project helps, please support! 
+If you like my work and find that this project helps, please support!
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png)](https://www.buymeacoffee.com/placesApi)
 

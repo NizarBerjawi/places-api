@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4b48a1f518b3fc93a2072d55a0b0685e",
+    "content-hash": "fe188d1aae9eaa1e02b6fdadca1de899",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -4303,24 +4303,24 @@
         },
         {
             "name": "spatie/laravel-json-api-paginate",
-            "version": "1.10.0",
+            "version": "1.12.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-json-api-paginate.git",
-                "reference": "c0b3bd93600ca03c1e216fd519db16f286b8b1cf"
+                "reference": "5ecdd3569d07a22798d8fe9de9ec6de640343b75"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-json-api-paginate/zipball/c0b3bd93600ca03c1e216fd519db16f286b8b1cf",
-                "reference": "c0b3bd93600ca03c1e216fd519db16f286b8b1cf",
+                "url": "https://api.github.com/repos/spatie/laravel-json-api-paginate/zipball/5ecdd3569d07a22798d8fe9de9ec6de640343b75",
+                "reference": "5ecdd3569d07a22798d8fe9de9ec6de640343b75",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "^6.0|^7.0|^8.0",
+                "illuminate/support": "^6.0|^7.0|^8.0|^9.0",
                 "php": "^7.3|^8.0"
             },
             "require-dev": {
-                "orchestra/testbench": "^4.0|^5.0|^6.0",
+                "orchestra/testbench": "^4.0|^5.0|^6.0|^7.0",
                 "phpunit/phpunit": "^8.0|^9.0"
             },
             "type": "library",
@@ -4355,8 +4355,7 @@
                 "spatie"
             ],
             "support": {
-                "issues": "https://github.com/spatie/laravel-json-api-paginate/issues",
-                "source": "https://github.com/spatie/laravel-json-api-paginate/tree/1.10.0"
+                "source": "https://github.com/spatie/laravel-json-api-paginate/tree/1.12.0"
             },
             "funding": [
                 {
@@ -4364,7 +4363,7 @@
                     "type": "custom"
                 }
             ],
-            "time": "2020-11-27T08:21:48+00:00"
+            "time": "2022-05-16T12:16:39+00:00"
         },
         {
             "name": "spatie/laravel-package-tools",
@@ -11367,5 +11366,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.1.0"
+    "plugin-api-version": "2.3.0"
 }

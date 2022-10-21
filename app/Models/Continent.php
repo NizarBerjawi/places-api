@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
 /**
+ * Continent.
+ *
  * @OA\Schema(
  *      schema="continent",
  *      type="object",
@@ -80,6 +82,23 @@ class Continent extends Model
     public function place()
     {
         return $this->hasOne(Place::class, 'geoname_id', 'geoname_id');
+    }
+
+    /**
+     * Get the geometries of all the countries in the continent.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function geometries()
+    {
+        return $this->hasManyThrough(
+            Geometry::class,
+            Country::class,
+            'continent_code',
+            'country_code',
+            null,
+            'iso3166_alpha2',
+        );
     }
 
     /**

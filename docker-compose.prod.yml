@@ -1,4 +1,4 @@
-version: '3.3'
+version: "3.9"
 services:
   nginx:
     build:
@@ -10,13 +10,12 @@ services:
       - "443:443"
     restart: always
     depends_on:
-      - builder
       - php
-      - postgres
+      - db
       - supervisor
     networks:
       - api_network
-    volumes: 
+    volumes:
       - nginx:/etc/nginx/http.d
       - certs:/etc/letsencrypt
   php:
@@ -31,9 +30,6 @@ services:
       - api_network
     volumes:
       - storage:/var/www/html/storage
-    depends_on:
-      - builder
-      - postgres
   supervisor:
     build:
       context: .
@@ -42,11 +38,9 @@ services:
       - storage:/var/www/html/storage
     networks:
       - api_network
-    depends_on:
-      - builder
     env_file:
       - .env
-  postgres:
+  db:
     image: postgres:13.3-alpine3.13
     restart: always
     environment:
@@ -63,10 +57,8 @@ services:
       dockerfile: .docker/Dockerfile.builder
       args:
         APP_URL: ${APP_URL}
-    image: builder
+    image: builder:latest
     container_name: builder
-    networks:
-      - api_network
 # Docker Networks
 networks:
   api_network:
