@@ -6,29 +6,33 @@
             <div class="content">
                 <div class="columns">
                     <div class="column is-10 is-offset-1">
-                        <article class="panel pb-4">
-                            <p class="panel-heading">Feature Codes</p>
-                            <p class="panel-tabs">
-                                <a href={{ route('featureCodes') }} @class([
-                                    'is-active' => !request()->has('filter'),
-                                ])>
-                                    All
-                                </a>
+                        <p class="title">Feature Codes</p>
+
+                        <div class="tabs is-large is-centered">
+                            <ul>
+                                <li @class(['is-active' => !request()->has('filter')])>
+                                    <a href={{ route('featureCodes') }}>All</a>
+                                </li>
 
                                 @foreach ($featureClasses as $featureClass)
-                                    <a href="{{ route('featureCodes', ['filter' => ['featureClassCode' => $featureClass->code]]) }}"
-                                        @class([
-                                            'is-active' =>
-                                                $featureClass->code === request()->input('filter.featureClassCode'),
-                                        ])>
-                                        {{ $featureClass->code }}
-                                    </a>
+                                    <li @class([
+                                        'is-active' =>
+                                            $featureClass->code === request()->input('filter.featureClassCode'),
+                                    ])>
+                                        <a
+                                            href="{{ route('featureCodes', ['filter' => ['featureClassCode' => $featureClass->code]]) }}">
+                                            {{ $featureClass->code }}
+                                        </a>
+                                    </li>
                                 @endforeach
-                            </p>
+                            </ul>
+                        </div>
 
-                            <div class="table-container">
-                                <table class='table'>
-                                    <tr class="is-selected has-text-centered has-text-weight-bold">
+                        <div class="table-container">
+                            <table class='table is-striped'>
+                                <thead>
+                                    <tr
+                                        class="is-selected has-text-centered has-text-weight-bold has-background-primary-dark">
                                         <td colspan="3">
                                             {{ $selectedFeatureClass ?? 'ALL' }}
                                         </td>
@@ -38,21 +42,20 @@
                                         <th>Short Description</th>
                                         <th>Full Description</th>
                                     </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($featureCodes as $featureCode)
+                                        <tr>
+                                            <td>{{ $featureCode->code }}</td>
+                                            <td>{{ $featureCode->short_description }}</td>
+                                            <td>{{ $featureCode->full_description }}</td>
+                                        </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
 
-                                    <tbody>
-                                        @foreach ($featureCodes as $featureCode)
-                                            <tr>
-                                                <td>{{ $featureCode->code }}</td>
-                                                <td>{{ $featureCode->short_description }}</td>
-                                                <td>{{ $featureCode->full_description }}</td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-
-                            {{ $featureCodes->links('partials.pagination') }}
-                        </article>
+                        {{ $featureCodes->links('partials.pagination') }}
                     </div>
                 </div>
             </div>
