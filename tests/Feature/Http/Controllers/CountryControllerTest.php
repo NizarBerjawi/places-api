@@ -202,8 +202,8 @@ class CountryControllerTest extends TestCase
         $response->shouldReturnJson();
         $response->seeJsonEquals([
             'data' => CountryResource::make($country)->resolve() + [
-                    'continent' => ContinentResource::make($country->continent),
-                ],
+                'continent' => ContinentResource::make($country->continent),
+            ],
         ]);
     }
 }
