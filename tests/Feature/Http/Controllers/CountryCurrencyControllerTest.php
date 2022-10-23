@@ -20,8 +20,8 @@ class CountryCurrencyControllerTest extends TestCase
         $response->shouldReturnJson();
         $response->seeJsonStructure([
             'data' => [
-                    'code',
-                    'name',
+                'code',
+                'name',
             ],
         ]);
     }
