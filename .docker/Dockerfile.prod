@@ -1,7 +1,7 @@
 #################################
 ## Build application container ##
 #################################
-FROM php:8-fpm-alpine3.13
+FROM php:8.1.11-fpm-alpine3.16
 
 LABEL maintainer="Nizar El Berjawi <nizarberjawi12@gmail.com>"
 
@@ -21,14 +21,11 @@ RUN apk --update add --no-cache \
 
 COPY .docker/app /usr/local/etc
 
-COPY --chown=www-data:www-data . .
+COPY --from=builder --chown=www-data:www-data /app .
 
 RUN chmod -R ug+rwx ./storage && \
   find . -type f -exec chmod 644 {} \; && \
   find . -type d -exec chmod 755 {} \;
-
-COPY --from=builder --chown=www-data:www-data /app/public ./public
-COPY --from=builder --chown=www-data:www-data /app/vendor ./vendor
 
 USER www-data
 

@@ -12,9 +12,12 @@ use App\Models\TimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Pluralizer;
+use Ramsey\Uuid\Uuid;
 
 class StatisticsController extends Controller
 {
+    const NAMESPACE = '4bdbe8ec-5cb5-11ea-bc55-0242ac130003';
+
     /**
      * Display a listing of all time zones.
      *
@@ -56,14 +59,15 @@ class StatisticsController extends Controller
 
         return new JsonResource(
             array_map(function ($class) {
+                $uuid = Uuid::uuid5(self::NAMESPACE, $class);
                 $className = class_basename($class);
                 $plural = Pluralizer::plural($className);
 
                 return [
-                    'key' => strtolower($plural),
-                    'description' => "{$plural}",
-                    'value' => $class::count(),
+                    'id' => $uuid,
                     'type' => 'count',
+                    'label' => "{$plural}",
+                    'value' => $class::count(),
                 ];
             }, $classes)
         );

@@ -6,16 +6,16 @@
             <div class="content">
                 <div class="columns">
                     <div class="column is-10 is-offset-1">
-                        <article class="panel pb-4">
-                            <p class="panel-heading">Continents</p>
+                            <p class="title">Continents</p>
 
                             <div class="table-container">
-                                <table class='table'>
-                                    <tr>
-                                        <th>Code</th>
-                                        <th>Name</th>
-                                    </tr>
-
+                                <table class='table is-striped'>
+                                    <thead>
+                                        <tr>
+                                            <th>Code</th>
+                                            <th>Name</th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                         @foreach ($continents as $continent)
                                             <tr>
@@ -28,7 +28,6 @@
                             </div>
 
                             {{ $continents->links('partials.pagination') }}
-                        </article>
                     </div>
                 </div>
             </div>
