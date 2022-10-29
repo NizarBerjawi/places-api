@@ -109,11 +109,12 @@ $app->routeMiddleware([
 */
 $app->register(\Spatie\HttpLogger\HttpLoggerServiceProvider::class);
 $app->register(\Spatie\QueryBuilder\QueryBuilderServiceProvider::class);
-$app->register(\Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::class);
+// $app->register(\Spatie\JsonApiPaginate\JsonApiPaginateServiceProvider::class);
 $app->register(\Spatie\ResponseCache\ResponseCacheServiceProvider::class);
 $app->register(\Illuminate\Mail\MailServiceProvider::class);
 $app->register(\Fruitcake\Cors\CorsServiceProvider::class);
 $app->register(\Bepsvpt\SecureHeaders\SecureHeadersServiceProvider::class);
+$app->register(\App\Providers\JsonApiPaginateServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------

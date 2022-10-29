@@ -64,7 +64,7 @@ class CountryQuery extends Query
     public function getAllowedFilters(): array
     {
         return [
-            AllowedFilter::exact('name'),
+            AllowedFilter::partial('name'),
             AllowedFilter::exact('iso3166Alpha2', 'iso3166_alpha2'),
             AllowedFilter::exact('iso3166Alpha3', 'iso3166_alpha3'),
             AllowedFilter::exact('iso3166Numeric', 'iso3166_numeric'),
