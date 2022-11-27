@@ -38,8 +38,8 @@ class ContinentCountryController extends Controller
      *      )
      * )
      *
-     * @param \App\Queries\CountryQuery  $query
-     * @param string $continentCode
+     * @param  \App\Queries\CountryQuery  $query
+     * @param  string  $continentCode
      * @return \Illuminate\Http\Response
      */
     public function index(CountryQuery $query, string $continentCode)

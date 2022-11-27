@@ -30,8 +30,9 @@ class PlaceLocationController extends Controller
      *         description="Place not found"
      *     ),
      * )
-     * @param \App\Queries\PlaceQuery  $query
-     * @param int $geonameId
+     *
+     * @param  \App\Queries\PlaceQuery  $query
+     * @param  int  $geonameId
      * @return \Illuminate\Http\Response
      */
     public function index(LocationQuery $query, $geonameId)

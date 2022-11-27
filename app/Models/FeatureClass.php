@@ -92,8 +92,8 @@ class FeatureClass extends Model
     /**
      * Get a feature class by feature class code.
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param string $featureClassCode
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $featureClassCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByFeatureClassCode(Builder $query, string $featureClassCode)

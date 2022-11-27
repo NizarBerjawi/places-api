@@ -91,8 +91,8 @@ class Language extends Model
     /**
      * Get languages by country code.
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param string $countryCode
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $countryCode
      * @return \Illuminate\Database\Eloquent\Builder  $query
      */
     public function scopeByCountry(Builder $query, string $countryCode)
@@ -106,8 +106,8 @@ class Language extends Model
     /**
      * Get langauge by ISO639-3 code.
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param string $languageCode
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $languageCode
      * @return \Illuminate\Database\Eloquent\Builder  $query
      */
     public function scopeByLanguageCode(Builder $query, string $languageCode)

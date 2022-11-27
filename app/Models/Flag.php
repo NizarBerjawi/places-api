@@ -70,8 +70,8 @@ class Flag extends Model
     /**
      * Get a Flag by country code.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder $query
-     * @param  string $countryCode
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $countryCode
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
     public function scopeByCountryCode(Builder $query, string $countryCode)

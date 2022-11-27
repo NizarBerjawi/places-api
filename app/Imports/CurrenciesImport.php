@@ -42,8 +42,8 @@ class CurrenciesImport extends CountriesFileIterator implements ShouldQueue
             }
 
             $currencies->push([
-                'code'       => $code,
-                'name'       => $name,
+                'code' => $code,
+                'name' => $name,
             ]);
         }
 

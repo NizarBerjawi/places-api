@@ -39,7 +39,7 @@ class ContinentAlternateNameController extends Controller
      * )
      *
      * @param  \App\Queries\CurrencyQuery  $query
-     * @param  string $continentCode
+     * @param  string  $continentCode
      * @return \Illuminate\Http\Response
      */
     public function index(AlternateNameQuery $query, string $continentCode)

@@ -35,7 +35,7 @@ class TimeZoneController extends Controller
      *     description="Everything about time zones"
      * )
      *
-     * @param \App\Queries\TimeZoneQuery  $query
+     * @param  \App\Queries\TimeZoneQuery  $query
      * @return \Illuminate\Http\Response
      */
     public function index(TimeZoneQuery $query)
@@ -68,8 +68,9 @@ class TimeZoneController extends Controller
      *         description="Time zone not found"
      *     )
      * )
-     * @param \App\Queries\TimeZoneQuery  $query
-     * @param  string $code
+     *
+     * @param  \App\Queries\TimeZoneQuery  $query
+     * @param  string  $code
      * @return \Illuminate\Http\Response
      */
     public function show(TimeZoneQuery $query, string $timeZoneCode)

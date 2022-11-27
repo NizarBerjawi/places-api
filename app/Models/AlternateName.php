@@ -78,8 +78,8 @@ class AlternateName extends Model
     /**
      * Get Alternate names by language.
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param array $languages
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  array  $languages
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByLanguageCode(Builder $query, ...$languages)
@@ -92,8 +92,8 @@ class AlternateName extends Model
     /**
      * Get alternate name by their parent geoname ID.
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param array $languages
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  array  $languages
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByGeonameId(Builder $query, int $geonameId)

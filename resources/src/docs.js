@@ -1,7 +1,7 @@
 
 import SwaggerUI from 'swagger-ui'
 import 'swagger-ui/dist/swagger-ui.css';
-import './custom.css'
+import './docs.css'
 
 const spec = require('../../public/openApi.json');
 

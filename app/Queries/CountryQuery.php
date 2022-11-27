@@ -2,6 +2,8 @@
 
 namespace App\Queries;
 
+use App\Filters\NumericFilters;
+use App\Filters\StringFilters;
 use App\Models\Country;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
@@ -38,24 +40,26 @@ class CountryQuery extends Query
      *             "iso3166Numeric",
      *             "population",
      *             "area",
-     *             "phoneCode",
-     *             "areaGt",
-     *             "areaGte",
-     *             "areaLt",
-     *             "areaLte",
-     *             "areaBetween",
-     *             "populationGt",
-     *             "populationGte",
-     *             "populationLt",
-     *             "populationLte",
-     *             "populationBetween",
-     *             "neighbourOf"
+     *             "phoneCode"
      *         },
      *         @OA\Property(
-     *             property="areaLt",
-     *             type="integer",
-     *             example="100000"
-     *         )
+     *             property="area",
+     *             type="object",
+     *             @OA\Property(
+     *                 property="lt",
+     *                 type="integer",
+     *                 example=10000
+     *             )
+     *         ),
+     *         @OA\Property(
+     *             property="population",
+     *             type="object",
+     *             @OA\Property(
+     *                 property="gt",
+     *                 type="integer",
+     *                 example=5000000
+     *             )
+     *         ),
      *     )
      * )
      *
@@ -64,24 +68,13 @@ class CountryQuery extends Query
     public function getAllowedFilters(): array
     {
         return [
-            AllowedFilter::partial('name'),
-            AllowedFilter::exact('iso3166Alpha2', 'iso3166_alpha2'),
-            AllowedFilter::exact('iso3166Alpha3', 'iso3166_alpha3'),
-            AllowedFilter::exact('iso3166Numeric', 'iso3166_numeric'),
-            AllowedFilter::exact('population'),
-            AllowedFilter::exact('area'),
-            AllowedFilter::exact('phoneCode', 'phone_code'),
-            AllowedFilter::scope('areaGt'),
-            AllowedFilter::scope('areaGte'),
-            AllowedFilter::scope('areaLt'),
-            AllowedFilter::scope('areaLte'),
-            AllowedFilter::scope('areaBetween'),
-            AllowedFilter::scope('populationGt'),
-            AllowedFilter::scope('populationGte'),
-            AllowedFilter::scope('populationLt'),
-            AllowedFilter::scope('populationLte'),
-            AllowedFilter::scope('populationBetween'),
-            AllowedFilter::scope('neighbourOf'),
+            AllowedFilter::custom('name', new StringFilters),
+            AllowedFilter::custom('iso3166Alpha2', new StringFilters, 'iso3166_alpha2'),
+            AllowedFilter::custom('iso3166Alpha3', new StringFilters, 'iso3166_alpha3'),
+            AllowedFilter::custom('iso3166Numeric', new NumericFilters, 'iso3166_numeric'),
+            AllowedFilter::custom('population', new NumericFilters),
+            AllowedFilter::custom('area', new NumericFilters),
+            AllowedFilter::custom('phoneCode', new StringFilters, 'phone_code'),
         ];
     }
 

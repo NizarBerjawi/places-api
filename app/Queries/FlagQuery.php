@@ -2,6 +2,7 @@
 
 namespace App\Queries;
 
+use App\Filters\StringFilters;
 use App\Models\Flag;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
@@ -45,7 +46,7 @@ class FlagQuery extends Query
     public function getAllowedFilters(): array
     {
         return [
-            AllowedFilter::exact('countryCode', 'country_code'),
+            AllowedFilter::custom('countryCode', new StringFilters, 'country_code'),
         ];
     }
 
@@ -80,6 +81,7 @@ class FlagQuery extends Query
     /**
      * The relations that we can sort by.
 
+     *
      * @OA\Parameter(
      *     parameter="flagSort",
      *     name="sort",

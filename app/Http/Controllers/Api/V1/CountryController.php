@@ -67,8 +67,9 @@ class CountryController extends Controller
      *         description="Country not found"
      *      )
      * )
+     *
      * @param  \App\Queries\CountryQuery  $query
-     * @param  string $countryCode
+     * @param  string  $countryCode
      * @return \Illuminate\Http\Response
      */
     public function show(CountryQuery $query, string $countryCode)

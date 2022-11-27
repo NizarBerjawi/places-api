@@ -3,22 +3,10 @@
 namespace App\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
-use Laravel\Lumen\Console\Kernel as ConsoleKernel;
+use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
-    /**
-     * The Artisan commands provided by your application.
-     *
-     * @var array
-     */
-    protected $commands = [
-        Commands\GenerateDocumentation::class,
-        Commands\DownloadGeonamesFiles::class,
-        Commands\ImportGeonamesFiles::class,
-        Commands\UpdateGeonamesData::class,
-    ];
-
     /**
      * Define the application's command schedule.
      *
@@ -33,5 +21,17 @@ class Kernel extends ConsoleKernel
 
         $schedule->command('responsecache:clear')
             ->dailyAt('22:30');
+    }
+
+    /**
+     * Register the commands for the application.
+     *
+     * @return void
+     */
+    protected function commands()
+    {
+        $this->load(__DIR__.'/Commands');
+
+        require base_path('routes/console.php');
     }
 }

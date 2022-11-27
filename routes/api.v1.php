@@ -1,79 +1,101 @@
 <?php
 
-/** @var \Laravel\Lumen\Routing\Router $router */
+use App\Http\Controllers\Api\V1\ContinentAlternateNameController;
+use App\Http\Controllers\Api\V1\ContinentController;
+use App\Http\Controllers\Api\V1\ContinentCountryController;
+use App\Http\Controllers\Api\V1\ContinentGeometryController;
+use App\Http\Controllers\Api\V1\CountryAlternateNameController;
+use App\Http\Controllers\Api\V1\CountryController;
+use App\Http\Controllers\Api\V1\CountryCurrencyController;
+use App\Http\Controllers\Api\V1\CountryFlagController;
+use App\Http\Controllers\Api\V1\CountryGeometryController;
+use App\Http\Controllers\Api\V1\CountryLanguageController;
+use App\Http\Controllers\Api\V1\CountryNeighbourController;
+use App\Http\Controllers\Api\V1\CountryPlaceController;
+use App\Http\Controllers\Api\V1\CountryTimeZoneController;
+use App\Http\Controllers\Api\V1\CurrencyController;
+use App\Http\Controllers\Api\V1\FeatureClassController;
+use App\Http\Controllers\Api\V1\FeatureCodeController;
+use App\Http\Controllers\Api\V1\FlagController;
+use App\Http\Controllers\Api\V1\LanguageController;
+use App\Http\Controllers\Api\V1\PlaceAlternateNameController;
+use App\Http\Controllers\Api\V1\PlaceController;
+use App\Http\Controllers\Api\V1\PlaceLocationController;
+use App\Http\Controllers\Api\V1\StatisticsController;
+use App\Http\Controllers\Api\V1\TimeZoneController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| API Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It is a breeze. Simply tell Lumen the URIs it should respond to
-| and give it the Closure to call when that URI is requested.
+| Here is where you can register API routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::prefix('countries')->group(function () {
+    Route::get('/', [CountryController::class, 'index']);
+    Route::get('/{countryCode}', [CountryController::class, 'show']);
 
-$router->group(['prefix' => 'countries'], function () use ($router) {
-    $router->get('/', ['uses' => 'CountryController@index']);
-    $router->get('/{countryCode}', ['uses' => 'CountryController@show']);
-
-    $router->get('/{countryCode}/flag', ['uses' => 'CountryFlagController@index']);
-    $router->get('/{countryCode}/currency', ['uses' => 'CountryCurrencyController@index']);
-    $router->get('/{countryCode}/languages', ['uses' => 'CountryLanguageController@index']);
-    $router->get('/{countryCode}/places', ['uses' => 'CountryPlaceController@index']);
-    $router->get('/{countryCode}/timeZones', ['uses' => 'CountryTimeZoneController@index']);
-    $router->get('/{countryCode}/neighbours', ['uses' => 'CountryNeighbourController@index']);
-    $router->get('/{countryCode}/alternateNames', ['uses' => 'CountryAlternateNameController@index']);
-    $router->get('/{countryCode}/geometry', ['uses' => 'CountryGeometryController@index']);
+    Route::get('/{countryCode}/flag', [CountryFlagController::class, 'index']);
+    Route::get('/{countryCode}/currency', [CountryCurrencyController::class, 'index']);
+    Route::get('/{countryCode}/languages', [CountryLanguageController::class, 'index']);
+    Route::get('/{countryCode}/places', [CountryPlaceController::class, 'index']);
+    Route::get('/{countryCode}/timeZones', [CountryTimeZoneController::class, 'index']);
+    Route::get('/{countryCode}/neighbours', [CountryNeighbourController::class, 'index']);
+    Route::get('/{countryCode}/alternateNames', [CountryAlternateNameController::class, 'index']);
+    Route::get('/{countryCode}/geometry', [CountryGeometryController::class, 'index']);
 });
 
-$router->group(['prefix' => 'continents'], function () use ($router) {
-    $router->get('/', ['uses' => 'ContinentController@index']);
-    $router->get('/{continentCode}', ['uses' => 'ContinentController@show']);
+Route::prefix('continents')->group(function () {
+    Route::get('/', [ContinentController::class, 'index']);
+    Route::get('/{continentCode}', [ContinentController::class, 'show']);
 
-    $router->get('/{continentCode}/countries', ['uses' => 'ContinentCountryController@index']);
-    $router->get('/{continentCode}/alternateNames', ['uses' => 'ContinentAlternateNameController@index']);
-    $router->get('/{continentCode}/geometry', ['uses' => 'ContinentGeometryController@index']);
+    Route::get('/{continentCode}/countries', [ContinentCountryController::class, 'index']);
+    Route::get('/{continentCode}/alternateNames', [ContinentAlternateNameController::class, 'index']);
+    Route::get('/{continentCode}/geometry', [ContinentGeometryController::class, 'index']);
 });
 
-$router->group(['prefix' => 'currencies'], function () use ($router) {
-    $router->get('/', ['uses' => 'CurrencyController@index']);
-    $router->get('/{currencyCode}', ['uses' => 'CurrencyController@show']);
+Route::prefix('currencies')->group(function () {
+    Route::get('/', [CurrencyController::class, 'index']);
+    Route::get('/{currencyCode}', [CurrencyController::class, 'show']);
 });
 
-$router->group(['prefix' => 'featureClasses'], function () use ($router) {
-    $router->get('/', ['uses' => 'FeatureClassController@index']);
-    $router->get('/{featureClassCode}', ['uses' => 'FeatureClassController@show']);
+Route::prefix('featureClasses')->group(function () {
+    Route::get('/', [FeatureClassController::class, 'index']);
+    Route::get('/{featureClassCode}', [FeatureClassController::class, 'show']);
 });
 
-$router->group(['prefix' => 'featureCodes'], function () use ($router) {
-    $router->get('/', ['uses' => 'FeatureCodeController@index']);
-    $router->get('/{featureCodeCode}', ['uses' => 'FeatureCodeController@show']);
+Route::prefix('featureCodes')->group(function () {
+    Route::get('/', [FeatureCodeController::class, 'index']);
+    Route::get('/{featureCodeCode}', [FeatureCodeController::class, 'show']);
 });
 
-$router->group(['prefix' => 'timeZones'], function () use ($router) {
-    $router->get('/', ['uses' => 'TimeZoneController@index']);
-    $router->get('/{timeZoneCode}', ['uses' => 'TimeZoneController@show']);
+Route::prefix('timeZones')->group(function () {
+    Route::get('/', [TimeZoneController::class, 'index']);
+    Route::get('/{timeZoneCode}', [TimeZoneController::class, 'show']);
 });
 
-$router->group(['prefix' => 'flags'], function () use ($router) {
-    $router->get('/', ['uses' => 'FlagController@index']);
-    $router->get('/{countryCode}', ['uses' => 'FlagController@show']);
+Route::prefix('flags')->group(function () {
+    Route::get('/', [FlagController::class, 'index']);
+    Route::get('/{countryCode}', [FlagController::class, 'show']);
 });
 
-$router->group(['prefix' => 'languages'], function () use ($router) {
-    $router->get('/', ['uses' => 'LanguageController@index']);
-    $router->get('/{languageCode}', ['uses' => 'LanguageController@show']);
+Route::prefix('languages')->group(function () {
+    Route::get('/', [LanguageController::class, 'index']);
+    Route::get('/{languageCode}', [LanguageController::class, 'show']);
 });
 
-$router->group(['prefix' => 'places'], function () use ($router) {
-    $router->get('/', ['uses' => 'PlaceController@index']);
-    $router->get('/{geonameId}', ['uses' => 'PlaceController@show']);
+Route::prefix('places')->group(function () {
+    Route::get('/', [PlaceController::class, 'index']);
+    Route::get('/{geonameId}', [PlaceController::class, 'show']);
 
-    $router->get('/{geonameId}/alternateNames', ['uses' => 'PlaceAlternateNameController@index']);
-    $router->get('/{geonameId}/location', ['uses' => 'PlaceLocationController@index']);
+    Route::get('/{geonameId}/alternateNames', [PlaceAlternateNameController::class, 'index']);
+    Route::get('/{geonameId}/location', [PlaceLocationController::class, 'index']);
 });
 
-$router->group(['prefix' => 'statistics'], function () use ($router) {
-    $router->get('/', ['uses' => 'StatisticsController@index']);
+Route::prefix('statistics')->group(function () {
+    Route::get('/', [StatisticsController::class, 'index']);
 });

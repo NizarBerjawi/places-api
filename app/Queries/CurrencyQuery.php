@@ -2,6 +2,7 @@
 
 namespace App\Queries;
 
+use App\Filters\StringFilters;
 use App\Models\Currency;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
@@ -45,8 +46,8 @@ class CurrencyQuery extends Query
     public function getAllowedFilters(): array
     {
         return [
-            AllowedFilter::exact('code'),
-            AllowedFilter::partial('name'),
+            AllowedFilter::custom('code', new StringFilters),
+            AllowedFilter::custom('name', new StringFilters),
         ];
     }
 

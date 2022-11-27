@@ -15,13 +15,13 @@ class AlternateNameResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'name'            => $this->name,
+            'name' => $this->name,
             'isPreferredName' => $this->is_preferred_name,
-            'isShortName'     => $this->is_short_name,
-            'isHistoric'      => $this->is_historic,
-            'isColloquial'    => $this->is_colloquial,
-            'language'        => LanguageResource::make($this->whenLoaded('language')),
-            'place'           => PlaceResource::make($this->whenLoaded('place')),
+            'isShortName' => $this->is_short_name,
+            'isHistoric' => $this->is_historic,
+            'isColloquial' => $this->is_colloquial,
+            'language' => LanguageResource::make($this->whenLoaded('language')),
+            'place' => PlaceResource::make($this->whenLoaded('place')),
         ];
     }
 }

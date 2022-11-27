@@ -45,7 +45,7 @@ class CountryLanguageImport extends CountriesFileIterator implements ShouldQueue
             foreach ($languages as $language) {
                 $countryLanguages->push([
                     'country_code' => $item[0],
-                    'language_code'  => $language->iso639_3,
+                    'language_code' => $language->iso639_3,
                 ]);
             }
         }
@@ -63,7 +63,7 @@ class CountryLanguageImport extends CountriesFileIterator implements ShouldQueue
      * For example, the language string "am,en,en-ET,om-ET,ti-ET,so-ET,sid"
      * will turn to ["am", "en", "om", "ti", "so", "sid"]
      *
-     * @param \Illuminate\Support\Stringable  $languagesString
+     * @param  \Illuminate\Support\Stringable  $languagesString
      * @return \Illuminate\Support\Collection
      */
     private function parseLanguageString(Stringable $languagesString)

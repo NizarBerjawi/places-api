@@ -4,7 +4,7 @@
   <h3 align="center">Places API</h3>
 
   <p align="center">
-    A RESTful places API built using Lumen micro-framework.
+    A RESTful places API built using Laravel framework.
     <br />
     <a href="https://www.placesapi.dev"><strong>API »</strong></a>
     <br />
@@ -43,7 +43,7 @@ Places API is a RESTful api based on the <a href="https://www.geonames.org/">Geo
 
 ### Built With
 
-- [Lumen Micro-framework](https://lumen.laravel.com/)
+- [Laravel framework](https://laravel.com/)
 - [Bulma](https://bulma.io/)
 
 <!-- GETTING STARTED -->
@@ -58,7 +58,7 @@ We recommend running the project using Docker and Docker Compose.
 
 You will need:
 
-1. PHP 7.3 or newer
+1. PHP 8.1
 2. Composer
 3. Node Package Manager (NPM)
 4. Docker
@@ -164,4 +164,4 @@ Nizar El Berjawi - nizarberjawi12@gmail.com
 ## Acknowledgements
 
 - [GeoNames](https://www.geonames.org/)
-- [Lumen Micro-framework](https://lumen.laravel.com/)
+- [Laravel framework](https://laravel.com/)

@@ -35,7 +35,7 @@ class LanguageController extends Controller
      *     description="Everything about languages"
      * )
      *
-     * @param \App\Queries\LanguageQuery  $query
+     * @param  \App\Queries\LanguageQuery  $query
      * @return \Illuminate\Http\Response
      */
     public function index(LanguageQuery $query)
@@ -66,8 +66,9 @@ class LanguageController extends Controller
      *          description="Language not found"
      *       )
      * )
-     * @param \App\Queries\FlagQuery  $query
-     * @param  string $code
+     *
+     * @param  \App\Queries\FlagQuery  $query
+     * @param  string  $code
      * @return \Illuminate\Http\Response
      */
     public function show(LanguageQuery $query, string $languageCode)

@@ -12,7 +12,17 @@ return [
      * The log writer used to write the request to a log.
      * It should implement `LogWriter`.
      */
-    'log_writer' => \App\Logger\LogWriter::class,
+    'log_writer' => \Spatie\HttpLogger\DefaultLogWriter::class,
+
+    /*
+     * The log channel used to write the request.
+     */
+    'log_channel' => 'http-requests',
+
+    /*
+     * The log level used to log the request.
+     */
+    'log_level' => 'info',
 
     /*
      * Filter out body fields which will never be logged.

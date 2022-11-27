@@ -28,8 +28,8 @@ class ContinentsImport extends GeonamesFileIterator implements ShouldQueue
     /**
      * Initialize an instance.
      *
-     * @param string $filepath
-     * @param string $delimiter
+     * @param  string  $filepath
+     * @param  string  $delimiter
      * @return void
      */
     public function __construct(string $filepath, string $delimiter = "\t")
@@ -82,8 +82,8 @@ class ContinentsImport extends GeonamesFileIterator implements ShouldQueue
 
             $continents->push([
                 'geoname_id' => $geonameId,
-                'code'       => $code,
-                'name'       => $name,
+                'code' => $code,
+                'name' => $name,
             ]);
         }
 

@@ -104,7 +104,7 @@ class Continent extends Model
     /**
      * Get the alternate names belonging to this continent.
      *
-     * @param string $value
+     * @param  string  $value
      * @return array
      */
     public function alternateNames()
@@ -119,8 +119,8 @@ class Continent extends Model
     /**
      * Returns non-existing Continent IDs from an array of IDs.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param array  $ids
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  array  $ids
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeGetMissing(Builder $query, array $ids)
@@ -138,14 +138,14 @@ class Continent extends Model
     }
 
     /**
-     * Get a continent scoped by continent code.
+     * Scope continents by continent code.
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param string $continentCode
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $code
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    public function scopeByContinentCode(Builder $query, $continentCode)
+    public function scopeByCode(Builder $query, string $code)
     {
-        return $query->where('code', $continentCode);
+        return $query->where('code', $code);
     }
 }

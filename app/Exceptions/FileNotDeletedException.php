@@ -16,7 +16,7 @@ class FileNotDeletedException extends Exception
     /**
      * Instantiate the exception.
      *
-     * @param string $filename
+     * @param  string  $filename
      * @return void
      */
     public function __construct(string $location = null)

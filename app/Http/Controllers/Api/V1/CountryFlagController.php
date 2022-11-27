@@ -37,7 +37,7 @@ class CountryFlagController extends Controller
      * )
      *
      * @param  \App\Queries\FlagQuery  $query
-     * @param  string $code
+     * @param  string  $code
      * @return \Illuminate\Http\Response
      */
     public function index(FlagQuery $query, string $countryCode)
