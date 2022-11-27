@@ -12,5 +12,5 @@ return [
     | as the default, or current.
     */
 
-    'latest'  => '1',
+    'latest' => '1',
 ];

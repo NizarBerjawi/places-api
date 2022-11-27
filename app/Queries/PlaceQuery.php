@@ -2,6 +2,8 @@
 
 namespace App\Queries;
 
+use App\Filters\NumericFilters;
+use App\Filters\StringFilters;
 use App\Models\Place;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
@@ -32,6 +34,7 @@ class PlaceQuery extends Query
      *     @OA\Schema(
      *         type="object",
      *         enum={
+     *             "name",
      *             "featureCode",
      *             "countryCode",
      *             "elevation",
@@ -39,13 +42,11 @@ class PlaceQuery extends Query
      *             "elevationGte",
      *             "elevationLt",
      *             "elevationLte",
-     *             "elevationBetween",
      *             "population",
      *             "populationGt",
      *             "populationGte",
      *             "populationLt",
-     *             "populationLte",
-     *             "populationBetween"
+     *             "populationLte"
      *         },
      *         @OA\Property(
      *             property="populationGt",
@@ -60,22 +61,12 @@ class PlaceQuery extends Query
     public function getAllowedFilters(): array
     {
         return [
-            AllowedFilter::exact('name'),
-            AllowedFilter::exact('featureCode', 'feature_code'),
-            AllowedFilter::exact('countryCode', 'country_code'),
-            AllowedFilter::exact('timeZoneCode', 'time_zone_code'),
-            AllowedFilter::exact('population'),
-            AllowedFilter::exact('elevation'),
-            AllowedFilter::scope('populationGt'),
-            AllowedFilter::scope('populationGte'),
-            AllowedFilter::scope('populationLt'),
-            AllowedFilter::scope('populationLte'),
-            AllowedFilter::scope('populationBetween'),
-            AllowedFilter::scope('elevationGt'),
-            AllowedFilter::scope('elevationGte'),
-            AllowedFilter::scope('elevationLt'),
-            AllowedFilter::scope('elevationLte'),
-            AllowedFilter::scope('elevationBetween'),
+            AllowedFilter::custom('name', new StringFilters),
+            AllowedFilter::custom('featureCode', new StringFilters, 'feature_code'),
+            AllowedFilter::custom('countryCode', new StringFilters, 'country_code'),
+            AllowedFilter::custom('timeZoneCode', new StringFilters, 'time_zone_code'),
+            AllowedFilter::custom('elevation', new NumericFilters),
+            AllowedFilter::custom('population', new NumericFilters),
         ];
     }
 
@@ -113,9 +104,9 @@ class PlaceQuery extends Query
             AllowedInclude::relationship('country'),
             AllowedInclude::relationship('location'),
             AllowedInclude::relationship('alternateNames'),
-            AllowedInclude::relationship('featureClass', 'feature_class'),
-            AllowedInclude::relationship('featureCode', 'feature_code'),
-            AllowedInclude::relationship('timeZone', 'time_zone'),
+            AllowedInclude::relationship('featureClass'),
+            AllowedInclude::relationship('featureCode'),
+            AllowedInclude::relationship('timeZone'),
         ];
     }
 

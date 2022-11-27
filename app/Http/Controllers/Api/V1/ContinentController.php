@@ -36,7 +36,7 @@ class ContinentController extends Controller
      *     description="Everything about continents"
      * )
      *
-     * @param \App\Queries\ContinentQuery  $query
+     * @param  \App\Queries\ContinentQuery  $query
      * @return \Illuminate\Http\Response
      */
     public function index(ContinentQuery $query)
@@ -68,14 +68,15 @@ class ContinentController extends Controller
      *         description="Continent not found"
      *     ),
      * )
-     * @param \App\Queries\ContinentQuery  $query
-     * @param  string $continentCode
+     *
+     * @param  \App\Queries\ContinentQuery  $query
+     * @param  string  $continentCode
      * @return \Illuminate\Http\Response
      */
     public function show(ContinentQuery $query, string $continentCode)
     {
         $continent = $query
-            ->applyScope('byContinentCode', Arr::wrap($continentCode))
+            ->applyScope('byCode', Arr::wrap($continentCode))
             ->getBuilder()
             ->firstOrFail();
 

@@ -9,6 +9,20 @@ use Illuminate\Support\Str;
 class PaginatedResourceResponse extends IlluminateJsonPaginatedResourceResponse
 {
     /**
+     * Get the pagination links for the response.
+     *
+     * @param  array  $paginated
+     * @return array
+     */
+    protected function paginationLinks($paginated)
+    {
+        return [
+            'prev' => $paginated['prev_page_url'] ?? null,
+            'next' => $paginated['next_page_url'] ?? null,
+        ];
+    }
+
+    /**
      * Gather the meta data for the response.
      *
      * @param  array  $paginated

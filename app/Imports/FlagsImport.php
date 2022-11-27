@@ -29,8 +29,8 @@ class FlagsImport extends CountriesFileIterator implements ShouldQueue
 
             $flags->push([
                 'country_code' => $code,
-                'filename'     => $code.'.gif',
-                'filepath'     => 'app/flags',
+                'filename' => $code.'.gif',
+                'filepath' => 'app/flags',
             ]);
         }
 

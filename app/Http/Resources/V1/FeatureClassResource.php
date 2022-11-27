@@ -15,8 +15,8 @@ class FeatureClassResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'code'         => $this->code,
-            'description'  => $this->description,
+            'code' => $this->code,
+            'description' => $this->description,
             'featureCodes' => FeatureCodeResource::collection($this->whenLoaded('featureCodes')),
         ];
     }

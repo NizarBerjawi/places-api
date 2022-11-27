@@ -2,6 +2,7 @@
 
 namespace App\Queries;
 
+use App\Filters\StringFilters;
 use App\Models\FeatureClass;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
@@ -45,7 +46,7 @@ class FeatureClassQuery extends Query
     public function getAllowedFilters(): array
     {
         return [
-            AllowedFilter::exact('code'),
+            AllowedFilter::custom('code', new StringFilters),
         ];
     }
 

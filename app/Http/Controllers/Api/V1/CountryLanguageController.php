@@ -39,7 +39,7 @@ class CountryLanguageController extends Controller
      * )
      *
      * @param  \App\Queries\LanguageQuery  $query
-     * @param  string $code
+     * @param  string  $code
      * @return \Illuminate\Http\Response
      */
     public function index(LanguageQuery $query, string $countryCode)

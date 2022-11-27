@@ -28,8 +28,8 @@ class BaseIterator implements GeonamesIterable
     /**
      * Initialize an instance.
      *
-     * @param string $filepath
-     * @param string $delimiter
+     * @param  string  $filepath
+     * @param  string  $delimiter
      */
     public function __construct(string $filepath, string $delimiter = "\t")
     {

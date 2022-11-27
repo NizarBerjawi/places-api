@@ -37,9 +37,7 @@ class GenerateDocumentation extends Command
 
         $path = app_path("Http/Controllers/Api/$apiVersion/Spec/constants.php");
 
-        $filesystem = new Filesystem();
-
-        if (! $filesystem->exists($path)) {
+        if ((new Filesystem)->missing($path)) {
             return $this->error('Failed to generate documentation');
         }
 
@@ -52,6 +50,7 @@ class GenerateDocumentation extends Command
             app_path('Models'),
             app_path('Queries'),
         ])->toJson();
+
         (new Filesystem)->put(public_path('openApi.json'), $content);
     }
 }

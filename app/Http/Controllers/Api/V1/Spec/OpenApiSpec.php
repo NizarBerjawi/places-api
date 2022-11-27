@@ -42,18 +42,6 @@ namespace App\Http\Controllers\Api\V1\Spec;
  *                     type="object",
  *                     description="Display the links to other pages of the response",
  *                     @OA\Property(
- *                          property="first",
- *                          type="string",
- *                          example=FIRST,
- *                          description="The first page of the paginated data set."
- *                     ),
- *                     @OA\Property(
- *                          property="last",
- *                          type="string",
- *                          example=LAST,
- *                          description="The last page in the paginated data set. For performance reasons, this is always null"
- *                     ),
- *                     @OA\Property(
  *                          property="prev",
  *                          type="string",
  *                          example=PREV,
@@ -71,18 +59,6 @@ namespace App\Http\Controllers\Api\V1\Spec;
  *                     type="object",
  *                     description="Meta data related to paginated responses",
  *                     @OA\Property(
- *                          property="currentPage",
- *                          type="integer",
- *                          example="3",
- *                          description="The number of the current page of data."
- *                     ),
- *                     @OA\Property(
- *                          property="from",
- *                          type="integer",
- *                          example="21",
- *                          description="The index of the first item on the current page relative to all the data set."
- *                     ),
- *                     @OA\Property(
  *                          property="path",
  *                          type="string",
  *                          example=PAGE_PATH,
@@ -95,11 +71,17 @@ namespace App\Http\Controllers\Api\V1\Spec;
  *                          description="The number of items per page."
  *                     ),
  *                     @OA\Property(
- *                          property="to",
- *                          type="integer",
- *                          example="30",
- *                          description="The index of the last item on the current page relative to all the data set."
- *                     )
+ *                          property="nextCursor",
+ *                          type="string",
+ *                          example="eyJpc28zMTY2X2FscGhhMiI6IkJPIiwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ",
+ *                          description="The cursor to the next paginated set of data"
+ *                     ),
+ *                     @OA\Property(
+ *                          property="prevCursor",
+ *                          type="string",
+ *                          example="eyJpc28zMTY2X2FscGhhMiI6IkJFIiwiX3BvaW50c1RvTmV4dEl0ZW1zIjpmYWxzZX0",
+ *                          description="The cursor to the previous paginated set of data"
+ *                     ),
  *                )
  *           )
  *      }

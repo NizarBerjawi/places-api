@@ -33,7 +33,7 @@ class CountryGeometryController extends Controller
      * )
      *
      * @param  \App\Queries\GeometryQuery  $query
-     * @param  string $code
+     * @param  string  $code
      * @return \Illuminate\Http\Response
      */
     public function index(GeometryQuery $query, string $countryCode)

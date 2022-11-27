@@ -35,7 +35,7 @@ class FlagController extends Controller
      *     description="Everything about flags"
      * )
      *
-     * @param \App\Queries\FlagQuery  $query
+     * @param  \App\Queries\FlagQuery  $query
      * @return \Illuminate\Http\Response
      */
     public function index(FlagQuery $query)
@@ -67,8 +67,9 @@ class FlagController extends Controller
      *         description="Flag not found"
      *     )
      * )
-     * @param \App\Queries\FlagQuery  $query
-     * @param  string $code
+     *
+     * @param  \App\Queries\FlagQuery  $query
+     * @param  string  $code
      * @return \Illuminate\Http\Response
      */
     public function show(FlagQuery $query, string $countryCode)

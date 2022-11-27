@@ -2,6 +2,7 @@
 
 namespace App\Queries;
 
+use App\Filters\StringFilters;
 use App\Models\TimeZone;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
@@ -32,8 +33,7 @@ class TimeZoneQuery extends Query
      *     @OA\Schema(
      *         type="object",
      *         enum={
-     *             "code",
-     *             "countryCode"
+     *             "code"
      *         },
      *         @OA\Property(
      *             property="code",
@@ -48,8 +48,7 @@ class TimeZoneQuery extends Query
     public function getAllowedFilters(): array
     {
         return [
-            AllowedFilter::exact('code'),
-            AllowedFilter::scope('countryCode', 'by_country'),
+            AllowedFilter::custom('code', new StringFilters),
         ];
     }
 

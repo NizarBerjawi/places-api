@@ -74,8 +74,9 @@ class FeatureCodeController extends Controller
      *          description="Feature code not found"
      *       )
      * )
+     *
      * @param  \App\Queries\FeatureCodeQuery  $query
-     * @param  string $featureCodeCode
+     * @param  string  $featureCodeCode
      * @return \Illuminate\Http\Response
      */
     public function show(FeatureCodeQuery $query, string $featureCodeCode)

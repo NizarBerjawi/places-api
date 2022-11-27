@@ -19,7 +19,7 @@ class FeatureCodesImport extends GeonamesFileIterator implements ShouldQueue
     /**
      * Decides whether to skip a row or not.
      *
-     * @param array  $row
+     * @param  array  $row
      * @param bool
      */
     public function skip(array $row)
@@ -46,9 +46,9 @@ class FeatureCodesImport extends GeonamesFileIterator implements ShouldQueue
             $featureCode = $data->last();
 
             $featureCodes->push([
-                'code'               => $featureCode,
-                'short_description'  => ucfirst($item[1]),
-                'full_description'   => ucfirst($item[2]),
+                'code' => $featureCode,
+                'short_description' => ucfirst($item[1]),
+                'full_description' => ucfirst($item[2]),
                 'feature_class_code' => $featureClassCode,
             ]);
         }

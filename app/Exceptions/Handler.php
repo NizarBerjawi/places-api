@@ -5,9 +5,9 @@ namespace App\Exceptions;
 use App\Logger\LogWriter;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
+use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Spatie\QueryBuilder\Exceptions\InvalidIncludeQuery;
 use Spatie\QueryBuilder\Exceptions\InvalidQuery;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
@@ -17,25 +17,44 @@ use Throwable;
 class Handler extends ExceptionHandler
 {
     /**
-     * A list of the exception types that should not be reported.
+     * A list of exception types with their corresponding custom log levels.
      *
-     * @var array
+     * @var array<class-string<\Throwable>, \Psr\Log\LogLevel::*>
      */
-    protected $dontReport = [];
+    protected $levels = [
+        //
+    ];
 
     /**
-     * Report or log an exception.
+     * A list of the exception types that are not reported.
      *
-     * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
-     *
-     * @param  \Throwable  $exception
-     * @return void
-     *
-     * @throws \Exception
+     * @var array<int, class-string<\Throwable>>
      */
-    public function report(Throwable $exception)
+    protected $dontReport = [
+        //
+    ];
+
+    /**
+     * A list of the inputs that are never flashed to the session on validation exceptions.
+     *
+     * @var array<int, string>
+     */
+    protected $dontFlash = [
+        'current_password',
+        'password',
+        'password_confirmation',
+    ];
+
+    /**
+     * Register the exception handling callbacks for the application.
+     *
+     * @return void
+     */
+    public function register()
     {
-        parent::report($exception);
+        $this->reportable(function (Throwable $e) {
+            //
+        });
     }
 
     /**
@@ -71,9 +90,9 @@ class Handler extends ExceptionHandler
     {
         $debugEnabled = config('app.debug');
 
-        if ($this->shouldntReport($e)) {
-            return;
-        }
+        // if ($this->shouldntReport($e)) {
+        //     return;
+        // }
 
         if (
             $e instanceof NotFoundHttpException ||
@@ -119,7 +138,7 @@ class Handler extends ExceptionHandler
     /**
      * Get the status code from the exception.
      *
-     * @param \Throwable $exception
+     * @param  \Throwable  $exception
      * @return int
      */
     protected function getStatusCode(Throwable $exception)

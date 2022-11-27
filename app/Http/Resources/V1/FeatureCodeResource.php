@@ -15,10 +15,10 @@ class FeatureCodeResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'code'             => $this->code,
+            'code' => $this->code,
             'shortDescription' => $this->short_description,
-            'fullDescription'  => $this->full_description,
-            'featureClass'     => FeatureClassResource::make($this->whenLoaded('featureClass')),
+            'fullDescription' => $this->full_description,
+            'featureClass' => FeatureClassResource::make($this->whenLoaded('featureClass')),
         ];
     }
 }

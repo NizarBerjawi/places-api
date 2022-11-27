@@ -35,7 +35,7 @@ class PlaceController extends Controller
      *     description="Everything about places"
      * )
      *
-     * @param \App\Queries\PlaceQuery  $query
+     * @param  \App\Queries\PlaceQuery  $query
      * @return \Illuminate\Http\Response
      */
     public function index(PlaceQuery $query)
@@ -69,8 +69,9 @@ class PlaceController extends Controller
      *         description="Place not found"
      *     )
      * )
-     * @param \App\Queries\PlaceQuery  $query
-     * @param string $uuid
+     *
+     * @param  \App\Queries\PlaceQuery  $query
+     * @param  string  $uuid
      * @return \Illuminate\Http\Response
      */
     public function show(PlaceQuery $query, $geonameId)

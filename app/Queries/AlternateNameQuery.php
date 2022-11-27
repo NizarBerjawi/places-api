@@ -2,6 +2,8 @@
 
 namespace App\Queries;
 
+use App\Filters\BooleanFilters;
+use App\Filters\StringFilters;
 use App\Models\AlternateName;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
@@ -31,25 +33,37 @@ class AlternateNameQuery extends Query
      *     style="deepObject",
      *     @OA\Schema(
      *         type="object",
-     *         enum = {"name", "isPreferredName", "isShortName", "isHistoric", "isColloquial", "languageCodes"},
+     *         enum = {
+     *             "name",
+     *             "isPreferredName",
+     *             "isShortName",
+     *             "isHistoric",
+     *             "isColloquial",
+     *             "languageCode"
+     *         },
      *         @OA\Property(
      *             property="isPreferredName",
-     *             type="boolean",
-     *             example="true"
+     *             type="object",
+     *             @OA\Property(
+     *                 property="eq",
+     *                 type="boolean",
+     *                 example=true
+     *             )
      *         )
      *     )
      * )
+     *
      * @return array
      */
     public function getAllowedFilters(): array
     {
         return [
-            AllowedFilter::exact('name'),
-            AllowedFilter::exact('isPreferredName', 'is_preferred_name'),
-            AllowedFilter::exact('isShortName', 'is_short_name'),
-            AllowedFilter::exact('isHistoric', 'is_historic'),
-            AllowedFilter::exact('isColloquial', 'is_colloquial'),
-            AllowedFilter::scope('languageCodes', 'byLanguageCode'),
+            AllowedFilter::custom('name', new StringFilters),
+            AllowedFilter::custom('isPreferredName', new BooleanFilters, 'is_preferred_name'),
+            AllowedFilter::custom('isShortName', new BooleanFilters, 'is_short_name'),
+            AllowedFilter::custom('isHistoric', new BooleanFilters, 'is_historic'),
+            AllowedFilter::custom('isColloquial', new BooleanFilters, 'is_colloquial'),
+            AllowedFilter::custom('languageCode', new StringFilters, 'language_code'),
         ];
     }
 
@@ -67,7 +81,10 @@ class AlternateNameQuery extends Query
      *         type="array",
      *         @OA\Items(
      *             type="string",
-     *             enum = {"language"},
+     *             enum = {
+     *                 "language",
+     *                 "place"
+     *             },
      *         )
      *     )
      * )
@@ -78,6 +95,7 @@ class AlternateNameQuery extends Query
     {
         return [
             AllowedInclude::relationship('language'),
+            AllowedInclude::relationship('place'),
         ];
     }
 
@@ -110,6 +128,7 @@ class AlternateNameQuery extends Query
      *         )
      *     )
      * )
+     *
      * @return array
      */
     public function getAllowedSorts(): array
@@ -120,6 +139,7 @@ class AlternateNameQuery extends Query
             AllowedSort::field('isShortName', 'is_short_name'),
             AllowedSort::field('isHistoric', 'is_historic'),
             AllowedSort::field('isColloquial', 'is_colloquial'),
+            AllowedSort::field('languageCode', 'language_code'),
         ];
     }
 }

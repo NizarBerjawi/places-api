@@ -39,7 +39,7 @@ class CountryNeighbourController extends Controller
      * )
      *
      * @param  \App\Queries\CountryQuery  $query
-     * @param  string $code
+     * @param  string  $code
      * @return \Illuminate\Http\Response
      */
     public function index(CountryQuery $query, string $countryCode)

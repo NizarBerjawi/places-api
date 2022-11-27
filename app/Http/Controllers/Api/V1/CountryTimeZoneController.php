@@ -39,7 +39,7 @@ class CountryTimeZoneController extends Controller
      * )
      *
      * @param  \App\Queries\TimeZoneQuery  $query
-     * @param  string $code
+     * @param  string  $code
      * @return \Illuminate\Http\Response
      */
     public function index(TimeZoneQuery $query, string $countryCode)

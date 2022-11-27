@@ -22,12 +22,9 @@ class StatisticsController extends Controller
      * Display a listing of all time zones.
      *
      * @OA\Get(
-     *      tags={"Time Zones"},
-     *      summary="Returns a list of paginated time zones",
-     *      path="/timeZones",
-     *      @OA\Parameter(ref="#/components/parameters/timeZoneFilter"),
-     *      @OA\Parameter(ref="#/components/parameters/timeZoneInclude"),
-     *      @OA\Parameter(ref="#/components/parameters/timeZoneSort"),
+     *      tags={"Statistics"},
+     *      summary="Returns a collection of statistics",
+     *      path="/statistics",
      *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *      @OA\Response(
      *          response=200,
@@ -39,11 +36,11 @@ class StatisticsController extends Controller
      *      ),
      * )
      * @OA\Tag(
-     *     name="Time Zones",
-     *     description="Everything about time zones"
+     *     name="Statistics",
+     *     description="Statistics about the data"
      * )
      *
-     * @param \App\Queries\TimeZoneQuery  $query
+     * @param  \App\Queries\TimeZoneQuery  $query
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)

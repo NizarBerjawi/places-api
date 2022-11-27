@@ -1,0 +1,14 @@
+{
+  "app": {
+    "css": "app.css",
+    "js": "app.cfa647004692ee36ee09.js"
+  },
+  "vendor": {
+    "css": "vendor.css",
+    "js": "vendor.02da676c2279c815dea2.js"
+  },
+  "documentation": {
+    "css": "documentation.css",
+    "js": "documentation.559acd95c63e6af305f6.js"
+  }
+}
