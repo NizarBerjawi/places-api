@@ -1,15 +1,13 @@
 <?php
 
 use App\Models\Continent;
-
-use function Pest\Laravel\get;
 use function Pest\Laravel\getJson;
 
 test('returns correct structure on GET continents', function () {
     getJson('/api/v1/continents')->assertJsonStructure([
-        'data' => [ [ 'code', 'name' ] ],
-        'links' => [ 'prev', 'next' ],
-        'meta' => [ 'path', 'perPage', 'nextCursor', 'prevCursor' ],
+        'data' => [['code', 'name']],
+        'links' => ['prev', 'next'],
+        'meta' => ['path', 'perPage', 'nextCursor', 'prevCursor'],
     ]);
 });
 
@@ -17,7 +15,7 @@ test('returns 200 response on GET continents', function () {
     getJson('/api/v1/continents')->assertOk();
 });
 
-test('returns correct pagination limit on GET continents', function() {
+test('returns correct pagination limit on GET continents', function () {
     $response = getJson('/api/v1/continents');
 
     $continentsCount = Continent::count();
