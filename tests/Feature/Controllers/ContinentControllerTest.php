@@ -4,7 +4,6 @@ use App\Http\Resources\V1\ContinentResource;
 use App\Models\Continent;
 use App\Pagination\PaginatedResourceResponse;
 use Illuminate\Http\Request;
-
 use function Pest\Laravel\getJson;
 
 test('returns correct structure on GET continents', function () {
@@ -34,7 +33,7 @@ test('returns correct structure on GET continent', function () {
         ->limit(1)
         ->first();
 
-    getJson('/api/v1/continents/' . $continent->code)
+    getJson('/api/v1/continents/'.$continent->code)
         ->assertJsonStructure([
             'data' => [
                 'code',
@@ -49,10 +48,10 @@ test('returns correct structure and data on show continent', function () {
         ->limit(1)
         ->first();
 
-    getJson('/api/v1/continents/' . $continent->code)
+    getJson('/api/v1/continents/'.$continent->code)
         ->assertJson([
             'data' => [
-                'code' =>  $continent->code,
+                'code' => $continent->code,
                 'name' => $continent->name,
             ],
         ]);
@@ -64,7 +63,7 @@ test('returns correct continent by code filter', function () {
         ->limit(1)
         ->first();
 
-    getJson('/api/v1/continents?filter[code][eq]=' . $continent->code)
+    getJson('/api/v1/continents?filter[code][eq]='.$continent->code)
         ->assertJson([
             'data' => [[
                 'code' => $continent->code,
@@ -89,11 +88,11 @@ test('returns correct continent by name filter', function () {
         ContinentResource::collection($continentsCollection)
     ));
 
-    $request = Request::create('/api/v1/continents?filter[name][eq]=' . $continent->name, 'GET');
+    $request = Request::create('/api/v1/continents?filter[name][eq]='.$continent->name, 'GET');
 
-    dd( $resource);
+    dd($resource);
     // getJson('/api/v1/continents?filter[name][eq]=' . $continent->name)
     //     ->assertSimilarJson(
-           
+
     //     );
 });
