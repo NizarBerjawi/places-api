@@ -34,7 +34,7 @@ test('returns correct continents by "code" filter', function () {
         ->limit(1)
         ->first();
 
-    $uri = '/api/v1/continents?filter[code][eq]=' . $continent->code;
+    $uri = '/api/v1/continents?filter[code][eq]='.$continent->code;
 
     $continentsCollection = Continent::query()
         ->where('code', $continent->code)
@@ -59,7 +59,7 @@ test('returns correct continents by "name" filter', function () {
         ->limit(1)
         ->first();
 
-    $uri = 'api/v1/continents?filter[name][eq]=' . $continent->name;
+    $uri = 'api/v1/continents?filter[name][eq]='.$continent->name;
     $continentsCollection = Continent::query()
         ->where('name', $continent->name)
         ->jsonPaginate();
@@ -86,7 +86,7 @@ test('returns empty data when filters don\'t match for continents', function () 
     $code = $continents->first()->code;
     $name = $continents->last()->name;
 
-    getJson('/api/v1/continents?filter[code][eq]=' . $code . '&filter[name][eq]=' . $name)
+    getJson('/api/v1/continents?filter[code][eq]='.$code.'&filter[name][eq]='.$name)
         ->assertOk()
         ->assertJsonFragment([
             'data' => [],
@@ -189,7 +189,7 @@ test('returns correct structure on GET continent', function () {
         ->limit(1)
         ->first();
 
-    getJson('/api/v1/continents/' . $continent->code)
+    getJson('/api/v1/continents/'.$continent->code)
         ->assertJsonStructure([
             'data' => [
                 'code',
@@ -204,7 +204,7 @@ test('returns correct data on GET continent', function () {
         ->limit(1)
         ->first();
 
-    $uri = 'api/v1/continents/' . $continent->code;
+    $uri = 'api/v1/continents/'.$continent->code;
 
     $request = Request::create(url($uri));
 
@@ -224,7 +224,7 @@ test('returns correct data when "countries" are included for a continent', funct
         ->limit(1)
         ->first();
 
-    $uri = '/api/v1/continents/' . $continent->code . '?include=countries';
+    $uri = '/api/v1/continents/'.$continent->code.'?include=countries';
 
     $request = Request::create(url($uri), 'GET');
 
@@ -244,7 +244,7 @@ test('returns correct data when "alternate names" are included for a continent',
         ->limit(1)
         ->first();
 
-    $uri = '/api/v1/continents/' . $continent->code . '?include=alternateNames';
+    $uri = '/api/v1/continents/'.$continent->code.'?include=alternateNames';
 
     $request = Request::create(url($uri), 'GET');
 
