@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Routing\Middleware\ThrottleRequests;
+
 uses(Tests\TestCase::class)->in('Feature');
 
 /*
@@ -43,3 +45,7 @@ function something()
 {
     // ..
 }
+
+uses()
+    ->beforeEach(fn () => $this->withoutMiddleware(ThrottleRequests::class))
+    ->in('Feature/Controllers');
