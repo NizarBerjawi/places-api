@@ -30,6 +30,10 @@ abstract class BaseFilter implements Filter
 
             $symbol = Arr::get($this->allowedOperators(), $operator, '=');
 
+            if (empty($filters)) {
+                $query->where($property, $symbol, null);
+            }
+
             foreach ($filters as $index => $value) {
                 $query->where($property, $symbol, $value, $index === 0 ? 'and' : 'or');
             }
