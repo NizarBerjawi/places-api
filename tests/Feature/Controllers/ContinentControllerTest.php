@@ -5,6 +5,7 @@ use App\Models\Continent;
 use App\Pagination\PaginatedResourceResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
 use function Pest\Laravel\getJson;
 
 test('returns 200 response on GET continents', function () {
@@ -19,61 +20,60 @@ test('returns correct structure on GET continents', function () {
     ]);
 });
 
-test('returns correct pagination limit on GET continents', function () {
-    $response = getJson('/api/v1/continents');
+$continentFilters = [
+    'code' => 'code',
+    'name' => 'name',
+];
 
-    $this->assertEquals(
-        Arr::get($response, 'meta.perPage'),
-        config('geonames.pagination_limit')
-    );
-});
+foreach ($continentFilters as $key => $filter) {
+    test("returns correct continent data by \"{$filter}\" when filtered", function () use ($key, $filter) {
+        $continent = Continent::query()
+            ->inRandomOrder()
+            ->limit(1)
+            ->first();
 
-test('returns correct continents by "code" filter', function () {
-    $continent = Continent::query()
-        ->inRandomOrder()
-        ->limit(1)
-        ->first();
+        $uri = "/api/v1/continents?filter[$filter][eq]=".urlencode($continent->{$key});
 
-    $uri = '/api/v1/continents?filter[code][eq]='.$continent->code;
+        $continentsCollection = Continent::query()
+            ->where($key, $continent->{$key})
+            ->jsonPaginate(config('json-api-paginate.default_size'));
+
+        $resource = (new PaginatedResourceResponse(
+            ContinentResource::collection($continentsCollection)
+        ));
+
+        $request = Request::create(url($uri));
+
+        getJson($uri)
+            ->assertOk()
+            ->assertJson(
+                Arr::only($resource->toResponse($request)->getData(true), 'data')
+            );
+    });
+}
+
+$continentIncludes = [
+    'countries',
+    'alternateNames',
+];
+
+test("returns correct data when \"{$include}\" are included for countries", function () use ($include) {
+    $uri = '/api/v1/continents?include='.urlencode($include);
 
     $continentsCollection = Continent::query()
-        ->where('code', $continent->code)
-        ->jsonPaginate();
+        ->with($include)
+        ->jsonPaginate(config('json-api-paginate.default_size'));
 
     $resource = (new PaginatedResourceResponse(
         ContinentResource::collection($continentsCollection)
     ));
 
-    $request = Request::create(url($uri));
+    $request = Request::create(url($uri), 'GET');
 
     getJson($uri)
         ->assertOk()
         ->assertExactJson(
-            $resource->toResponse($request)->getData(true)
-        );
-});
-
-test('returns correct continents by "name" filter', function () {
-    $continent = Continent::query()
-        ->inRandomOrder()
-        ->limit(1)
-        ->first();
-
-    $uri = 'api/v1/continents?filter[name][eq]='.$continent->name;
-    $continentsCollection = Continent::query()
-        ->where('name', $continent->name)
-        ->jsonPaginate();
-
-    $resource = (new PaginatedResourceResponse(
-        ContinentResource::collection($continentsCollection)
-    ));
-
-    $request = Request::create(url($uri));
-
-    getJson($uri)
-        ->assertOk()
-        ->assertExactJson(
-            $resource->toResponse($request)->getData(true)
+            Arr::only($resource->toResponse($request)->getData(true), 'data')
         );
 });
 
@@ -91,46 +91,6 @@ test('returns empty data when filters don\'t match for continents', function () 
         ->assertJsonFragment([
             'data' => [],
         ]);
-});
-
-test('returns correct data when "countries" are included for continents', function () {
-    $uri = '/api/v1/continents?include=countries';
-
-    $continentsCollection = Continent::query()
-        ->with('countries')
-        ->jsonPaginate();
-
-    $resource = (new PaginatedResourceResponse(
-        ContinentResource::collection($continentsCollection)
-    ));
-
-    $request = Request::create(url($uri), 'GET');
-
-    getJson($uri)
-        ->assertOk()
-        ->assertExactJson(
-            $resource->toResponse($request)->getData(true)
-        );
-});
-
-test('returns correct data when "alternate names" are included for continents', function () {
-    $uri = '/api/v1/continents?include=alternateNames';
-
-    $continentsCollection = Continent::query()
-        ->with('alternateNames')
-        ->jsonPaginate();
-
-    $resource = (new PaginatedResourceResponse(
-        ContinentResource::collection($continentsCollection)
-    ));
-
-    $request = Request::create(url($uri), 'GET');
-
-    getJson($uri)
-        ->assertOk()
-        ->assertExactJson(
-            $resource->toResponse($request)->getData(true)
-        );
 });
 
 test('returns an error response with invalid include for continents', function () {

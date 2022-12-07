@@ -28,7 +28,7 @@ test('returns correct structure on GET countries', function () {
     ]);
 });
 
-$filters = [
+$countryFilters = [
     'name' => 'name',
     'iso3166_alpha2' => 'iso3166Alpha2',
     'iso3166_alpha3' => 'iso3166Alpha3',
@@ -38,7 +38,7 @@ $filters = [
     'phone_code' => 'phoneCode',
 ];
 
-foreach ($filters as $key => $filter) {
+foreach ($countryFilters as $key => $filter) {
     test("returns correct country data by \"{$filter}\" when filtered", function () use ($key, $filter) {
         $country = Country::query()
             ->inRandomOrder()
@@ -65,7 +65,7 @@ foreach ($filters as $key => $filter) {
     });
 }
 
-$includes = [
+$countryIncludes = [
     'continent',
     'timeZones',
     'flag',
@@ -76,19 +76,19 @@ $includes = [
     'location',
 ];
 
-foreach ($includes as $include) {
+foreach ($countryIncludes as $include) {
     test("returns correct data when \"{$include}\" are included for countries", function () use ($include) {
         $uri = '/api/v1/countries?include='.urlencode($include);
 
-        $request = Request::create(url($uri), 'GET');
-
         $countriesCollection = Country::query()
-            ->with($include)
-            ->jsonPaginate(config('json-api-paginate.default_size'));
+        ->with($include)
+        ->jsonPaginate(config('json-api-paginate.default_size'));
 
         $resource = (new PaginatedResourceResponse(
             CountryResource::collection($countriesCollection)
         ));
+
+        $request = Request::create(url($uri), 'GET');
 
         getJson($uri)
             ->assertOk()
@@ -98,7 +98,7 @@ foreach ($includes as $include) {
     });
 }
 
-$sorts = [
+$countrySorts = [
     'name' => 'name',
     'iso3166_alpha2' => 'iso3166Alpha2',
     'iso3166_alpha3' => 'iso3166Alpha3',
@@ -108,9 +108,9 @@ $sorts = [
     'phone_code' => 'phoneCode',
 ];
 
-foreach ($sorts as $key => $sort) {
+foreach ($countrySorts as $key => $sort) {
     test("returns correct data when sorted by \"{$sort}\" for countries", function () use ($key, $sort) {
-        $directions = ['ASC' => '', 'DESC' => '-'];
+        $directions = ['ASC' => '+', 'DESC' => '-'];
 
         foreach ($directions as $direction => $operator) {
             $uri = '/api/v1/countries?sort='.$operator.urlencode($sort);
@@ -150,7 +150,22 @@ test('returns empty data when filters don\'t match for countries', function () {
         ]);
 });
 
-test('returns an error response with invalid include for countries', function () {
+test('returns an error response when invalid filter for countries', function () use ($countryFilters) {
+    $uri = '/api/v1/countries?filter[invalid][eq]=invalid';
+
+    getJson($uri)
+        ->assertNotFound()
+        ->assertExactJson(
+            [
+                'errors' => [
+                    'message' => 'Requested filter(s) `invalid` are not allowed. Allowed filter(s) are `'.implode(', ', $countryFilters).'`.',
+                    'status_code' => Response::HTTP_NOT_FOUND,
+                ],
+            ]
+        );
+});
+
+test('returns an error response when invalid include for countries', function () {
     $uri = '/api/v1/countries?include=invalid';
 
     getJson($uri)
@@ -165,15 +180,15 @@ test('returns an error response with invalid include for countries', function ()
         );
 });
 
-test('returns an error response with invalid sort for continents', function () {
-    $uri = '/api/v1/continents?sort=invalid';
+test('returns an error response when invalid sort for countries', function () use ($countrySorts) {
+    $uri = '/api/v1/countries?sort=invalid';
 
     getJson($uri)
         ->assertNotFound()
         ->assertExactJson(
             [
                 'errors' => [
-                    'message' => 'Requested sort(s) `invalid` is not allowed. Allowed sort(s) are `name, code`.',
+                    'message' => 'Requested sort(s) `invalid` is not allowed. Allowed sort(s) are `'.implode(', ', $countrySorts).'`.',
                     'status_code' => Response::HTTP_NOT_FOUND,
                 ],
             ]
