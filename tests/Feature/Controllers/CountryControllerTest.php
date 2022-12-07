@@ -77,7 +77,7 @@ $countryIncludes = [
 ];
 
 foreach ($countryIncludes as $include) {
-    test("returns correct data when \"{$include}\" are included for countries", function () use ($include) {
+    test("returns correct data when \"{$include}\" relation is included for countries", function () use ($include) {
         $uri = '/api/v1/countries?include='.urlencode($include);
 
         $countriesCollection = Country::query()
@@ -233,3 +233,25 @@ test('returns correct data on GET country', function () {
                 ->getData(true)
         );
 });
+
+foreach ($countryIncludes as $include) {
+    test("returns correct data when \"{$include}\" relation is included for continent", function () use ($include) {
+        $country = Country::query()
+            ->with($include)
+            ->inRandomOrder()
+            ->limit(1)
+            ->first();
+
+        $uri = '/api/v1/countries/'.$country->getKey().'?include='.$include;
+
+        $request = Request::create(url($uri), 'GET');
+
+        getJson($uri)
+            ->assertOk()
+            ->assertExactJson(
+                CountryResource::make($country)
+                    ->toResponse($request)
+                    ->getData(true)
+            );
+    });
+}
