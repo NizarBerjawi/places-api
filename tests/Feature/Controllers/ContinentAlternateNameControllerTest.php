@@ -8,7 +8,12 @@ use function Pest\Laravel\getJson;
 use Symfony\Component\HttpFoundation\Response;
 
 test('returns 200 response on GET alternate names', function () {
-    getJson('/api/v1/continents')->assertOk();
+    $continent = Continent::query()
+        ->inRandomOrder()
+        ->limit(1)
+        ->first();
+
+    getJson('/api/v1/continents/'.$continent->getKey())->assertOk();
 });
 
 test('returns correct structure on GET alternate names', function () {
