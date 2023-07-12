@@ -15,10 +15,10 @@ class TimeZoneResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'code'      => $this->code,
-            'timeZone'  => $this->time_zone,
+            'code' => $this->code,
+            'timeZone' => $this->time_zone,
             'gmtOffset' => $this->gmt_offset,
-            'country'   => new CountryResource($this->whenLoaded('country')),
+            'country' => new CountryResource($this->whenLoaded('country')),
         ];
     }
 }

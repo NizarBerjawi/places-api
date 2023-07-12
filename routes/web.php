@@ -1,59 +1,25 @@
 <?php
 
-/** @var \Laravel\Lumen\Routing\Router $router */
+use App\Http\Controllers\WebController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It is a breeze. Simply tell Lumen the URIs it should respond to
-| and give it the Closure to call when that URI is requested.
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 */
 
-$router->get('/', [
-    'uses' => 'WebController@home',
-    'as' => 'home',
-]);
-
-$router->get('/introduction', [
-    'uses' => 'WebController@intro',
-    'as' => 'intro',
-]);
-
-$router->get('/documentation', [
-    'uses' => 'WebController@docs',
-    'as' => 'docs',
-]);
-
-$router->get('/flags/{flag}', [
-    'uses' => 'WebController@flags',
-    'as' => 'flags',
-]);
-
-$router->get('/continents', [
-    'uses' => 'WebController@continents',
-    'as' => 'continents',
-]);
-
-$router->get('/countries', [
-    'uses' => 'WebController@countries',
-    'as' => 'countries',
-]);
-
-$router->get('/featureCodes', [
-    'uses' => 'WebController@featureCodes',
-    'as' => 'featureCodes',
-]);
-
-$router->get('/timeZones', [
-    'uses' => 'WebController@timeZones',
-    'as' => 'timeZones',
-]);
-
-$router->get('/languages', [
-    'uses' => 'WebController@languages',
-    'as' => 'languages',
-]);
+Route::get('/', [WebController::class, 'home'])->name('home');
+Route::get('/introduction', [WebController::class, 'intro'])->name('intro');
+Route::get('/documentation', [WebController::class, 'docs'])->name('docs');
+Route::get('/flags/{flag}', [WebController::class, 'flags'])->name('flags');
+Route::get('/continents', [WebController::class, 'continents'])->name('continents');
+Route::get('/countries', [WebController::class, 'countries'])->name('countries');
+Route::get('/featureCodes', [WebController::class, 'featureCodes'])->name('featureCodes');
+Route::get('/timeZones', [WebController::class, 'timeZones'])->name('timeZones');
+Route::get('/languages', [WebController::class, 'languages'])->name('languages');

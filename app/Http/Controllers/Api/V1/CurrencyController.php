@@ -66,8 +66,9 @@ class CurrencyController extends Controller
      *         description="Currency not found"
      *     )
      * )
+     *
      * @param  \App\Queries\CurrencyQuery  $query
-     * @param  string $code
+     * @param  string  $code
      * @return \Illuminate\Http\Response
      */
     public function show(CurrencyQuery $query, string $currencyCode)

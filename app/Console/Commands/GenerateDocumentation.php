@@ -35,11 +35,9 @@ class GenerateDocumentation extends Command
             return $this->error('You must provide an apiVersion value.');
         }
 
-        $path = "app/Http/Controllers/Api/$apiVersion/spec/constants.php";
+        $path = app_path("Http/Controllers/Api/$apiVersion/Spec/constants.php");
 
-        $filesystem = new Filesystem();
-
-        if (! $filesystem->exists($path)) {
+        if ((new Filesystem)->missing($path)) {
             return $this->error('Failed to generate documentation');
         }
 
@@ -48,9 +46,9 @@ class GenerateDocumentation extends Command
         require_once $path;
 
         $content = Generator::scan([
-            'app/Http/Controllers',
-            'app/Models',
-            'app/Queries',
+            app_path('Http/Controllers'),
+            app_path('Models'),
+            app_path('Queries'),
         ])->toJson();
 
         (new Filesystem)->put(public_path('openApi.json'), $content);

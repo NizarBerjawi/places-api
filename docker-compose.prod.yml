@@ -1,5 +1,13 @@
 version: "3.9"
 services:
+  builder:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile.builder
+      args:
+        APP_URL: ${APP_URL}
+    image: builder:latest
+    container_name: builder
   nginx:
     build:
       context: .
@@ -51,14 +59,6 @@ services:
       - dbData:/var/lib/postgresql/data
     networks:
       - api_network
-  builder:
-    build:
-      context: .
-      dockerfile: .docker/Dockerfile.builder
-      args:
-        APP_URL: ${APP_URL}
-    image: builder:latest
-    container_name: builder
 # Docker Networks
 networks:
   api_network:

@@ -22,9 +22,10 @@ class DownloadAlternateNamesFiles extends GeonamesJob
             ->filesystem
             ->ensureDirectoryExists($this->folderPath());
 
-        $response = Http::withOptions([
-            'sink' => $this->filepath(),
-        ])->get($this->url());
+        $response = Http::timeout(static::TIMEOUT)
+            ->withOptions([
+                'sink' => $this->filepath(),
+            ])->get($this->url());
 
         if ($response->failed()) {
             return $this->fail(new FileNotDownloadedException($this->url()));

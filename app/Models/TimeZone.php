@@ -79,7 +79,7 @@ class TimeZone extends Model
     ];
 
     /**
-     * Get all the countries that belong to this TimeZone.
+     * Get the country that belongs to this TimeZone.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -101,8 +101,8 @@ class TimeZone extends Model
     /**
      * Get a time zones by its parent country code.
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param string $countryCode
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $countryCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByCountry(Builder $query, string $countryCode)
@@ -113,8 +113,8 @@ class TimeZone extends Model
     /**
      * Get a time zones by code.
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param string $timeZoneCode
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $timeZoneCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByTimeZoneCode(Builder $query, string $timeZoneCode)

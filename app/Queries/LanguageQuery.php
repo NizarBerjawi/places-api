@@ -2,6 +2,7 @@
 
 namespace App\Queries;
 
+use App\Filters\StringFilters;
 use App\Models\Language;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
@@ -31,11 +32,11 @@ class LanguageQuery extends Query
      *     style="deepObject",
      *     @OA\Schema(
      *         type="object",
-     *         enum={"countryCode", "iso639.1", "iso639.2", "iso639.3"},
+     *         enum={"iso639.1", "iso639.2", "iso639.3"},
      *         @OA\Property(
-     *             property="countryCode",
+     *             property="iso639.1",
      *             type="string",
-     *             example="AU"
+     *             example="en"
      *         )
      *     )
      * )
@@ -45,10 +46,9 @@ class LanguageQuery extends Query
     public function getAllowedFilters(): array
     {
         return [
-            AllowedFilter::exact('iso639.1', 'iso639_1'),
-            AllowedFilter::exact('iso639.2', 'iso639_2'),
-            AllowedFilter::exact('iso639.3', 'iso639_3'),
-            AllowedFilter::scope('countryCode', 'by_country'),
+            AllowedFilter::custom('iso639.1', new StringFilters, 'iso639_1'),
+            AllowedFilter::custom('iso639.2', new StringFilters, 'iso639_2'),
+            AllowedFilter::custom('iso639.3', new StringFilters, 'iso639_3'),
         ];
     }
 

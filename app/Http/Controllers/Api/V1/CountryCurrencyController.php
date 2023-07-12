@@ -38,7 +38,7 @@ class CountryCurrencyController extends Controller
      * )
      *
      * @param  \App\Queries\CurrencyQuery  $query
-     * @param  string $code
+     * @param  string  $code
      * @return \Illuminate\Http\Response
      */
     public function index(CurrencyQuery $query, string $countryCode)

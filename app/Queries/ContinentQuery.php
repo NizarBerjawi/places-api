@@ -2,6 +2,7 @@
 
 namespace App\Queries;
 
+use App\Filters\StringFilters;
 use App\Models\Continent;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedInclude;
@@ -34,8 +35,12 @@ class ContinentQuery extends Query
      *         enum={"code", "name"},
      *         @OA\Property(
      *             property="code",
-     *             type="string",
-     *             example="OC"
+     *             type="object",
+     *             @OA\Property(
+     *                 property="eq",
+     *                 type="string",
+     *                 example="EU"
+     *             )
      *         )
      *     )
      * )
@@ -45,8 +50,8 @@ class ContinentQuery extends Query
     public function getAllowedFilters(): array
     {
         return [
-            AllowedFilter::exact('code'),
-            AllowedFilter::exact('name'),
+            AllowedFilter::custom('code', new StringFilters),
+            AllowedFilter::custom('name', new StringFilters),
         ];
     }
 

@@ -8,7 +8,7 @@ trait HasPlaceholders
      * Parse a string and return an array of all the
      * placeholders available in it.
      *
-     * @param string $text
+     * @param  string  $text
      * @return array
      */
     public function parse(string $text)
@@ -37,9 +37,9 @@ trait HasPlaceholders
     /**
      * Replace a placeholder with a value.
      *
-     * @param string $placeholder
-     * @param string $value
-     * @param string $string
+     * @param  string  $placeholder
+     * @param  string  $value
+     * @param  string  $string
      * @return mixed
      */
     public function replace(string $placeholder, string $value, string $string)

@@ -15,8 +15,8 @@ class CurrencyResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'code'      => $this->code,
-            'name'      => $this->name,
+            'code' => $this->code,
+            'name' => $this->name,
             'countries' => CountryResource::collection($this->whenLoaded('countries')),
         ];
     }

@@ -18,7 +18,7 @@ class NeighbourCountriesImport extends CountriesFileIterator implements ShouldQu
     /**
      * Decides whether to skip a row or not.
      *
-     * @param array  $row
+     * @param  array  $row
      * @param bool
      */
     public function skip(array $row)
@@ -42,7 +42,7 @@ class NeighbourCountriesImport extends CountriesFileIterator implements ShouldQu
                 return $neighbourCodes->map(function (string $code) use ($data) {
                     return [
                         'neighbour_code' => $code,
-                        'country_code'   => $data[0],
+                        'country_code' => $data[0],
                     ];
                 });
             });

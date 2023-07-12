@@ -39,21 +39,21 @@ class PlacesImport extends GeonamesFileIterator implements ShouldQueue
 
                     foreach ($chunk as $item) {
                         $places->push([
-                            'geoname_id'     => $item[0],
-                            'name'           => $item[1],
-                            'ascii_name'     => $item[2],
-                            'population'     => max((int) $item[14], 0),
-                            'elevation'      => (int) $item[15],
-                            'dem'            => (int) $item[16],
-                            'feature_code'   => $item[7] ?? null,
-                            'country_code'   => $item[8] ?? null,
+                            'geoname_id' => $item[0],
+                            'name' => $item[1],
+                            'ascii_name' => $item[2],
+                            'population' => max((int) $item[14], 0),
+                            'elevation' => (int) $item[15],
+                            'dem' => (int) $item[16],
+                            'feature_code' => $item[7] ?? null,
+                            'country_code' => $item[8] ?? null,
                             'time_zone_code' => $item[17] ? str_replace('/', '_', strtolower($item[17])) : null,
                         ]);
 
                         $locations->push([
                             'geoname_id' => $item[0],
-                            'latitude'   => $item[4],
-                            'longitude'  => $item[5],
+                            'latitude' => $item[4],
+                            'longitude' => $item[5],
                         ]);
                     }
 

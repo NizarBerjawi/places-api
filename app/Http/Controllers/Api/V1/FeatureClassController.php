@@ -66,8 +66,9 @@ class FeatureClassController extends Controller
      *         description="Feature class not found"
      *     )
      * )
+     *
      * @param  \App\Queries\FeatureClassQuery  $query
-     * @param  string $featureClassCode
+     * @param  string  $featureClassCode
      * @return \Illuminate\Http\Response
      */
     public function show(FeatureClassQuery $query, string $featureClassCode)

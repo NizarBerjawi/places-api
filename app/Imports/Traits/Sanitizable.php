@@ -7,7 +7,7 @@ trait Sanitizable
     /**
      * Cleans/Sanitises an array of strings.
      *
-     * @param array  $row
+     * @param  array  $row
      * @return array
      */
     public function clean(array $row)
@@ -27,7 +27,7 @@ trait Sanitizable
     /**
      * Removes any UTF8 BOM characters from a given string.
      *
-     * @param string $text
+     * @param  string  $text
      * @return string
      */
     protected function removeUtf8Bom($text)
@@ -41,7 +41,7 @@ trait Sanitizable
     /**
      * Replace empty strings with null values.
      *
-     * @param string  $text
+     * @param  string  $text
      * @return mixed
      */
     protected function removeEmptyStrings(string $text)
@@ -52,7 +52,7 @@ trait Sanitizable
     /**
      * Trim any trailing spaces at start or end of a string.
      *
-     * @param string  $text
+     * @param  string  $text
      * @return string $text
      */
     protected function trim(string $text)

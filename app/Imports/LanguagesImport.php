@@ -31,11 +31,15 @@ class LanguagesImport extends GeonamesFileIterator implements ShouldQueue
                 $languages = Collection::make();
 
                 foreach ($chunk as $item) {
+                    if (! isset($item[0])) {
+                        continue;
+                    }
+
                     $language = [
-                        'iso639_1'   => $item[2],
-                        'iso639_2'   => $item[1],
-                        'iso639_3'   => $item[0],
-                        'name'       => $item[3],
+                        'iso639_1' => $item[2],
+                        'iso639_2' => $item[1],
+                        'iso639_3' => $item[0],
+                        'name' => $item[3],
                     ];
 
                     $languages->push($language);

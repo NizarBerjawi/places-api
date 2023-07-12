@@ -5,10 +5,11 @@ namespace App\Jobs;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Log\LogManager;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Laravel\Lumen\Application;
 use Psr\Log\LoggerInterface;
 
 abstract class GeonamesJob implements ShouldQueue
@@ -24,7 +25,14 @@ abstract class GeonamesJob implements ShouldQueue
     |
     */
 
-    use InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    /**
+     * The number of seconds before a request timesout
+     *
+     * @var int
+     */
+    const TIMEOUT = 300;
 
     /**
      * @var \Illuminate\Filesystem\Filesystem

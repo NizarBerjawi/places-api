@@ -147,7 +147,7 @@ class Place extends Model
     /**
      * Get the alternate names belonging to this place.
      *
-     * @param string $value
+     * @param  string  $value
      * @return array
      */
     public function alternateNames()
@@ -158,8 +158,8 @@ class Place extends Model
     /**
      * Returns non-existing Place IDs from an array of IDs.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param array  $ids
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  array  $ids
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeGetMissing(Builder $query, array $ids)
@@ -179,8 +179,8 @@ class Place extends Model
     /**
      * Get places scoped by geoname id.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param int  $geonameId
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  int  $geonameId
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByGeonameId(Builder $query, int $geonameId)
@@ -191,146 +191,12 @@ class Place extends Model
     /**
      * Get places scoped by country.
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param string  $countryCode
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $countryCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByCountry(Builder $query, string $countryCode)
     {
         return $query->where('country_code', $countryCode);
-    }
-
-    /**
-     * Get places with elevation greater than a specified
-     * value.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param int $value
-     * @return \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopeElevationGt(Builder $query, int $value)
-    {
-        return $query->where('elevation', '>', $value);
-    }
-
-    /**
-     * Get places with elevation greater than or equal to a
-     * specified value.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param int $value
-     * @return \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopeElevationGte(Builder $query, int $value)
-    {
-        return $query->where('elevation', '>=', $value);
-    }
-
-    /**
-     * Get places with elevation less than a specified
-     * value.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param int  $value
-     * @return \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopeElevationLt(Builder $query, int $value)
-    {
-        return $query->where('elevation', '<', $value);
-    }
-
-    /**
-     * Get places with elevation less than or equal to a
-     * specified value.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param int $value
-     * @return \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopeElevationLte(Builder $query, int $value)
-    {
-        return $query->where('elevation', '<=', $value);
-    }
-
-    /**
-     * Get places with elevation between two specified values.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param int $min
-     * @param int $max
-     * @return \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopeElevationBetween(Builder $query, int $min, int $max)
-    {
-        return $query
-            ->elevationGte($min)
-            ->elevationLte($max);
-    }
-
-    /**
-     * Get places with population greater than a specified
-     * value.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param int $value
-     * @return \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopePopulationGt(Builder $query, int $value)
-    {
-        return $query->where('population', '>', $value);
-    }
-
-    /**
-     * Get places with population greater than or equal to a
-     * specified value.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param int $value
-     * @return \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopePopulationGte(Builder $query, int $value)
-    {
-        return $query->where('population', '>=', $value);
-    }
-
-    /**
-     * Get places with population less than a specified
-     * value.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param int $value
-     * @return \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopePopulationLt(Builder $query, int $value)
-    {
-        return $query->where('population', '<', $value);
-    }
-
-    /**
-     * Get places with population less than or equal to a
-     * specified value.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param int $value
-     * @return \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopePopulationLte(Builder $query, int $value)
-    {
-        return $query->where('population', '<=', $value);
-    }
-
-    /**
-     * Get places with population between two specified values.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder $query
-     * @param int $min
-     * @param int $max
-     * @return \Illuminate\Database\Eloquent\Builder $query
-     */
-    public function scopePopulationBetween(Builder $query, int $min, int $max)
-    {
-        return $query
-            ->populationGte($min)
-            ->populationLte($max);
     }
 }

@@ -36,8 +36,9 @@ class PlaceAlternateNameController extends Controller
      *          description="Alternate name not found"
      *      ),
      * )
-     * @param \App\Queries\PlaceQuery  $query
-     * @param int $geonameId
+     *
+     * @param  \App\Queries\PlaceQuery  $query
+     * @param  int  $geonameId
      * @return \Illuminate\Http\Response
      */
     public function index(AlternateNameQuery $query, $geonameId)

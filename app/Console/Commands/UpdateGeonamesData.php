@@ -18,8 +18,8 @@ use Illuminate\Bus\Batch;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Bus\Dispatcher;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Foundation\Application;
 use Illuminate\Mail\Mailer;
-use Laravel\Lumen\Application;
 use Throwable;
 
 class UpdateGeonamesData extends Command

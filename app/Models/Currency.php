@@ -82,8 +82,8 @@ class Currency extends Model
     /**
      * Get a currency by its parent country.
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param string $countryCode
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $countryCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByCountry(Builder $query, string $countryCode)
@@ -96,8 +96,8 @@ class Currency extends Model
     /**
      * Get a currency by its currency code.
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param string $currencyCode
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $currencyCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByCurrencyCode(Builder $query, string $currencyCode)

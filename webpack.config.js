@@ -6,6 +6,7 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = {
     entry: {
+        app: path.resolve('./resources/src/app'),
         vendor: path.resolve('./resources/src/vendor'),
         documentation: path.resolve('./resources/src/docs')
     },

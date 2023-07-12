@@ -2,7 +2,7 @@
 
 namespace App\Queries;
 
-use Illuminate\Pagination\AbstractPaginator;
+use Illuminate\Contracts\Pagination\CursorPaginator;
 use Spatie\QueryBuilder\QueryBuilder;
 
 abstract class Query
@@ -63,8 +63,8 @@ abstract class Query
     /**
      * Apply a scope to the builder.
      *
-     * @param string $scope
-     * @param array $parameters
+     * @param  string  $scope
+     * @param  array  $parameters
      * @return static
      */
     public function applyScope(string $scope, array $parameters = []): self
@@ -77,7 +77,7 @@ abstract class Query
     /**
      * Append more expressions to the Builder.
      *
-     * @param callable $callable
+     * @param  callable  $callable
      * @return $this
      */
     public function apply(callable $callable): self
@@ -119,9 +119,9 @@ abstract class Query
      *         type="object",
      *         enum = {"number", "size"},
      *         @OA\Property(
-     *             property="number",
-     *             type="integer",
-     *             example="1"
+     *             property="cursor",
+     *             type="string",
+     *             example="eyJpc28zMTY2X2FscGhhMiI6IkJPIiwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ"
      *         ),
      *         @OA\Property(
      *             property="size",
@@ -131,9 +131,9 @@ abstract class Query
      *     )
      * )
      *
-     * @return \Illuminate\Pagination\AbstractPaginator
+     * @return \Illuminate\Pagination\CursorPaginator
      */
-    public function getPaginator(): AbstractPaginator
+    public function getPaginator(): CursorPaginator
     {
         $this->checkBuilder();
 

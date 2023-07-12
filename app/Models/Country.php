@@ -211,7 +211,7 @@ class Country extends Model
     /**
      * Get the alternate names belonging to this country.
      *
-     * @param string $value
+     * @param  string  $value
      * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
      */
     public function alternateNames()
@@ -291,8 +291,8 @@ class Country extends Model
     /**
      * Get Countries by continent code.
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param string $continentCode
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $continentCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByContinentCode(Builder $query, string $continentCode)
@@ -303,8 +303,8 @@ class Country extends Model
     /**
      * Get Countries by country code.
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param string $countryCode
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $countryCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByCountryCode(Builder $query, string $countryCode)
@@ -313,144 +313,10 @@ class Country extends Model
     }
 
     /**
-     * Get countries with area greater than a specified
-     * value.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param float $value
-     * @return \Illuminate\Database\Eloquent\Builder  $query
-     */
-    public function scopeAreaGt(Builder $query, float $value)
-    {
-        return $query->where('area', '>', $value);
-    }
-
-    /**
-     * Get countries with area greater than or equal to a
-     * specified value.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param float $value
-     * @return \Illuminate\Database\Eloquent\Builder  $query
-     */
-    public function scopeAreaGte(Builder $query, float $value)
-    {
-        return $query->where('area', '>=', $value);
-    }
-
-    /**
-     * Get countries with area less than a specified
-     * value.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param float $value
-     * @return \Illuminate\Database\Eloquent\Builder  $query
-     */
-    public function scopeAreaLt(Builder $query, float $value)
-    {
-        return $query->where('area', '<', $value);
-    }
-
-    /**
-     * Get countries with area less than or equal to a
-     * specified value.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param float $value
-     * @return \Illuminate\Database\Eloquent\Builder  $query
-     */
-    public function scopeAreaLte(Builder $query, float $value)
-    {
-        return $query->where('area', '<=', $value);
-    }
-
-    /**
-     * Get countries with area between two specified values.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param float $min
-     * @param float $max
-     * @return \Illuminate\Database\Eloquent\Builder  $query
-     */
-    public function scopeAreaBetween(Builder $query, float $min, float $max)
-    {
-        return $query
-            ->areaGte($min)
-            ->areaLte($max);
-    }
-
-    /**
-     * Get countries with population greater than a specified
-     * value.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param int $value
-     * @return \Illuminate\Database\Eloquent\Builder  $query
-     */
-    public function scopePopulationGt(Builder $query, int $value)
-    {
-        return $query->where('population', '>', $value);
-    }
-
-    /**
-     * Get countries with population greater than or equal to a
-     * specified value.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param int $value
-     * @return \Illuminate\Database\Eloquent\Builder  $query
-     */
-    public function scopePopulationGte(Builder $query, int $value)
-    {
-        return $query->where('population', '>=', $value);
-    }
-
-    /**
-     * Get countries with population less than a specified
-     * value.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param float $value
-     * @return \Illuminate\Database\Eloquent\Builder  $query
-     */
-    public function scopePopulationLt(Builder $query, int $value)
-    {
-        return $query->where('population', '<', $value);
-    }
-
-    /**
-     * Get countries with population less than or equal to a
-     * specified value.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param float $value
-     * @return \Illuminate\Database\Eloquent\Builder  $query
-     */
-    public function scopePopulationLte(Builder $query, int $value)
-    {
-        return $query->where('population', '<=', $value);
-    }
-
-    /**
-     * Get countries with population between two specified values.
-     *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param float $min
-     * @param float $max
-     * @return \Illuminate\Database\Eloquent\Builder  $query
-     */
-    public function scopePopulationBetween(Builder $query, int $min, int $max)
-    {
-        return $query
-            ->populationGte($min)
-            ->populationLte($max);
-    }
-
-    /**
      * Get any country that is a neighbour of the specified country.
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $query
-     * @param string $code
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  string  $code
      * @return \Illuminate\Database\Eloquent\Builder  $query
      */
     public function scopeNeighbourOf(Builder $query, string $code)
