@@ -32,7 +32,6 @@ services:
       - .docker/app/php/php.ini-production:/usr/local/etc/php/php.ini-production
       - .docker/app/php/php.ini-development:/usr/local/etc/php/php.ini-development
     working_dir: /var/www/html
-    tty: true
     expose:
       - "9000"
     networks:
