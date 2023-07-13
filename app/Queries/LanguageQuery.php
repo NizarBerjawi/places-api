@@ -12,8 +12,6 @@ class LanguageQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
-     *
-     * @return string
      */
     public function modelClass(): string
     {
@@ -30,9 +28,11 @@ class LanguageQuery extends Query
      *     description="Filter languages by certain criteria",
      *     required=false,
      *     style="deepObject",
+     *
      *     @OA\Schema(
      *         type="object",
      *         enum={"iso639.1", "iso639.2", "iso639.3"},
+     *
      *         @OA\Property(
      *             property="iso639.1",
      *             type="string",
@@ -40,8 +40,6 @@ class LanguageQuery extends Query
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedFilters(): array
     {
@@ -62,16 +60,16 @@ class LanguageQuery extends Query
      *     description="Include related resources",
      *     required=false,
      *     explode=false,
+     *
      *     @OA\Schema(
      *         type="array",
+     *
      *         @OA\Items(
      *             type="string",
      *             enum = {"countries"},
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedIncludes(): array
     {
@@ -90,8 +88,10 @@ class LanguageQuery extends Query
      *     description="Sort the result set by certain properties.",
      *     required=false,
      *     explode=false,
+     *
      *     @OA\Schema(
      *         type="array",
+     *
      *         @OA\Items(
      *             type="string",
      *             enum = {
@@ -107,8 +107,6 @@ class LanguageQuery extends Query
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedSorts(): array
     {

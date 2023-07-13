@@ -16,22 +16,26 @@ class ContinentGeometryController extends Controller
      *      tags={"Continents"},
      *      summary="Returns the geometry of a specific continent",
      *      path="/continents/{continentCode}/geometry",
+     *
      *      @OA\Parameter(ref="#/components/parameters/continentCode"),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(ref="#/components/schemas/featureCollection")
      *          ),
      *      ),
+     *
      *      @OA\Response(
      *          response=404,
      *          description="Continent not found"
      *       )
      * )
      *
-     * @param  \App\Queries\GeometryQuery  $query
      * @param  string  $code
      * @return \Illuminate\Http\Response
      */

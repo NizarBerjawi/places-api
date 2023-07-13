@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="currency",
  *      type="object",
  *      title="Currency",
+ *
  *      @OA\Property(
  *           property="name",
  *           type="string",
@@ -37,6 +38,7 @@ class Currency extends Model
      *    in="path",
      *    required=true,
      *    description="The ISO 4217 code of the currency",
+     *
      *    @OA\Schema(
      *        type="string"
      *    )
@@ -82,8 +84,6 @@ class Currency extends Model
     /**
      * Get a currency by its parent country.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $countryCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByCountry(Builder $query, string $countryCode)
@@ -96,8 +96,6 @@ class Currency extends Model
     /**
      * Get a currency by its currency code.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $currencyCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByCurrencyCode(Builder $query, string $currencyCode)

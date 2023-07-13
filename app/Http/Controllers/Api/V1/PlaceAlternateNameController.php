@@ -20,17 +20,22 @@ class PlaceAlternateNameController extends Controller
      *      tags={"Places"},
      *      path="/places/{geonameId}/alternateNames",
      *      operationId="getAlternateNamesForPlace",
+     *
      *      @OA\Property(ref="#/components/schemas/AlternateName"),
+     *
      *      @OA\Parameter(ref="#/components/parameters/geonameId"),
      *      @OA\Parameter(ref="#/components/parameters/alternateNameFilter"),
      *      @OA\Parameter(ref="#/components/parameters/alternateNameInclude"),
      *      @OA\Parameter(ref="#/components/parameters/alternateNameSort"),
      *      @OA\Parameter(ref="#/components/parameters/pagination"),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(ref="#/components/schemas/location")
      *      ),
+     *
      *      @OA\Response(
      *          response=404,
      *          description="Alternate name not found"

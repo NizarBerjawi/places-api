@@ -81,8 +81,8 @@ foreach ($countryIncludes as $include) {
         $uri = '/api/v1/countries?include='.urlencode($include);
 
         $countriesCollection = Country::query()
-        ->with($include)
-        ->jsonPaginate(config('json-api-paginate.default_size'));
+            ->with($include)
+            ->jsonPaginate(config('json-api-paginate.default_size'));
 
         $resource = (new PaginatedResourceResponse(
             CountryResource::collection($countriesCollection)
@@ -202,17 +202,17 @@ test('returns correct structure on GET country', function () {
         ->first();
 
     getJson('/api/v1/countries/'.$country->getKey())
-    ->assertJsonStructure([
-        'data' => [
-            'name',
-            'iso3166Alpha2',
-            'iso3166Alpha3',
-            'iso3166Numeric',
-            'population',
-            'area',
-            'phoneCode',
-        ],
-    ]);
+        ->assertJsonStructure([
+            'data' => [
+                'name',
+                'iso3166Alpha2',
+                'iso3166Alpha3',
+                'iso3166Numeric',
+                'population',
+                'area',
+                'phoneCode',
+            ],
+        ]);
 });
 
 test('returns correct data on GET country', function () {

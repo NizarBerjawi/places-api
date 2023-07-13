@@ -19,19 +19,24 @@ class CountryPlaceController extends Controller
      *      tags={"Countries"},
      *      summary="Returns the places available in a specific country",
      *      path="/countries/{countryCode}/places",
+     *
      *      @OA\Parameter(ref="#/components/parameters/countryCode"),
      *      @OA\Parameter(ref="#/components/parameters/placeFilter"),
      *      @OA\Parameter(ref="#/components/parameters/placeInclude"),
      *      @OA\Parameter(ref="#/components/parameters/placeSort"),
      *      @OA\Parameter(ref="#/components/parameters/pagination"),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(ref="#/components/schemas/place")
      *          ),
      *      ),
+     *
      *      @OA\Response(
      *          response=404,
      *          description="Country not found"

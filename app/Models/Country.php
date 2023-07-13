@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="country",
  *      type="object",
  *      title="Country",
+ *
  *      @OA\Property(
  *           property="name",
  *           type="string",
@@ -68,6 +69,7 @@ class Country extends Model
      *    required=true,
      *    description="The iso3166Alpha2 code of the country",
      *    example="AU",
+     *
      *    @OA\Schema(
      *        type="string"
      *    )
@@ -291,8 +293,6 @@ class Country extends Model
     /**
      * Get Countries by continent code.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $continentCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByContinentCode(Builder $query, string $continentCode)
@@ -303,8 +303,6 @@ class Country extends Model
     /**
      * Get Countries by country code.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $countryCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByCountryCode(Builder $query, string $countryCode)
@@ -315,8 +313,6 @@ class Country extends Model
     /**
      * Get any country that is a neighbour of the specified country.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $code
      * @return \Illuminate\Database\Eloquent\Builder  $query
      */
     public function scopeNeighbourOf(Builder $query, string $code)

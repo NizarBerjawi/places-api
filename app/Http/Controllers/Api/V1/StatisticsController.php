@@ -25,16 +25,21 @@ class StatisticsController extends Controller
      *      tags={"Statistics"},
      *      summary="Returns a collection of statistics",
      *      path="/statistics",
+     *
      *      @OA\Parameter(ref="#/components/parameters/pagination"),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(ref="#/components/schemas/timeZone")
      *          ),
      *      ),
      * )
+     *
      * @OA\Tag(
      *     name="Statistics",
      *     description="Statistics about the data"

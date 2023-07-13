@@ -18,13 +18,17 @@ class PlaceLocationController extends Controller
      *     tags={"Places"},
      *     path="/places/{geonameId}/location",
      *     operationId="getLocationByPlace",
+     *
      *     @OA\Parameter(ref="#/components/parameters/geonameId"),
      *      @OA\Parameter(ref="#/components/parameters/pagination"),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/location")
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Place not found"

@@ -19,19 +19,24 @@ class CountryAlternateNameController extends Controller
      *      tags={"Countries"},
      *      summary="Returns the alternate names of a specific country",
      *      path="/countries/{countryCode}/alternateNames",
+     *
      *      @OA\Parameter(ref="#/components/parameters/countryCode"),
      *      @OA\Parameter(ref="#/components/parameters/alternateNameFilter"),
      *      @OA\Parameter(ref="#/components/parameters/alternateNameInclude"),
      *      @OA\Parameter(ref="#/components/parameters/alternateNameSort"),
      *      @OA\Parameter(ref="#/components/parameters/pagination"),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(ref="#/components/schemas/alternateName")
      *          ),
      *      ),
+     *
      *      @OA\Response(
      *          response=404,
      *          description="Alternate name not found"

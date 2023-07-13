@@ -12,8 +12,6 @@ class FeatureClassQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
-     *
-     * @return string
      */
     public function modelClass(): string
     {
@@ -30,9 +28,11 @@ class FeatureClassQuery extends Query
      *     description="Filter feature classes by certain criteria",
      *     required=false,
      *     style="deepObject",
+     *
      *     @OA\Schema(
      *         type="object",
      *         enum={"code"},
+     *
      *         @OA\Property(
      *             property="code",
      *             type="string",
@@ -40,8 +40,6 @@ class FeatureClassQuery extends Query
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedFilters(): array
     {
@@ -60,16 +58,16 @@ class FeatureClassQuery extends Query
      *     description="Include related resources",
      *     required=false,
      *     explode=false,
+     *
      *     @OA\Schema(
      *         type="array",
+     *
      *         @OA\Items(
      *             type="string",
      *             enum = {"featureCodes"},
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedIncludes(): array
     {
@@ -88,16 +86,16 @@ class FeatureClassQuery extends Query
      *     description="Sort the result set by certain properties.",
      *     required=false,
      *     explode=false,
+     *
      *     @OA\Schema(
      *         type="array",
+     *
      *         @OA\Items(
      *             type="string",
      *             enum = {"code", "-code"},
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedSorts(): array
     {

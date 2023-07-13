@@ -13,8 +13,6 @@ class AlternateNameQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
-     *
-     * @return string
      */
     public function modelClass(): string
     {
@@ -31,6 +29,7 @@ class AlternateNameQuery extends Query
      *     description="Filter alternate names by certain criteria",
      *     required=false,
      *     style="deepObject",
+     *
      *     @OA\Schema(
      *         type="object",
      *         enum = {
@@ -41,6 +40,7 @@ class AlternateNameQuery extends Query
      *             "isColloquial",
      *             "languageCode"
      *         },
+     *
      *         @OA\Property(
      *             property="isPreferredName",
      *             type="object",
@@ -52,8 +52,6 @@ class AlternateNameQuery extends Query
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedFilters(): array
     {
@@ -77,8 +75,10 @@ class AlternateNameQuery extends Query
      *     description="Include resources related to the specified alternate name.",
      *     required=false,
      *     explode=false,
+     *
      *     @OA\Schema(
      *         type="array",
+     *
      *         @OA\Items(
      *             type="string",
      *             enum = {
@@ -88,8 +88,6 @@ class AlternateNameQuery extends Query
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedIncludes(): array
     {
@@ -109,8 +107,10 @@ class AlternateNameQuery extends Query
      *     description="Sort the result set by certain properties.",
      *     required=false,
      *     explode=false,
+     *
      *     @OA\Schema(
      *         type="array",
+     *
      *         @OA\Items(
      *             type="string",
      *             enum = {
@@ -128,8 +128,6 @@ class AlternateNameQuery extends Query
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedSorts(): array
     {

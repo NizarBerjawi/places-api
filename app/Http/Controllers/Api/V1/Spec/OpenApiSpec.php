@@ -7,24 +7,29 @@ namespace App\Http\Controllers\Api\V1\Spec;
  *     title="Places API",
  *     version="1.0.0",
  *     description="This is the full documentation for the Places API.",
+ *
  *     @OA\Contact(
  *         email="nizarberjawi12@gmail.com"
  *     )
  * )
+ *
  * @OA\Server(
  *     description="Places API host",
  *     url=BASE_URL
  * )
+ *
  * @OA\Schema(
  *      schema="apiResponse",
  *      type="object",
  *      title="Api Response",
  *      allOf={
  *           @OA\Schema(
+ *
  *                @OA\Property(
  *                     property="data",
  *                     description="The paginated data set that is returned.",
  *                     oneOf={
+ *
  *                           @OA\Schema(ref="#/components/schemas/alternateName"),
  *                           @OA\Schema(ref="#/components/schemas/continent"),
  *                           @OA\Schema(ref="#/components/schemas/country"),
@@ -37,6 +42,7 @@ namespace App\Http\Controllers\Api\V1\Spec;
  *                           @OA\Schema(ref="#/components/schemas/timeZone"),
  *                     }
  *                ),
+ *
  *                @OA\Property(
  *                     property="links",
  *                     type="object",

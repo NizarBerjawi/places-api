@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="featureClass",
  *      type="object",
  *      title="Feature Class",
+ *
  *      @OA\Property(
  *           property="code",
  *           type="string",
@@ -37,6 +38,7 @@ class FeatureClass extends Model
      *    in="path",
      *    required=true,
      *    description="The code of the Feature Class",
+     *
      *    @OA\Schema(
      *        type="string"
      *    )
@@ -92,8 +94,6 @@ class FeatureClass extends Model
     /**
      * Get a feature class by feature class code.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $featureClassCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByFeatureClassCode(Builder $query, string $featureClassCode)

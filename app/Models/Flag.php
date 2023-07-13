@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="flag",
  *      type="object",
  *      title="Flag",
+ *
  *      @OA\Property(
  *           property="countryCode",
  *           type="string",
@@ -70,8 +71,6 @@ class Flag extends Model
     /**
      * Get a Flag by country code.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $countryCode
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
     public function scopeByCountryCode(Builder $query, string $countryCode)

@@ -12,8 +12,6 @@ class FlagQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
-     *
-     * @return string
      */
     public function modelClass(): string
     {
@@ -30,9 +28,11 @@ class FlagQuery extends Query
      *     description="Sort the result set by certain properties.",
      *     required=false,
      *     style="deepObject",
+     *
      *     @OA\Schema(
      *         type="object",
      *         enum = {"countryCode"},
+     *
      *         @OA\Property(
      *             property="countryCode",
      *             type="string",
@@ -40,8 +40,6 @@ class FlagQuery extends Query
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedFilters(): array
     {
@@ -60,16 +58,16 @@ class FlagQuery extends Query
      *     description="Include resources related to the specified flag.",
      *     required=false,
      *     explode=false,
+     *
      *     @OA\Schema(
      *         type="array",
+     *
      *         @OA\Items(
      *             type="string",
      *             enum = {"country"},
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedIncludes(): array
     {
@@ -89,16 +87,16 @@ class FlagQuery extends Query
      *     description="Sort the result set by certain properties.",
      *     required=false,
      *     explode=false,
+     *
      *     @OA\Schema(
      *         type="array",
+     *
      *         @OA\Items(
      *             type="string",
      *             enum = {"countryCode", "-countryCode"},
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedSorts(): array
     {

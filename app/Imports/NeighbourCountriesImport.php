@@ -18,7 +18,6 @@ class NeighbourCountriesImport extends CountriesFileIterator implements ShouldQu
     /**
      * Decides whether to skip a row or not.
      *
-     * @param  array  $row
      * @param bool
      */
     public function skip(array $row)

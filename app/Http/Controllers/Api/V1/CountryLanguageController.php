@@ -19,26 +19,30 @@ class CountryLanguageController extends Controller
      *      tags={"Countries"},
      *      summary="Returns the languages of a specific country",
      *      path="/countries/{countryCode}/languages",
+     *
      *      @OA\Parameter(ref="#/components/parameters/countryCode"),
      *      @OA\Parameter(ref="#/components/parameters/languageFilter"),
      *      @OA\Parameter(ref="#/components/parameters/languageInclude"),
      *      @OA\Parameter(ref="#/components/parameters/languageSort"),
      *      @OA\Parameter(ref="#/components/parameters/pagination"),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(ref="#/components/schemas/language")
      *          ),
      *      ),
+     *
      *      @OA\Response(
      *          response=404,
      *          description="Country not found"
      *      )
      * )
      *
-     * @param  \App\Queries\LanguageQuery  $query
      * @param  string  $code
      * @return \Illuminate\Http\Response
      */

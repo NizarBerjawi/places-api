@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="timeZone",
  *      type="object",
  *      title="Time Zone",
+ *
  *      @OA\Property(
  *           property="gmtOffset",
  *           type="integer",
@@ -44,6 +45,7 @@ class TimeZone extends Model
      *    required=true,
      *    description="The code of the time zone",
      *    example="asia_tokyo",
+     *
      *    @OA\Schema(
      *        type="string"
      *    )
@@ -101,8 +103,6 @@ class TimeZone extends Model
     /**
      * Get a time zones by its parent country code.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $countryCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByCountry(Builder $query, string $countryCode)
@@ -113,8 +113,6 @@ class TimeZone extends Model
     /**
      * Get a time zones by code.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $timeZoneCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByTimeZoneCode(Builder $query, string $timeZoneCode)

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
  *      schema="continent",
  *      type="object",
  *      title="Continent",
+ *
  *      @OA\Property(
  *          property="code",
  *          type="string",
@@ -39,6 +40,7 @@ class Continent extends Model
      *    required=true,
      *    description="The code of the continent",
      *    example="EU",
+     *
      *    @OA\Schema(
      *        type="string"
      *    )
@@ -119,8 +121,6 @@ class Continent extends Model
     /**
      * Returns non-existing Continent IDs from an array of IDs.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  array  $ids
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeGetMissing(Builder $query, array $ids)
@@ -140,8 +140,6 @@ class Continent extends Model
     /**
      * Scope continents by continent code.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $code
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByCode(Builder $query, string $code)

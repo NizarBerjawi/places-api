@@ -19,26 +19,30 @@ class CountryTimeZoneController extends Controller
      *      tags={"Countries"},
      *      summary="Returns the Time Zones available in a specific country",
      *      path="/countries/{countryCode}/timeZones",
+     *
      *      @OA\Parameter(ref="#/components/parameters/countryCode"),
      *      @OA\Parameter(ref="#/components/parameters/timeZoneFilter"),
      *      @OA\Parameter(ref="#/components/parameters/timeZoneInclude"),
      *      @OA\Parameter(ref="#/components/parameters/timeZoneSort"),
      *      @OA\Parameter(ref="#/components/parameters/pagination"),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(ref="#/components/schemas/timeZone")
      *          ),
      *      ),
+     *
      *      @OA\Response(
      *          response=404,
      *          description="Country not found"
      *      )
      * )
      *
-     * @param  \App\Queries\TimeZoneQuery  $query
      * @param  string  $code
      * @return \Illuminate\Http\Response
      */

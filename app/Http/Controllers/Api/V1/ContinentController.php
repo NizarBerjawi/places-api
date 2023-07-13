@@ -17,14 +17,18 @@ class ContinentController extends Controller
      *      tags={"Continents"},
      *      summary="Returns a list of paginated continents",
      *      path="/continents",
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(ref="#/components/schemas/continent")
      *          ),
      *      ),
+     *
      *      @OA\Parameter(ref="#/components/parameters/continentFilter"),
      *      @OA\Parameter(ref="#/components/parameters/continentInclude"),
      *      @OA\Parameter(ref="#/components/parameters/continentSort"),
@@ -36,7 +40,6 @@ class ContinentController extends Controller
      *     description="Everything about continents"
      * )
      *
-     * @param  \App\Queries\ContinentQuery  $query
      * @return \Illuminate\Http\Response
      */
     public function index(ContinentQuery $query)
@@ -55,22 +58,25 @@ class ContinentController extends Controller
      *     tags={"Continents"},
      *     path="/continents/{continentCode}",
      *     operationId="getContinentByCode",
+     *
      *     @OA\Property(ref="#/components/schemas/continent"),
+     *
      *     @OA\Parameter(ref="#/components/parameters/continentCode"),
      *     @OA\Parameter(ref="#/components/parameters/continentInclude"),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/continent")
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Continent not found"
      *     ),
      * )
      *
-     * @param  \App\Queries\ContinentQuery  $query
-     * @param  string  $continentCode
      * @return \Illuminate\Http\Response
      */
     public function show(ContinentQuery $query, string $continentCode)
