@@ -19,26 +19,30 @@ class CountryNeighbourController extends Controller
      *      tags={"Countries"},
      *      summary="Returns the neighbouring countries of a specific country",
      *      path="/countries/{countryCode}/neighbours",
+     *
      *      @OA\Parameter(ref="#/components/parameters/countryCode"),
      *      @OA\Parameter(ref="#/components/parameters/countryFilter"),
      *      @OA\Parameter(ref="#/components/parameters/countryInclude"),
      *      @OA\Parameter(ref="#/components/parameters/countrySort"),
      *      @OA\Parameter(ref="#/components/parameters/pagination"),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(ref="#/components/schemas/country")
      *          ),
      *      ),
+     *
      *      @OA\Response(
      *          response=404,
      *          description="Country not found"
      *      )
      * )
      *
-     * @param  \App\Queries\CountryQuery  $query
      * @param  string  $code
      * @return \Illuminate\Http\Response
      */

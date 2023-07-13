@@ -17,25 +17,29 @@ class CurrencyController extends Controller
      *      tags={"Currencies"},
      *      summary="Returns a list of paginated currencies",
      *      path="/currencies",
+     *
      *      @OA\Parameter(ref="#/components/parameters/currencyFilter"),
      *      @OA\Parameter(ref="#/components/parameters/currencyInclude"),
      *      @OA\Parameter(ref="#/components/parameters/currencySort"),
      *      @OA\Parameter(ref="#/components/parameters/pagination"),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(ref="#/components/schemas/currency")
      *          ),
      *      ),
      * )
+     *
      * @OA\Tag(
      *     name="Currencies",
      *     description="Everything about currencies"
      * )
      *
-     * @param  \App\Queries\CurrencyQuery  $query
      * @return \Illuminate\Http\Response
      */
     public function index(CurrencyQuery $query)
@@ -54,20 +58,23 @@ class CurrencyController extends Controller
      *     tags={"Currencies"},
      *     path="/currencies/{currencyCode}",
      *     operationId="getCurrencyByCode",
+     *
      *     @OA\Parameter(ref="#/components/parameters/currencyCode"),
      *     @OA\Parameter(ref="#/components/parameters/currencyInclude"),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/currency")
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Currency not found"
      *     )
      * )
      *
-     * @param  \App\Queries\CurrencyQuery  $query
      * @param  string  $code
      * @return \Illuminate\Http\Response
      */

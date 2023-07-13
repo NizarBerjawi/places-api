@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="geometry",
  *      type="object",
  *      title="Geometry",
+ *
  *      @OA\Property(
  *           property="type",
  *           type="string",
@@ -30,6 +31,7 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="feature",
  *      type="object",
  *      title="Feature",
+ *
  *      @OA\Property(
  *           property="type",
  *           type="string",
@@ -50,6 +52,7 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="featureCollection",
  *      type="object",
  *      title="Feature Collection",
+ *
  *      @OA\Property(
  *           property="type",
  *           type="string",
@@ -59,6 +62,7 @@ use Illuminate\Database\Eloquent\Model;
  *      @OA\Property(
  *           property="features",
  *           type="array",
+ *
  *           @OA\Items(ref="#/components/schemas/feature")
  *      )
  * )
@@ -134,8 +138,6 @@ class Geometry extends Model
     /**
      * Get a Geometry by country code.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $countryCode
      * @return \Illuminate\Database\Eloquent\Builder $query
      */
     public function scopeByCountryCode(Builder $query, string $countryCode)

@@ -16,6 +16,7 @@ class Controller extends BaseController
      *     title="Places API",
      *     version="1.0.0",
      *     description="This is the full documentation for the Places API.",
+     *
      *     @OA\Contact(
      *         email="nizarberjawi12@gmail.com"
      *     )

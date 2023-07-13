@@ -13,8 +13,6 @@ class CountryQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
-     *
-     * @return string
      */
     public function modelClass(): string
     {
@@ -31,6 +29,7 @@ class CountryQuery extends Query
      *     description="Filter countries by certain criteria",
      *     required=false,
      *     style="deepObject",
+     *
      *     @OA\Schema(
      *         type="object",
      *         enum={
@@ -42,6 +41,7 @@ class CountryQuery extends Query
      *             "area",
      *             "phoneCode"
      *         },
+     *
      *         @OA\Property(
      *             property="area",
      *             type="object",
@@ -62,8 +62,6 @@ class CountryQuery extends Query
      *         ),
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedFilters(): array
     {
@@ -88,8 +86,10 @@ class CountryQuery extends Query
      *     description="Include related resources with every country.",
      *     required=false,
      *     explode=false,
+     *
      *     @OA\Schema(
      *         type="array",
+     *
      *         @OA\Items(
      *             type="string",
      *             enum = {
@@ -105,8 +105,6 @@ class CountryQuery extends Query
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedIncludes(): array
     {
@@ -132,8 +130,10 @@ class CountryQuery extends Query
      *     description="Sort the result set by certain properties.",
      *     required=false,
      *     explode=false,
+     *
      *     @OA\Schema(
      *         type="array",
+     *
      *         @OA\Items(
      *             type="string",
      *             enum = {
@@ -155,8 +155,6 @@ class CountryQuery extends Query
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedSorts(): array
     {

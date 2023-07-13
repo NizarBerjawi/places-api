@@ -28,8 +28,6 @@ class ContinentsImport extends GeonamesFileIterator implements ShouldQueue
     /**
      * Initialize an instance.
      *
-     * @param  string  $filepath
-     * @param  string  $delimiter
      * @return void
      */
     public function __construct(string $filepath, string $delimiter = "\t")

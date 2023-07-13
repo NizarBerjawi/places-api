@@ -208,10 +208,10 @@ test('returns correct data on GET continent', function () {
 foreach ($continentIncludes as $include) {
     test("returns correct data when \"{$include}\" relation is included for continent", function () use ($include) {
         $continent = Continent::query()
-        ->with($include)
-        ->inRandomOrder()
-        ->limit(1)
-        ->first();
+            ->with($include)
+            ->inRandomOrder()
+            ->limit(1)
+            ->first();
 
         $uri = '/api/v1/continents/'.$continent->getKey().'?include='.$include;
 

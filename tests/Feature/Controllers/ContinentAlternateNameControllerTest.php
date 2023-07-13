@@ -189,9 +189,9 @@ test('returns an error response when invalid filter for alternate names', functi
 
 test('returns an error response when invalid include for alternate names', function () {
     $continent = Continent::query()
-    ->inRandomOrder()
-    ->limit(1)
-    ->first();
+        ->inRandomOrder()
+        ->limit(1)
+        ->first();
 
     $uri = '/api/v1/continents/'.$continent->getKey().'/alternateNames?include=invalid';
 
@@ -209,9 +209,9 @@ test('returns an error response when invalid include for alternate names', funct
 
 test('returns an error response when invalid sort for alternate names', function () use ($alternateNameSorts) {
     $continent = Continent::query()
-    ->inRandomOrder()
-    ->limit(1)
-    ->first();
+        ->inRandomOrder()
+        ->limit(1)
+        ->first();
 
     $uri = '/api/v1/continents/'.$continent->getKey().'/alternateNames?sort=invalid';
 

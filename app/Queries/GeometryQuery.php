@@ -8,8 +8,6 @@ class GeometryQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
-     *
-     * @return string
      */
     public function modelClass(): string
     {
@@ -18,8 +16,6 @@ class GeometryQuery extends Query
 
     /**
      * The attributes we can use to filter.
-     *
-     * @return array
      */
     public function getAllowedFilters(): array
     {
@@ -28,8 +24,6 @@ class GeometryQuery extends Query
 
     /**
      * The relations that we can include.
-     *
-     * @return array
      */
     public function getAllowedIncludes(): array
     {
@@ -38,8 +32,6 @@ class GeometryQuery extends Query
 
     /**
      * The relations that we can sort by.
-     *
-     * @return array
      */
     public function getAllowedSorts(): array
     {

@@ -18,25 +18,29 @@ class CountryFlagController extends Controller
      *      tags={"Countries"},
      *      summary="Returns the flag of a specific country",
      *      path="/countries/{countryCode}/flag",
+     *
      *      @OA\Parameter(ref="#/components/parameters/countryCode"),
      *      @OA\Parameter(ref="#/components/parameters/flagFilter"),
      *      @OA\Parameter(ref="#/components/parameters/flagInclude"),
      *      @OA\Parameter(ref="#/components/parameters/flagSort"),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(ref="#/components/schemas/flag")
      *          ),
      *      ),
+     *
      *      @OA\Response(
      *          response=404,
      *          description="Country not found"
      *       )
      * )
      *
-     * @param  \App\Queries\FlagQuery  $query
      * @param  string  $code
      * @return \Illuminate\Http\Response
      */

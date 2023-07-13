@@ -12,8 +12,6 @@ class ContinentQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
-     *
-     * @return string
      */
     public function modelClass(): string
     {
@@ -30,9 +28,11 @@ class ContinentQuery extends Query
      *     description="Filter continents by name or code",
      *     required=false,
      *     style="deepObject",
+     *
      *     @OA\Schema(
      *         type="object",
      *         enum={"code", "name"},
+     *
      *         @OA\Property(
      *             property="code",
      *             type="object",
@@ -44,8 +44,6 @@ class ContinentQuery extends Query
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedFilters(): array
     {
@@ -65,16 +63,16 @@ class ContinentQuery extends Query
      *     description="Include related resources with every continent.",
      *     required=false,
      *     explode=false,
+     *
      *     @OA\Schema(
      *         type="array",
+     *
      *         @OA\Items(
      *             type="string",
      *             enum = {"countries", "alternateNames"},
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedIncludes(): array
     {
@@ -94,16 +92,16 @@ class ContinentQuery extends Query
      *     description="Sort the result set by certain properties.",
      *     required=false,
      *     explode=false,
+     *
      *     @OA\Schema(
      *         type="array",
+     *
      *         @OA\Items(
      *             type="string",
      *             enum = {"name", "code", "-name", "-code"},
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedSorts(): array
     {

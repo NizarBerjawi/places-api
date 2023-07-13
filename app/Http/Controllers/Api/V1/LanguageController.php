@@ -17,25 +17,29 @@ class LanguageController extends Controller
      *      tags={"Languages"},
      *      summary="Returns a list of paginated languages",
      *      path="/languages",
+     *
      *      @OA\Parameter(ref="#/components/parameters/languageFilter"),
      *      @OA\Parameter(ref="#/components/parameters/languageInclude"),
      *      @OA\Parameter(ref="#/components/parameters/languageSort"),
      *      @OA\Parameter(ref="#/components/parameters/pagination"),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(ref="#/components/schemas/language")
      *          ),
      *      ),
      * )
+     *
      * @OA\Tag(
      *     name="Languages",
      *     description="Everything about languages"
      * )
      *
-     * @param  \App\Queries\LanguageQuery  $query
      * @return \Illuminate\Http\Response
      */
     public function index(LanguageQuery $query)
@@ -54,13 +58,17 @@ class LanguageController extends Controller
      *     tags={"Languages"},
      *     path="/languages/{languageCode}",
      *     operationId="getLanguageByCode",
+     *
      *     @OA\Parameter(ref="#/components/parameters/languageCode"),
      *     @OA\Parameter(ref="#/components/parameters/languageInclude"),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(ref="#/components/schemas/language")
      *       ),
+     *
      *      @OA\Response(
      *          response=404,
      *          description="Language not found"

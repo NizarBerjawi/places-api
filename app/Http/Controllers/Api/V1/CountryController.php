@@ -17,15 +17,19 @@ class CountryController extends Controller
      *      tags={"Countries"},
      *      summary="Returns a list of paginated countries",
      *      path="/countries",
+     *
      *      @OA\Parameter(ref="#/components/parameters/countryFilter"),
      *      @OA\Parameter(ref="#/components/parameters/countryInclude"),
      *      @OA\Parameter(ref="#/components/parameters/countrySort"),
      *      @OA\Parameter(ref="#/components/parameters/pagination"),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(ref="#/components/schemas/country")
      *          ),
      *      )
@@ -36,7 +40,6 @@ class CountryController extends Controller
      *     description="Everything about countries"
      * )
      *
-     * @param  \App\Queries\CountryQuery  $query
      * @return \Illuminate\Http\Response
      */
     public function index(CountryQuery $query)
@@ -55,21 +58,23 @@ class CountryController extends Controller
      *     tags={"Countries"},
      *     path="/countries/{countryCode}",
      *     operationId="getCountryByCode",
+     *
      *     @OA\Parameter(ref="#/components/parameters/countryCode"),
      *     @OA\Parameter(ref="#/components/parameters/countryInclude"),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/country")
      *      ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Country not found"
      *      )
      * )
      *
-     * @param  \App\Queries\CountryQuery  $query
-     * @param  string  $countryCode
      * @return \Illuminate\Http\Response
      */
     public function show(CountryQuery $query, string $countryCode)

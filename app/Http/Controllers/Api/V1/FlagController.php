@@ -17,25 +17,29 @@ class FlagController extends Controller
      *      tags={"Flags"},
      *      summary="Returns a list of paginated flags",
      *      path="/flags",
+     *
      *      @OA\Parameter(ref="#/components/parameters/flagFilter"),
      *      @OA\Parameter(ref="#/components/parameters/flagInclude"),
      *      @OA\Parameter(ref="#/components/parameters/flagSort"),
      *      @OA\Parameter(ref="#/components/parameters/pagination"),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(ref="#/components/schemas/flag")
      *          ),
      *      ),
      * )
+     *
      * @OA\Tag(
      *     name="Flags",
      *     description="Everything about flags"
      * )
      *
-     * @param  \App\Queries\FlagQuery  $query
      * @return \Illuminate\Http\Response
      */
     public function index(FlagQuery $query)
@@ -54,21 +58,25 @@ class FlagController extends Controller
      *     tags={"Flags"},
      *     path="/flags/{countryCode}",
      *     operationId="getFlagByCode",
+     *
      *     @OA\Property(ref="#/components/schemas/flag"),
+     *
      *     @OA\Parameter(ref="#/components/parameters/countryCode"),
      *     @OA\Parameter(ref="#/components/parameters/flagInclude"),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/flag")
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Flag not found"
      *     )
      * )
      *
-     * @param  \App\Queries\FlagQuery  $query
      * @param  string  $code
      * @return \Illuminate\Http\Response
      */

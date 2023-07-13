@@ -18,26 +18,30 @@ class CountryCurrencyController extends Controller
      *      tags={"Countries"},
      *      summary="Returns the currency of a specific country",
      *      path="/countries/{countryCode}/currency",
+     *
      *      @OA\Parameter(ref="#/components/parameters/countryCode"),
      *      @OA\Parameter(ref="#/components/parameters/currencyFilter"),
      *      @OA\Parameter(ref="#/components/parameters/currencyInclude"),
      *      @OA\Parameter(ref="#/components/parameters/currencySort"),
      *      @OA\Parameter(ref="#/components/parameters/pagination"),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(ref="#/components/schemas/currency")
      *          ),
      *      ),
+     *
      *      @OA\Response(
      *          response=404,
      *          description="Country not found"
      *       )
      * )
      *
-     * @param  \App\Queries\CurrencyQuery  $query
      * @param  string  $code
      * @return \Illuminate\Http\Response
      */
