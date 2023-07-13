@@ -5,14 +5,14 @@
     "keywords": ["framework", "laravel"],
     "license": "MIT",
     "require": {
-        "php": "^8.0.2",
-        "guzzlehttp/guzzle": "^7.2",
+        "php": "^8.2",
+        "guzzlehttp/guzzle": "^7.7",
         "laravel/framework": "^9.19",
         "laravel/tinker": "^2.7",
-        "spatie/laravel-json-api-paginate": "^1.12",
-        "spatie/laravel-query-builder": "^5.0",
+        "spatie/laravel-json-api-paginate": "^1.13",
+        "spatie/laravel-query-builder": "^5.2",
         "spatie/laravel-responsecache": "^7.4",
-        "zircote/swagger-php": "^4.4"
+        "zircote/swagger-php": "^4.7"
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
