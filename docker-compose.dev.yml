@@ -39,7 +39,7 @@ services:
     depends_on:
       - db
   db:
-    image: postgres:13.3-alpine3.13
+    image: postgres:15.3-alpine3.18
     restart: always
     environment:
       - POSTGRES_USER=${DB_USERNAME}
