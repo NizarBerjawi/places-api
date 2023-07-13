@@ -9,9 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 test('returns 200 response on GET countries', function () {
     $continent = Continent::query()
-    ->inRandomOrder()
-    ->limit(1)
-    ->first();
+        ->inRandomOrder()
+        ->limit(1)
+        ->first();
 
     getJson('/api/v1/continents/'.$continent->getKey().'/countries')->assertOk();
 });

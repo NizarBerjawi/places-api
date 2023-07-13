@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
  *      schema="place",
  *      type="object",
  *      title="Place",
+ *
  *      @OA\Property(
  *           property="geonameId",
  *           type="integer",
@@ -62,6 +63,7 @@ class Place extends Model
      *    in="path",
      *    required=true,
      *    description="The Geoname ID of the place",
+     *
      *    @OA\Schema(
      *        type="string"
      *    )
@@ -158,8 +160,6 @@ class Place extends Model
     /**
      * Returns non-existing Place IDs from an array of IDs.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  array  $ids
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeGetMissing(Builder $query, array $ids)
@@ -179,8 +179,6 @@ class Place extends Model
     /**
      * Get places scoped by geoname id.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  int  $geonameId
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByGeonameId(Builder $query, int $geonameId)
@@ -191,8 +189,6 @@ class Place extends Model
     /**
      * Get places scoped by country.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $countryCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByCountry(Builder $query, string $countryCode)

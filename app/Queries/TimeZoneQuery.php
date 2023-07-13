@@ -12,8 +12,6 @@ class TimeZoneQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
-     *
-     * @return string
      */
     public function modelClass(): string
     {
@@ -30,11 +28,13 @@ class TimeZoneQuery extends Query
      *     description="Filter time zones by certain criteria",
      *     required=false,
      *     style="deepObject",
+     *
      *     @OA\Schema(
      *         type="object",
      *         enum={
      *             "code"
      *         },
+     *
      *         @OA\Property(
      *             property="code",
      *             type="string",
@@ -42,8 +42,6 @@ class TimeZoneQuery extends Query
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedFilters(): array
     {
@@ -62,16 +60,16 @@ class TimeZoneQuery extends Query
      *     description="Include related resources",
      *     required=false,
      *     explode=false,
+     *
      *     @OA\Schema(
      *         type="array",
+     *
      *         @OA\Items(
      *             type="string",
      *             enum = {"country"},
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedIncludes(): array
     {
@@ -90,8 +88,10 @@ class TimeZoneQuery extends Query
      *     description="Sort the result set by certain properties.",
      *     required=false,
      *     explode=false,
+     *
      *     @OA\Schema(
      *         type="array",
+     *
      *         @OA\Items(
      *             type="string",
      *             enum = {
@@ -106,8 +106,6 @@ class TimeZoneQuery extends Query
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedSorts(): array
     {

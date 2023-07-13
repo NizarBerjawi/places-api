@@ -17,25 +17,29 @@ class TimeZoneController extends Controller
      *      tags={"Time Zones"},
      *      summary="Returns a list of paginated time zones",
      *      path="/timeZones",
+     *
      *      @OA\Parameter(ref="#/components/parameters/timeZoneFilter"),
      *      @OA\Parameter(ref="#/components/parameters/timeZoneInclude"),
      *      @OA\Parameter(ref="#/components/parameters/timeZoneSort"),
      *      @OA\Parameter(ref="#/components/parameters/pagination"),
+     *
      *      @OA\Response(
      *          response=200,
      *          description="Successful operation",
+     *
      *          @OA\JsonContent(
      *              type="array",
+     *
      *              @OA\Items(ref="#/components/schemas/timeZone")
      *          ),
      *      ),
      * )
+     *
      * @OA\Tag(
      *     name="Time Zones",
      *     description="Everything about time zones"
      * )
      *
-     * @param  \App\Queries\TimeZoneQuery  $query
      * @return \Illuminate\Http\Response
      */
     public function index(TimeZoneQuery $query)
@@ -54,22 +58,25 @@ class TimeZoneController extends Controller
      *     tags={"Time Zones"},
      *     path="/timeZones/{timeZoneCode}",
      *     operationId="getTimeZoneByCode",
+     *
      *     @OA\Parameter(ref="#/components/parameters/timeZoneCode"),
      *     @OA\Parameter(ref="#/components/parameters/timeZoneFilter"),
      *     @OA\Parameter(ref="#/components/parameters/timeZoneInclude"),
      *     @OA\Parameter(ref="#/components/parameters/timeZoneSort"),
+     *
      *     @OA\Response(
      *         response=200,
      *         description="Successful operation",
+     *
      *         @OA\JsonContent(ref="#/components/schemas/timeZone")
      *     ),
+     *
      *     @OA\Response(
      *         response=404,
      *         description="Time zone not found"
      *     )
      * )
      *
-     * @param  \App\Queries\TimeZoneQuery  $query
      * @param  string  $code
      * @return \Illuminate\Http\Response
      */

@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="location",
  *      type="object",
  *      title="Location",
+ *
  *      @OA\Property(
  *           property="latitude",
  *           type="number",
@@ -64,8 +65,6 @@ class Location extends Model
     /**
      * Get locations by place.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  int  $geonameId
      * @return \Illuminate\Database\Eloquent\Builder  $query
      */
     public function scopeByPlace(Builder $query, int $geonameId)

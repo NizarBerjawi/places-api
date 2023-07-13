@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="alternateName",
  *      type="object",
  *      title="Alternate Name",
+ *
  *      @OA\Property(
  *           property="name",
  *           type="string",
@@ -78,7 +79,6 @@ class AlternateName extends Model
     /**
      * Get Alternate names by language.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  array  $languages
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -92,7 +92,6 @@ class AlternateName extends Model
     /**
      * Get alternate name by their parent geoname ID.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @param  array  $languages
      * @return \Illuminate\Database\Eloquent\Builder
      */

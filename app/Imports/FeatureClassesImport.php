@@ -26,8 +26,6 @@ class FeatureClassesImport extends GeonamesFileIterator implements ShouldQueue
     /**
      * Initialize an instance.
      *
-     * @param  string  $filepath
-     * @param  string  $delimiter
      * @return void
      */
     public function __construct(string $filepath, string $delimiter = "\t")
@@ -40,7 +38,6 @@ class FeatureClassesImport extends GeonamesFileIterator implements ShouldQueue
     /**
      * Decides whether to skip a row or not.
      *
-     * @param  array  $row
      * @param bool
      */
     public function skip(array $row)

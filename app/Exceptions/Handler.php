@@ -59,7 +59,6 @@ class Handler extends ExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $exception
      * @return \Illuminate\Http\Response|\Illuminate\Http\JsonResponse
      *
      * @throws \Throwable
@@ -77,7 +76,6 @@ class Handler extends ExceptionHandler
      * Prepare a JSON response for the given exception.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Throwable  $e
      * @return \Illuminate\Http\JsonResponse
      */
     protected function prepareJsonResponse($request, Throwable $e)
@@ -132,7 +130,6 @@ class Handler extends ExceptionHandler
     /**
      * Get the status code from the exception.
      *
-     * @param  \Throwable  $exception
      * @return int
      */
     protected function getStatusCode(Throwable $exception)

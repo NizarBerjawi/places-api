@@ -13,8 +13,6 @@ class PlaceQuery extends Query
 {
     /**
      * Return the model classname to be filtered.
-     *
-     * @return string
      */
     public function modelClass(): string
     {
@@ -31,6 +29,7 @@ class PlaceQuery extends Query
      *     description="Filter places by certain criteria",
      *     required=false,
      *     style="deepObject",
+     *
      *     @OA\Schema(
      *         type="object",
      *         enum={
@@ -48,6 +47,7 @@ class PlaceQuery extends Query
      *             "populationLt",
      *             "populationLte"
      *         },
+     *
      *         @OA\Property(
      *             property="populationGt",
      *             type="integer",
@@ -55,8 +55,6 @@ class PlaceQuery extends Query
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedFilters(): array
     {
@@ -80,8 +78,10 @@ class PlaceQuery extends Query
      *     description="Include related resources",
      *     required=false,
      *     explode=false,
+     *
      *     @OA\Schema(
      *         type="array",
+     *
      *         @OA\Items(
      *             type="string",
      *             enum = {
@@ -95,8 +95,6 @@ class PlaceQuery extends Query
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedIncludes(): array
     {
@@ -120,8 +118,10 @@ class PlaceQuery extends Query
      *     description="Sort the result set by certain properties.",
      *     required=false,
      *     explode=false,
+     *
      *     @OA\Schema(
      *         type="array",
+     *
      *         @OA\Items(
      *             type="string",
      *             enum = {
@@ -141,8 +141,6 @@ class PlaceQuery extends Query
      *         )
      *     )
      * )
-     *
-     * @return array
      */
     public function getAllowedSorts(): array
     {

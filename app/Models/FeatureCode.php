@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="featureCode",
  *      type="object",
  *      title="Feature Code",
+ *
  *      @OA\Property(
  *           property="code",
  *           type="string",
@@ -82,8 +83,6 @@ class FeatureCode extends Model
     /**
      * Scope Feature Code by its code.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $featureCodeCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByFeatureCodeCode(Builder $query, string $featureCodeCode)
@@ -94,8 +93,6 @@ class FeatureCode extends Model
     /**
      * Scope Feature Codes by Feature Class Code.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
-     * @param  string  $featureClassCode
      * @return \Illuminate\Database\Eloquent\Builder
      */
     public function scopeByFeatureClassCode(Builder $query, string $featureClassCode)

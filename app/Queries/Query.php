@@ -34,37 +34,27 @@ abstract class Query
 
     /**
      * Return the model classname to be filtered.
-     *
-     * @return string
      */
     abstract public function modelClass(): string;
 
     /**
      * The attributes we can use to filter.
-     *
-     * @return array
      */
     abstract public function getAllowedFilters(): array;
 
     /**
      * The relations that we can include.
-     *
-     * @return array
      */
     abstract public function getAllowedIncludes(): array;
 
     /**
      * The allowed fields to sort by.
-     *
-     * @return array
      */
     abstract public function getAllowedSorts(): array;
 
     /**
      * Apply a scope to the builder.
      *
-     * @param  string  $scope
-     * @param  array  $parameters
      * @return static
      */
     public function applyScope(string $scope, array $parameters = []): self
@@ -77,7 +67,6 @@ abstract class Query
     /**
      * Append more expressions to the Builder.
      *
-     * @param  callable  $callable
      * @return $this
      */
     public function apply(callable $callable): self
@@ -89,8 +78,6 @@ abstract class Query
 
     /**
      * The query builder used to apply the filters.
-     *
-     * @return \Spatie\QueryBuilder\QueryBuilder
      */
     public function getBuilder(): QueryBuilder
     {
@@ -115,9 +102,11 @@ abstract class Query
      *     description="Paginate the data",
      *     required=false,
      *     style="deepObject",
+     *
      *     @OA\Schema(
      *         type="object",
      *         enum = {"number", "size"},
+     *
      *         @OA\Property(
      *             property="cursor",
      *             type="string",
@@ -142,8 +131,6 @@ abstract class Query
 
     /**
      * Initialize the query builder.
-     *
-     * @return void
      */
     protected function initializeBuilder(): void
     {
@@ -154,8 +141,6 @@ abstract class Query
 
     /**
      * Check if the builder has been initialized.
-     *
-     * @return void
      */
     protected function checkBuilder(): void
     {

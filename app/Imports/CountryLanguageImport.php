@@ -63,7 +63,6 @@ class CountryLanguageImport extends CountriesFileIterator implements ShouldQueue
      * For example, the language string "am,en,en-ET,om-ET,ti-ET,so-ET,sid"
      * will turn to ["am", "en", "om", "ti", "so", "sid"]
      *
-     * @param  \Illuminate\Support\Stringable  $languagesString
      * @return \Illuminate\Support\Collection
      */
     private function parseLanguageString(Stringable $languagesString)
