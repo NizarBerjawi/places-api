@@ -1,7 +1,7 @@
 ############################
 ## Build NGINX container  ##
 ############################
-FROM nginx:1.23.1-alpine
+FROM nginx:1.25.1-alpine3.17
 
 LABEL maintainer="Nizar El Berjawi <nizarberjawi12@gmail.com>"
 
