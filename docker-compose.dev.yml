@@ -31,6 +31,7 @@ services:
       - .docker/app/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - .docker/app/php/php.ini-production:/usr/local/etc/php/php.ini-production
       - .docker/app/php/php.ini-development:/usr/local/etc/php/php.ini-development
+      - /home/nizar/.gitconfig:/home/nizar/.gitconfig
     working_dir: /var/www/html
     expose:
       - "9000"
