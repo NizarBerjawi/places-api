@@ -23,3 +23,7 @@ Route::get('/countries', [WebController::class, 'countries'])->name('countries')
 Route::get('/featureCodes', [WebController::class, 'featureCodes'])->name('featureCodes');
 Route::get('/timeZones', [WebController::class, 'timeZones'])->name('timeZones');
 Route::get('/languages', [WebController::class, 'languages'])->name('languages');
+
+Route::get('/admin', function() {
+    return view('admin');
+});
