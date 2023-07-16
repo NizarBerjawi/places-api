@@ -1,8 +1,9 @@
 <?php
 
 use App\Http\Controllers\WebController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use \Illuminate\Http\Request;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -24,6 +25,6 @@ Route::get('/featureCodes', [WebController::class, 'featureCodes'])->name('featu
 Route::get('/timeZones', [WebController::class, 'timeZones'])->name('timeZones');
 Route::get('/languages', [WebController::class, 'languages'])->name('languages');
 
-Route::get('/account', function(Request $request) {
+Route::get('/account', function (Request $request) {
     return view('admin.account');
 });
