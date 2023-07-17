@@ -13,35 +13,51 @@
                     <form action="{{ route('user-password.update') }}" method="post">
                         @method('PUT')
                         @csrf
-                       
+
                         <div class="field">
                             <label class="label">Email</label>
                             <div class="control">
-                                <input class="input" type="email" name="email" value={{ auth()->user()->email }}
+                                <input @class([
+                                    'input', 
+                                    'is-danger' => $errors->has('email')
+                                ]) type="email" name="email" value={{ auth()->user()->email }}
                                 disabled>
                             </div>
+                            <p class="help is-danger">{{ $errors->first('email') }}</p>
                         </div>
 
                         <div class="field">
                             <label class="label">Current password</label>
                             <div class="control">
-                                <input class="input" type="password" name="current_password" placeholder="********" autofocus>
+                                <input @class([
+                                    'input', 
+                                    'is-danger' => $errors->has('current_password')
+                                ]) type="password" name="current_password" placeholder="********">
                             </div>
+                            <p class="help is-danger">{{ $errors->first('current_password') }}</p>
                         </div>
 
                         <div class="field">
                             <label class="label">New password</label>
                             <div class="control">
-                                <input class="input" type="password" name="password" placeholder="********">
+                                <input @class([
+                                    'input', 
+                                    'is-danger' => $errors->has('password')
+                                ]) type="password" name="password" placeholder="********">
                             </div>
+                            <p class="help is-danger">{{ $errors->first('password') }}</p>
                         </div>
 
                         <div class="field">
                             <label class="label">Confirm new password</label>
                             <div class="control">
-                                <input class="input" type="password" name="password_confirmation"
+                                <input @class([
+                                    'input', 
+                                    'is-danger' => $errors->has('password_confirmation')
+                                ]) type="password" name="password_confirmation"
                                     placeholder="********">
                             </div>
+                            <p class="help is-danger">{{ $errors->first('password_confirmation') }}</p>
                         </div>
 
                         <div class="is-flex is-justify-content-flex-end">
@@ -49,12 +65,6 @@
                                 password</button>
                         </div>
                     </form>
-                    @php echo json_encode($errors); @endphp
-                    @if ($errors->any())
-                    <div class="notification is-danger is-light">
-                        {{ $errors->first() }}
-                    </div>
-                    @endif
                 </section>
 
                 <hr />

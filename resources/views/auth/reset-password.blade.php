@@ -6,28 +6,15 @@
         <div class="content">
             <div class="columns">
                 <div class="column is-6 is-offset-3">
-                    <form class="box" method="POST" action="/register">
+                    <form class="box" method="POST" action="{{ route('password.update', $request->token) }}">
                         @csrf
-
-                        <div class="field">
-                            <label class="label">Name</label>
-                            <div class="control">
-                                <input @class([
-                                    'input', 
-                                    'is-danger' => $errors->has('name')
-                                ]) type="text" name="name" placeholder="e.g. John Smith" value="{{ old('name') }}">
-                            </div>
-                            <p class="help is-danger">{{ $errors->first('name') }}</p>
-
-                        </div>
-
+                        <input type="hidden" name="token" value="{{ request()->route('token')}}">
                         <div class="field">
                             <label class="label">Email</label>
                             <div class="control">
-                                <input @class([
-                                    'input', 
-                                    'is-danger' => $errors->has('email')
-                                ]) type="email" name="email" placeholder="e.g. john@example.com" value="{{ old('email') }}">
+                                <input @class([ 'input' , 'is-danger'=> $errors->has('email')
+                                ]) type="email" name="email" placeholder="e.g. alex@example.com" value={{ old('email')
+                                }}>
                             </div>
                             <p class="help is-danger">{{ $errors->first('email') }}</p>
                         </div>
@@ -56,10 +43,16 @@
                         </div>
 
                         <div class="is-flex is-justify-content-flex-end">
-                            <div class="m-2 has-text-link"><a href="/login">Already registered?</a></div>
-
-                            <button class="button is-primary">Register</button>
+                            <button class="button is-primary">Reset password</button>
                         </div>
+                       
+                        @if (session('status'))
+                        <article class="message is-success mt-2">
+                            <div class="message-body">
+                                {{ session('status') }}
+                            </div>
+                          </article>
+                        @endif
                     </form>
                 </div>
             </div>
