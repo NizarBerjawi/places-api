@@ -79,7 +79,8 @@
                         <section>
                             <h1 class="title">Two-factor authentication</h1>
 
-                            @if (!session()->has('auth.password_confirmed_at'))
+                            {{-- STEP ONE: CONFIRM PASSWORD --}}
+                            @if (!request()->user()->hasEnabledTwoFactorAuthentication() && !session()->has('auth.password_confirmed_at'))
                                 <article class="message is-info">
                                     <div class="message-body">
                                         Please confirm your password to be able to enable two-factor authentication
@@ -108,8 +109,13 @@
                                 </form>
                             @endif
 
-                            @if (session()->has('auth.password_confirmed_at') &&
-                                    !in_array(session('status'), ['two-factor-authentication-enabled', 'two-factor-authentication-confirmed']))
+                            {{-- STEP TWO: ENABLE TWO-FACTOR AUTHENTICATION --}}
+                            @if (
+                                !request()->user()->hasEnabledTwoFactorAuthentication() &&
+                                    session()->has('auth.password_confirmed_at') &&
+                                    !in_array(session('status'), ['two-factor-authentication-enabled', 'two-factor-authentication-confirmed']) &&
+                                    empty($errors->confirmTwoFactorAuthentication->first())
+                                )
                                 <article class="message is-success">
                                     <div class="message-body">
                                         Start configuring two-factor authentication.
@@ -122,8 +128,8 @@
                                 </form>
                             @endif
 
-
-                            @if (session('status') == 'two-factor-authentication-enabled')
+                            {{-- STEP THREE: SCAN QR CODE AND VERIFY --}}
+                            @if (session('status') == 'two-factor-authentication-enabled' || !empty($errors->confirmTwoFactorAuthentication->first()))
                                 <article class="message is-warning">
                                     <div class="message-body">
                                         You can finish configuring two factor authentication by scanning the below QR code
@@ -144,13 +150,14 @@
                                             <div class="control">
                                                 <input @class([
                                                     'input',
-                                                    'is-danger' => $errors->has('code'),
+                                                    'is-danger' => $errors->confirmTwoFactorAuthentication->has('code'),
                                                     'is-large',
                                                     'has-text-centered',
                                                 ]) type="text" name="code"
                                                     placeholder="XXXXXX" maxlength="6">
                                             </div>
-                                            <p class="help is-danger">{{ $errors->first('password') }}</p>
+                                            <p class="help is-danger">
+                                                {{ $errors->confirmTwoFactorAuthentication->first('code') }}</p>
                                         </div>
 
                                         <div class="is-flex is-justify-content-flex-end">
@@ -165,17 +172,20 @@
                                 </div>
                             @endif
 
-                            @if (session('status') == 'two-factor-authentication-confirmed')
+                            {{-- STEP FOUR: DISABLE TWO_FACTOR AUTHENTICATION --}}
+                            @if (request()->user()->hasEnabledTwoFactorAuthentication())
                                 <article class="message is-success">
                                     <div class="message-body">
                                         Two factor authentication confirmed and enabled successfully.
                                     </div>
                                 </article>
 
+                                <h2 class="title">Recovery Codes</h2>
+
                                 <form action="{{ route('two-factor.disable') }}" method="post">
                                     @csrf
                                     @method('delete')
-                                    
+
                                     <button class="button is-primary is-large">Disable 2FA</button>
                                 </form>
                             @endif
