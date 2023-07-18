@@ -25,6 +25,6 @@ Route::get('/featureCodes', [WebController::class, 'featureCodes'])->name('featu
 Route::get('/timeZones', [WebController::class, 'timeZones'])->name('timeZones');
 Route::get('/languages', [WebController::class, 'languages'])->name('languages');
 
-Route::get('/account', function (Request $request) {
-    return view('admin.account');
-});
+Route::get('/account', function () { return view('admin.account'); })
+    ->middleware(['auth'])
+    ->name('admin.account');
