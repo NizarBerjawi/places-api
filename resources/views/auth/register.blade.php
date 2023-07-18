@@ -1,70 +1,78 @@
-@extends('layouts.base')
+@extends('layouts.auth')
 
 @section('content')
-<div class="container">
-    <section class="section">
-        <div class="content">
-            <div class="columns">
-                <div class="column is-6 is-offset-3">
-                    <form class="box" method="POST" action="/register">
-                        @csrf
+<section class="hero is-fullheight-with-navbar">
+    <div class="hero-body">
+        <div class="container">
+            <section class="section">
+                <div class="content">
+                    <div class="columns">
+                        <div class="column is-6 is-offset-3">
+                            <h1 class="is-size-1">Create new account</h1>
+                            <p class="is-size-4">Already registered? <a href="{{ route('login') }}">Login to your account</a></p>
 
-                        <div class="field">
-                            <label class="label">Name</label>
-                            <div class="control">
-                                <input @class([
-                                    'input', 
-                                    'is-danger' => $errors->has('name')
-                                ]) type="text" name="name" placeholder="e.g. John Smith" value="{{ old('name') }}">
-                            </div>
-                            <p class="help is-danger">{{ $errors->first('name') }}</p>
+                            <form method="POST" action="/register">
+                                @csrf
 
+                                <div class="field">
+                                    <label class="label">Name</label>
+                                    <div class="control">
+                                        <input @class([ 'input' , 'is-danger'=> $errors->has('name'),
+                                        'is-large'
+                                        ]) type="text" name="name" placeholder="e.g. John Smith" value="{{ old('name') }}">
+                                    </div>
+                                    <p class="help is-danger">{{ $errors->first('name') }}</p>
+
+                                </div>
+
+                                <div class="field">
+                                    <label class="label">Email</label>
+                                    <div class="control">
+                                        <input @class([ 'input' , 'is-danger'=> $errors->has('email'),
+                                        'is-large'
+                                        ]) type="email" name="email" placeholder="e.g. john@example.com" value="{{ old('email') }}">
+                                    </div>
+                                    <p class="help is-danger">{{ $errors->first('email') }}</p>
+                                </div>
+
+                                <div class="field">
+                                    <label class="label">Password</label>
+                                    <div class="control">
+                                        <input @class([ 'input' , 'is-danger'=> $errors->has('password'),
+                                        'is-large'
+                                        ]) type="password" name="password" placeholder="********">
+                                    </div>
+                                    <p class="help is-danger">{{ $errors->first('password') }}</p>
+                                </div>
+
+
+                                <div class="field">
+                                    <label class="label">Confirm Password</label>
+                                    <div class="control">
+                                        <input @class([ 'input' , 'is-danger'=> $errors->has('password_confirmation'),
+                                        'is-large'
+                                        ]) type="password" name="password_confirmation" placeholder="********">
+                                    </div>
+                                    <p class="help is-danger">{{ $errors->first('password_confirmation') }}</p>
+                                </div>
+
+                                <div class="is-flex is-justify-content-flex-end is-align-items-center">
+                                    <div class="field is-grouped">
+                                        <p class="control">
+                                            <a href="{{ route('home') }}" class="button is-large">Back</a>
+                                        </p>
+                                        <p class="control">
+                                            <button class="button is-primary is-large">Register</button>
+                                        </p>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-
-                        <div class="field">
-                            <label class="label">Email</label>
-                            <div class="control">
-                                <input @class([
-                                    'input', 
-                                    'is-danger' => $errors->has('email')
-                                ]) type="email" name="email" placeholder="e.g. john@example.com" value="{{ old('email') }}">
-                            </div>
-                            <p class="help is-danger">{{ $errors->first('email') }}</p>
-                        </div>
-
-                        <div class="field">
-                            <label class="label">Password</label>
-                            <div class="control">
-                                <input @class([
-                                    'input', 
-                                    'is-danger' => $errors->has('password')
-                                ]) type="password" name="password" placeholder="********">
-                            </div>
-                            <p class="help is-danger">{{ $errors->first('password') }}</p>
-                        </div>
-
-
-                        <div class="field">
-                            <label class="label">Confirm Password</label>
-                            <div class="control">
-                                <input @class([
-                                    'input', 
-                                    'is-danger' => $errors->has('password_confirmation')
-                                ]) type="password" name="password_confirmation" placeholder="********">
-                            </div>
-                            <p class="help is-danger">{{ $errors->first('password_confirmation') }}</p>
-                        </div>
-
-                        <div class="is-flex is-justify-content-flex-end">
-                            <div class="m-2 has-text-link"><a href="/login">Already registered?</a></div>
-
-                            <button class="button is-primary">Register</button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
-            </div>
+            </section>
         </div>
-    </section>
-</div>
+    </div>
+</section>
 
 @endsection
