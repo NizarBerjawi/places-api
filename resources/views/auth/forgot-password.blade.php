@@ -34,6 +34,7 @@
                                         <p class="control">
                                             <button class="button is-primary is-large">Send reset link</button>
                                         </p>
+                                    </div>
                                 </div>
                             
                                 @if (session('status'))
