@@ -3,7 +3,6 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
-use Illuminate\Contracts\Auth\StatefulGuard;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Fortify;
 
@@ -14,10 +13,9 @@ class ConfirmPassword
      *
      * @param  \Illuminate\Contracts\Auth\StatefulGuard  $guard
      * @param  mixed  $user
-     * @param  string|null  $password
      * @return bool
      */
-    public function __invoke(User $user, ?string $password = null)
+    public function __invoke(User $user, string $password = null)
     {
         $username = Fortify::username();
 
@@ -25,7 +23,7 @@ class ConfirmPassword
             $username => $user->{$username},
             'password' => $password,
         ], [
-            'password' => ['current_password']
+            'password' => ['current_password'],
         ])->validateWithBag('confirmPassword');
     }
 }
