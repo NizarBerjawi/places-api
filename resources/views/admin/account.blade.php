@@ -93,10 +93,15 @@
                                     <div class="field">
                                         <label class="label">Password</label>
                                         <div class="control">
-                                            <input @class(['input', 'is-danger' => $errors->has('password'), 'is-large']) type="password" name="password"
-                                                placeholder="********">
+                                            <input @class([
+                                                'input',
+                                                'is-danger' => $errors->confirmPassword->has('password'),
+                                                'is-large',
+                                            ]) type="password" name="password"
+                                                placeholder="********"
+                                                {{ $errors->confirmPassword->has('password') ? 'autofocus' : '' }}>
                                         </div>
-                                        <p class="help is-danger">{{ $errors->first('password') }}</p>
+                                        <p class="help is-danger">{{ $errors->confirmPassword->first('password') }}</p>
                                     </div>
 
                                     <div class="is-flex is-justify-content-flex-end">
@@ -114,8 +119,7 @@
                                 !request()->user()->hasEnabledTwoFactorAuthentication() &&
                                     session()->has('auth.password_confirmed_at') &&
                                     !in_array(session('status'), ['two-factor-authentication-enabled', 'two-factor-authentication-confirmed']) &&
-                                    empty($errors->confirmTwoFactorAuthentication->first())
-                                )
+                                    empty($errors->confirmTwoFactorAuthentication->first()))
                                 <article class="message is-success">
                                     <div class="message-body">
                                         Start configuring two-factor authentication.
@@ -124,12 +128,15 @@
 
                                 <form action="{{ route('two-factor.enable') }}" method="post">
                                     @csrf
-                                    <button class="button is-primary is-large">Enable 2FA</button>
+                                    <div class="is-flex is-justify-content-flex-end">
+                                        <button class="button is-primary is-large">Enable 2FA</button>
+                                    </div>
                                 </form>
                             @endif
 
                             {{-- STEP THREE: SCAN QR CODE AND VERIFY --}}
-                            @if (session('status') == 'two-factor-authentication-enabled' || !empty($errors->confirmTwoFactorAuthentication->first()))
+                            @if (session('status') == 'two-factor-authentication-enabled' ||
+                                    !empty($errors->confirmTwoFactorAuthentication->first()))
                                 <article class="message is-warning">
                                     <div class="message-body">
                                         You can finish configuring two factor authentication by scanning the below QR code
@@ -186,7 +193,7 @@
                                     @csrf
                                     @method('delete')
 
-                                    <button class="button is-primary is-large">Disable 2FA</button>
+                                    <button class="button is-large">Disable 2FA</button>
                                 </form>
                             @endif
 
