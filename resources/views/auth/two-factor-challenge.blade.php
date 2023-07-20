@@ -9,7 +9,12 @@
                         <div class="columns">
                             <div class="column is-6 is-offset-3">
                                 <h1 class="is-size-1">Two-factor authentication</h1>
-
+                                <article class="message is-info">
+                                    <div class="message-body">
+                                        Open your two-factor authenticator (TOTP) app or browser extension to view your
+                                        authentication code.
+                                    </div>
+                                </article>
                                 <form method="POST" action="{{ route('two-factor.login') }}">
                                     @csrf
 
@@ -22,16 +27,20 @@
                                                 'is-large',
                                                 'has-text-centered',
                                             ]) type="text" name="code"
-                                                placeholder="XXXXXX" maxlength="6">
+                                                placeholder="XXXXXX" maxlength="6" autofocus>
                                         </div>
                                         <p class="help is-danger">{{ $errors->first('code') }}</p>
                                     </div>
 
                                     <div class="is-flex is-justify-content-flex-end">
                                         <div class="field is-grouped">
-                                            <p class="control">
+
+                                            <div class="control">
+                                                <a href="{{ route('home') }}" class="button is-large">Back</a>
+                                            </div>
+                                            <div class="control">
                                                 <button class="button is-primary is-large" type="submit">Verify</button>
-                                            </p>
+                                            </div>
                                         </div>
                                     </div>
                                 </form>

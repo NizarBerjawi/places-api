@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "bulma": "^0.9.4",
+        "feather-icons": "^4.29.0",
         "swagger-ui": "^5.1.0"
     }
 }

@@ -19,7 +19,17 @@
     </header>
 
     <main>
-        @yield('content')
+        <div class="container">
+            @include('partials.tabs')
+
+            <section class="section">
+                <div class="columns">
+                    <div class="column is-6 is-offset-3">
+                        @yield('content')
+                    </div>
+                </div>
+            </section>
+        </div>
     </main>
 
     @yield('scripts')
