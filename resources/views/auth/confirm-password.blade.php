@@ -20,8 +20,7 @@
                     'input',
                     'is-danger' => $errors->confirmPassword->has('password'),
                     'is-large',
-                ]) type="password" name="password" placeholder="********"
-                    {{ $errors->confirmPassword->has('password') ? 'autofocus' : '' }}>
+                ]) type="password" name="password" placeholder="********" autofocus>
             </div>
             <p class="help is-danger">{{ $errors->confirmPassword->first('password') }}</p>
         </div>

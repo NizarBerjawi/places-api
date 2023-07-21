@@ -5,7 +5,7 @@
         <h1 class="title">Two-factor authentication</h1>
 
         {{-- STEP ONE: CONFIRM PASSWORD --}}
-        @if (!session()->has('auth.password_confirmed_at'))
+        {{-- @if (!session()->has('auth.password_confirmed_at'))
             <article class="message is-info">
                 <div class="message-body">
                     Please confirm your password to be able to <span class="has-text-weight-bold">enable/disable</span>
@@ -16,24 +16,34 @@
             <div class="is-flex is-justify-content-flex-end">
                 <a href="{{ route('password.confirm') }}" class="button is-primary is-large" type="submit">Confirm</a>
             </div>
-        @endif
+        @endif --}}
 
         {{-- STEP TWO: ENABLE TWO-FACTOR AUTHENTICATION --}}
         @if (
             !request()->user()->hasEnabledTwoFactorAuthentication() &&
-                session()->has('auth.password_confirmed_at') &&
                 !in_array(session('status'), ['two-factor-authentication-enabled', 'two-factor-authentication-confirmed']) &&
                 empty($errors->confirmTwoFactorAuthentication->first()))
-            <article class="message is-success">
-                <div class="message-body">
-                    Start configuring two-factor authentication.
-                </div>
-            </article>
+            @if (!session()->has('auth.password_confirmed_at'))
+                <article class="message is-info">
+                    <div class="message-body">
+                        Please confirm your password to be able to <span class="has-text-weight-bold">enable/disable</span>
+                        two-factor authentication.
+                    </div>
+                </article>
+            @else
+                <article class="message is-success">
+                    <div class="message-body">
+                        Start configuring two-factor authentication.
+                    </div>
+                </article>
+            @endif
 
             <form action="{{ route('two-factor.enable') }}" method="post">
                 @csrf
                 <div class="is-flex is-justify-content-flex-end">
-                    <button class="button is-primary is-large">Enable 2FA</button>
+                    <button class="button is-primary is-large">
+                        {{ session()->has('auth.password_confirmed_at') ? 'Enable 2FA' : 'Confirm password' }}
+                    </button>
                 </div>
             </form>
         @endif
@@ -65,7 +75,7 @@
                                 'is-large',
                                 'has-text-centered',
                             ]) type="text" name="code" placeholder="XXXXXX"
-                                maxlength="6">
+                                maxlength="6" autofocus>
                         </div>
                         <p class="help is-danger">
                             {{ $errors->confirmTwoFactorAuthentication->first('code') }}</p>
