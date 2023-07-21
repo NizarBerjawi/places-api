@@ -1,7 +1,7 @@
 import './app.css'
+import * as feather from 'feather-icons';
 
 document.addEventListener('DOMContentLoaded', () => {
-
     // Get all "navbar-burger" elements
     const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 
@@ -25,3 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 });
+
+feather.replace({
+    class: 'icon is-small',
+})
