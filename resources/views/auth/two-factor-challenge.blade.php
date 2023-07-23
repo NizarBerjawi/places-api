@@ -8,7 +8,7 @@
                     <div class="content">
                         <div class="columns">
                             <div class="column is-6 is-offset-3">
-                                <h1 class="is-size-1">Two-factor authentication</h1>
+                                <h1 class="is-size-1 is-size-3-mobile">Two-factor authentication</h1>
                                 <article class="message is-info">
                                     <div class="message-body">
                                         Open your two-factor authenticator (TOTP) app or browser extension to view your
@@ -36,10 +36,10 @@
                                         <div class="field is-grouped">
 
                                             <div class="control">
-                                                <a href="{{ route('home') }}" class="button is-large">Back</a>
+                                                <a href="{{ route('home') }}" class="button is-large is-responsive">Back</a>
                                             </div>
                                             <div class="control">
-                                                <button class="button is-primary is-large" type="submit">Verify</button>
+                                                <button class="button is-primary is-large is-responsive" type="submit">Verify</button>
                                             </div>
                                         </div>
                                     </div>

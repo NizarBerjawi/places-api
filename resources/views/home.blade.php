@@ -7,14 +7,19 @@
                 <h1 class="title is-size-1">
                     {{ config('app.name') }}
                 </h1>
-                
-                <a href="{{ route('intro') }}" class="button is-large">
-                    Introduction
-                </a>
 
-                <a href="{{ route('docs') }}" class="button is-large is-primary">
-                    API Reference
-                </a>
+                <div class="field is-grouped is-justify-content-center">
+                    <p class="control">
+                        <a href="{{ route('intro') }}" class="button is-large is-responsive">
+                            Introduction
+                        </a>
+                    </p>
+                    <p class="control">
+                        <a href="{{ route('docs') }}" class="button is-large is-primary is-responsive">
+                            API Reference
+                        </a>
+                    </p>
+                </div>
             </div>
         </div>
     </section>

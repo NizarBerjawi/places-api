@@ -28,7 +28,10 @@
         <div class="is-flex is-justify-content-flex-end">
             <div class="field is-grouped">
                 <p class="control">
-                    <button class="button is-primary is-large" type="submit">Confirm</button>
+                    <a href={{ route('admin.authentication') }} class="button is-large is-responsive">Back</a>
+                </p>
+                <p class="control">
+                    <button class="button is-primary is-large is-responsive" type="submit">Confirm</button>
                 </p>
             </div>
         </div>

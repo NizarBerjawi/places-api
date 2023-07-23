@@ -8,8 +8,8 @@
                 <div class="content">
                     <div class="columns">
                         <div class="column is-6 is-offset-3">
-                            <h1 class="is-size-1">Create new account</h1>
-                            <p class="is-size-4">Already registered? <a href="{{ route('login') }}">Login to your account</a></p>
+                            <h1 class="is-size-1 is-size-3-mobile">Create new account</h1>
+                            <p class="is-size-4 is-size-6-mobile">Already registered? <a href="{{ route('login') }}">Login to your account</a></p>
 
                             <form method="POST" action="/register">
                                 @csrf
@@ -59,10 +59,10 @@
                                 <div class="is-flex is-justify-content-flex-end is-align-items-center">
                                     <div class="field is-grouped">
                                         <p class="control">
-                                            <a href="{{ route('home') }}" class="button is-large">Back</a>
+                                            <a href="{{ route('home') }}" class="button is-large is-responsive">Back</a>
                                         </p>
                                         <p class="control">
-                                            <button class="button is-primary is-large">Register</button>
+                                            <button class="button is-primary is-large is-responsive">Register</button>
                                         </p>
                                     </div>
                                 </div>

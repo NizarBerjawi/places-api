@@ -2,22 +2,15 @@
 
 @section('content')
     <section>
-        <h1 class="title">Two-factor authentication</h1>
+        <h1 class="title">
+            Two-factor authentication
 
-        {{-- STEP ONE: CONFIRM PASSWORD --}}
-        {{-- @if (!session()->has('auth.password_confirmed_at'))
-            <article class="message is-info">
-                <div class="message-body">
-                    Please confirm your password to be able to <span class="has-text-weight-bold">enable/disable</span>
-                    two-factor authentication.
-                </div>
-            </article>
-
-            <div class="is-flex is-justify-content-flex-end">
-                <a href="{{ route('password.confirm') }}" class="button is-primary is-large" type="submit">Confirm</a>
-            </div>
-        @endif --}}
-
+            @if (request()->user()->hasEnabledTwoFactorAuthentication())
+                <span class="tag is-success is-small">Enabled</span>
+            @else
+                <span class="tag is-danger is-small">Disabled</span>
+            @endif
+        </h1>
         {{-- STEP TWO: ENABLE TWO-FACTOR AUTHENTICATION --}}
         @if (
             !request()->user()->hasEnabledTwoFactorAuthentication() &&
@@ -41,7 +34,7 @@
             <form action="{{ route('two-factor.enable') }}" method="post">
                 @csrf
                 <div class="is-flex is-justify-content-flex-end">
-                    <button class="button is-primary is-large">
+                    <button class="button is-primary is-large is-responsive">
                         {{ session()->has('auth.password_confirmed_at') ? 'Enable 2FA' : 'Confirm password' }}
                     </button>
                 </div>
@@ -84,7 +77,7 @@
                     <div class="is-flex is-justify-content-flex-end">
                         <div class="field is-grouped">
                             <p class="control">
-                                <button class="button is-primary is-large" type="submit">Verify</button>
+                                <button class="button is-primary is-large is-responsive" type="submit">Verify</button>
                             </p>
                         </div>
                     </div>
@@ -93,23 +86,37 @@
         @endif
 
         {{-- STEP FOUR: DISABLE TWO_FACTOR AUTHENTICATION --}}
-        @if (session()->has('auth.password_confirmed_at') &&
-                request()->user()->hasEnabledTwoFactorAuthentication())
-            <article class="message is-success">
-                <div class="message-body">
-                    Two-factor authentication is enabled for your account.
-                </div>
-            </article>
+        @if (request()->user()->hasEnabledTwoFactorAuthentication())
+            @if (!session()->has('auth.password_confirmed_at'))
+                <article class="message is-info">
+                    <div class="message-body">
+                        Please confirm your password to be able to <span class="has-text-weight-bold">enable/disable</span>
+                        two-factor authentication.
+                    </div>
+                </article>
+            @else
+                <article class="message is-success">
+                    <div class="message-body">
+                        Two-factor authentication is enabled for your account.
+                    </div>
+                </article>
 
-            <a class="is-size-6 has-text-link" href="{{ route('admin.recovery-codes') }}">Get recovery keys</a>
-
+                <a class="is-size-6 has-text-link" href="{{ route('admin.recovery-codes') }}">Get recovery keys</a>
+            @endif
             <div class="mt-4">
                 <form action="{{ route('two-factor.disable') }}" method="post">
                     @csrf
                     @method('delete')
 
                     <div class="is-flex is-justify-content-flex-end">
-                        <button class="button is-large is-warning">Disable 2FA</button>
+                        <button @class([
+                            'button',
+                            'is-large',
+                            'is-danger' => session()->has('auth.password_confirmed_at'),
+                            'is-primary' => !session()->has('auth.password_confirmed_at'),
+                        ])>
+                            {{ session()->has('auth.password_confirmed_at') ? 'Disable 2FA' : 'Confirm password' }}
+                        </button>
                     </div>
                 </form>
             </div>

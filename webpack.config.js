@@ -20,11 +20,9 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.(css)$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                ],
+                test: /\.(sa|sc|c)ss$/,
+                exclude: /node_modules/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
             },
         ]
     },

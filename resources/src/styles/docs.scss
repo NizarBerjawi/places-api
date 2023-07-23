@@ -1,3 +1,5 @@
+@import 'swagger-ui/dist/swagger-ui.css';
+
 /* Dealing with conflict between Bulma and Swagger UI styles */
 .swagger-ui .info .title small pre.version {
     background: #7d8492 !important;

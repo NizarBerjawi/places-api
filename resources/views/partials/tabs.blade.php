@@ -1,11 +1,11 @@
 <div class="tabs is-centered is-boxed">
     <ul>
-        <li @class(['is-active' => Route::is('admin.keys')])>
+        {{-- <li @class(['is-active' => Route::is('admin.keys')])>
             <a>
                 <i data-feather="key"></i>
                 <span>API Keys</span>
             </a>
-        </li>
+        </li> --}}
         <li @class(['is-active' => Route::is('admin.password')])>
             <a href={{ route('admin.password') }}>
                 <i data-feather="key"></i>

@@ -7,8 +7,9 @@
                     @lang('Prev')
                 </li>
             @else
-                <a href="{{ $paginator->previousPageUrl() }}" class="pagination-previous"
-                    rel="prev">@lang('Prev')</a>
+                <a href="{{ $paginator->previousPageUrl() }}" class="pagination-previous" rel="prev">
+                    @lang('Prev')
+                </a>
             @endif
 
             {{-- Next Page Link --}}

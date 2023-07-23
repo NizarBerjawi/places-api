@@ -8,7 +8,7 @@
                 <div class="content">
                     <div class="columns">
                         <div class="column is-6 is-offset-3">
-                            <h1 class="is-size-1">Reset your password</h1>
+                            <h1 class="is-size-1 is-size-3-mobile">Reset your password</h1>
                             <form method="POST" action="{{ route('password.update', $request->token) }}">
                                 @csrf
                                 <input type="hidden" name="token" value="{{ request()->route('token')}}">
@@ -53,10 +53,10 @@
                                 <div class="is-flex is-justify-content-flex-end">
                                     <div class="field is-grouped">
                                         <p class="control">
-                                            <a href="{{ route('home') }}" class="button is-large">Back</a>
+                                            <a href="{{ route('home') }}" class="button is-large is-responsive">Back</a>
                                         </p>
                                         <p class="control">
-                                            <button class="button is-primary is-large">Reset password</button>
+                                            <button class="button is-primary is-large is-responsive">Reset password</button>
                                         </p>
                                     </div>
                                 </div>
