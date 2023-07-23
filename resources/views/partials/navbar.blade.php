@@ -1,35 +1,43 @@
 <nav class="navbar">
     <div class="navbar-brand">
-        @if (!Route::is('admin.*'))
+        @if (
+            request()->routeIs('admin.*') ||
+                request()->route()->uri() === 'user/confirm-password')
             <a class="navbar-item is-size-4" href={{ route('home') }}>
-                Places API
+                <span class="icon-text">
+                    <span class="has-text-primary ">
+                        <i class="icon is-medium is-clickable" data-feather="arrow-left-circle"></i>
+                    </span>
+                </span>
             </a>
         @endif
-        
+
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
         </a>
     </div>
-
     <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-end">
             <div class="navbar-item">
                 <div class="buttons">
                     @auth
-                        @if (!Route::is('admin.*'))
-                            <a href="{{ route('admin.password') }}" class="button">Dashboard</a>
+                        @if (
+                            !request()->routeIs('admin.*') &&
+                                request()->route()->uri() !== 'user/confirm-password')
+                            <a href="{{ route('admin.password') }}" class="button is-small is-rounded">Dashboard</a>
                         @endif
+
                         <form method="POST" action="/logout">
                             @csrf
-                            <button class="button is-primary">Log out</button>
+                            <button class="button is-primary is-small is-rounded">Log out</button>
                         </form>
                     @endauth
 
                     @guest
-                        <a href="{{ route('login') }}" class="button">Log in</a>
-                        <a href="{{ route('register') }}" class="button is-primary">Register</a>
+                        <a href="{{ route('login') }}" class="button is-small is-rounded">Log in</a>
+                        <a href="{{ route('register') }}" class="button is-primary is-small is-rounded">Register</a>
                     @endguest
 
                     <!-- <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button"

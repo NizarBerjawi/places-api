@@ -1,5 +1,5 @@
-import './app.css'
 import * as feather from 'feather-icons';
+import './styles/app.scss';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Get all "navbar-burger" elements

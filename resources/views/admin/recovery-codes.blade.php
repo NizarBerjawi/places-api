@@ -23,10 +23,10 @@
         <div class="is-flex is-justify-content-flex-end">
             <div class="field is-grouped">
                 <div class="control">
-                    <a href="{{ route('admin.authentication') }}" class="button is-large">Back</a>
+                    <a href="{{ route('admin.authentication') }}" class="button is-large is-responsive">Back</a>
                 </div>
                 <div class="control">
-                    <button class="button is-primary is-large">Regenerate codes</button>
+                    <button class="button is-primary is-large is-responsive">Regenerate codes</button>
                 </div>
             </div>
         </div>

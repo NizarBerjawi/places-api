@@ -8,8 +8,8 @@
                     <div class="content">
                         <div class="columns">
                             <div class="column is-6 is-offset-3">
-                                <h1 class="is-size-1">Forgot password?</h1>
-                                <p class="is-size-4">New to Places API? <a href="{{ route('register') }}">Create an
+                                <h1 class="is-size-1 is-size-3-mobile">Forgot password?</h1>
+                                <p class="is-size-4 is-size-6-mobile">New to Places API? <a href="{{ route('register') }}">Create an
                                         account</a></p>
                                 <form method="POST" action="{{ route('password.email') }}">
                                     @csrf
@@ -26,10 +26,10 @@
                                     <div class="is-flex is-justify-content-flex-end">
                                         <div class="field is-grouped">
                                             <p class="control">
-                                                <a href="{{ route('home') }}" class="button is-large">Back</a>
+                                                <a href="{{ route('home') }}" class="button is-large is-responsive">Back</a>
                                             </p>
                                             <p class="control">
-                                                <button class="button is-primary is-large">Send reset link</button>
+                                                <button class="button is-primary is-large is-responsive">Send reset link</button>
                                             </p>
                                         </div>
                                     </div>

@@ -32,7 +32,7 @@
                             <table class='table is-striped'>
                                 <thead>
                                     <tr
-                                        class="is-selected has-text-centered has-text-weight-bold has-background-primary-dark">
+                                        class="is-selected has-text-centered has-text-weight-bold has-background-primary">
                                         <td colspan="3">
                                             {{ $selectedFeatureClass ?? 'ALL' }}
                                         </td>

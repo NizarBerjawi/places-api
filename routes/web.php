@@ -42,7 +42,7 @@ Route::get('user/authentication', function () {
     ->name('admin.authentication');
 
 Route::get('/user/recovery-codes', function () {
-    return view('auth.recovery-codes');
+    return view('admin.recovery-codes');
 })
     ->middleware($twoFactorMiddleware)
     ->name('admin.recovery-codes');

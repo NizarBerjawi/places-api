@@ -46,7 +46,7 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         Fortify::confirmPasswordView(function (Request $request) {
-            return view('auth.confirm-password');
+            return view('admin.confirm-password');
         });
 
         Fortify::twoFactorChallengeView(function (Request $request) {

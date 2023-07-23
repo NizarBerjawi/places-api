@@ -50,7 +50,7 @@
             </div>
 
             <div class="is-flex is-justify-content-flex-end">
-                <button class="button is-primary is-large" href="{{ route('password.confirm') }}">Update
+                <button class="button is-primary is-large is-responsive" href="{{ route('password.confirm') }}">Update
                     password</button>
             </div>
         </form>

@@ -34,9 +34,9 @@
 
     @yield('scripts')
 
-    <div class="github-ribbon">
+    {{-- <div class="github-ribbon">
         <a target="_blank" href="{{ env('GITHUB_URL') }}">Fork me on GitHub</a>
-    </div>
+    </div> --}}
 
     <script src="{{ webpack('app', 'js') }}"></script>
 </body>

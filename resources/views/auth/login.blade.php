@@ -8,8 +8,8 @@
                     <div class="content">
                         <div class="columns">
                             <div class="column is-6 is-offset-3">
-                                <h1 class="is-size-1">Welcome Back!</h1>
-                                <p class="is-size-4">New to Places API? <a href="{{ route('register') }}">Create an
+                                <h1 class="is-size-1 is-size-3-mobile">Welcome Back!</h1>
+                                <p class="is-size-4 is-size-6-mobile">New to Places API? <a href="{{ route('register') }}">Create an
                                         account</a></p>
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
@@ -26,7 +26,7 @@
                                     <div class="field">
                                         <label class="label">Password</label>
                                         <div class="control">
-                                            <input @class(['input', 'is-danger' => $errors->has('email'), 'is-large']) type="password" name="password"
+                                            <input @class(['input', 'is-danger' => $errors->has('email'), 'is-large', 'is-small-mobile']) type="password" name="password"
                                                 placeholder="********">
                                         </div>
                                         <p class="help is-danger">{{ $errors->first('password') }}</p>
@@ -34,22 +34,22 @@
 
                                     <div class="field">
                                         <label class="checkbox">
-                                            <input class="mr-2 has-text-link" type="checkbox">Remember me
+                                            <input class="mr-2 has-text-link" type="checkbox" name="remember" value="true">Remember me
                                         </label>
                                     </div>
 
                                     <div class="is-flex is-justify-content-flex-end is-align-items-center">
 
-                                        <div class="m-2 is-size-5">
+                                        <div class="m-2 is-size-5 is-size-6-mobile">
                                             <a href="{{ route('password.request') }}">Forgot password?</a>
                                         </div>
 
                                         <div class="field is-grouped">
                                             <p class="control">
-                                                <a href="{{ route('home') }}" class="button is-large">Back</a>
+                                                <a href="{{ route('home') }}" class="button is-large is-responsive">Back</a>
                                             </p>
                                             <p class="control">
-                                                <button class="button is-primary is-large">Log in</button>
+                                                <button class="button is-primary is-large is-responsive">Log in</button>
                                             </p>
                                         </div>
                                     </div>
