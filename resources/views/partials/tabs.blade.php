@@ -1,7 +1,7 @@
 <div class="tabs is-centered is-boxed">
     <ul>
         <li @class(['is-active' => Route::is('admin.tokens.show')])>
-            <a href="{{ route('admin.tokens.show') }}">
+            <a href="{{ route('admin.tokens.index') }}">
                 <i data-feather="key"></i>
                 <span>API Keys</span>
             </a>

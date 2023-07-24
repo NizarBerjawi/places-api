@@ -11,37 +11,18 @@
         </div>
     </article>
 
-    {{-- @if (count(request()->user()->tokens) === 0)
-        <p>You have not issued any API tokens yet.</p>
-    @endif --}}
 
     <div class="mb-4">
-        <table class="table is-fullwidth">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Token</th>
-                    <th>Created at</th>
-                    <th>Expires at</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                @if (count(request()->user()->tokens) === 0)
-                    <tr>
-                        <td colspan="5">You have not issued any tokens yet.</td>
-                    </tr>
-                @endif
-            </tbody>
-        </table>
+        <div class="box has-text-centered is-size-5-widescreen is-size-6-tablet has-background-link has-text-white">
+            <span class="has-text-weight-bold">{{ session('textToken') }}</span>
+        </div>
     </div>
 
     <div class="is-flex is-justify-content-flex-end">
         <div class="field is-grouped">
-            <div class="control">
-                <a href="{{ route('admin.tokens.create')}}" class="button is-primary is-large is-responsive">Issue API Token</a>
-            </div>
+            <p class="control">
+                <a href={{ route('admin.tokens.index') }} class="button is-large is-responsive">Back</a>
+            </p>
         </div>
     </div>
 @endsection
