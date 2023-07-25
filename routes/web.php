@@ -63,7 +63,7 @@ Route::get('user/tokens/create', function (Request $request) {
     ->name('admin.tokens.create');
 
 Route::get('user/tokens/{id}', function (Request $request, string $id) {
-    $token = $request->user()->tokens()->where('id', $id);
+    $token = $request->user()->tokens()->where('id', $id)->first();
 
     return view('admin.tokens-show', [
         'token' => $token,
