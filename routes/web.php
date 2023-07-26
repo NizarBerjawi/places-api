@@ -27,19 +27,19 @@ Route::get('/timeZones', [WebController::class, 'timeZones'])->name('timeZones')
 Route::get('/languages', [WebController::class, 'languages'])->name('languages');
 
 $twoFactorMiddleware = Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword')
-    ? [config('fortify.auth_middleware', 'auth').':'.config('fortify.guard'), 'password.confirm']
-    : [config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')];
+    ? [config('fortify.auth_middleware', 'auth') . ':' . config('fortify.guard'), 'password.confirm']
+    : [config('fortify.auth_middleware', 'auth') . ':' . config('fortify.guard')];
 
 Route::get('user/password', function () {
     return view('admin.password');
 })
-    ->middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')])
+    ->middleware([config('fortify.auth_middleware', 'auth') . ':' . config('fortify.guard')])
     ->name('admin.password');
 
 Route::get('user/authentication', function () {
     return view('admin.authentication');
 })
-    ->middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')])
+    ->middleware([config('fortify.auth_middleware', 'auth') . ':' . config('fortify.guard')])
     ->name('admin.authentication');
 
 Route::get('/user/recovery-codes', function () {
@@ -52,3 +52,5 @@ Route::get('user/tokens', [TokenController::class, 'index'])->name('admin.tokens
 Route::get('user/tokens/create', [TokenController::class, 'create'])->name('admin.tokens.create');
 Route::get('user/tokens/{id}', [TokenController::class, 'show'])->name('admin.tokens.show');
 Route::post('user/tokens/create', [TokenController::class, 'store'])->name('admin.tokens.store');
+Route::get('user/tokens/{id}/delete', [TokenController::class, 'confirm'])->name('admin.tokens.destroy.confirm');
+Route::delete('user/tokens/{id}', [TokenController::class, 'destroy'])->name('admin.tokens.destroy');

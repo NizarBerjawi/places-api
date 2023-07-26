@@ -15,6 +15,7 @@ class TokenController extends Controller
 
     public function show(Request $request, $id)
     {
+
         $token = $request->user()->tokens()->where('id', $id)->first();
 
         return view('admin.tokens-show', [
@@ -35,19 +36,32 @@ class TokenController extends Controller
 
         $token = $request->user()->createToken($request->token_name);
 
-        $last = $request
-            ->user()
-            ->tokens()
-            ->orderBy('created_at', 'desc')
-            ->limit(1)
-            ->first();
-
         $textToken = $token->plainTextToken;
 
         if (strpos($textToken, '|') !== false) {
             [$id, $textToken] = explode('|', $textToken, 2);
         }
 
-        return redirect('admin.tokens.show', ['id' => $last->id])->with('textToken', $textToken);
+        return redirect()->route('admin.tokens.show', $id)->with('textToken', $textToken);
+    }
+
+    /**
+     * 
+     */
+    public function destroy(Request $request, $id)
+    {
+        $request->user()->tokens()->where('id', $id)->delete();
+
+
+        return redirect()->route('admin.tokens.index');
+    }
+
+    public function confirm(Request $request, $id)
+    {
+        $token = $request->user()->tokens()->where('id', $id)->first();
+
+        return view('admin.tokens-delete', [
+            'token' => $token,
+        ]);
     }
 }
