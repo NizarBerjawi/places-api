@@ -1,8 +1,7 @@
 <?php
 
+use App\Http\Controllers\TokenController;
 use App\Http\Controllers\WebController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -49,45 +48,7 @@ Route::get('/user/recovery-codes', function () {
     ->middleware($twoFactorMiddleware)
     ->name('admin.recovery-codes');
 
-//
-Route::get('user/tokens', function (Request $request) {
-    return view('admin.tokens-index', [
-        'tokens' => $request->user()->tokens,
-    ]);
-})
-    ->name('admin.tokens.index');
-
-Route::get('user/tokens/create', function (Request $request) {
-    return view('admin.tokens-create');
-})
-    ->name('admin.tokens.create');
-
-Route::get('user/tokens/{id}', function (Request $request, string $id) {
-    $token = $request->user()->tokens()->where('id', $id)->first();
-
-    return view('admin.tokens-show', [
-        'token' => $token,
-    ]);
-})
-    ->name('admin.tokens.show');
-
-Route::post('user/tokens/create', function (Request $request) {
-
-    $token = $request->user()->createToken($request->token_name);
-
-    $last = $request
-        ->user()
-        ->tokens()
-        ->orderBy('created_at', 'desc')
-        ->limit(1)
-        ->first();
-
-    $textToken = $token->plainTextToken;
-
-    if (strpos($textToken, '|') !== false) {
-        [$id, $textToken] = explode('|', $textToken, 2);
-    }
-
-    return Redirect::route('admin.tokens.show', ['id' => $last->id])->with('textToken', $textToken);
-})
-    ->name('admin.tokens.store');
+Route::get('user/tokens', [TokenController::class, 'index'])->name('admin.tokens.index');
+Route::get('user/tokens/create', [TokenController::class, 'create'])->name('admin.tokens.create');
+Route::get('user/tokens/{id}', [TokenController::class, 'show'])->name('admin.tokens.show');
+Route::post('user/tokens/create', [TokenController::class, 'store'])->name('admin.tokens.store');

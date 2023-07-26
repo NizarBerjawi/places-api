@@ -1,9 +1,9 @@
 <div class="tabs is-centered is-boxed">
     <ul>
-        <li @class(['is-active' => Route::is('admin.tokens.show')])>
+        <li @class(['is-active' => Route::is('admin.tokens.*')])>
             <a href="{{ route('admin.tokens.index') }}">
                 <i data-feather="key"></i>
-                <span>API Keys</span>
+                <span>API Access Tokens</span>
             </a>
         </li>
         <li @class(['is-active' => Route::is('admin.password')])>

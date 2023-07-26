@@ -5,8 +5,8 @@
 
     <article class="message is-info">
         <div class="message-body">
-            <span class="has-text-weight-bold">You won't be able to see this token again!</span>
-            Make sure to copy your access token somewhere safe now.
+            <span class="has-text-weight-bold">Personal access tokens function like ordinary OAuth access tokens.</span>
+            They can be used to authenticate to the API over Basic Authentication. 
         </div>
     </article>
 
@@ -22,7 +22,7 @@
                     'is-large',
                 ]) type="token_name" name="token_name" placeholder="My token" autofocus>
             </div>
-            <p class="help is-danger">{{ $errors->has('token_name') }}</p>
+            <p class="help is-danger">{{ $errors->first('token_name') }}</p>
         </div>
 
         <div class="is-flex is-justify-content-flex-end">

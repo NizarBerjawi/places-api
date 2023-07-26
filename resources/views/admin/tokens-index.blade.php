@@ -16,27 +16,27 @@
     @endif --}}
 
     <div class="mb-4">
-        <table class="table is-fullwidth">
-            <thead>
-                <tr>
-                    <th class="has-text-centered">Tokens</th>
-                </tr>
-            </thead>
+        @if (count($tokens) === 0)
+            <span>You have not issued any tokens yet.</span>
+        @else
+            @foreach ($tokens as $token)
+                <div class="card is-success m-6">
+                    <div class="card-content">
+                        <div class="content">
+                            <div class="title is-size-4">{{ $token->name }}</div>
+                            <div class="subtitle is-size-6">{{ $token->created_at }}</div>
+                            {{-- <div><time class="subtitle is-size-6" datetime="2016-1-1">{{ $token->created_at }}</time></div> --}}
+                        </div>
+                    </div>
 
-            <tbody>
-                @if (count($tokens) === 0)
-                    <tr>
-                        <td colspan="5">You have not issued any tokens yet.</td>
-                    </tr>
-                @else
-                    @foreach ($tokens as $token)
-                        <tr>
-                            <td class="has-text-centered">{{ $token->name }}</td>
-                        </tr>
-                    @endforeach
-                @endif
-            </tbody>
-        </table>
+                    <footer class="card-footer">
+                        <a href="#" class="card-footer-item">Regenerate</a>
+                        <a href="#" class="card-footer-item">Edit</a>
+                        <a href="#" class="card-footer-item">Delete</a>
+                    </footer>
+                </div>
+            @endforeach
+        @endif
     </div>
 
     <div class="is-flex is-justify-content-flex-end">
