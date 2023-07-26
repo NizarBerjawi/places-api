@@ -45,13 +45,9 @@ class TokenController extends Controller
         return redirect()->route('admin.tokens.show', $id)->with('textToken', $textToken);
     }
 
-    /**
-     * 
-     */
     public function destroy(Request $request, $id)
     {
         $request->user()->tokens()->where('id', $id)->delete();
-
 
         return redirect()->route('admin.tokens.index');
     }
