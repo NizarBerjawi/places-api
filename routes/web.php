@@ -52,5 +52,7 @@ Route::get('user/tokens', [TokenController::class, 'index'])->name('admin.tokens
 Route::get('user/tokens/create', [TokenController::class, 'create'])->name('admin.tokens.create');
 Route::get('user/tokens/{id}', [TokenController::class, 'show'])->name('admin.tokens.show');
 Route::post('user/tokens/create', [TokenController::class, 'store'])->name('admin.tokens.store');
-Route::get('user/tokens/{id}/delete', [TokenController::class, 'confirm'])->name('admin.tokens.destroy.confirm');
+Route::put('user/tokens/{id}', [TokenController::class, 'update'])->name('admin.tokens.update');
 Route::delete('user/tokens/{id}', [TokenController::class, 'destroy'])->name('admin.tokens.destroy');
+
+Route::get('user/tokens/{id}/confirm', [TokenController::class, 'confirm'])->name('admin.tokens.confirm');

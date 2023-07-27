@@ -23,6 +23,11 @@ class TokenController extends Controller
         ]);
     }
 
+    public function update(Request $request, $id)
+    {
+        dd('here');
+    }
+
     public function create(Request $request)
     {
         return view('admin.tokens-create');
@@ -54,9 +59,15 @@ class TokenController extends Controller
 
     public function confirm(Request $request, $id)
     {
+        if (! $request->has('action')) {
+            return back();
+        }
+
+        $action = $request->get('action');
+
         $token = $request->user()->tokens()->where('id', $id)->first();
 
-        return view('admin.tokens-delete', [
+        return view("admin.tokens-$action", [
             'token' => $token,
         ]);
     }

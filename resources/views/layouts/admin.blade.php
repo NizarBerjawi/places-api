@@ -24,7 +24,7 @@
 
             <section class="section">
                 <div class="columns">
-                    <div class="column is-8 is-offset-2">
+                    <div class="column is-6 is-offset-3">
                         @yield('content')
                     </div>
                 </div>

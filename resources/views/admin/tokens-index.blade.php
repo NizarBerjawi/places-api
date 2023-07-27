@@ -5,13 +5,12 @@
 
     <article class="message is-info">
         <div class="message-body">
-            <span class="has-text-weight-bold">This is where you view all your API tokens.</span> These codes are
-            the last resort for accessing your account in case you lose your password and second
-            factors.
+            <span class="has-text-weight-bold">This is where you view all your API tokens.</span>
+            Tokens you have generated that can be used to access the Places API.
         </div>
     </article>
 
-    <div class="section">
+    <div class="block">
         @if (count($tokens) === 0)
             <span>You have not issued any tokens yet.</span>
         @else
@@ -21,7 +20,15 @@
                         <div class="content">
                             <div class="is-flex is-justify-content-space-between">
                                 <div>
-                                    <div class="title is-size-4"><a href="#">{{ $token->name }}</a></div>
+                                    <div class="title is-size-4">
+                                        <a href="{{ route('admin.tokens.show', $token->id) }}">{{ $token->name }}</a>
+
+                                        <a href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'regenerate']) }}">
+                                            <span class="icon is-clickable">
+                                                <i data-feather="refresh-cw"></i>
+                                            </span>
+                                        </a>
+                                    </div>
                                     @if ($token->last_used_at)
                                         <div class="subtitle is-size-6">
                                             Last used {{ now()->diffForHumans($token->last_used_at) }}
@@ -32,8 +39,9 @@
                                 </div>
 
                                 <div class="is-flex is-align-content-center is-flex-wrap-wrap">
-                                    <a href="{{ route('admin.tokens.destroy.confirm', $token->id) }}" class="button is-small">
-                                        <span class="icon has-text-danger">
+                                    <a href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'delete']) }}"
+                                        class="button is-small is-danger is-light">
+                                        <span class="icon">
                                             <i data-feather="trash-2"></i>
                                         </span>
                                     </a>
