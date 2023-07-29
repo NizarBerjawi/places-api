@@ -26,6 +26,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-feather.replace({
-    class: 'icon is-small',
-})
+feather.replace();

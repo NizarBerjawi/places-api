@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1 class="title">Are you sure you want to delete "{{ $token->name }}"?</h1>
+    <h1 class="title">Are you sure you want to regenerate "{{ $token->name }}"?</h1>
 
     <article class="message is-warning">
         <div class="message-body">

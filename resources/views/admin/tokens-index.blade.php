@@ -5,8 +5,8 @@
 
     <article class="message is-info">
         <div class="message-body">
-            <span class="has-text-weight-bold">This is where you view all your API tokens.</span>
-            Tokens you have generated that can be used to access the Places API.
+            <span class="has-text-weight-bold">Personal access tokens function like ordinary OAuth access tokens.</span>
+            They can be used to authenticate to the API over Basic Authentication.
         </div>
     </article>
 
@@ -23,9 +23,10 @@
                                     <div class="title is-size-4">
                                         <a href="{{ route('admin.tokens.show', $token->id) }}">{{ $token->name }}</a>
 
-                                        <a href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'regenerate']) }}">
+                                        <a
+                                            href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'regenerate']) }}">
                                             <span class="icon is-clickable">
-                                                <i data-feather="refresh-cw"></i>
+                                                <i class="icon is-small" data-feather="refresh-cw"></i>
                                             </span>
                                         </a>
                                     </div>
@@ -41,9 +42,7 @@
                                 <div class="is-flex is-align-content-center is-flex-wrap-wrap">
                                     <a href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'delete']) }}"
                                         class="button is-small is-danger is-light">
-                                        <span class="icon">
-                                            <i data-feather="trash-2"></i>
-                                        </span>
+                                            <i class="icon is-small" data-feather="trash-2"></i>
                                     </a>
                                 </div>
                             </div>

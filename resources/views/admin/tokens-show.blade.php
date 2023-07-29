@@ -3,52 +3,75 @@
 @section('content')
     <h1 class="title">API Token</h1>
 
-    <article class="message is-info">
-        <div class="message-body">
-            <span class="has-text-weight-bold">This is where you view all your API tokens.</span> These codes are
-            the last resort for accessing your account in case you lose your password and second
-            factors.
-        </div>
-    </article>
-
-
     @if (session()->has('textToken'))
-        <div class="mb-4">
-            <div class="box has-text-centered is-size-5-widescreen is-size-6-tablet has-background-primary has-text-white">
+        <article class="message is-info">
+            <div class="message-body">
+                Make sure to copy your personal access token now. <span class="has-text-weight-bold">You won’t be able to see
+                    it again!</span>
+            </div>
+        </article>
+
+        <div class="block">
+            <div class="box has-text-centered is-size-6-widescreen has-background-success has-text-white">
                 <span class="has-text-weight-bold">{{ session('textToken') }}</span>
             </div>
         </div>
-    @endif
+    @else
+        <div class="buttons has-addons is-centered">
+            <a class="button has-text-primary is-rounded">
+                <i class="icon is-small" data-feather="edit"></i>
 
-    <div class="card is-success">
-        {{-- <header class="card-header">
-            <p class="card-header-title">
-            </p>
-        </header> --}}
+                <span class="has-text-weight-bold">Edit</span>
+            </a>
 
+            <a href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'regenerate']) }}"
+                class="button has-text-warning is-rounded">
+                <i class="icon is-small" data-feather="refresh-cw"></i>
 
-        <div class="card-content">
-            <div class="content">
-                <div class="title is-size-4">{{ $token->name }}</div>
-                <div class="subtitle is-size-6">{{ $token->created_at }}</div>
-                {{-- <div><time class="subtitle is-size-6" datetime="2016-1-1">{{ $token->created_at }}</time></div> --}}
-            </div>
+                <span>Regenerate</span>
+            </a>
+
+            <a href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'delete']) }}"
+                class="button has-text-danger is-rounded">
+                <i class="icon is-small" data-feather="trash-2"></i>
+
+                <span>Delete</span>
+            </a>
         </div>
 
-        <footer class="card-footer">
-            <a href="#" class="card-footer-item">Regenerate</a>
-            <a href="#" class="card-footer-item">Edit</a>
-            <a href="#" class="card-footer-item">Delete</a>
-        </footer>
-    </div>
-    <div>{{ $token->name }}</div>
-    <div>{{ $token->created_at }}</div>
-    <div>{{ $token->last_used }}</div>
-    <div>{{ $token->expires_at }}</div>
+        <div class="block box">
+            <div class="is-flex is-justify-content-space-between is-align-items-center">
+                <div class="is-size-4-tablet mr-1">
+                    {{ $token->name }}
+                </div>
+                @if ($token->expires_at && $token->expires_at->isBefore(now()))
+                    <div class="ml-1">
+                        <span class="tag is-danger is-light">Expired</span>
+                    </div>
+                @endif
 
+            </div>
 
-
-
+            <div>
+                <div class="is-size-7"><span class="has-text-weight-bold">Created at: </span>{{ $token->created_at }}</div>
+                <div class="is-size-7"><span class="has-text-weight-bold">Expires at: </span>
+                    @if ($token->expires_at)
+                        {{ now()->diffForHumans($token->expires_at) }}
+                    @else
+                        This token has no expiration date.
+                    @endif
+                </div>
+                <div class="is-size-7"><span class="has-text-weight-bold">Last used: </span>
+                    @if ($token->last_used_at)
+                        Last used {{ now()->diffForHumans($token->last_used_at) }}
+                    @else
+                        Never used
+                    @endif
+                </div>
+            </div>
+        </div>
+    @endif
+    
     <div class="is-flex is-justify-content-flex-end">
         <div class="field is-grouped">
             <p class="control">

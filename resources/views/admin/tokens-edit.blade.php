@@ -1,9 +1,9 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1 class="title">Create API Token</h1>
+    <h1 class="title">Edit API Token</h1>
 
-    <form method="POST" action="{{ route('admin.tokens.create') }}">
+    <form method="POST" action="{{ route('admin.tokens.update') }}">
         @csrf
 
         <div class="field">
@@ -24,7 +24,7 @@
                     <a href={{ route('admin.tokens.index') }} class="button is-large is-responsive">Back</a>
                 </p>
                 <p class="control">
-                    <button class="button is-primary is-large is-responsive" type="submit">Create token</button>
+                    <button class="button is-primary is-large is-responsive" type="submit">Update token</button>
                 </p>
             </div>
         </div>

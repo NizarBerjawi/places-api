@@ -25,7 +25,16 @@ class TokenController extends Controller
 
     public function update(Request $request, $id)
     {
-        dd('here');
+        $token = $request->user()->tokens()->where('id', $id)->regenerateToken();
+
+        $textToken = $token->plainTextToken;
+
+        if (strpos($textToken, '|') !== false) {
+            [$id, $textToken] = explode('|', $textToken, 2);
+        }
+
+        return redirect()->route('admin.tokens.show', $id)->with('textToken', $textToken);
+
     }
 
     public function create(Request $request)
