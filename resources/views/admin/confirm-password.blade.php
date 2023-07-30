@@ -10,7 +10,7 @@
             factors.
         </div>
     </article>
-    <form method="POST" action="{{ route('password.confirm') }}">
+    <form method="post" action="{{ route('password.confirm') }}">
         @csrf
 
         <div class="field">

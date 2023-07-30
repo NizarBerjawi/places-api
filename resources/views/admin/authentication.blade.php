@@ -2,7 +2,7 @@
 
 @section('content')
     <section>
-        <h1 class="title">
+        <h1 class="title is-size-3-desktop is-size-4-tablet is-size-5-mobile">
             Two-factor authentication
 
             @if (request()->user()->hasEnabledTwoFactorAuthentication())
@@ -106,12 +106,13 @@
             <div class="mt-4">
                 <form action="{{ route('two-factor.disable') }}" method="post">
                     @csrf
-                    @method('delete')
+                    @method('DELETE')
 
                     <div class="is-flex is-justify-content-flex-end">
                         <button @class([
                             'button',
                             'is-large',
+                            'is-responsive',
                             'is-danger' => session()->has('auth.password_confirmed_at'),
                             'is-primary' => !session()->has('auth.password_confirmed_at'),
                         ])>

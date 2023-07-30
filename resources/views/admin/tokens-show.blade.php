@@ -1,10 +1,12 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1 class="title">API Token</h1>
+    <h1 class="title is-size-3-desktop is-size-4-tablet is-size-5-mobile">
+        Access Token
+    </h1>
 
     @if (session()->has('textToken'))
-        <article class="message is-info">
+        <article class="message is-warning">
             <div class="message-body">
                 Make sure to copy your personal access token now. <span class="has-text-weight-bold">You won’t be able to see
                     it again!</span>
@@ -18,21 +20,22 @@
         </div>
     @else
         <div class="buttons has-addons is-centered">
-            <a class="button has-text-primary is-rounded">
+            <a href="{{ route('admin.tokens.edit', ['id' => $token->id]) }}"
+                class="button has-text-primary is-medium is-responsive">
                 <i class="icon is-small" data-feather="edit"></i>
 
                 <span class="has-text-weight-bold">Edit</span>
             </a>
 
             <a href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'regenerate']) }}"
-                class="button has-text-warning is-rounded">
+                class="button has-text-warning is-medium is-responsive">
                 <i class="icon is-small" data-feather="refresh-cw"></i>
 
                 <span>Regenerate</span>
             </a>
 
             <a href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'delete']) }}"
-                class="button has-text-danger is-rounded">
+                class="button has-text-danger is-medium is-responsive">
                 <i class="icon is-small" data-feather="trash-2"></i>
 
                 <span>Delete</span>
@@ -53,7 +56,10 @@
             </div>
 
             <div>
-                <div class="is-size-7"><span class="has-text-weight-bold">Created at: </span>{{ $token->created_at }}</div>
+                <div class="is-size-7">
+                    <span class="has-text-weight-bold">Created at: </span>
+                    {{ $token->created_at->format('Y-m-d') }} at {{ $token->created_at->format('g:i A') }}
+                </div>
                 <div class="is-size-7"><span class="has-text-weight-bold">Expires at: </span>
                     @if ($token->expires_at)
                         {{ now()->diffForHumans($token->expires_at) }}
@@ -63,7 +69,7 @@
                 </div>
                 <div class="is-size-7"><span class="has-text-weight-bold">Last used: </span>
                     @if ($token->last_used_at)
-                        Last used {{ now()->diffForHumans($token->last_used_at) }}
+                        Last used {{ $token->last_used_at->diffForHumans() }}
                     @else
                         Never used
                     @endif
@@ -71,7 +77,7 @@
             </div>
         </div>
     @endif
-    
+
     <div class="is-flex is-justify-content-flex-end">
         <div class="field is-grouped">
             <p class="control">

@@ -15,7 +15,6 @@ class TokenController extends Controller
 
     public function show(Request $request, $id)
     {
-
         $token = $request->user()->tokens()->where('id', $id)->first();
 
         return view('admin.tokens-show', [
@@ -23,18 +22,45 @@ class TokenController extends Controller
         ]);
     }
 
+    public function edit(Request $request, $id)
+    {
+        $token = $request->user()->tokens()->where('id', $id)->first();
+
+        return view('admin.tokens-edit', [
+            'token' => $token,
+        ]);
+    }
+
     public function update(Request $request, $id)
     {
-        $token = $request->user()->tokens()->where('id', $id)->regenerateToken();
-
-        $textToken = $token->plainTextToken;
-
-        if (strpos($textToken, '|') !== false) {
-            [$id, $textToken] = explode('|', $textToken, 2);
+        if (! $request->has('action')) {
+            return back();
         }
 
-        return redirect()->route('admin.tokens.show', $id)->with('textToken', $textToken);
+        $token = $request->user()->tokens()->where('id', $id)->first();
 
+        $action = $request->get('action');
+
+        if ($action === 'regenerate') {
+            $newAccessToken = $token->regenerateToken();
+
+            $textToken = $newAccessToken->plainTextToken;
+
+            if (strpos($textToken, '|') !== false) {
+                [$id, $textToken] = explode('|', $textToken, 2);
+            }
+        }
+
+        if ($action === 'update') {
+            $request->validate([
+                'token_name' => ['required', 'string', 'max:255'],
+            ]);
+
+            $token->update(['name' => $request->input('token_name')]);
+        }
+
+        return redirect()->route('admin.tokens.show', $id)
+            ->with('textToken', $textToken ?? null);
     }
 
     public function create(Request $request)

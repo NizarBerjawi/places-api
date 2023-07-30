@@ -11,7 +11,7 @@
                             <h1 class="is-size-1 is-size-3-mobile">Create new account</h1>
                             <p class="is-size-4 is-size-6-mobile">Already registered? <a href="{{ route('login') }}">Login to your account</a></p>
 
-                            <form method="POST" action="/register">
+                            <form method="post" action="/register">
                                 @csrf
 
                                 <div class="field">

@@ -1,7 +1,9 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1 class="title">Are you sure you want to delete "{{ $token->name }}"?</h1>
+    <h1 class="title is-size-3-desktop is-size-4-tablet is-size-5-mobile">
+        Are you sure you want to delete "{{ $token->name }}"?
+    </h1>
 
     <article class="message is-danger">
         <div class="message-body">
@@ -12,7 +14,7 @@
 
     <form method="post" action="{{ route('admin.tokens.destroy', $token->id) }}">
         @csrf
-        @method('delete')
+        @method('DELETE')
 
         <div class="is-flex is-justify-content-flex-end">
             <div class="field is-grouped">

@@ -1,7 +1,9 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1 class="title">Recovery Codes</h1>
+    <h1 class="title is-size-3-desktop is-size-4-tablet is-size-5-mobile">
+        Recovery Codes
+    </h1>
 
     <article class="message is-info">
         <div class="message-body">
@@ -17,7 +19,7 @@
         @endforeach
     </div>
 
-    <form method="POST" action="{{ route('two-factor.recovery-codes') }}">
+    <form method="post" action="{{ route('two-factor.recovery-codes') }}">
         @csrf
 
         <div class="is-flex is-justify-content-flex-end">

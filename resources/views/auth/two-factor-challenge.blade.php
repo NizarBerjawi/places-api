@@ -15,7 +15,7 @@
                                         authentication code.
                                     </div>
                                 </article>
-                                <form method="POST" action="{{ route('two-factor.login') }}">
+                                <form method="post" action="{{ route('two-factor.login') }}">
                                     @csrf
 
                                     <div class="field">

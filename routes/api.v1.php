@@ -35,6 +35,7 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
 Route::prefix('countries')->group(function () {
     Route::get('/', [CountryController::class, 'index']);
     Route::get('/{countryCode}', [CountryController::class, 'show']);

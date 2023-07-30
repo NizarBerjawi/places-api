@@ -2,7 +2,17 @@
 
 @section('content')
     <section>
-        <h1 class="title">Change password</h1>
+        <h1 class="title is-size-3-desktop is-size-4-tablet is-size-5-mobile">
+            Change password
+        </h1>
+
+        @if (session('status') === \Laravel\Fortify\Fortify::PASSWORD_UPDATED)
+            <article class="message is-success">
+                <div class="message-body">
+                    {{ __('passwords.updated') }}
+                </div>
+            </article>
+        @endif
 
         <form action="{{ route('user-password.update') }}" method="post">
             @method('PUT')
@@ -54,13 +64,5 @@
                     password</button>
             </div>
         </form>
-
-        @if (session('status') === \Laravel\Fortify\Fortify::PASSWORD_UPDATED)
-            <article class="message is-success mt-4">
-                <div class="message-body">
-                    {{ __('passwords.updated') }}
-                </div>
-            </article>
-        @endif
     </section>
 @endsection

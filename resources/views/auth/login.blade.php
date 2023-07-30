@@ -11,7 +11,7 @@
                                 <h1 class="is-size-1 is-size-3-mobile">Welcome Back!</h1>
                                 <p class="is-size-4 is-size-6-mobile">New to Places API? <a href="{{ route('register') }}">Create an
                                         account</a></p>
-                                <form method="POST" action="{{ route('login') }}">
+                                <form method="post" action="{{ route('login') }}">
                                     @csrf
 
                                     <div class="field">

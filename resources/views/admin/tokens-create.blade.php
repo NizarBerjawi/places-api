@@ -1,9 +1,11 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1 class="title">Create API Token</h1>
+    <h1 class="title is-size-3-desktop is-size-4-tablet is-size-5-mobile">
+        Create Access Token
+    </h1>
 
-    <form method="POST" action="{{ route('admin.tokens.create') }}">
+    <form method="post" action="{{ route('admin.tokens.store') }}">
         @csrf
 
         <div class="field">

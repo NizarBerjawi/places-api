@@ -1,5 +1,7 @@
 <?php
 
+use App\Providers\RouteServiceProvider;
+
 if (! function_exists('webpack')) {
     /**
      * Get path to a webpack bundle asset.
@@ -27,5 +29,17 @@ if (! function_exists('webpack')) {
         }
 
         return asset('dist/'.$manifest->$bundle->$type);
+    }
+}
+
+if (! function_exists('home')) {
+    /**
+     * Get path to a webpack bundle asset.
+     *
+     * @return string Home route
+     */
+    function home()
+    {
+        return RouteServiceProvider::HOME;
     }
 }

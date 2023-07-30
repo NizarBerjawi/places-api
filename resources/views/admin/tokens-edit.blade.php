@@ -1,9 +1,12 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1 class="title">Edit API Token</h1>
+    <h1 class="title is-size-3-desktop is-size-4-tablet is-size-5-mobile">
+        Edit Access Token
+    </h1>
 
-    <form method="POST" action="{{ route('admin.tokens.update') }}">
+    <form method="post" action="{{ route('admin.tokens.update', ['id' => $token->id, 'action' => 'update']) }}">
+        @method('PUT')
         @csrf
 
         <div class="field">
@@ -13,7 +16,8 @@
                     'input',
                     'is-danger' => $errors->has('token_name'),
                     'is-large',
-                ]) type="token_name" name="token_name" placeholder="My token" autofocus>
+                ]) type="token_name" name="token_name" placeholder="My token"
+                    value="{{ $token->name }}" autofocus>
             </div>
             <p class="help is-danger">{{ $errors->first('token_name') }}</p>
         </div>

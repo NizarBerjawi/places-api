@@ -26,10 +26,10 @@
                         @if (
                             !request()->routeIs('admin.*') &&
                                 request()->route()->uri() !== 'user/confirm-password')
-                            <a href="{{ route('admin.password') }}" class="button is-small is-rounded">Dashboard</a>
+                            <a href="{{ home() }}" class="button is-small is-rounded">Dashboard</a>
                         @endif
 
-                        <form method="POST" action="/logout">
+                        <form method="post" action="/logout">
                             @csrf
                             <button class="button is-primary is-small is-rounded">Log out</button>
                         </form>

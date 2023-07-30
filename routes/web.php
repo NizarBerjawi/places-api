@@ -30,29 +30,27 @@ $twoFactorMiddleware = Features::optionEnabled(Features::twoFactorAuthentication
     ? [config('fortify.auth_middleware', 'auth').':'.config('fortify.guard'), 'password.confirm']
     : [config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')];
 
-Route::get('user/password', function () {
-    return view('admin.password');
-})
-    ->middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')])
-    ->name('admin.password');
+Route::middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')])
+    ->prefix('user')
+    ->group(function () {
+        Route::get('password', fn () => view('admin.password'))->name('admin.password');
+        Route::get('authentication', fn () => view('admin.authentication'))->name('admin.authentication');
 
-Route::get('user/authentication', function () {
-    return view('admin.authentication');
-})
-    ->middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')])
-    ->name('admin.authentication');
+        Route::prefix('tokens')
+            ->group(function () {
+                Route::get('/', [TokenController::class, 'index'])->name('admin.tokens.index');
+                Route::get('create', [TokenController::class, 'create'])->name('admin.tokens.create');
+                Route::get('{id}', [TokenController::class, 'show'])->name('admin.tokens.show');
+                Route::get('{id}/edit', [TokenController::class, 'edit'])->name('admin.tokens.edit');
+                Route::post('/', [TokenController::class, 'store'])->name('admin.tokens.store');
+                Route::put('{id}', [TokenController::class, 'update'])->name('admin.tokens.update');
+                Route::delete('{id}', [TokenController::class, 'destroy'])->name('admin.tokens.destroy');
+                Route::get('{id}/confirm', [TokenController::class, 'confirm'])->name('admin.tokens.confirm');
+            });
+    });
 
 Route::get('/user/recovery-codes', function () {
     return view('admin.recovery-codes');
 })
     ->middleware($twoFactorMiddleware)
     ->name('admin.recovery-codes');
-
-Route::get('user/tokens', [TokenController::class, 'index'])->name('admin.tokens.index');
-Route::get('user/tokens/create', [TokenController::class, 'create'])->name('admin.tokens.create');
-Route::get('user/tokens/{id}', [TokenController::class, 'show'])->name('admin.tokens.show');
-Route::post('user/tokens/create', [TokenController::class, 'store'])->name('admin.tokens.store');
-Route::put('user/tokens/{id}', [TokenController::class, 'update'])->name('admin.tokens.update');
-Route::delete('user/tokens/{id}', [TokenController::class, 'destroy'])->name('admin.tokens.destroy');
-
-Route::get('user/tokens/{id}/confirm', [TokenController::class, 'confirm'])->name('admin.tokens.confirm');

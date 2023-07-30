@@ -1,5 +1,8 @@
 <?php
 
+namespace App\Models\Sanctum;
+
+use Illuminate\Support\Str;
 use Laravel\Sanctum\NewAccessToken;
 use Laravel\Sanctum\PersonalAccessToken as SanctumPersonalAccessToken;
 
