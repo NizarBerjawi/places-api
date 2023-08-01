@@ -20,10 +20,10 @@
         <div class="is-flex is-justify-content-flex-end">
             <div class="field is-grouped">
                 <p class="control">
-                    <a href={{ route('admin.tokens.index') }} class="button is-large is-responsive">Cancel</a>
+                    <a href={{ route('admin.tokens.index') }} class="button is-medium is-responsive">Cancel</a>
                 </p>
                 <p class="control">
-                    <button class="button is-warning is-large is-responsive" type="submit">Regenerate token</button>
+                    <button class="button is-warning is-medium is-responsive" type="submit">Regenerate token</button>
                 </p>
             </div>
         </div>

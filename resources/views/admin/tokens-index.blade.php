@@ -2,7 +2,7 @@
 
 @section('content')
     <h1 class="title is-size-3-desktop is-size-4-tablet is-size-5-mobile">
-        Access Tokens
+        Tokens
     </h1>
 
     <article class="message is-info">
@@ -58,7 +58,7 @@
     <div class="is-flex is-justify-content-flex-end">
         <div class="field is-grouped">
             <div class="control">
-                <a href="{{ route('admin.tokens.create') }}" class="button is-primary is-large is-responsive">Issue access
+                <a href="{{ route('admin.tokens.create') }}" class="button is-primary is-medium is-responsive">Generate access
                     token</a>
             </div>
         </div>

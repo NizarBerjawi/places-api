@@ -15,7 +15,7 @@
                 <input @class([
                     'input',
                     'is-danger' => $errors->has('token_name'),
-                    'is-large',
+                    'is-medium',
                 ]) type="token_name" name="token_name" placeholder="My token"
                     value="{{ $token->name }}" autofocus>
             </div>
@@ -25,10 +25,10 @@
         <div class="is-flex is-justify-content-flex-end">
             <div class="field is-grouped">
                 <p class="control">
-                    <a href={{ route('admin.tokens.index') }} class="button is-large is-responsive">Back</a>
+                    <a href={{ route('admin.tokens.index') }} class="button is-medium is-responsive">Back</a>
                 </p>
                 <p class="control">
-                    <button class="button is-primary is-large is-responsive" type="submit">Update token</button>
+                    <button class="button is-primary is-medium is-responsive" type="submit">Update token</button>
                 </p>
             </div>
         </div>

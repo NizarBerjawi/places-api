@@ -10,12 +10,12 @@
 
                 <div class="field is-grouped is-justify-content-center">
                     <p class="control">
-                        <a href="{{ route('intro') }}" class="button is-large is-responsive">
+                        <a href="{{ route('intro') }}" class="button is-medium is-responsive">
                             Introduction
                         </a>
                     </p>
                     <p class="control">
-                        <a href="{{ route('docs') }}" class="button is-large is-primary is-responsive">
+                        <a href="{{ route('docs') }}" class="button is-medium is-primary is-responsive">
                             API Reference
                         </a>
                     </p>

@@ -18,7 +18,7 @@
                                         <input @class([ 
                                             'input', 
                                             'is-danger'=> $errors->has('email'),
-                                            'is-large',
+                                            'is-medium',
                                         ]) type="email" name="email" placeholder="e.g. alex@example.com" value={{ request()->get('email') }} disabled>
                                     </div>
                                     <p class="help is-danger">{{ $errors->first('email') }}</p>
@@ -30,7 +30,7 @@
                                         <input @class([
                                             'input', 
                                             'is-danger' => $errors->has('password'), 
-                                            'is-large'
+                                            'is-medium'
                                         ]) type="password" name="password" placeholder="********">
                                     </div>
                                     <p class="help is-danger">{{ $errors->first('password') }}</p>
@@ -43,7 +43,7 @@
                                         <input @class([
                                             'input', 
                                             'is-danger' => $errors->has('password_confirmation'),
-                                            'is-large'
+                                            'is-medium'
                                         ]) type="password" name="password_confirmation" placeholder="********">
                                     </div>
                                     <p class="help is-danger">{{ $errors->first('password_confirmation') }}</p>
@@ -53,10 +53,10 @@
                                 <div class="is-flex is-justify-content-flex-end">
                                     <div class="field is-grouped">
                                         <p class="control">
-                                            <a href="{{ route('home') }}" class="button is-large is-responsive">Back</a>
+                                            <a href="{{ route('home') }}" class="button is-medium is-responsive">Back</a>
                                         </p>
                                         <p class="control">
-                                            <button class="button is-primary is-large is-responsive">Reset password</button>
+                                            <button class="button is-primary is-medium is-responsive">Reset password</button>
                                         </p>
                                     </div>
                                 </div>

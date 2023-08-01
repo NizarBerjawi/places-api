@@ -19,7 +19,7 @@
                 <input @class([
                     'input',
                     'is-danger' => $errors->confirmPassword->has('password'),
-                    'is-large',
+                    'is-medium',
                 ]) type="password" name="password" placeholder="********" autofocus>
             </div>
             <p class="help is-danger">{{ $errors->confirmPassword->first('password') }}</p>
@@ -28,10 +28,10 @@
         <div class="is-flex is-justify-content-flex-end">
             <div class="field is-grouped">
                 <p class="control">
-                    <a href={{ route('admin.authentication') }} class="button is-large is-responsive">Back</a>
+                    <a href={{ route('admin.authentication') }} class="button is-medium is-responsive">Back</a>
                 </p>
                 <p class="control">
-                    <button class="button is-primary is-large is-responsive" type="submit">Confirm</button>
+                    <button class="button is-primary is-medium is-responsive" type="submit">Confirm</button>
                 </p>
             </div>
         </div>

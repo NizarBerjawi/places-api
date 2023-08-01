@@ -34,7 +34,7 @@
             <form action="{{ route('two-factor.enable') }}" method="post">
                 @csrf
                 <div class="is-flex is-justify-content-flex-end">
-                    <button class="button is-primary is-large is-responsive">
+                    <button class="button is-primary is-medium is-responsive">
                         {{ session()->has('auth.password_confirmed_at') ? 'Enable 2FA' : 'Confirm password' }}
                     </button>
                 </div>
@@ -65,7 +65,7 @@
                             <input @class([
                                 'input',
                                 'is-danger' => $errors->confirmTwoFactorAuthentication->has('code'),
-                                'is-large',
+                                'is-medium',
                                 'has-text-centered',
                             ]) type="text" name="code" placeholder="XXXXXX"
                                 maxlength="6" autofocus>
@@ -77,7 +77,7 @@
                     <div class="is-flex is-justify-content-flex-end">
                         <div class="field is-grouped">
                             <p class="control">
-                                <button class="button is-primary is-large is-responsive" type="submit">Verify</button>
+                                <button class="button is-primary is-medium is-responsive" type="submit">Verify</button>
                             </p>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
                     <div class="is-flex is-justify-content-flex-end">
                         <button @class([
                             'button',
-                            'is-large',
+                            'is-medium',
                             'is-responsive',
                             'is-danger' => session()->has('auth.password_confirmed_at'),
                             'is-primary' => !session()->has('auth.password_confirmed_at'),

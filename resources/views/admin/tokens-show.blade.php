@@ -14,28 +14,28 @@
         </article>
 
         <div class="block">
-            <div class="box has-text-centered is-size-6-widescreen has-background-success has-text-white">
-                <span class="has-text-weight-bold">{{ session('textToken') }}</span>
+            <div class="box has-text-centered has-background-success has-text-white">
+                <span class="has-text-weight-bold is-size-5-widescreen is-size-6-desktop is-size-7-mobile">{{ session('textToken') }}</span>
             </div>
         </div>
     @else
         <div class="buttons has-addons is-centered">
             <a href="{{ route('admin.tokens.edit', ['id' => $token->id]) }}"
-                class="button has-text-primary is-medium is-responsive">
+                class="button has-text-primary is-normal is-responsive">
                 <i class="icon is-small" data-feather="edit"></i>
 
                 <span class="has-text-weight-bold">Edit</span>
             </a>
 
             <a href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'regenerate']) }}"
-                class="button has-text-warning is-medium is-responsive">
+                class="button has-text-warning is-normal is-responsive">
                 <i class="icon is-small" data-feather="refresh-cw"></i>
 
                 <span>Regenerate</span>
             </a>
 
             <a href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'delete']) }}"
-                class="button has-text-danger is-medium is-responsive">
+                class="button has-text-danger is-normal is-responsive">
                 <i class="icon is-small" data-feather="trash-2"></i>
 
                 <span>Delete</span>
@@ -81,7 +81,7 @@
     <div class="is-flex is-justify-content-flex-end">
         <div class="field is-grouped">
             <p class="control">
-                <a href={{ route('admin.tokens.index') }} class="button is-large is-responsive">Back</a>
+                <a href={{ route('admin.tokens.index') }} class="button is-medium is-responsive">Back</a>
             </p>
         </div>
     </div>

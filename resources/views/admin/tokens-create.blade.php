@@ -2,7 +2,7 @@
 
 @section('content')
     <h1 class="title is-size-3-desktop is-size-4-tablet is-size-5-mobile">
-        Create Access Token
+        Create Token
     </h1>
 
     <form method="post" action="{{ route('admin.tokens.store') }}">
@@ -14,7 +14,7 @@
                 <input @class([
                     'input',
                     'is-danger' => $errors->has('token_name'),
-                    'is-large',
+                    'is-medium',
                 ]) type="token_name" name="token_name" placeholder="My token" autofocus>
             </div>
             <p class="help is-danger">{{ $errors->first('token_name') }}</p>
@@ -23,10 +23,10 @@
         <div class="is-flex is-justify-content-flex-end">
             <div class="field is-grouped">
                 <p class="control">
-                    <a href={{ route('admin.tokens.index') }} class="button is-large is-responsive">Back</a>
+                    <a href={{ route('admin.tokens.index') }} class="button is-medium is-responsive">Back</a>
                 </p>
                 <p class="control">
-                    <button class="button is-primary is-large is-responsive" type="submit">Create token</button>
+                    <button class="button is-primary is-medium is-responsive" type="submit">Generate token</button>
                 </p>
             </div>
         </div>

@@ -24,7 +24,7 @@
                                             <input @class([
                                                 'input',
                                                 'is-danger' => $errors->has('code'),
-                                                'is-large',
+                                                'is-medium',
                                                 'has-text-centered',
                                             ]) type="text" name="code"
                                                 placeholder="XXXXXX" maxlength="6" autofocus>
@@ -36,10 +36,10 @@
                                         <div class="field is-grouped">
 
                                             <div class="control">
-                                                <a href="{{ route('home') }}" class="button is-large is-responsive">Back</a>
+                                                <a href="{{ route('home') }}" class="button is-medium is-responsive">Back</a>
                                             </div>
                                             <div class="control">
-                                                <button class="button is-primary is-large is-responsive" type="submit">Verify</button>
+                                                <button class="button is-primary is-medium is-responsive" type="submit">Verify</button>
                                             </div>
                                         </div>
                                     </div>

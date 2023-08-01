@@ -21,7 +21,7 @@
             <div class="field">
                 <label class="label">Email</label>
                 <div class="control">
-                    <input @class(['input', 'is-danger' => $errors->has('email'), 'is-large']) type="email" name="email" value={{ auth()->user()->email }}
+                    <input @class(['input', 'is-danger' => $errors->has('email'), 'is-medium']) type="email" name="email" value={{ auth()->user()->email }}
                         disabled>
                 </div>
                 <p class="help is-danger">{{ $errors->first('email') }}</p>
@@ -33,7 +33,7 @@
                     <input @class([
                         'input',
                         'is-danger' => $errors->has('current_password'),
-                        'is-large',
+                        'is-medium',
                     ]) type="password" name="current_password" placeholder="********">
                 </div>
                 <p class="help is-danger">{{ $errors->first('current_password') }}</p>
@@ -42,7 +42,7 @@
             <div class="field">
                 <label class="label">New password</label>
                 <div class="control">
-                    <input @class(['input', 'is-danger' => $errors->has('password'), 'is-large']) type="password" name="password" placeholder="********">
+                    <input @class(['input', 'is-danger' => $errors->has('password'), 'is-medium']) type="password" name="password" placeholder="********">
                 </div>
                 <p class="help is-danger">{{ $errors->first('password') }}</p>
             </div>
@@ -53,14 +53,14 @@
                     <input @class([
                         'input',
                         'is-danger' => $errors->has('password_confirmation'),
-                        'is-large',
+                        'is-medium',
                     ]) type="password" name="password_confirmation" placeholder="********">
                 </div>
                 <p class="help is-danger">{{ $errors->first('password_confirmation') }}</p>
             </div>
 
             <div class="is-flex is-justify-content-flex-end">
-                <button class="button is-primary is-large is-responsive" href="{{ route('password.confirm') }}">Update
+                <button class="button is-primary is-medium is-responsive" href="{{ route('password.confirm') }}">Update
                     password</button>
             </div>
         </form>

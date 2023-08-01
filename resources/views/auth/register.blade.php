@@ -18,7 +18,7 @@
                                     <label class="label">Name</label>
                                     <div class="control">
                                         <input @class([ 'input' , 'is-danger'=> $errors->has('name'),
-                                        'is-large'
+                                        'is-medium'
                                         ]) type="text" name="name" placeholder="e.g. John Smith" value="{{ old('name') }}">
                                     </div>
                                     <p class="help is-danger">{{ $errors->first('name') }}</p>
@@ -29,7 +29,7 @@
                                     <label class="label">Email</label>
                                     <div class="control">
                                         <input @class([ 'input' , 'is-danger'=> $errors->has('email'),
-                                        'is-large'
+                                        'is-medium'
                                         ]) type="email" name="email" placeholder="e.g. john@example.com" value="{{ old('email') }}">
                                     </div>
                                     <p class="help is-danger">{{ $errors->first('email') }}</p>
@@ -39,7 +39,7 @@
                                     <label class="label">Password</label>
                                     <div class="control">
                                         <input @class([ 'input' , 'is-danger'=> $errors->has('password'),
-                                        'is-large'
+                                        'is-medium'
                                         ]) type="password" name="password" placeholder="********">
                                     </div>
                                     <p class="help is-danger">{{ $errors->first('password') }}</p>
@@ -50,7 +50,7 @@
                                     <label class="label">Confirm Password</label>
                                     <div class="control">
                                         <input @class([ 'input' , 'is-danger'=> $errors->has('password_confirmation'),
-                                        'is-large'
+                                        'is-medium'
                                         ]) type="password" name="password_confirmation" placeholder="********">
                                     </div>
                                     <p class="help is-danger">{{ $errors->first('password_confirmation') }}</p>
@@ -59,10 +59,10 @@
                                 <div class="is-flex is-justify-content-flex-end is-align-items-center">
                                     <div class="field is-grouped">
                                         <p class="control">
-                                            <a href="{{ route('home') }}" class="button is-large is-responsive">Back</a>
+                                            <a href="{{ route('home') }}" class="button is-medium is-responsive">Back</a>
                                         </p>
                                         <p class="control">
-                                            <button class="button is-primary is-large is-responsive">Register</button>
+                                            <button class="button is-primary is-medium is-responsive">Register</button>
                                         </p>
                                     </div>
                                 </div>
