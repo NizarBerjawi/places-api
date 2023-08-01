@@ -13,9 +13,10 @@
             </div>
         </article>
 
-        <div class="block">
-            <div class="box has-text-centered has-background-success has-text-white">
-                <span class="has-text-weight-bold is-size-5-widescreen is-size-6-desktop is-size-7-mobile">{{ session('textToken') }}</span>
+        <div class="block has-background-white-ter is-flex is-justify-content-space-between is-align-items-center">
+            <pre id="token" class="has-text-weight-bold is-size-6-widescreen is-size-6-desktop is-size-7-mobile">{{ session('textToken') }}</pre>
+            <div class="copy is-clickable m-2" data-clipboard-target="#token">
+                <i class="icon" data-feather="copy"></i>
             </div>
         </div>
     @else

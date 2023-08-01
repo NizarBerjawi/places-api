@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class TokenController extends Controller
 {
     public function index(Request $request)
     {
-        return view('admin.tokens-index', [
+        return view('admin.tokens.index', [
             'tokens' => $request->user()->tokens,
         ]);
     }
@@ -17,7 +18,7 @@ class TokenController extends Controller
     {
         $token = $request->user()->tokens()->where('id', $id)->first();
 
-        return view('admin.tokens-show', [
+        return view('admin.tokens.show', [
             'token' => $token,
         ]);
     }
@@ -26,7 +27,7 @@ class TokenController extends Controller
     {
         $token = $request->user()->tokens()->where('id', $id)->first();
 
-        return view('admin.tokens-edit', [
+        return view('admin.tokens.edit', [
             'token' => $token,
         ]);
     }
@@ -65,7 +66,7 @@ class TokenController extends Controller
 
     public function create(Request $request)
     {
-        return view('admin.tokens-create');
+        return view('admin.tokens.create');
     }
 
     public function store(Request $request)
@@ -94,6 +95,10 @@ class TokenController extends Controller
 
     public function confirm(Request $request, $id)
     {
+        $request->validate([
+            'action' => ['required', Rule::in(['delete', 'regenerate'])],
+        ]);
+
         if (! $request->has('action')) {
             return back();
         }
@@ -102,7 +107,7 @@ class TokenController extends Controller
 
         $token = $request->user()->tokens()->where('id', $id)->first();
 
-        return view("admin.tokens-$action", [
+        return view("admin.tokens.$action", [
             'token' => $token,
         ]);
     }

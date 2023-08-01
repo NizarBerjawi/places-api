@@ -34,7 +34,7 @@ Route::middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify
     ->prefix('user')
     ->group(function () {
         Route::get('password', fn () => view('admin.password'))->name('admin.password');
-        Route::get('authentication', fn () => view('admin.authentication'))->name('admin.authentication');
+        Route::get('authentication', fn () => view('admin.authentication'))->name('admin.account');
 
         Route::prefix('tokens')
             ->group(function () {

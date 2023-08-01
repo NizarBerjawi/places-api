@@ -2,7 +2,7 @@
 
 @section('content')
     <h1 class="title is-size-3-desktop is-size-4-tablet is-size-5-mobile">
-        Are you sure you want to regenerate "{{ $token->name }}"?
+        Are you sure you want to regenerate the "{{ $token->name }}" token?
     </h1>
 
     <article class="message is-warning">

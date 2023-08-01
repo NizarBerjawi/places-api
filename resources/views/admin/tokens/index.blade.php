@@ -26,7 +26,9 @@
                                         <a href="{{ route('admin.tokens.show', $token->id) }}">{{ $token->name }}</a>
 
                                         <a
-                                            href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'regenerate']) }}">
+                                            href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'regenerate']) }}"
+                                            title="Regenerate token"
+                                            >
                                             <span class="icon is-clickable">
                                                 <i class="icon is-small" data-feather="refresh-cw"></i>
                                             </span>
@@ -43,7 +45,7 @@
 
                                 <div class="is-flex is-align-content-center is-flex-wrap-wrap">
                                     <a href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'delete']) }}"
-                                        class="button is-small is-danger is-light">
+                                        class="button is-small is-danger is-light"                                             title="Delete token">
                                         <i class="icon is-small" data-feather="trash-2"></i>
                                     </a>
                                 </div>
