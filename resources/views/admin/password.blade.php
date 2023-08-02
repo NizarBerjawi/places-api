@@ -42,7 +42,11 @@
             <div class="field">
                 <label class="label">New password</label>
                 <div class="control">
-                    <input @class(['input', 'is-danger' => $errors->has('password'), 'is-medium']) type="password" name="password" placeholder="********">
+                    <input @class([
+                        'input',
+                        'is-danger' => $errors->has('password'),
+                        'is-medium',
+                    ]) type="password" name="password" placeholder="********">
                 </div>
                 <p class="help is-danger">{{ $errors->first('password') }}</p>
             </div>
@@ -65,6 +69,8 @@
             </div>
         </form>
     </section>
+    
+    <hr />
 
     <section class="block">
         <h1 class="title is-size-3-desktop is-size-4-tablet is-size-5-mobile">

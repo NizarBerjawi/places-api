@@ -16,7 +16,7 @@
 
         <li @class([
             'is-active' =>
-                Route::is('admin.authentication') ||
+                Route::is('admin.account') ||
                 Route::is('admin.recovery-codes') ||
                 request()->is('user/confirm-password'),
         ])>

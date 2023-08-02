@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\TokenController;
 use App\Http\Controllers\WebController;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
 
@@ -34,7 +35,16 @@ Route::middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify
     ->prefix('user')
     ->group(function () {
         Route::get('password', fn () => view('admin.password'))->name('admin.password');
-        Route::get('authentication', fn () => view('admin.authentication'))->name('admin.account');
+        Route::get('account', fn () => view('admin.account'))->name('admin.account');
+        Route::delete('account', function (Request $request) {
+            $request->user()->delete();
+
+            $request->session()->invalidate();
+
+            $request->session()->regenerateToken();
+
+            return redirect()->route('home');
+        })->name('account.delete');
 
         Route::prefix('tokens')
             ->group(function () {
