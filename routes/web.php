@@ -1,9 +1,9 @@
 <?php
 
-use App\Http\Controllers\WebController;
 use App\Http\Controllers\Dashboard\AccountController;
 use App\Http\Controllers\Dashboard\SecurityController;
 use App\Http\Controllers\Dashboard\TokenController;
+use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -27,7 +27,7 @@ Route::get('/featureCodes', [WebController::class, 'featureCodes'])->name('featu
 Route::get('/timeZones', [WebController::class, 'timeZones'])->name('timeZones');
 Route::get('/languages', [WebController::class, 'languages'])->name('languages');
 
-Route::middleware([config('fortify.auth_middleware', 'auth') . ':' . config('fortify.guard')])
+Route::middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')])
     ->prefix('user')
     ->group(function () {
         Route::get('security', [SecurityController::class, 'index'])->name('admin.security.index');
@@ -35,7 +35,6 @@ Route::middleware([config('fortify.auth_middleware', 'auth') . ':' . config('for
             ->middleware(['password.confirm'])
             ->name('admin.security.recovery-codes');
 
-            
         Route::prefix('account')
             ->group(function () {
                 Route::get('/', [AccountController::class, 'index'])->name('admin.account.index');

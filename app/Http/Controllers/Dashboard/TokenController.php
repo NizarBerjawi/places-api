@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use App\Http\Controllers\Controller;
 
 class TokenController extends Controller
 {
@@ -35,7 +35,7 @@ class TokenController extends Controller
 
     public function update(Request $request, $id)
     {
-        if (!$request->has('action')) {
+        if (! $request->has('action')) {
             return back();
         }
 
@@ -100,7 +100,7 @@ class TokenController extends Controller
             'action' => ['required', Rule::in(['delete', 'regenerate'])],
         ]);
 
-        if (!$request->has('action')) {
+        if (! $request->has('action')) {
             return back();
         }
 
