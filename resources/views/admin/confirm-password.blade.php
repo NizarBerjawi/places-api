@@ -3,13 +3,6 @@
 @section('content')
     <h1 class="title">Confirm Password</h1>
 
-    <article class="message is-info">
-        <div class="message-body">
-            <span class="has-text-weight-bold">Keep your recovery codes safe.</span> These codes are
-            the last resort for accessing your account in case you lose your password and second
-            factors.
-        </div>
-    </article>
     <form method="post" action="{{ route('password.confirm') }}">
         @csrf
 
@@ -28,7 +21,7 @@
         <div class="is-flex is-justify-content-flex-end">
             <div class="field is-grouped">
                 <p class="control">
-                    <a href={{ route('admin.password') }} class="button is-medium is-responsive">Back</a>
+                    <a href={{ route('admin.security.index') }} class="button is-medium is-responsive">Back</a>
                 </p>
                 <p class="control">
                     <button class="button is-primary is-medium is-responsive" type="submit">Confirm</button>

@@ -1,16 +1,17 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Dashboard;
 
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
 
 class TokenController extends Controller
 {
     public function index(Request $request)
     {
         return view('admin.tokens.index', [
-            'tokens' => $request->user()->tokens,
+            'tokens' => $request->user()->tokens()->simplePaginate(3),
         ]);
     }
 
@@ -34,7 +35,7 @@ class TokenController extends Controller
 
     public function update(Request $request, $id)
     {
-        if (! $request->has('action')) {
+        if (!$request->has('action')) {
             return back();
         }
 
@@ -99,7 +100,7 @@ class TokenController extends Controller
             'action' => ['required', Rule::in(['delete', 'regenerate'])],
         ]);
 
-        if (! $request->has('action')) {
+        if (!$request->has('action')) {
             return back();
         }
 

@@ -54,6 +54,7 @@
                     </div>
                 </div>
             @endforeach
+            {{ $tokens->links('partials.pagination') }}
         @endif
     </div>
 

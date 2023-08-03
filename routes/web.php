@@ -1,10 +1,10 @@
 <?php
 
-use App\Http\Controllers\TokenController;
 use App\Http\Controllers\WebController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\Dashboard\AccountController;
+use App\Http\Controllers\Dashboard\SecurityController;
+use App\Http\Controllers\Dashboard\TokenController;
 use Illuminate\Support\Facades\Route;
-use Laravel\Fortify\Features;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,24 +27,23 @@ Route::get('/featureCodes', [WebController::class, 'featureCodes'])->name('featu
 Route::get('/timeZones', [WebController::class, 'timeZones'])->name('timeZones');
 Route::get('/languages', [WebController::class, 'languages'])->name('languages');
 
-$twoFactorMiddleware = Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword')
-    ? [config('fortify.auth_middleware', 'auth').':'.config('fortify.guard'), 'password.confirm']
-    : [config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')];
-
-Route::middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')])
+Route::middleware([config('fortify.auth_middleware', 'auth') . ':' . config('fortify.guard')])
     ->prefix('user')
     ->group(function () {
-        Route::get('password', fn () => view('admin.password'))->name('admin.password');
-        Route::get('account', fn () => view('admin.account'))->name('admin.account');
-        Route::delete('account', function (Request $request) {
-            $request->user()->delete();
+        Route::get('security', [SecurityController::class, 'index'])->name('admin.security.index');
+        Route::get('security/recovery-codes', [SecurityController::class, 'recovery'])
+            ->middleware(['password.confirm'])
+            ->name('admin.security.recovery-codes');
 
-            $request->session()->invalidate();
+            
+        Route::prefix('account')
+            ->group(function () {
+                Route::get('/', [AccountController::class, 'index'])->name('admin.account.index');
 
-            $request->session()->regenerateToken();
-
-            return redirect()->route('home');
-        })->name('account.delete');
+                Route::delete('{id}', [AccountController::class, 'destroy'])
+                    ->middleware(['password.confirm'])
+                    ->name('admin.account.delete');
+            });
 
         Route::prefix('tokens')
             ->group(function () {
@@ -58,9 +57,3 @@ Route::middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify
                 Route::get('{id}/confirm', [TokenController::class, 'confirm'])->name('admin.tokens.confirm');
             });
     });
-
-Route::get('/user/recovery-codes', function () {
-    return view('admin.recovery-codes');
-})
-    ->middleware($twoFactorMiddleware)
-    ->name('admin.recovery-codes');
