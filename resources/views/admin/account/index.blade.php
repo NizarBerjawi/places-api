@@ -13,14 +13,10 @@
             </div>
         </article>
 
-        <form action="{{ route('admin.account.delete', $user->id) }}" method="post">
-            @csrf
-            @method('delete')
-            <div class="is-flex is-justify-content-flex-end">
-                <button class="button is-danger is-medium is-responsive">
-                    Delete account
-                </button>
-            </div>
-        </form>
+        <div class="is-flex is-justify-content-flex-end">
+            <a href="{{ route('admin.account.confirm', ['id' => $user->id, 'action' => 'delete']) }}" class="button is-danger is-medium is-responsive">
+                Delete account
+            </a>
+        </div>
     </section>
 @endsection

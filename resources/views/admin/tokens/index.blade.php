@@ -25,10 +25,8 @@
                                     <div class="title is-size-4">
                                         <a href="{{ route('admin.tokens.show', $token->id) }}">{{ $token->name }}</a>
 
-                                        <a
-                                            href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'regenerate']) }}"
-                                            title="Regenerate token"
-                                            >
+                                        <a href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'regenerate']) }}"
+                                            title="Regenerate token">
                                             <span class="icon is-clickable">
                                                 <i class="icon is-small" data-feather="refresh-cw"></i>
                                             </span>
@@ -45,7 +43,7 @@
 
                                 <div class="is-flex is-align-content-center is-flex-wrap-wrap">
                                     <a href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'delete']) }}"
-                                        class="button is-small is-danger is-light"                                             title="Delete token">
+                                        class="button is-small is-danger is-light" title="Delete token">
                                         <i class="icon is-small" data-feather="trash-2"></i>
                                     </a>
                                 </div>
@@ -61,7 +59,8 @@
     <div class="is-flex is-justify-content-flex-end">
         <div class="field is-grouped">
             <div class="control">
-                <a href="{{ route('admin.tokens.create') }}" class="button is-primary is-medium is-responsive">Generate access
+                <a href="{{ route('admin.tokens.create') }}" class="button is-primary is-medium is-responsive">Generate
+                    access
                     token</a>
             </div>
         </div>

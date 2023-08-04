@@ -19,7 +19,7 @@
                                             'input', 
                                             'is-danger'=> $errors->has('email'),
                                             'is-medium',
-                                        ]) type="email" name="email" placeholder="e.g. alex@example.com" value={{ request()->get('email') }} disabled>
+                                        ]) type="email" name="email" placeholder="e.g. alex@example.com" value={{ request()->get('email') }} readonly>
                                     </div>
                                     <p class="help is-danger">{{ $errors->first('email') }}</p>
                                 </div>

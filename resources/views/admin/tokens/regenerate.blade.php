@@ -13,7 +13,7 @@
         </div>
     </article>
 
-    <form method="post" action="{{ route('admin.tokens.update', ['id' => $token->id, 'action' => 'regenerate']) }}">
+    <form method="post" action="{{ route('admin.tokens.update', ['id' => $token->id, 'action' => $action]) }}">
         @csrf
         @method('PUT')
 

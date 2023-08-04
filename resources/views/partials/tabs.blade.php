@@ -7,7 +7,9 @@
             </a>
         </li>
 
-        <li @class(['is-active' => Route::is('admin.security.*')])>
+        <li @class([
+            'is-active' => Route::is('admin.security.*') || (isset($intended) && $intended === route('admin.security.index'))
+        ])>
             <a href="{{ route('admin.security.index') }}">
                 <i class="icon is-small" data-feather="lock"></i>
                 <span>Security</span>
@@ -16,8 +18,7 @@
 
         <li @class([
             'is-active' =>
-                Route::is('admin.account*') ||
-                request()->is('user/confirm-password'),
+                Route::is('admin.account.*') || (isset($intended) && $intended === route('admin.account.confirm', ['id' => request()->user()->id, 'action' => 'delete'])),
         ])>
             <a href="{{ route('admin.account.index') }}">
                 <i class="icon is-small" data-feather="shield"></i>

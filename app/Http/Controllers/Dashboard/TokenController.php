@@ -39,6 +39,10 @@ class TokenController extends Controller
             return back();
         }
 
+        $request->validate([
+            'action' => ['required', Rule::in(['update', 'regenerate'])],
+        ]);
+
         $token = $request->user()->tokens()->where('id', $id)->first();
 
         $action = $request->get('action');
@@ -108,8 +112,6 @@ class TokenController extends Controller
 
         $token = $request->user()->tokens()->where('id', $id)->first();
 
-        return view("admin.tokens.$action", [
-            'token' => $token,
-        ]);
+        return view("admin.tokens.$action", compact('action', 'token'));
     }
 }
