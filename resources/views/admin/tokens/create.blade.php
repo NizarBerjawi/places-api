@@ -15,9 +15,24 @@
                     'input',
                     'is-danger' => $errors->has('token_name'),
                     'is-medium',
-                ]) type="token_name" name="token_name" placeholder="My token" autofocus>
+                ]) type="text" name="token_name" placeholder="My token"
+                    value="{{ old('token_name') }}" autofocus>
             </div>
             <p class="help is-danger">{{ $errors->first('token_name') }}</p>
+        </div>
+
+        <div class="field">
+            <label class="label">Expiration date</label>
+            <div class="control">
+                <input @class([
+                    'input',
+                    'is-danger' => $errors->has('expires_at'),
+                    'is-medium',
+                ]) min="{{ \Illuminate\Support\Carbon::tomorrow()->format('Y-m-d') }}"
+                    type="date" name="expires_at" value="{{ old('expires_at') }}">
+            </div>
+            <p class="help">{{ __('tokens.expiry') }}</p>
+            <p class="help is-danger">{{ $errors->first('expires_at') }}</p>
         </div>
 
         <div class="is-flex is-justify-content-flex-end">

@@ -5,6 +5,11 @@
         Edit Access Token
     </h1>
 
+    <article class="message is-info">
+        <div class="message-body">
+            {!! __('tokens.edit', ['regenerateLink' => route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'regenerate'])]) !!}
+        </div>
+    </article>
     <form method="post" action="{{ route('admin.tokens.update', ['id' => $token->id, 'action' => 'update']) }}">
         @method('PUT')
         @csrf
@@ -20,6 +25,15 @@
                     value="{{ $token->name }}" autofocus>
             </div>
             <p class="help is-danger">{{ $errors->first('token_name') }}</p>
+        </div>
+
+        <div class="field">
+            <label class="label">Expiration date</label>
+            <div class="control">
+                <input @class(['input', 'is-medium']) type="text"
+                    value="{{ $token->expires_at?->isoFormat('MMMM Do, YYYY') ?? 'No Expiry' }}"
+                    disabled>
+            </div>
         </div>
 
         <div class="is-flex is-justify-content-flex-end">

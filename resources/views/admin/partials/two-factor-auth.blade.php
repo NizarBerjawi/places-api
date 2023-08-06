@@ -10,7 +10,10 @@
 {{-- STEP TWO: ENABLE TWO-FACTOR AUTHENTICATION --}}
 @if (
     !request()->user()->hasEnabledTwoFactorAuthentication() &&
-        !in_array(session('status'), ['two-factor-authentication-enabled', 'two-factor-authentication-confirmed']) &&
+        !in_array(session('status'), [
+            \Laravel\Fortify\Fortify::TWO_FACTOR_AUTHENTICATION_ENABLED,
+            \Laravel\Fortify\Fortify::TWO_FACTOR_AUTHENTICATION_CONFIRMED,
+        ]) &&
         empty($errors->confirmTwoFactorAuthentication->first()))
     @if (!session()->has('auth.password_confirmed_at'))
         <article class="message is-info">
@@ -39,7 +42,7 @@
 @endif
 
 {{-- STEP THREE: SCAN QR CODE AND VERIFY --}}
-@if (session('status') == 'two-factor-authentication-enabled' ||
+@if (session('status') == \Laravel\Fortify\Fortify::TWO_FACTOR_AUTHENTICATION_ENABLED ||
         !empty($errors->confirmTwoFactorAuthentication->first()))
     <article class="message is-warning">
         <div class="message-body">

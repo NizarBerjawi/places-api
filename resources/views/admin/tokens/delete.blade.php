@@ -7,8 +7,7 @@
 
     <article class="message is-danger">
         <div class="message-body">
-            You are permenantly deleting this API access token. <span class="has-text-weight-bold">This action is
-                irreversible.</span>
+            {!! __('tokens.delete') !!}
         </div>
     </article>
 

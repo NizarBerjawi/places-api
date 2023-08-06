@@ -7,8 +7,7 @@
 
     <article class="message is-info">
         <div class="message-body">
-            <span class="has-text-weight-bold">Personal access tokens function like ordinary OAuth access tokens.</span>
-            They can be used to authenticate to the API over Basic Authentication.
+            {!! __('tokens.index') !!}
         </div>
     </article>
 
@@ -17,7 +16,7 @@
             <span>You have not issued any tokens yet.</span>
         @else
             @foreach ($tokens as $token)
-                <div class="card is-success mb-4">
+                <div class="card block">
                     <div class="card-content">
                         <div class="content">
                             <div class="is-flex is-justify-content-space-between">
@@ -59,9 +58,9 @@
     <div class="is-flex is-justify-content-flex-end">
         <div class="field is-grouped">
             <div class="control">
-                <a href="{{ route('admin.tokens.create') }}" class="button is-primary is-medium is-responsive">Generate
-                    access
-                    token</a>
+                <a href="{{ route('admin.tokens.create') }}" class="button is-primary is-medium is-responsive">
+                    Generate access token
+                </a>
             </div>
         </div>
     </div>

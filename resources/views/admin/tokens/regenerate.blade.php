@@ -7,9 +7,7 @@
 
     <article class="message is-warning">
         <div class="message-body">
-            If you've lost or forgotten this token, you can regenerate it, but be aware that any scripts or applications
-            using this token will need to be updated.
-            <span class="has-text-weight-bold">This action is irreversible.</span>
+            {!! __('tokens.regenerate') !!}
         </div>
     </article>
 
@@ -17,6 +15,20 @@
         @csrf
         @method('PUT')
 
+        <div class="field">
+            <label class="label">Expiry date</label>
+            <div class="control">
+                <input @class([
+                    'input',
+                    'is-danger' => $errors->has('expires_at'),
+                    'is-medium',
+                ]) min="{{ \Illuminate\Support\Carbon::tomorrow()->format('Y-m-d') }}"
+                    type="date" name="expires_at" value="{{ old('expires_at') }}">
+            </div>
+            <p class="help">{{ __('tokens.expiry') }}</p>
+            <p class="help is-danger">{{ $errors->first('expires_at') }}</p>
+        </div>
+        
         <div class="is-flex is-justify-content-flex-end">
             <div class="field is-grouped">
                 <p class="control">

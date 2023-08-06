@@ -6,12 +6,11 @@
     </h1>
 
     @if (session()->has('textToken'))
-        <article class="message is-warning">
-            <div class="message-body">
-                Make sure to copy your personal access token now. <span class="has-text-weight-bold">You won’t be able to see
-                    it again!</span>
-            </div>
-        </article>
+    <article class="message is-warning">
+        <div class="message-body">
+            {!! __('tokens.copy') !!}
+        </div>
+    </article>
 
         <div class="block has-background-white-ter is-flex is-justify-content-space-between is-align-items-center">
             <pre id="token" class="has-text-weight-bold is-size-6-widescreen is-size-6-desktop is-size-7-mobile">{{ session('textToken') }}</pre>
@@ -48,9 +47,18 @@
                 <div class="is-size-4-tablet mr-1">
                     {{ $token->name }}
                 </div>
+
                 @if ($token->expires_at && $token->expires_at->isBefore(now()))
                     <div class="ml-1">
-                        <span class="tag is-danger is-light">Expired</span>
+                        <span class="tag is-danger">Expired {{ $token->expires_at->diffForHumans() }}</span>
+                    </div>
+                @elseif ($token->expires_at && $token->expires_at->isAfter(now()))
+                    <div class="ml-1">
+                        <span class="tag is-success">Expires {{ $token->expires_at->diffForHumans() }}</span>
+                    </div>
+                @else
+                    <div class="ml-1">
+                        <span class="tag is-warning">No expiry</span>
                     </div>
                 @endif
 
@@ -59,11 +67,11 @@
             <div>
                 <div class="is-size-7">
                     <span class="has-text-weight-bold">Created at: </span>
-                    {{ $token->created_at->format('Y-m-d') }} at {{ $token->created_at->format('g:i A') }}
+                    {{ $token->created_at->isoFormat('MMMM Do, YYYY') }} at {{ $token->created_at->format('g:i A') }}
                 </div>
-                <div class="is-size-7"><span class="has-text-weight-bold">Expires at: </span>
+                <div class="is-size-7"><span class="has-text-weight-bold">Expires on: </span>
                     @if ($token->expires_at)
-                        {{ now()->diffForHumans($token->expires_at) }}
+                        {{ $token->expires_at->isoFormat('MMMM Do, YYYY') }}
                     @else
                         This token has no expiration date.
                     @endif

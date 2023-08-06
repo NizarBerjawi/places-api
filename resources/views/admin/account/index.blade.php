@@ -9,7 +9,7 @@
         <article class="message is-danger">
             <div class="message-body">
                 Once you delete your account, there is no going back. <span class="has-text-weight-bold">Please be
-                    certain.</span>
+                    certain!</span>
             </div>
         </article>
 

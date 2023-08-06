@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\UnauthorizedException;
 
 class TokenController extends Controller
 {
@@ -35,10 +37,6 @@ class TokenController extends Controller
 
     public function update(Request $request, $id)
     {
-        if (! $request->has('action')) {
-            return back();
-        }
-
         $request->validate([
             'action' => ['required', Rule::in(['update', 'regenerate'])],
         ]);
@@ -48,7 +46,13 @@ class TokenController extends Controller
         $action = $request->get('action');
 
         if ($action === 'regenerate') {
-            $newAccessToken = $token->regenerateToken();
+            $request->validate([
+                'expires_at' => ['nullable', 'date', 'after_or_equal:tomorrow'],
+            ]);
+
+            $newAccessToken = $token->regenerateToken(
+                Carbon::make($request->expires_at)
+            );
 
             $textToken = $newAccessToken->plainTextToken;
 
@@ -59,7 +63,12 @@ class TokenController extends Controller
 
         if ($action === 'update') {
             $request->validate([
-                'token_name' => ['required', 'string', 'max:255'],
+                'token_name' => [
+                    'required',
+                    Rule::unique('personal_access_tokens', 'name')->ignore($token),
+                    'string',
+                    'max:255',
+                ],
             ]);
 
             $token->update(['name' => $request->input('token_name')]);
@@ -77,10 +86,21 @@ class TokenController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'token_name' => ['required', 'string', 'max:255'],
+            'token_name' => [
+                'required',
+                'unique:personal_access_tokens,name',
+                'string',
+                'max:255',
+            ],
+            'expires_at' => ['nullable', 'date', 'after_or_equal:tomorrow'],
         ]);
 
-        $token = $request->user()->createToken($request->token_name);
+        $token = $request->user()
+            ->createToken(
+                $request->token_name,
+                ['*'],
+                Carbon::make($request->expires_at)
+            );
 
         $textToken = $token->plainTextToken;
 
@@ -105,7 +125,7 @@ class TokenController extends Controller
         ]);
 
         if (! $request->has('action')) {
-            return back();
+            throw new UnauthorizedException();
         }
 
         $action = $request->get('action');

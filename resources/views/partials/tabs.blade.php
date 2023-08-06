@@ -21,7 +21,7 @@
                 Route::is('admin.account.*') || (isset($intended) && $intended === route('admin.account.confirm', ['id' => request()->user()->id, 'action' => 'delete'])),
         ])>
             <a href="{{ route('admin.account.index') }}">
-                <i class="icon is-small" data-feather="shield"></i>
+                <i class="icon is-small" data-feather="user"></i>
                 <span>Account</span>
             </a>
         </li>
