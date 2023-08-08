@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -82,31 +83,32 @@ class Handler extends ExceptionHandler
     {
         $debugEnabled = config('app.debug');
 
-        // if ($this->shouldntReport($e)) {
-        //     return;
-        // }
-
         if (
             $e instanceof NotFoundHttpException ||
             $e instanceof ModelNotFoundException
         ) {
             $message = 'The specified resource could not be found';
-            $statusCode = 404;
+            $statusCode = Response::HTTP_NOT_FOUND;
         }
 
         if ($e instanceof InvalidQuery) {
             $message = $e->getMessage();
-            $statusCode = 404;
+            $statusCode = Response::HTTP_NOT_FOUND;
         }
 
         if ($e instanceof InvalidIncludeQuery) {
             $message = "Requested include(s) `{$e->unknownIncludes->implode(', ')}` are not allowed.";
-            $statusCode = 404;
+            $statusCode = Response::HTTP_NOT_FOUND;
         }
 
         if ($e instanceof QueryException) {
             $message = 'Internal Server Error';
-            $statusCode = 500;
+            $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
+        }
+
+        if ($e instanceof AuthenticationException) {
+            $message = $e->getMessage();
+            $statusCode = Response::HTTP_FORBIDDEN;
         }
 
         if (! isset($message)) {

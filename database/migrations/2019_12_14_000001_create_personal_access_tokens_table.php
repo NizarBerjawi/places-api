@@ -21,6 +21,10 @@ return new class extends Migration
             $table->timestamp('expires_at')->nullable();
             $table->timestamps();
         });
+
+        Schema::table('personal_access_tokens', function (Blueprint $table) {
+            $table->foreign('tokenable_id')->references('id')->on('users')->onDelete('cascade');
+        });
     }
 
     /**
@@ -28,6 +32,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+
+        Schema::table('personal_access_tokens', function (Blueprint $table) {
+            $table->dropForeign(['tokenable_id']);
+        });
+
         Schema::dropIfExists('personal_access_tokens');
     }
 };

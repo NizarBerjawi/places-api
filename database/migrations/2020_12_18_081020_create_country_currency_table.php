@@ -32,7 +32,7 @@ class CreateCountryCurrencyTable extends Migration
      */
     public function down()
     {
-        Schema::table('countries', function (Blueprint $table) {
+        Schema::table('country_currency', function (Blueprint $table) {
             $table->dropForeign(['country_code']);
             $table->dropForeign(['currency_code']);
         });

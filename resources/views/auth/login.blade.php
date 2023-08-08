@@ -9,15 +9,24 @@
                         <div class="columns">
                             <div class="column is-6 is-offset-3">
                                 <h1 class="is-size-1 is-size-3-mobile">Welcome Back!</h1>
-                                <p class="is-size-4 is-size-6-mobile">New to Places API? <a href="{{ route('register') }}">Create an
+                                <p class="is-size-4 is-size-6-mobile">New to Places API? <a
+                                        href="{{ route('register') }}">Create an
                                         account</a></p>
-                                <form method="POST" action="{{ route('login') }}">
+
+                                @if (session('status'))
+                                    <article class="message is-success mt-4">
+                                        <div class="message-body">
+                                            {{ session('status') }}
+                                        </div>
+                                    </article>
+                                @endif
+                                <form method="post" action="{{ route('login') }}">
                                     @csrf
 
                                     <div class="field">
                                         <label class="label">Email</label>
                                         <div class="control">
-                                            <input @class(['input', 'is-danger' => $errors->has('email'), 'is-large']) type="email" name="email"
+                                            <input @class(['input', 'is-danger' => $errors->has('email'), 'is-medium']) type="email" name="email"
                                                 placeholder="e.g. alex@example.com" value={{ old('email') }}>
                                         </div>
                                         <p class="help is-danger">{{ $errors->first('email') }}</p>
@@ -26,7 +35,12 @@
                                     <div class="field">
                                         <label class="label">Password</label>
                                         <div class="control">
-                                            <input @class(['input', 'is-danger' => $errors->has('email'), 'is-large', 'is-small-mobile']) type="password" name="password"
+                                            <input @class([
+                                                'input',
+                                                'is-danger' => $errors->has('email'),
+                                                'is-medium',
+                                                'is-small-mobile',
+                                            ]) type="password" name="password"
                                                 placeholder="********">
                                         </div>
                                         <p class="help is-danger">{{ $errors->first('password') }}</p>
@@ -34,7 +48,8 @@
 
                                     <div class="field">
                                         <label class="checkbox">
-                                            <input class="mr-2 has-text-link" type="checkbox" name="remember" value="true">Remember me
+                                            <input class="mr-2 has-text-link" type="checkbox" name="remember"
+                                                value="true">Remember me
                                         </label>
                                     </div>
 
@@ -46,10 +61,11 @@
 
                                         <div class="field is-grouped">
                                             <p class="control">
-                                                <a href="{{ route('home') }}" class="button is-large is-responsive">Back</a>
+                                                <a href="{{ route('home') }}"
+                                                    class="button is-medium is-responsive">Back</a>
                                             </p>
                                             <p class="control">
-                                                <button class="button is-primary is-large is-responsive">Log in</button>
+                                                <button class="button is-primary is-medium is-responsive">Log in</button>
                                             </p>
                                         </div>
                                     </div>

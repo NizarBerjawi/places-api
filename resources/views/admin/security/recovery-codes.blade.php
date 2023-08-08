@@ -1,7 +1,9 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1 class="title">Recovery Codes</h1>
+    <h1 class="title is-size-3-desktop is-size-4-tablet is-size-5-mobile">
+        Recovery Codes
+    </h1>
 
     <article class="message is-info">
         <div class="message-body">
@@ -17,16 +19,16 @@
         @endforeach
     </div>
 
-    <form method="POST" action="{{ route('two-factor.recovery-codes') }}">
+    <form method="post" action="{{ route('two-factor.recovery-codes') }}">
         @csrf
 
         <div class="is-flex is-justify-content-flex-end">
             <div class="field is-grouped">
                 <div class="control">
-                    <a href="{{ route('admin.authentication') }}" class="button is-large is-responsive">Back</a>
+                    <a href="{{ route('admin.security.index') }}" class="button is-medium is-responsive">Back</a>
                 </div>
                 <div class="control">
-                    <button class="button is-primary is-large is-responsive">Regenerate codes</button>
+                    <button class="button is-primary is-medium is-responsive">Regenerate codes</button>
                 </div>
             </div>
         </div>
