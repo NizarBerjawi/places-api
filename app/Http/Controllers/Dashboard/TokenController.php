@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TokenConfirmRequest;
+use App\Http\Requests\TokenPostRequest;
+use App\Http\Requests\TokenPutRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Validation\Rule;
-use Illuminate\Validation\UnauthorizedException;
 
 class TokenController extends Controller
 {
@@ -35,21 +36,13 @@ class TokenController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(TokenPutRequest $request, $id)
     {
-        $request->validate([
-            'action' => ['required', Rule::in(['update', 'regenerate'])],
-        ]);
-
         $token = $request->user()->tokens()->where('id', $id)->first();
 
         $action = $request->get('action');
 
         if ($action === 'regenerate') {
-            $request->validate([
-                'expires_at' => ['nullable', 'date', 'after_or_equal:tomorrow'],
-            ]);
-
             $newAccessToken = $token->regenerateToken(
                 Carbon::make($request->expires_at)
             );
@@ -62,19 +55,13 @@ class TokenController extends Controller
         }
 
         if ($action === 'update') {
-            $request->validate([
-                'token_name' => [
-                    'required',
-                    Rule::unique('personal_access_tokens', 'name')->ignore($token),
-                    'string',
-                    'max:255',
-                ],
+            $token->update([
+                'name' => $request->input('token_name'),
             ]);
-
-            $token->update(['name' => $request->input('token_name')]);
         }
 
-        return redirect()->route('admin.tokens.show', $id)
+        return redirect()
+            ->route('admin.tokens.show', $id)
             ->with('textToken', $textToken ?? null);
     }
 
@@ -83,18 +70,8 @@ class TokenController extends Controller
         return view('admin.tokens.create');
     }
 
-    public function store(Request $request)
+    public function store(TokenPostRequest $request)
     {
-        $request->validate([
-            'token_name' => [
-                'required',
-                'unique:personal_access_tokens,name',
-                'string',
-                'max:255',
-            ],
-            'expires_at' => ['nullable', 'date', 'after_or_equal:tomorrow'],
-        ]);
-
         $token = $request->user()
             ->createToken(
                 $request->token_name,
@@ -118,16 +95,8 @@ class TokenController extends Controller
         return redirect()->route('admin.tokens.index');
     }
 
-    public function confirm(Request $request, $id)
+    public function confirm(TokenConfirmRequest $request, $id)
     {
-        $request->validate([
-            'action' => ['required', Rule::in(['delete', 'regenerate'])],
-        ]);
-
-        if (! $request->has('action')) {
-            throw new UnauthorizedException();
-        }
-
         $action = $request->get('action');
 
         $token = $request->user()->tokens()->where('id', $id)->first();

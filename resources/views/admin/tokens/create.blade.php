@@ -5,6 +5,14 @@
         Create Token
     </h1>
 
+    @if ($errors->has('token_count'))
+        <article class="message is-danger mt-4">
+            <div class="message-body">
+                {!! $errors->first('token_count') !!}
+            </div>
+        </article>
+    @endif
+
     <form method="post" action="{{ route('admin.tokens.store') }}">
         @csrf
 
