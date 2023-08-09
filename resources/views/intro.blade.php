@@ -11,6 +11,8 @@
                         </p>
                         <ul class="menu-list">
                             <li><a href="#introduction">Introduction</a></li>
+                            <li><a href="#authentication">Authentication</a></li>
+
                             <li><a href="#querying-relations">Querying Relations</a></li>
                             <li>
                                 <a href="#filtering-relations">Filtering results</a>
@@ -39,6 +41,37 @@
                             available for download free of charge.
                         </blockquote>
 
+                        <h1 id="authentication">Authentication</h1>
+
+                        <article class="message is-danger">
+                            <div class="message-body">
+                                Standard accounts can only have up to 3 API access tokens.
+                            </div>
+                        </article>
+
+                        <p>The Places API authenticates your API requests using your account's API keys. If a request
+                            doesn't include
+                            a valid key, Places API returns an authentication error.</p>
+
+                        <p>You can use the <a href="{{ route('login') }}">dashboard</a> to create, delete, and regenerate
+                            API keys.
+                        <p>
+                            Authentication to the API is performed via <a
+                                href="https://swagger.io/docs/specification/authentication/bearer-authentication/">HTTP
+                                Bearer Auth</a>. When making requests using API tokens, the token should be included in the
+                            Authorization header as a Bearer token:
+                        </p>
+
+                        <pre>Authorization: Bearer &lt;TOKEN&gt;</pre>
+
+                        <h1 id="rate-limiting">Rate-Limiting</h1>
+                        <p>At this point in time, users can make a <code>15</code> requests per minute to the API
+                            before getting rate-limited.</p>
+
+                        <p>You can determine how many requests you have remaining by inspecting the Response Headers of
+                            your Request:</p>
+
+                        <pre>X-RateLimit-Limit: 100&#010;X-RateLimit-Remaining: 65</pre>
                         <h1 id="querying-relateions">Querying Relations</h1>
                         <p>You can query a relation by adding the <code>include</code> query parameter to the request.
                         </p>
@@ -177,18 +210,6 @@
                         <pre>GET /api/v1/featureCodes?page[size]=5&page[cursor]=eyJpc28zMTY2X2FscGhhMiI6IkFXIiwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ</pre>
 
                         <p>To improve the performance of the API, some pagination meta data is not computed</p>
-
-                        <h1 id="rate-limiting">Rate-Limiting</h1>
-                        <p>At this point in time, users can make a <code>100</code> requests per minute to the API
-                            before
-                            getting
-                            rate-limited.</p>
-
-                        <p>You can determine how many requests you have remaining by inspecting the Response Headers of
-                            your
-                            Request:</p>
-
-                        <pre>X-RateLimit-Limit: 100&#010;X-RateLimit-Remaining: 65</pre>
 
                         <h1 id="additional-resources">Additional Resources</h1>
 
