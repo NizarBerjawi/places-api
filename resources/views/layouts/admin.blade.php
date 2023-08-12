@@ -20,7 +20,9 @@
 
     <main>
         <div class="container">
-            @include('partials.tabs')
+            <section class="section mt-2">
+                @include('partials.tabs')
+            </section>
 
             <section class="section">
                 <div class="columns">
