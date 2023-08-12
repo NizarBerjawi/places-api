@@ -16,9 +16,4 @@ class SecurityController extends Controller
     {
         return view('admin.security.recovery-codes');
     }
-
-    public function store()
-    {
-        dd('test');
-    }
 }
