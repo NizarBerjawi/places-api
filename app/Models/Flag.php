@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  *      type="object",
  *      title="Flag",
  *      description="A flag is a piece of fabric with a distinctive design and colours. It is used as a symbol, a signalling device, or for decoration.",
- * 
+ *
  *      @OA\Property(
  *           property="countryCode",
  *           type="string",

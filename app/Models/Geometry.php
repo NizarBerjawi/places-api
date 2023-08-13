@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  *      type="object",
  *      title="Feature Collection",
  *      description="A Feature Collection object is a type of GeoJSON object. Each element of the Feature Collection is a Feature object.",
- * 
+ *
  *      @OA\Property(
  *           property="type",
  *           type="string",
@@ -27,13 +27,13 @@ use Illuminate\Database\Eloquent\Model;
  *           @OA\Items(ref="#/components/schemas/feature")
  *      )
  * )
- * 
+ *
  * @OA\Schema(
  *      schema="feature",
  *      type="object",
  *      title="Feature",
  *      description="A Feature object represents a spatially bounded thing.  Every Feature object is a GeoJSON object no matter where it occurs in a GeoJSON text.",
- * 
+ *
  *      @OA\Property(
  *           property="type",
  *           type="string",
@@ -49,7 +49,7 @@ use Illuminate\Database\Eloquent\Model;
  *           ref="#/components/schemas/geometry"
  *      )
  * )
- * 
+ *
  * @OA\Schema(
  *      schema="geometry",
  *      type="object",
@@ -70,9 +70,6 @@ use Illuminate\Database\Eloquent\Model;
  *              "GeometryCollection"
  *           },
  *           description="The type of the Geometry object.",
- * 
- * 
- *      ),
  *      @OA\Property(
  *           property="coordinates",
  *           type="string",

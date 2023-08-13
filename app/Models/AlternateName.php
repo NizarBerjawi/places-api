@@ -12,11 +12,11 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="alternateName",
  *      type="object",
  *      title="Alternate Name",
- *      description="Alternate names for places in the database. This includes: 
+ *      description="Alternate names for places in the database. This includes:
  * Translations to different languages
  * Historic names
  * Colloquial names",
- * 
+ *
  *      @OA\Property(
  *           property="name",
  *           type="string",

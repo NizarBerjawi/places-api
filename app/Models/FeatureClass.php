@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  *      type="object",
  *      title="Feature Class",
  *      description="Feature Classes are high-level categories used to categorize geographical names. There are a total of 9 Feature Classes.",
- * 
+ *
  *      @OA\Property(
  *           property="code",
  *           type="string",

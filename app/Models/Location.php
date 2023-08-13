@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  *      type="object",
  *      title="Location",
  *      description="Latitude and Longitude are the units that represent the coordinates at geographic coordinate system.",
- * 
+ *
  *      @OA\Property(
  *           property="latitude",
  *           type="number",

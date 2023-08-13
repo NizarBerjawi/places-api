@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  *      type="object",
  *      title="Feature Code",
  *      description="Feature Codes are sub-categories of Feature Classes and are used to further categorize geographical names. There are a total of 645 feature codes.",
- * 
+ *
  *      @OA\Property(
  *           property="code",
  *           type="string",

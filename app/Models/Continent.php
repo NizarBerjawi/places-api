@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\DB;
  *      type="object",
  *      title="Continent",
  *      description="A continent could be a single landmass or a part of a very large landmass, as in the case of Asia or Europe.",
- * 
+ *
  *      @OA\Property(
  *          property="code",
  *          type="string",

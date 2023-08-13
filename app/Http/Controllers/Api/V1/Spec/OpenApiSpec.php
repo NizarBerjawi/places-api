@@ -24,13 +24,16 @@ namespace App\Http\Controllers\Api\V1\Spec;
  *      title="API Collection Response",
  *      allOf={
  *           @OA\Schema(
+ *
  *                @OA\Property(
  *                     property="data",
  *                     description="A paginated collection of objects.",
  *                     type="array",
+ *
  *                     @OA\Items(
  *                          type="object",
  *                          oneOf={
+ *
  *                                @OA\Schema(ref="#/components/schemas/alternateName"),
  *                                @OA\Schema(ref="#/components/schemas/continent"),
  *                                @OA\Schema(ref="#/components/schemas/country"),
@@ -94,18 +97,20 @@ namespace App\Http\Controllers\Api\V1\Spec;
  *           )
  *      }
  * )
- * 
+ *
  * @OA\Schema(
  *      schema="apiObjectResponse",
  *      type="object",
  *      title="API Object Response",
  *      allOf={
  *           @OA\Schema(
+ *
  *                @OA\Property(
  *                     property="data",
  *                     description="A single data object",
  *                     type="object",
  *                     oneOf={
+ *
  *                           @OA\Schema(ref="#/components/schemas/alternateName"),
  *                           @OA\Schema(ref="#/components/schemas/continent"),
  *                           @OA\Schema(ref="#/components/schemas/country"),
