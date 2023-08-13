@@ -12,7 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="currency",
  *      type="object",
  *      title="Currency",
- *
+ *      description="A currency is a standardization of money in any form, in use or circulation as a medium of exchange, for example banknotes and coins.",
+ * 
  *      @OA\Property(
  *           property="name",
  *           type="string",

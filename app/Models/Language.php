@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="language",
  *      type="object",
  *      title="Language",
+ *      description="Language is a structured system of communication that consists of grammar and vocabulary.",
  *
  *      @OA\Property(
  *           property="name",

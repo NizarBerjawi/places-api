@@ -1245,14 +1245,107 @@
     },
     "components": {
         "schemas": {
-            "apiResponse": {
-                "title": "Api Response",
+            "apiCollectionResponse": {
+                "title": "API Collection Response",
                 "type": "object",
                 "allOf": [
                     {
                         "properties": {
                             "data": {
-                                "description": "The paginated data set that is returned.",
+                                "description": "A paginated collection of objects.",
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "oneOf": [
+                                        {
+                                            "$ref": "#/components/schemas/alternateName"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/continent"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/country"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/currency"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/featureClass"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/featureCode"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/flag"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/language"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/place"
+                                        },
+                                        {
+                                            "$ref": "#/components/schemas/timeZone"
+                                        }
+                                    ]
+                                }
+                            },
+                            "links": {
+                                "description": "Display the links to other pages of the response",
+                                "properties": {
+                                    "prev": {
+                                        "description": "The previous page of the paginated data set.",
+                                        "type": "string",
+                                        "example": "http://localhost:8080/api/v1/featureCodes?page[cursor]=eyJnZW9uYW1lX2lkIjoxNCwiX3BvaW50c1RvTmV4dEl0ZW1zIjpmYWxzZX0"
+                                    },
+                                    "next": {
+                                        "description": "The next page in the paginated data set.",
+                                        "type": "string",
+                                        "example": "http://localhost:8080/api/v1/featureCodes?page[cursor]=eyJnZW9uYW1lX2lkIjoyNSwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "meta": {
+                                "description": "Meta data related to paginated responses.",
+                                "properties": {
+                                    "path": {
+                                        "description": "The base path of the data that is being paginated.",
+                                        "type": "string",
+                                        "example": "http://localhost:8080/api/v1/featureCodes"
+                                    },
+                                    "perPage": {
+                                        "description": "The number of items per page.",
+                                        "type": "string",
+                                        "example": "10"
+                                    },
+                                    "nextCursor": {
+                                        "description": "The cursor to the next paginated set of data",
+                                        "type": "string",
+                                        "example": "eyJpc28zMTY2X2FscGhhMiI6IkJPIiwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ"
+                                    },
+                                    "prevCursor": {
+                                        "description": "The cursor to the previous paginated set of data",
+                                        "type": "string",
+                                        "example": "eyJpc28zMTY2X2FscGhhMiI6IkJFIiwiX3BvaW50c1RvTmV4dEl0ZW1zIjpmYWxzZX0"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "apiObjectResponse": {
+                "title": "API Object Response",
+                "type": "object",
+                "allOf": [
+                    {
+                        "properties": {
+                            "data": {
+                                "description": "A single data object",
+                                "type": "object",
                                 "oneOf": [
                                     {
                                         "$ref": "#/components/schemas/alternateName"
@@ -1285,48 +1378,6 @@
                                         "$ref": "#/components/schemas/timeZone"
                                     }
                                 ]
-                            },
-                            "links": {
-                                "description": "Display the links to other pages of the response",
-                                "properties": {
-                                    "prev": {
-                                        "description": "The previous page of the paginated data set.",
-                                        "type": "string",
-                                        "example": "http://localhost:8080/api/v1/featureCodes?page[cursor]=eyJnZW9uYW1lX2lkIjoxNCwiX3BvaW50c1RvTmV4dEl0ZW1zIjpmYWxzZX0"
-                                    },
-                                    "next": {
-                                        "description": "The next page in the paginated data set.",
-                                        "type": "string",
-                                        "example": "http://localhost:8080/api/v1/featureCodes?page[cursor]=eyJnZW9uYW1lX2lkIjoyNSwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ"
-                                    }
-                                },
-                                "type": "object"
-                            },
-                            "meta": {
-                                "description": "Meta data related to paginated responses",
-                                "properties": {
-                                    "path": {
-                                        "description": "The base path of the data that is being paginated.",
-                                        "type": "string",
-                                        "example": "http://localhost:8080/api/v1/featureCodes"
-                                    },
-                                    "perPage": {
-                                        "description": "The number of items per page.",
-                                        "type": "string",
-                                        "example": "10"
-                                    },
-                                    "nextCursor": {
-                                        "description": "The cursor to the next paginated set of data",
-                                        "type": "string",
-                                        "example": "eyJpc28zMTY2X2FscGhhMiI6IkJPIiwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ"
-                                    },
-                                    "prevCursor": {
-                                        "description": "The cursor to the previous paginated set of data",
-                                        "type": "string",
-                                        "example": "eyJpc28zMTY2X2FscGhhMiI6IkJFIiwiX3BvaW50c1RvTmV4dEl0ZW1zIjpmYWxzZX0"
-                                    }
-                                },
-                                "type": "object"
                             }
                         },
                         "type": "object"
@@ -1335,24 +1386,25 @@
             },
             "alternateName": {
                 "title": "Alternate Name",
+                "description": "Alternate names for places in the database. This includes: \n * Translations to different languages\n * Historic names\n * Colloquial names",
                 "properties": {
                     "name": {
-                        "description": "The name of the place.",
+                        "description": "The alternate name of the place.",
                         "type": "string",
                         "example": "Sydney"
                     },
                     "isPreferredName": {
-                        "description": "Determines if the alternate name is official/preferred.",
+                        "description": "Determines if the alternate name is official/preferred or not.",
                         "type": "boolean",
                         "example": "true"
                     },
                     "isShortName": {
-                        "description": "Determines if the alternate name is a short name.",
+                        "description": "Determines if the alternate name is a shortened version of the name.",
                         "type": "boolean",
                         "example": "true"
                     },
                     "isHistoric": {
-                        "description": "Determines if the alternate name is historic and was used in the past.",
+                        "description": "Determines if the alternate name is historic and was used in the past but not anymore.",
                         "type": "boolean",
                         "example": "true"
                     },
@@ -1366,6 +1418,7 @@
             },
             "continent": {
                 "title": "Continent",
+                "description": "A continent could be a single landmass or a part of a very large landmass, as in the case of Asia or Europe.",
                 "properties": {
                     "code": {
                         "description": "The two letter continent code",
@@ -1382,6 +1435,7 @@
             },
             "country": {
                 "title": "Country",
+                "description": "A country is a distinct part of the world, such as a state, nation, or other political entity. It may be a sovereign state or make up one part of a larger state.",
                 "properties": {
                     "name": {
                         "description": "The English name of the country",
@@ -1423,6 +1477,7 @@
             },
             "currency": {
                 "title": "Currency",
+                "description": "A currency is a standardization of money in any form, in use or circulation as a medium of exchange, for example banknotes and coins.",
                 "properties": {
                     "name": {
                         "description": "The name of the currency",
@@ -1439,10 +1494,22 @@
             },
             "featureClass": {
                 "title": "Feature Class",
+                "description": "Feature Classes are high-level categories used to categorize geographical names. There are a total of 9 Feature Classes.",
                 "properties": {
                     "code": {
                         "description": "The code of the feature class",
                         "type": "string",
+                        "enum": [
+                            "A",
+                            "H",
+                            "L",
+                            "P",
+                            "R",
+                            "S",
+                            "T",
+                            "U",
+                            "V"
+                        ],
                         "example": "A"
                     },
                     "description": {
@@ -1455,6 +1522,7 @@
             },
             "featureCode": {
                 "title": "Feature Code",
+                "description": "Feature Codes are sub-categories of Feature Classes and are used to further categorize geographical names. There are a total of 645 feature codes.",
                 "properties": {
                     "code": {
                         "description": "The code of the feature code",
@@ -1476,6 +1544,7 @@
             },
             "flag": {
                 "title": "Flag",
+                "description": "A flag is a piece of fabric with a distinctive design and colours. It is used as a symbol, a signalling device, or for decoration.",
                 "properties": {
                     "countryCode": {
                         "description": "The two-letter ISO 3166-1 alpha-2 country code that this flag belongs to",
@@ -1488,48 +1557,16 @@
                         "example": "http://localhost:8080/storage/flags/AU.gif"
                     },
                     "filename": {
-                        "description": "The location of the flag image",
+                        "description": "The name of the flag file",
                         "type": "string",
                         "example": "AU.gif"
                     }
                 },
                 "type": "object"
             },
-            "geometry": {
-                "title": "Geometry",
-                "properties": {
-                    "type": {
-                        "description": "The type of the GeoJSON object.",
-                        "type": "string",
-                        "example": "Polygon"
-                    },
-                    "coordinates": {
-                        "description": "Coordinates represent points, curves, and surfaces in coordinate space.",
-                        "type": "string",
-                        "example": "[[[[6.531,-0.002],[6.53,-0.011],[6.523,-0.014]]]]"
-                    }
-                },
-                "type": "object"
-            },
-            "feature": {
-                "title": "Feature",
-                "properties": {
-                    "type": {
-                        "description": "The type of the GeoJSON object.",
-                        "type": "string",
-                        "example": "Feature"
-                    },
-                    "properties": {
-                        "$ref": "#/components/schemas/country"
-                    },
-                    "geometry": {
-                        "$ref": "#/components/schemas/geometry"
-                    }
-                },
-                "type": "object"
-            },
             "featureCollection": {
                 "title": "Feature Collection",
+                "description": "A Feature Collection object is a type of GeoJSON object. Each element of the Feature Collection is a Feature object.",
                 "properties": {
                     "type": {
                         "description": "The type of the GeoJSON object.",
@@ -1545,8 +1582,53 @@
                 },
                 "type": "object"
             },
+            "feature": {
+                "title": "Feature",
+                "description": "A Feature object represents a spatially bounded thing.  Every Feature object is a GeoJSON object no matter where it occurs in a GeoJSON text.",
+                "properties": {
+                    "type": {
+                        "description": "The type of the GeoJSON object.",
+                        "type": "string",
+                        "example": "Feature"
+                    },
+                    "properties": {
+                        "$ref": "#/components/schemas/country"
+                    },
+                    "geometry": {
+                        "$ref": "#/components/schemas/geometry"
+                    }
+                },
+                "type": "object"
+            },
+            "geometry": {
+                "title": "Geometry",
+                "description": "A Geometry object represents points, curves, and surfaces in coordinate space.  Every Geometry object is a GeoJSON object no matter where it occurs in a GeoJSON text.",
+                "properties": {
+                    "type": {
+                        "description": "The type of the Geometry object.",
+                        "type": "string",
+                        "enum": [
+                            "Point",
+                            "MultiPoint",
+                            "LineString",
+                            "MultiLineString",
+                            "Polygon",
+                            "MultiPolygon",
+                            "GeometryCollection"
+                        ],
+                        "example": "Polygon"
+                    },
+                    "coordinates": {
+                        "description": "Coordinates represent points, curves, and surfaces in coordinate space.",
+                        "type": "string",
+                        "example": "[[[[6.531,-0.002],[6.53,-0.011],[6.523,-0.014]]]]"
+                    }
+                },
+                "type": "object"
+            },
             "language": {
                 "title": "Language",
+                "description": "Language is a structured system of communication that consists of grammar and vocabulary.",
                 "properties": {
                     "name": {
                         "description": "The name of a specific language",
@@ -1573,6 +1655,7 @@
             },
             "location": {
                 "title": "Location",
+                "description": "Latitude and Longitude are the units that represent the coordinates at geographic coordinate system.",
                 "properties": {
                     "latitude": {
                         "description": "The latitude of a certain place",
@@ -1625,6 +1708,7 @@
             },
             "timeZone": {
                 "title": "Time Zone",
+                "description": "A time zone is an area which observes a uniform standard time for legal, commercial and social purposes. Time zones tend to follow the boundaries between countries and their subdivisions instead of strictly following longitude, because it is convenient for areas in frequent communication to keep the same time",
                 "properties": {
                     "gmtOffset": {
                         "description": "The number of hours a place refers to that time zone being three hours ",

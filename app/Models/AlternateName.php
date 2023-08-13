@@ -12,30 +12,34 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="alternateName",
  *      type="object",
  *      title="Alternate Name",
- *
+ *      description="Alternate names for places in the database. This includes: 
+ * Translations to different languages
+ * Historic names
+ * Colloquial names",
+ * 
  *      @OA\Property(
  *           property="name",
  *           type="string",
  *           example="Sydney",
- *           description="The name of the place."
+ *           description="The alternate name of the place."
  *      ),
  *      @OA\Property(
  *           property="isPreferredName",
  *           type="boolean",
  *           example="true",
- *           description="Determines if the alternate name is official/preferred."
+ *           description="Determines if the alternate name is official/preferred or not."
  *      ),
  *      @OA\Property(
  *           property="isShortName",
  *           type="boolean",
  *           example="true",
- *           description="Determines if the alternate name is a short name."
+ *           description="Determines if the alternate name is a shortened version of the name."
  *      ),
  *      @OA\Property(
  *           property="isHistoric",
  *           type="boolean",
  *           example="true",
- *           description="Determines if the alternate name is historic and was used in the past."
+ *           description="Determines if the alternate name is historic and was used in the past but not anymore."
  *      ),
  *      @OA\Property(
  *           property="isColloquial",

@@ -12,7 +12,8 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="flag",
  *      type="object",
  *      title="Flag",
- *
+ *      description="A flag is a piece of fabric with a distinctive design and colours. It is used as a symbol, a signalling device, or for decoration.",
+ * 
  *      @OA\Property(
  *           property="countryCode",
  *           type="string",
@@ -29,7 +30,7 @@ use Illuminate\Database\Eloquent\Model;
  *           property="filename",
  *           type="string",
  *           example="AU.gif",
- *           description="The location of the flag image"
+ *           description="The name of the flag file"
  *      ),
  * )
  */

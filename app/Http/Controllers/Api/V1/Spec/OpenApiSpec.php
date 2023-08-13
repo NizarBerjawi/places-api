@@ -19,28 +19,30 @@ namespace App\Http\Controllers\Api\V1\Spec;
  * )
  *
  * @OA\Schema(
- *      schema="apiResponse",
+ *      schema="apiCollectionResponse",
  *      type="object",
- *      title="Api Response",
+ *      title="API Collection Response",
  *      allOf={
  *           @OA\Schema(
- *
  *                @OA\Property(
  *                     property="data",
- *                     description="The paginated data set that is returned.",
- *                     oneOf={
- *
- *                           @OA\Schema(ref="#/components/schemas/alternateName"),
- *                           @OA\Schema(ref="#/components/schemas/continent"),
- *                           @OA\Schema(ref="#/components/schemas/country"),
- *                           @OA\Schema(ref="#/components/schemas/currency"),
- *                           @OA\Schema(ref="#/components/schemas/featureClass"),
- *                           @OA\Schema(ref="#/components/schemas/featureCode"),
- *                           @OA\Schema(ref="#/components/schemas/flag"),
- *                           @OA\Schema(ref="#/components/schemas/language"),
- *                           @OA\Schema(ref="#/components/schemas/place"),
- *                           @OA\Schema(ref="#/components/schemas/timeZone"),
- *                     }
+ *                     description="A paginated collection of objects.",
+ *                     type="array",
+ *                     @OA\Items(
+ *                          type="object",
+ *                          oneOf={
+ *                                @OA\Schema(ref="#/components/schemas/alternateName"),
+ *                                @OA\Schema(ref="#/components/schemas/continent"),
+ *                                @OA\Schema(ref="#/components/schemas/country"),
+ *                                @OA\Schema(ref="#/components/schemas/currency"),
+ *                                @OA\Schema(ref="#/components/schemas/featureClass"),
+ *                                @OA\Schema(ref="#/components/schemas/featureCode"),
+ *                                @OA\Schema(ref="#/components/schemas/flag"),
+ *                                @OA\Schema(ref="#/components/schemas/language"),
+ *                                @OA\Schema(ref="#/components/schemas/place"),
+ *                                @OA\Schema(ref="#/components/schemas/timeZone"),
+ *                          }
+ *                     )
  *                ),
  *
  *                @OA\Property(
@@ -63,7 +65,7 @@ namespace App\Http\Controllers\Api\V1\Spec;
  *                @OA\Property(
  *                     property="meta",
  *                     type="object",
- *                     description="Meta data related to paginated responses",
+ *                     description="Meta data related to paginated responses.",
  *                     @OA\Property(
  *                          property="path",
  *                          type="string",
@@ -88,6 +90,33 @@ namespace App\Http\Controllers\Api\V1\Spec;
  *                          example="eyJpc28zMTY2X2FscGhhMiI6IkJFIiwiX3BvaW50c1RvTmV4dEl0ZW1zIjpmYWxzZX0",
  *                          description="The cursor to the previous paginated set of data"
  *                     ),
+ *                )
+ *           )
+ *      }
+ * )
+ * 
+ * @OA\Schema(
+ *      schema="apiObjectResponse",
+ *      type="object",
+ *      title="API Object Response",
+ *      allOf={
+ *           @OA\Schema(
+ *                @OA\Property(
+ *                     property="data",
+ *                     description="A single data object",
+ *                     type="object",
+ *                     oneOf={
+ *                           @OA\Schema(ref="#/components/schemas/alternateName"),
+ *                           @OA\Schema(ref="#/components/schemas/continent"),
+ *                           @OA\Schema(ref="#/components/schemas/country"),
+ *                           @OA\Schema(ref="#/components/schemas/currency"),
+ *                           @OA\Schema(ref="#/components/schemas/featureClass"),
+ *                           @OA\Schema(ref="#/components/schemas/featureCode"),
+ *                           @OA\Schema(ref="#/components/schemas/flag"),
+ *                           @OA\Schema(ref="#/components/schemas/language"),
+ *                           @OA\Schema(ref="#/components/schemas/place"),
+ *                           @OA\Schema(ref="#/components/schemas/timeZone"),
+ *                     }
  *                )
  *           )
  *      }
