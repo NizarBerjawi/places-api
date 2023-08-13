@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="timeZone",
  *      type="object",
  *      title="Time Zone",
+ *      description="A time zone is an area which observes a uniform standard time for legal, commercial and social purposes. Time zones tend to follow the boundaries between countries and their subdivisions instead of strictly following longitude, because it is convenient for areas in frequent communication to keep the same time",
  *
  *      @OA\Property(
  *           property="gmtOffset",

@@ -12,12 +12,14 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="featureClass",
  *      type="object",
  *      title="Feature Class",
+ *      description="Feature Classes are high-level categories used to categorize geographical names. There are a total of 9 Feature Classes.",
  *
  *      @OA\Property(
  *           property="code",
  *           type="string",
  *           example="A",
- *           description="The code of the feature class"
+ *           description="The code of the feature class",
+ *           enum={"A", "H", "L", "P", "R", "S", "T", "U", "V"}
  *      ),
  *      @OA\Property(
  *           property="description",

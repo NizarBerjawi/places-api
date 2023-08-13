@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  *      schema="location",
  *      type="object",
  *      title="Location",
+ *      description="Latitude and Longitude are the units that represent the coordinates at geographic coordinate system.",
  *
  *      @OA\Property(
  *           property="latitude",
