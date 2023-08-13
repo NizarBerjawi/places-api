@@ -13,7 +13,7 @@
     @yield('styles')
 </head>
 
-<body class="has-navbar-fixed-top">
+<body>
     <header>
         @include('partials.navbar')
     </header>

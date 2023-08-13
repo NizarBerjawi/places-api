@@ -44,7 +44,6 @@ class CountryController extends Controller
      */
     public function index(CountryQuery $query)
     {
-        return json_encode(request()->user());
         $countries = $query->getPaginator();
 
         return new PaginatedResourceResponse(

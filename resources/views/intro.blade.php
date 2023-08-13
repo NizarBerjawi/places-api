@@ -3,7 +3,7 @@
 @section('content')
     <section class="section">
         <div class="columns">
-            <div class="column is-3">
+            <div class="column is-one-quarter">
                 <aside class="menu is-hidden-mobile" style="position: fixed;">
                     <p class="menu-label">
                         Places API
@@ -11,7 +11,7 @@
                     <ul class="menu-list">
                         <li><a href="#introduction">Introduction</a></li>
                         <li><a href="#authentication">Authentication</a></li>
-
+                        <li><a href="#rate-limiting">Rate-Limiting</a></li>
                         <li><a href="#querying-relations">Querying Relations</a></li>
                         <li>
                             <a href="#filtering-relations">Filtering results</a>
@@ -21,12 +21,10 @@
                         </li>
                         <li><a href="#sorting-results">Sorting results</a>
                         <li><a href="#pagination">Pagination</a></li>
-                        <li><a href="#rate-limiting">Rate-Limiting</a></li>
-                        <li><a href="#additional-resources">Additional Resources</a></li>
                     </ul>
                 </aside>
             </div>
-            <div class="column is-6">
+            <div class="column is-half-desktop is-three-quarters-tablet">
                 <div class="content">
                     <h1 id="introduction">Introduction</h1>
                     <p>
@@ -36,8 +34,7 @@
 
                     <blockquote>
                         The GeoNames geographical database covers all countries and contains over eleven million
-                        placenames that are
-                        available for download free of charge.
+                        placenames that are available for download free of charge.
                     </blockquote>
 
                     <p>The Places API utilizes Geonames' data dumps to provide its services.</p>
@@ -47,7 +44,8 @@
                         The data is then cleaned up and exposed through an expressive and RESTful API.
                     </p>
 
-                    <p class="is-italic has-text-weight-semibold">If you enjoy using the API, please consider supporting me:
+                    <p class="is-italic has-text-weight-semibold">If you enjoy using the Places API, please consider
+                        supporting me:
                     </p>
 
                     <div class="is-flex is-justify-content-center">
@@ -57,38 +55,45 @@
                     </div>
                     <h1 id="authentication">Authentication</h1>
 
-                    <article class="message is-danger">
+                    <article class="message is-info">
                         <div class="message-body">
-                            Standard accounts can only have up to 3 API access tokens.
+                            <p>You can use the <a href="{{ route('login') }}">dashboard</a> to create, delete, and
+                                regenerate API keys.
+                            </p>
                         </div>
                     </article>
 
                     <p>The Places API authenticates your API requests using your account's API keys. If a request
-                        doesn't include
-                        a valid key, Places API returns an authentication error.</p>
+                        doesn't include a valid key, Places API returns an authentication error.</p>
 
-                    <p>You can use the <a href="{{ route('login') }}">dashboard</a> to create, delete, and regenerate
-                        API keys.
-                    <p>
-                        Authentication to the API is performed via <a
+                    <p>Authentication to the API is performed via <a
                             href="https://swagger.io/docs/specification/authentication/bearer-authentication/">HTTP
                             Bearer Auth</a>. When making requests using API tokens, the token should be included in the
                         Authorization header as a Bearer token:
                     </p>
 
                     <pre>Authorization: Bearer &lt;TOKEN&gt;</pre>
-
+                    <article class="message is-danger">
+                        <div class="message-body">
+                            Standard accounts can only have up to 3 API access tokens.
+                        </div>
+                    </article>
                     <h1 id="rate-limiting">Rate-Limiting</h1>
-                    <p>At this point in time, users can make a <code>15</code> requests per minute to the API
+                    <p>At this point in time, users can make a <code>25</code> requests per minute to the API
                         before getting rate-limited.</p>
 
                     <p>You can determine how many requests you have remaining by inspecting the Response Headers of
                         your Request:</p>
 
-                    <pre>X-RateLimit-Limit: 100&#010;X-RateLimit-Remaining: 65</pre>
-                    <h1 id="querying-relateions">Querying Relations</h1>
-                    <p>You can query a relation by adding the <code>include</code> query parameter to the request.
-                    </p>
+                    <pre>X-RateLimit-Limit: 25&#010;X-RateLimit-Remaining: 10</pre>
+                    <h1 id="querying-relations">Querying Relations</h1>
+
+                    <article class="message is-info">
+                        <div class="message-body">
+                            <p>You can query a relation by adding the <code>include</code> query parameter to the request.
+                            </p>
+                        </div>
+                    </article>
                     <p>Let's say you need to get all
                         countries with their respective languages, then your request would look like this:
                         <pre>GET /api/v1/countries?include=languages</pre>
@@ -96,8 +101,12 @@
                         <pre>GET /api/v1/countries?include=languages,neighbours,flag</pre>
 
                     <h1 id="filtering-relations">Filtering Results</h1>
-                    <p>To filter a result set, you can add the <code>filter</code> query parameter to the request.
-                    </p>
+                    <article class="message is-info">
+                        <div class="message-body">
+                            <p>To filter a result set, you can add the <code>filter</code> query parameter to the request.
+                            </p>
+                        </div>
+                    </article>
 
                     <p>For example, the following request returns all the place names in Australia (AU) that have a
                         feature code of
@@ -113,13 +122,15 @@
 
                     <h4 id="filtering-relations-operators">Operators</h4>
 
+                    <h5>Comparison operators</h5>
+
                     <p>Some of the available endpoints allow you to scope results using comparison operators. For
                         example:</p>
 
                     <pre>GET /api/v1/countries/AU/places?filter[featureCode][eq]=ADM1&filter[population][gte]=2000000</pre>
 
                     <p>The above request will return all Australian states that have a population <i>greater than or
-                            equal</i> to 2000000.</p>
+                            equal</i> to 2,000,000.</p>
 
                     <div class="table-container">
                         <table class="table">
@@ -132,39 +143,41 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><b>eq</b></td>
+                                    <td class="has-text-weight-bold">eq</td>
                                     <td>equals</td>
                                     <td><code>?filter[area][eq]=100000</code> </td>
                                 </tr>
                                 <tr>
-                                    <td><b>neq</b></td>
+                                    <td class="has-text-weight-bold">neq</td>
                                     <td>not equal</td>
-                                    <td><code>?filter[popultion][neq]=100000</code> </td>
+                                    <td><code>?filter[popultion][neq]=1000000</code> </td>
                                 </tr>
                                 <tr>
-                                    <td><b>gt</b></td>
+                                    <td class="has-text-weight-bold">gt</td>
                                     <td>greater than</td>
-                                    <td><code>?filter[popultion][gt]=1000000</code> </td>
+                                    <td><code>?filter[elevation][gt]=5000</code> </td>
                                 </tr>
                                 <tr>
-                                    <td><b>lt</b></td>
+                                    <td class="has-text-weight-bold">lt</td>
                                     <td>less than</td>
                                     <td><code>?filter[popultion][lt]=1000000</code></td>
                                 </tr>
                                 <tr>
-                                    <td><b>gte</b></td>
+                                    <td class="has-text-weight-bold">gte</td>
                                     <td>greater than or equal</td>
                                     <td><code>?filter[popultion][gte]=1000000</code></td>
                                 </tr>
                                 <tr>
-                                    <td><b>lte</b></td>
+                                    <td class="has-text-weight-bold">lte</td>
                                     <td>less than or equal</td>
-                                    <td><code>?filter[popultion][lte]=1000000</code></td>
+                                    <td><code>?filter[area][lte]=1000</code></td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
 
+                    <h5>Logical operators</h5>
+
                     <div class="table-container">
                         <table class="table">
                             <thead>
@@ -176,12 +189,12 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>OR</td>
+                                    <td class="has-text-weight-bold">OR</td>
                                     <td>comma-separated filters</td>
                                     <td><code>?filter[featureCode][eq]=ADM1,ADM2,ADM3</code></td>
                                 </tr>
                                 <tr>
-                                    <td>AND</td>
+                                    <td class="has-text-weight-bold">AND</td>
                                     <td>separate filters</td>
                                     <td><code>?filter[featureCode][eq]=MT&filter[countryCode][eq]=FR&filter[elevation][gt]=3000</code>
                                     </td>
@@ -191,14 +204,17 @@
                     </div>
 
                     <h1 id="sorting-results">Sorting results</h1>
-                    <p>All API results are sorted by their primary key by default. However, you are free to change
-                        the
-                        sort criteria
-                        by adding the <code>sort</code> query parameter to the request.
-                        <pre>GET /api/v1/countries?sort=population</pre>
-                    <p>The above request will return all the countries sorted by <code>population</code> in
-                        ascending
-                        order.</p>
+                    <article class="message is-info">
+                        <div class="message-body">
+                            <p>All API results are sorted by their primary key by default. However, you are free to change
+                                the sort criteria by adding the <code>sort</code> query parameter to the request.</p>
+                        </div>
+                    </article>
+
+                    <p>The below request will return all the countries sorted by <code>population</code> in ascending order.
+                    </p>
+                    <pre>GET /api/v1/countries?sort=population</pre>
+
                     <p>To sort in descending order, simply add a <code>-</code> to the sort paramter.</p>
                     <pre>GET /api/v1/countries?sort=-population</pre>
                     <p>The above request will return all the countries sorted by <code>population</code> in
@@ -211,29 +227,41 @@
 
 
                     <h1 id="pagination">Pagination</h1>
-                    <p>By default, all API results are paginated with a total of 10 results per page. You can fetch
-                        the
-                        data on different pages by adding the <code>page[cursor]</code> query parameter to the
-                        request.
-                        <pre>GET /api/v1/featureCodes?page[cursor]=eyJpc28zMTY2X2FscGhhMiI6IkFXIiwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ</pre>
-                    <p>The above request will return all the results on the 3rd page.</p>
+                    <p>
+                        Places API uses cursor based pagination to return paginated data. Cursor pagination will offer
+                        better performance for larger data-sets.
+                    </p>
+                    <p>
+                        The cursor is an encoded string containing the location that the next paginated query should start
+                        paginating and the direction that it should paginate.
+                    </p>
 
-                    <p>You can control the number of items per page using the <code>page[size]</code> query
+                    <p>
+                        You can fetch the data on different pages by adding the <code>page[cursor]</code> query parameter to
+                        the request.
+                    </p>
+                    <pre>GET /api/v1/featureCodes?page[cursor]=eyJpc28zMTY2X2FscGhhMiI6IkFXIiwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ</pre>
+
+                    <p>
+                        By default, all API results are paginated with a total of 10 results per page. However, you are free
+                        to change the number of items per page using the <code>page[size]</code> query
                         parameter.
                     </p>
+
                     <pre>GET /api/v1/featureCodes?page[size]=5&page[cursor]=eyJpc28zMTY2X2FscGhhMiI6IkFXIiwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ</pre>
 
-                    <p>To improve the performance of the API, some pagination meta data is not computed</p>
 
-                    <h1 id="additional-resources">Additional Resources</h1>
+                    <article class="message is-info">
+                        <div class="message-body">
+                            <p>
+                                <span class="has-text-weight-bold">The Places API will always return pagination data when it
+                                    exists.</span>
+                                This includes links to the next and previous pages of data in addition to meta data to help
+                                you build easily build UIs based using the API.
+                            </p>
+                        </div>
+                    </article>
 
-                    <ul>
-                        <li><a href="{{ route('continents') }}">Continents</a></li>
-                        <li><a href="{{ route('countries') }}">Countries</a></li>
-                        <li><a href="{{ route('featureCodes') }}">Feature Codes</a></li>
-                        <li><a href="{{ route('timeZones') }}">Time Zones</a></li>
-                        <li><a href="{{ route('languages') }}">Languages</a></li>
-                    </ul>
                 </div>
 
             </div>
