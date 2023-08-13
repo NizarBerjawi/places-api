@@ -1,4 +1,4 @@
-<nav class="navbar is-fixed-top">
+<nav class="navbar">
     <div class="navbar-brand">
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="mainNavbar">
             <span aria-hidden="true"></span>
