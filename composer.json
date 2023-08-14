@@ -14,6 +14,8 @@
         "spatie/laravel-json-api-paginate": "^1.13",
         "spatie/laravel-query-builder": "^5.2",
         "spatie/laravel-responsecache": "^7.4",
+        "symfony/http-client": "^6.3",
+        "symfony/mailgun-mailer": "^6.3",
         "zircote/swagger-php": "^4.7"
     },
     "require-dev": {
