@@ -70,6 +70,7 @@ use Illuminate\Database\Eloquent\Model;
  *              "GeometryCollection"
  *           },
  *           description="The type of the Geometry object.",
+ *      ),
  *      @OA\Property(
  *           property="coordinates",
  *           type="string",

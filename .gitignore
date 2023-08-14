@@ -3,6 +3,7 @@
 /public/dist
 /public/hot
 /public/storage
+/public/openApi.json
 /storage/*.key
 /vendor
 .env
