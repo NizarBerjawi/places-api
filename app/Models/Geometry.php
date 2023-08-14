@@ -9,28 +9,30 @@ use Illuminate\Database\Eloquent\Model;
  * Geometry.
  *
  * @OA\Schema(
- *      schema="geometry",
+ *      schema="featureCollection",
  *      type="object",
- *      title="Geometry",
+ *      title="Feature Collection",
+ *      description="A Feature Collection object is a type of GeoJSON object. Each element of the Feature Collection is a Feature object.",
  *
  *      @OA\Property(
  *           property="type",
  *           type="string",
- *           example="Polygon",
+ *           example="FeatureCollection",
  *           description="The type of the GeoJSON object."
  *      ),
  *      @OA\Property(
- *           property="coordinates",
- *           type="string",
- *           example="[[[[6.531,-0.002],[6.53,-0.011],[6.523,-0.014]]]]",
- *           description="Coordinates represent points, curves, and surfaces in coordinate space."
- *      ),
+ *           property="features",
+ *           type="array",
+ *
+ *           @OA\Items(ref="#/components/schemas/feature")
+ *      )
  * )
  *
  * @OA\Schema(
  *      schema="feature",
  *      type="object",
  *      title="Feature",
+ *      description="A Feature object represents a spatially bounded thing.  Every Feature object is a GeoJSON object no matter where it occurs in a GeoJSON text.",
  *
  *      @OA\Property(
  *           property="type",
@@ -49,22 +51,32 @@ use Illuminate\Database\Eloquent\Model;
  * )
  *
  * @OA\Schema(
- *      schema="featureCollection",
+ *      schema="geometry",
  *      type="object",
- *      title="Feature Collection",
+ *      title="Geometry",
+ *      description="A Geometry object represents points, curves, and surfaces in coordinate space.  Every Geometry object is a GeoJSON object no matter where it occurs in a GeoJSON text.",
  *
  *      @OA\Property(
  *           property="type",
  *           type="string",
- *           example="FeatureCollection",
- *           description="The type of the GeoJSON object."
+ *           example="Polygon",
+ *           enum={
+ *              "Point",
+ *              "MultiPoint",
+ *              "LineString",
+ *              "MultiLineString",
+ *              "Polygon",
+ *              "MultiPolygon",
+ *              "GeometryCollection"
+ *           },
+ *           description="The type of the Geometry object.",
  *      ),
  *      @OA\Property(
- *           property="features",
- *           type="array",
- *
- *           @OA\Items(ref="#/components/schemas/feature")
- *      )
+ *           property="coordinates",
+ *           type="string",
+ *           example="[[[[6.531,-0.002],[6.53,-0.011],[6.523,-0.014]]]]",
+ *           description="Coordinates represent points, curves, and surfaces in coordinate space."
+ *      ),
  * )
  */
 class Geometry extends Model

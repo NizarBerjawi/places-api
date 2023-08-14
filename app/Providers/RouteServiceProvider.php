@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = 'user/tokens';
 
     /**
      * Define your route model bindings, pattern filters, and other route configuration.
@@ -29,7 +29,7 @@ class RouteServiceProvider extends ServiceProvider
         $this->configureRateLimiting();
 
         $this->routes(function () {
-            Route::middleware(['api', 'api-version:v1'])
+            Route::middleware(['auth:sanctum', 'api', 'api-version:v1'])
                 ->prefix('api/v1')
                 ->group(base_path('routes/api.v1.php'));
 
@@ -46,7 +46,7 @@ class RouteServiceProvider extends ServiceProvider
     protected function configureRateLimiting()
     {
         RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
+            return Limit::perMinute(25)->by($request->bearerToken() ?: $request->ip());
         });
     }
 }

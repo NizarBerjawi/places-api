@@ -8,7 +8,7 @@
                     <div class="column is-10 is-offset-1">
                         <p class="title">Feature Codes</p>
 
-                        <div class="tabs is-large is-centered">
+                        <div class="tabs is-medium is-centered">
                             <ul>
                                 <li @class(['is-active' => !request()->has('filter')])>
                                     <a href={{ route('featureCodes') }}>All</a>
@@ -32,7 +32,7 @@
                             <table class='table is-striped'>
                                 <thead>
                                     <tr
-                                        class="is-selected has-text-centered has-text-weight-bold has-background-primary-dark">
+                                        class="is-selected has-text-centered has-text-weight-bold has-background-primary">
                                         <td colspan="3">
                                             {{ $selectedFeatureClass ?? 'ALL' }}
                                         </td>

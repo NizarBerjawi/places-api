@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
  *      schema="place",
  *      type="object",
  *      title="Place",
+ *      description="The place object represents any geographic place within a country. This could be the capital, a mountain, a road, or even a building.",
  *
  *      @OA\Property(
  *           property="geonameId",

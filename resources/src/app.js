@@ -1,7 +1,9 @@
-import './app.css'
+import * as feather from 'feather-icons';
+import './styles/app.scss';
+import ClipboardJS from 'clipboard';
 
+// Instantiate the nav bar menu
 document.addEventListener('DOMContentLoaded', () => {
-
     // Get all "navbar-burger" elements
     const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
 
@@ -19,9 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
                 el.classList.toggle('is-active');
                 $target.classList.toggle('is-active');
-
             });
         });
     }
-
 });
+
+// Instantiate Feather Icons
+feather.replace();
+
+// 
+new ClipboardJS('.copy');

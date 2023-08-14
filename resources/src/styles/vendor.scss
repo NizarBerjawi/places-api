@@ -1,0 +1,32 @@
+@import 'nord/src/sass/nord.scss';
+
+// Polar Night
+$black:        $nord0;
+$black-bis:    $nord1;
+$black-ter:    $nord2;
+$grey-darker:  $nord3;
+$grey-dark:    #6c7079;
+$grey:         #96999f;
+
+// Snow Storm
+$grey-light:   $nord4;
+$grey-lighter: $nord5;
+$grey-lightest: $nord6;
+
+$white-ter:    hsl(0, 0%, 96%);
+$white-bis:    hsl(0, 0%, 98%);
+$white:        hsl(0, 0%, 100%);
+
+// Aurora
+$red:          $nord11;
+$orange:       $nord12;
+$yellow:       $nord13;
+$green:        $nord14;
+$purple:       $nord15;
+
+// Frost
+$turquoise:    $nord8;
+$cyan:         $nord9;
+$blue:         $nord10;
+
+@import 'bulma/bulma.sass';

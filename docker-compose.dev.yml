@@ -31,6 +31,7 @@ services:
       - .docker/app/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - .docker/app/php/php.ini-production:/usr/local/etc/php/php.ini-production
       - .docker/app/php/php.ini-development:/usr/local/etc/php/php.ini-development
+      - /home/nizar/.gitconfig:/home/nizar/.gitconfig
     working_dir: /var/www/html
     expose:
       - "9000"
@@ -38,6 +39,7 @@ services:
       - api_network
     depends_on:
       - db
+      - mailhog
   db:
     image: postgres:15.3-alpine3.18
     restart: always
@@ -49,6 +51,13 @@ services:
       - "5432:5432"
     # volumes:
     # - .docker/postgresql/data:/var/lib/postgresql/data
+    networks:
+      - api_network
+  mailhog:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - "8025:8025"
     networks:
       - api_network
   composer:
