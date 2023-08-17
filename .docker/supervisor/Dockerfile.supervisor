@@ -1,7 +1,7 @@
 ################################
 ## Build supervisor container ##
 ################################
-FROM php:8.1.11-cli-alpine3.16
+FROM php:8.2-cli-alpine3.18
 
 LABEL maintainer="Nizar El Berjawi <nizarberjawi12@gmail.com>"
 
