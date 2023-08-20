@@ -3,6 +3,7 @@
 namespace App\Queries;
 
 use Illuminate\Contracts\Pagination\CursorPaginator;
+use Illuminate\Support\Arr;
 use Spatie\QueryBuilder\QueryBuilder;
 
 abstract class Query
@@ -126,7 +127,24 @@ abstract class Query
     {
         $this->checkBuilder();
 
-        return $this->getBuilder()->jsonPaginate();
+        $defaultSize = config('paginate.default_size');
+        $maxResults = config('paginate.max_results');
+
+        $size = (int) request()->input('page.size.eq', $defaultSize);
+
+        if ($size <= 0) {
+            $size = $defaultSize;
+        }
+
+        if ($size > $maxResults) {
+            $size = $maxResults;
+        }
+
+        $cursor = (string) request()->input('page.cursor.eq');
+
+        return $this->getBuilder()
+            ->cursorPaginate($size, ['*'], 'page[cursor][eq]', $cursor)
+            ->appends(Arr::except(request()->input(), 'page.cursor.eq'));
     }
 
     /**
