@@ -54,11 +54,11 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-We recommend running the project using Docker and Docker Compose.
+We recommend settings up and running the project using Docker and Docker Compose.
 
 You will need:
 
-1. PHP 8.1
+1. PHP 8.2
 2. Composer
 3. Node Package Manager (NPM)
 4. Docker
@@ -74,30 +74,29 @@ You will need:
    ```sh
    cp .env.example .env
    ```
-3. Open an interactive shell inside the application docker container
-
+3. Install composer packages
    ```sh
-   docker compose -f docker-compose.dev.yml run --rm app sh
+   docker compose run --rm composer install
    ```
-4. Install composer packages
+4. Install npm packages
    ```sh
-   composer install
+   docker compose run --rm npm install
    ```
-5. Install npm packages
+5. Generate Open API spec
    ```sh
-   npm install
+   docker compose run --rm artisan docs:generate
    ```
-6. Generate Open API spec
+6. Build assets
    ```sh
-   php artisan docs:generate
+   docker compose run --rm npm run build
    ```
-7. Build assets
+7. Migrate the database
    ```sh
-   npm run build
+   docker compose run --rm artisan migrate:fresh
    ```
-8. Migrate the database
+8. Generate an application key
    ```sh
-   php artisan migrate
+   docker compose run --rm artisan key:generate
    ```
 At this point you can already start up the application, however there won't be any data in the database.
 To start the application without data, exit the interactive shell and jump to step `11` below, otherwise just keep on going through the steps below.
@@ -105,28 +104,25 @@ To start the application without data, exit the interactive shell and jump to st
 > Please note that downloading and importing the data will download ALL the Geonames dump export files and then imports them into the database. Depending on your CPU power, This process could take up to several hours to complete.
 
 9. Push the file download jobs to the queue
-
    ```sh
-   php artisan geonames:download
+   docker compose run --rm artisan geonames:download
    ```
-
    Then process the queue:
-
    ```sh
-   php artisan queue:work --stop-when-empty --queue=download-data,download-places,download-flags,download-names
+   docker compose run --rm artisan queue:work --stop-when-empty --queue=download-data,download-places,download-flags,download-names
    ```
 
 10. When all the files have been downloaded, push the file import jobs to the queue
    ```sh
-   php artisan geonames:import
+   docker compose run --rm artisan geonames:import
    ```
    Then process the queue:
    ```sh
-   php artisan queue:work --stop-when-empty --queue=import-data,import-places,import-names
+   docker compose run --rm artisan queue:work --stop-when-empty --queue=import-data,import-places,import-names
    ```
 11. Start the application server
     ```sh
-    docker compose -f docker-compose.dev.yml up --build nginx
+    docker compose up --build nginx
     ```
 12. Open the application in a browser
     ```sh

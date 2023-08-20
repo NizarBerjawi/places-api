@@ -90,6 +90,7 @@ services:
       - db
     working_dir: /var/www/html
     entrypoint: ['php', '/var/www/html/artisan']
+    tty: true
     networks:
       - api_network
   npm:

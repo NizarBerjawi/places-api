@@ -55,6 +55,9 @@
                     </div>
                     <h1 id="authentication">Authentication</h1>
 
+                    <p>The Places API authenticates your API requests using your account's API keys. If a request
+                        doesn't include a valid key, Places API returns an authentication error.</p>
+
                     <article class="message is-info">
                         <div class="message-body">
                             <p>You can use the <a href="{{ route('login') }}">dashboard</a> to create, delete, and
@@ -63,9 +66,6 @@
                         </div>
                     </article>
 
-                    <p>The Places API authenticates your API requests using your account's API keys. If a request
-                        doesn't include a valid key, Places API returns an authentication error.</p>
-
                     <p>Authentication to the API is performed via <a
                             href="https://swagger.io/docs/specification/authentication/bearer-authentication/">HTTP
                             Bearer Auth</a>. When making requests using API tokens, the token should be included in the
@@ -73,11 +73,7 @@
                     </p>
 
                     <pre>Authorization: Bearer &lt;TOKEN&gt;</pre>
-                    <article class="message is-danger">
-                        <div class="message-body">
-                            Standard accounts can only have up to 3 API access tokens.
-                        </div>
-                    </article>
+                    
                     <h1 id="rate-limiting">Rate-Limiting</h1>
                     <p>At this point in time, users can make a <code>25</code> requests per minute to the API
                         before getting rate-limited.</p>
