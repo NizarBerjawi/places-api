@@ -35,24 +35,21 @@ class PlaceQuery extends Query
      *         enum={
      *             "name",
      *             "featureCode",
+     *             "featureClass",
      *             "countryCode",
      *             "elevation",
-     *             "elevationGt",
-     *             "elevationGte",
-     *             "elevationLt",
-     *             "elevationLte",
      *             "population",
-     *             "populationGt",
-     *             "populationGte",
-     *             "populationLt",
-     *             "populationLte"
      *         },
      *
      *         @OA\Property(
-     *             property="populationGt",
-     *             type="integer",
-     *             example="100000"
-     *         )
+     *             property="population",
+     *             type="object",
+     *             @OA\Property(
+     *                 property="gt",
+     *                 type="integer",
+     *                 example=5000000
+     *             )
+     *         ),
      *     )
      * )
      */
@@ -61,6 +58,7 @@ class PlaceQuery extends Query
         return [
             AllowedFilter::custom('name', new StringFilters),
             AllowedFilter::custom('featureCode', new StringFilters, 'feature_code'),
+            AllowedFilter::custom('featureClass', new StringFilters, 'feature_class'),
             AllowedFilter::custom('countryCode', new StringFilters, 'country_code'),
             AllowedFilter::custom('timeZoneCode', new StringFilters, 'time_zone_code'),
             AllowedFilter::custom('elevation', new NumericFilters),
