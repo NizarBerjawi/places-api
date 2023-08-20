@@ -17,7 +17,7 @@ abstract class BaseFilter implements Filter
         $operations = Collection::make($this->allowedOperators())->keys();
 
         foreach (Arr::wrap($value) as $operator => $item) {
-            $hasOperator = !empty($operator);
+            $hasOperator = ! empty($operator);
 
             if ($hasOperator && $operations->doesntContain($operator)) {
                 throw new InvalidOperatorQuery($operator, $operations, static::description());
@@ -43,7 +43,7 @@ abstract class BaseFilter implements Filter
                     }
                 });
             }
-            
+
             foreach ($filters as $index => $value) {
                 $query->where($property, $symbol, $value, $index === 0 ? 'and' : 'or');
             }
