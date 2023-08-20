@@ -13,7 +13,7 @@ return [
      * when using the JSON API paginator.
      */
     'default_size' => 10,
-    
+
     /*
      * The name of the query parameter used for pagination
      */
