@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [WebController::class, 'home'])->name('home');
-Route::get('/introduction', [WebController::class, 'intro'])->name('intro');
+Route::get('/gettingStarted', [WebController::class, 'gettingStarted'])->name('gettingStarted');
 Route::get('/documentation', [WebController::class, 'docs'])->name('docs');
 Route::get('/flags/{flag}', [WebController::class, 'flags'])->name('flags');
 Route::get('/continents', [WebController::class, 'continents'])->name('continents');

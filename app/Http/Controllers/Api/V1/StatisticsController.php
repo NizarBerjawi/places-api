@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
+use App\Models\AlternateName;
 use App\Models\Continent;
 use App\Models\Country;
 use App\Models\Currency;
+use App\Models\FeatureClass;
+use App\Models\FeatureCode;
+use App\Models\Flag;
 use App\Models\Language;
 use App\Models\Place;
 use App\Models\TimeZone;
@@ -53,10 +57,14 @@ class StatisticsController extends Controller
         $classes = [
             Continent::class,
             Country::class,
-            Place::class,
-            Language::class,
-            TimeZone::class,
             Currency::class,
+            FeatureClass::class,
+            FeatureCode::class,
+            Flag::class,
+            Language::class,
+            Place::class,
+            TimeZone::class,
+            AlternateName::class,
         ];
 
         return new JsonResource(
