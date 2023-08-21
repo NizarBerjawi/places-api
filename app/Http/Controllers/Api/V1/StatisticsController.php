@@ -64,7 +64,7 @@ class StatisticsController extends Controller
             Language::class,
             Place::class,
             TimeZone::class,
-            AlternateName::class
+            AlternateName::class,
         ];
 
         return new JsonResource(
