@@ -24,9 +24,9 @@ class WebController extends Controller
         return view('docs');
     }
 
-    public function intro()
+    public function gettingStarted()
     {
-        return view('intro');
+        return view('gettingStarted');
     }
 
     public function flags($flag)
