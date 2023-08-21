@@ -10,8 +10,8 @@
 
                 <div class="field is-grouped is-justify-content-center">
                     <p class="control">
-                        <a href="{{ route('intro') }}" class="button is-medium is-responsive">
-                            Introduction
+                        <a href="{{ route('gettingStarted') }}" class="button is-medium is-responsive">
+                            Getting Started
                         </a>
                     </p>
                     <p class="control">
