@@ -38,7 +38,7 @@ class CountryCurrencyController extends Controller
      *
      *      @OA\Response(
      *          response=404,
-     *          description="Country not found"
+     *          description="The specified resource could not be found"
      *       )
      * )
      *

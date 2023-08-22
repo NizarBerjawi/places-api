@@ -39,7 +39,8 @@ class CountryQuery extends Query
      *             "iso3166Numeric",
      *             "population",
      *             "area",
-     *             "phoneCode"
+     *             "phoneCode",
+     *             "languageCodes"
      *         },
      *
      *         @OA\Property(
@@ -73,6 +74,7 @@ class CountryQuery extends Query
             AllowedFilter::custom('population', new NumericFilters),
             AllowedFilter::custom('area', new NumericFilters),
             AllowedFilter::custom('phoneCode', new StringFilters, 'phone_code'),
+            AllowedFilter::custom('languageCodes', new StringFilters, 'languages'),
         ];
     }
 

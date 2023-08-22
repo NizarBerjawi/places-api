@@ -39,7 +39,7 @@ class ContinentAlternateNameController extends Controller
      *
      *      @OA\Response(
      *          response=404,
-     *          description="Alternate name not found"
+     *          description="Continent not found"
      *       ),
      * )
      *
