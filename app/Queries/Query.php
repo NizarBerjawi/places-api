@@ -110,13 +110,23 @@ abstract class Query
      *
      *         @OA\Property(
      *             property="cursor",
-     *             type="string",
-     *             example="eyJpc28zMTY2X2FscGhhMiI6IkJPIiwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ"
+     *             type="object",
+     *             description="The cursor is an encoded string containing the location that the next paginated query should start paginating and the direction that it should paginate.",
+     *             @OA\Property(
+     *                  property="eq",
+     *                  type="string",
+     *                  example="eyJpc28zMTY2X2FscGhhMiI6IkJPIiwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ",
+     *             ),
      *         ),
      *         @OA\Property(
      *             property="size",
-     *             type="integer",
-     *             example="10"
+     *             type="object",
+     *             description="The size is an integer that determines the number of results to return per page.",
+     *             @OA\Property(
+     *                  property="eq",
+     *                  type="integer",
+     *                  example="10",
+     *             ),
      *         ),
      *     )
      * )

@@ -8,6 +8,17 @@
                     <div class="column is-10 is-offset-1">
                         <p class="title">Feature Codes</p>
 
+                        <article class="message is-info">
+                            <div class="message-body">
+                                <p>
+                                    All places in the Places API are categorized into one out of
+                                    {{ \App\Models\FeatureClass::count() }} feature classes (represented by letters)
+                                    and further subcategorized into one out of {{ \App\Models\FeatureCode::count() }}
+                                    feature codes.
+                                </p>
+                            </div>
+                        </article>
+
                         <div class="tabs is-medium is-centered">
                             <ul>
                                 <li @class(['is-active' => !request()->has('filter')])>
@@ -31,10 +42,9 @@
                         <div class="table-container">
                             <table class='table is-striped'>
                                 <thead>
-                                    <tr
-                                        class="is-selected has-text-centered has-text-weight-bold has-background-primary">
+                                    <tr class="is-selected has-text-centered has-text-weight-bold has-background-primary">
                                         <td colspan="3">
-                                            {{ $selectedFeatureClass ?? 'ALL' }}
+                                           {{ $selectedFeatureClass ?? 'ALL' }}
                                         </td>
                                     </tr>
                                     <tr>

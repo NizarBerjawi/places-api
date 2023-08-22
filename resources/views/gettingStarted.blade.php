@@ -27,6 +27,7 @@
                                 <li><a href="#example-mountains">Eight-thousander mountains</a></li>
                                 <li><a href="#example-states-us">States of the USA</a></li>
                                 <li><a href="#example-populated-capitals">Most populated capitals</a></li>
+                                <li><a href="#example-portuguese-language">Portuguese-speaking countries</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -284,7 +285,7 @@
                         </div>
                     </article>
 
-                    <h5>Eight-thousander mountains</h5>
+                    <h5 id="example-mountains">Eight-thousander mountains</h5>
 
                     <pre>GET /api/v1/places?filter[featureClass][eq]=T&filter[featureCode][eq]=MT&filter[elevation][gte]=8000&sort=-elevation</pre>
 
@@ -297,7 +298,7 @@
                     <p>Finally, we sort in descending order using <code>sort=-elevation</code>.
 
 
-                    <h5>States of the USA</h5>
+                    <h5 id="example-states-us">States of the USA</h5>
                     <pre>GET /api/v1/countries/US/places?filter[featureClass][eq]=A&filter[featureCode][eq]=ADM1</pre>
 
                     <p>First, we get all the places in the United States using the endpoint <code>/api/v1/countries/US/places</code>.
@@ -305,7 +306,7 @@
                         <code>A</code>. This limits our result set to places that are: "Country, state, region,..." in the US.
                     <p>Then, we filter by <code>featureCode</code> equal to <code>ADM1</code> which represents a "First-order administrative division" (i.e. state). </p>
 
-                    <h5>Top-5 most populated capitals of the world</h5>
+                    <h5 id="example-populated-capitals">Top-5 most populated capitals of the world</h5>
                     <pre>GET /api/v1/places?filter[featureClass][eq]=P&filter[featureCode][eq]=PPLC&sort=-population&page[size][eq]=5</pre>
 
                     <p>First, we begin by filtering all places to only those having <code>featureClass</code> equal to
@@ -315,6 +316,11 @@
                     <p>To get the capitals in the correct order, we sort by <code>population</code> in descending order.</p>
 
                     <p>Finally, we limit the result set to only the top 5 capitals using <code>page[size][eq]=5</code>.</p>
+
+                    <h5 id="example-portuguese-language">Portuguese-speaking countries</h5>
+                    <pre>GET /api/v1/countries?filter[languageCodes][eq]=por&include=languages</pre>
+                    <p>We filter all countries by <code>languageCodes</code> equal to <code>por</code>; i.e. the ISO 639-3 language code of Portuguese.</p>
+                    <p>Using <code>include=languages</code> is optional and will give you additional information about the languages spoken in a country.</p>
                 </div>
             </div>
         </div>
