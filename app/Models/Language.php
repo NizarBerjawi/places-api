@@ -50,7 +50,7 @@ class Language extends Model
      *    name="languageCode",
      *    in="path",
      *    required=true,
-     *    description="The ISO639-3 code of the country",
+     *    description="The ISO639-3 code of the language",
      *    example="eng",
      *
      *    @OA\Schema(
