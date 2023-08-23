@@ -16,4 +16,10 @@ class SecurityController extends Controller
     {
         return view('admin.security.recovery-codes');
     }
+
+    public function confirm(Request $request)
+    {
+        return view('admin.confirm-password')
+            ->with('intended', $request->session()->get('url.intended'));
+    }
 }
