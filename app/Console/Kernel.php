@@ -19,7 +19,7 @@ class Kernel extends ConsoleKernel
             ->dailyAt('22:00');
 
         $schedule->command('responsecache:clear')
-            ->dailyAt('22:30');
+            ->dailyAt('23:00');
     }
 
     /**
