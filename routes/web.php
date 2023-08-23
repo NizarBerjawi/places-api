@@ -4,7 +4,6 @@ use App\Http\Controllers\Dashboard\AccountController;
 use App\Http\Controllers\Dashboard\SecurityController;
 use App\Http\Controllers\Dashboard\TokenController;
 use App\Http\Controllers\WebController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,9 +30,7 @@ Route::get('/languages', [WebController::class, 'languages'])->name('languages')
 Route::middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')])
     ->prefix('user')
     ->group(function () {
-        Route::get('/confirm-password', function (Request $request) {
-            return view('admin.confirm-password')->with('intended', $request->session()->get('url.intended'));
-        })->name('password.confirm');
+        Route::get('/confirm-password', [SecurityController::class, 'confirm'])->name('password.confirm');
 
         Route::get('security', [SecurityController::class, 'index'])->name('admin.security.index');
         Route::get('security/recovery-codes', [SecurityController::class, 'recovery'])
