@@ -30,7 +30,7 @@ Route::get('/languages', [WebController::class, 'languages'])->name('languages')
 Route::middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')])
     ->prefix('user')
     ->group(function () {
-        Route::get('/confirm-password', [SecurityController::class, 'confirm'])->name('password.confirm');
+        Route::get('/confirm-password', [SecurityController::class, 'confirm']);
 
         Route::get('security', [SecurityController::class, 'index'])->name('admin.security.index');
         Route::get('security/recovery-codes', [SecurityController::class, 'recovery'])
