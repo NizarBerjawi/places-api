@@ -26,7 +26,7 @@ class CountryFlagController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="Successful operation",
+     *          description="OK",
      *
      *          @OA\JsonContent(
      *              type="array",
@@ -37,8 +37,18 @@ class CountryFlagController extends Controller
      *
      *      @OA\Response(
      *          response=404,
-     *          description="Country not found"
-     *       )
+     *          ref="#/components/responses/404"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          ref="#/components/responses/401"
+     *      ),
+     *      @OA\Response(
+     *          response=429,
+     *          ref="#/components/responses/429"
+     *      ),
+     *
+     *      security={ {"Bearer Authentication": {}} }
      * )
      *
      * @param  string  $code

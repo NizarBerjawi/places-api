@@ -25,14 +25,25 @@ class CountryController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="Successful operation",
+     *          description="OK",
      *
      *          @OA\JsonContent(
      *              type="array",
      *
      *              @OA\Items(ref="#/components/schemas/country")
      *          ),
-     *      )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=401,
+     *          ref="#/components/responses/401"
+     *      ),
+     *      @OA\Response(
+     *          response=429,
+     *          ref="#/components/responses/429"
+     *      ),
+     *
+     *      security={ {"Bearer Authentication": {}} }
      * )
      *
      * @OA\Tag(
@@ -64,15 +75,25 @@ class CountryController extends Controller
      *
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="OK",
      *
      *         @OA\JsonContent(ref="#/components/schemas/country")
      *      ),
      *
-     *     @OA\Response(
-     *         response=404,
-     *         description="Country not found"
-     *      )
+     *      @OA\Response(
+     *          response=404,
+     *          ref="#/components/responses/404"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          ref="#/components/responses/401"
+     *      ),
+     *      @OA\Response(
+     *          response=429,
+     *          ref="#/components/responses/429"
+     *      ),
+     *
+     *      security={ {"Bearer Authentication": {}} }
      * )
      *
      * @return \Illuminate\Http\Response

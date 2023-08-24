@@ -6,6 +6,7 @@ use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\ThrottleRequestsException;
 use Illuminate\Http\Response;
 use Spatie\QueryBuilder\Exceptions\InvalidIncludeQuery;
 use Spatie\QueryBuilder\Exceptions\InvalidQuery;
@@ -87,7 +88,7 @@ class Handler extends ExceptionHandler
             $e instanceof NotFoundHttpException ||
             $e instanceof ModelNotFoundException
         ) {
-            $message = 'The specified resource could not be found';
+            $message = 'The specified resource could not be found.';
             $statusCode = Response::HTTP_NOT_FOUND;
         }
 
@@ -102,13 +103,19 @@ class Handler extends ExceptionHandler
         }
 
         if ($e instanceof QueryException) {
-            $message = 'Internal Server Error';
+            $message = Response::$statusTexts[Response::HTTP_INTERNAL_SERVER_ERROR];
             $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
         }
 
         if ($e instanceof AuthenticationException) {
-            $message = $e->getMessage();
-            $statusCode = Response::HTTP_FORBIDDEN;
+            $message = 'Invalid API key or access token.';
+            $statusCode = Response::HTTP_UNAUTHORIZED;
+        }
+
+        if ($e instanceof ThrottleRequestsException) {
+            $limit = $e->getHeaders()['X-RateLimit-Limit'];
+            $statusCode = $this->getStatusCode($e);
+            $message = "Exceeded $limit calls per minute for API client. Reduce request rates to resume uninterrupted service.";
         }
 
         if (! isset($message)) {
@@ -118,7 +125,7 @@ class Handler extends ExceptionHandler
 
         $errors = [
             'message' => $message,
-            'status_code' => $statusCode,
+            'statusCode' => $statusCode,
         ];
 
         if ($debugEnabled) {

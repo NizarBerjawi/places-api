@@ -18,9 +18,14 @@ class ContinentController extends Controller
      *      summary="Returns a list of paginated continents",
      *      path="/continents",
      *
+     *      @OA\Parameter(ref="#/components/parameters/continentFilter"),
+     *      @OA\Parameter(ref="#/components/parameters/continentInclude"),
+     *      @OA\Parameter(ref="#/components/parameters/continentSort"),
+     *      @OA\Parameter(ref="#/components/parameters/pagination"),
+     *
      *      @OA\Response(
      *          response=200,
-     *          description="Successful operation",
+     *          description="OK",
      *
      *          @OA\JsonContent(
      *              type="array",
@@ -29,10 +34,16 @@ class ContinentController extends Controller
      *          ),
      *      ),
      *
-     *      @OA\Parameter(ref="#/components/parameters/continentFilter"),
-     *      @OA\Parameter(ref="#/components/parameters/continentInclude"),
-     *      @OA\Parameter(ref="#/components/parameters/continentSort"),
-     *      @OA\Parameter(ref="#/components/parameters/pagination"),
+     *      @OA\Response(
+     *          response=401,
+     *          ref="#/components/responses/401"
+     *      ),
+     *      @OA\Response(
+     *          response=429,
+     *          ref="#/components/responses/429"
+     *      ),
+     *
+     *      security={ {"Bearer Authentication": {}} }
      * )
      *
      * @OA\Tag(
@@ -66,15 +77,25 @@ class ContinentController extends Controller
      *
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="OK",
      *
      *         @OA\JsonContent(ref="#/components/schemas/continent")
      *     ),
      *
-     *     @OA\Response(
-     *         response=404,
-     *         description="Continent not found"
-     *     ),
+     *      @OA\Response(
+     *          response=404,
+     *          ref="#/components/responses/404"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          ref="#/components/responses/401"
+     *      ),
+     *      @OA\Response(
+     *          response=429,
+     *          ref="#/components/responses/429"
+     *      ),
+     *
+     *      security={ {"Bearer Authentication": {}} }
      * )
      *
      * @return \Illuminate\Http\Response
