@@ -16,6 +16,7 @@ class CountryGeometryController extends Controller
      * @OA\Get(
      *      tags={"Countries"},
      *      summary="Returns the geometry of a specific country",
+     *      operationId="getGeometryByCountry",
      *      path="/countries/{countryCode}/geometry",
      *
      *      @OA\Parameter(ref="#/components/parameters/countryCode"),

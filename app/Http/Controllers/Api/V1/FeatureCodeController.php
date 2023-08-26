@@ -16,6 +16,7 @@ class FeatureCodeController extends Controller
      * @OA\Get(
      *      tags={"Feature Codes"},
      *      summary="Returns a list of paginated feature codes",
+     *      operationId="getFeatureCodes",
      *      path="/featureCodes",
      *
      *      @OA\Parameter(ref="#/components/parameters/featureCodeFilter"),

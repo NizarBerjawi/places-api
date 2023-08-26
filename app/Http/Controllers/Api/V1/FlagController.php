@@ -16,6 +16,7 @@ class FlagController extends Controller
      * @OA\Get(
      *      tags={"Flags"},
      *      summary="Returns a list of paginated flags",
+     *      operationId="getFlags",
      *      path="/flags",
      *
      *      @OA\Parameter(ref="#/components/parameters/flagFilter"),

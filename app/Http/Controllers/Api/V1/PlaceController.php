@@ -16,6 +16,7 @@ class PlaceController extends Controller
      * @OA\Get(
      *      tags={"Places"},
      *      summary="Returns a list of paginated places",
+     *      operationId="getPlaces",
      *      path="/places",
      *
      *      @OA\Parameter(ref="#/components/parameters/placeFilter"),

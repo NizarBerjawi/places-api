@@ -18,6 +18,7 @@ class CountryLanguageController extends Controller
      * @OA\Get(
      *      tags={"Countries"},
      *      summary="Returns the languages of a specific country",
+     *      operationId="getLanguagesByCountry",
      *      path="/countries/{countryCode}/languages",
      *
      *      @OA\Parameter(ref="#/components/parameters/countryCode"),

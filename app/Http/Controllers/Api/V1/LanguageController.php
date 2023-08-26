@@ -16,6 +16,7 @@ class LanguageController extends Controller
      * @OA\Get(
      *      tags={"Languages"},
      *      summary="Returns a list of paginated languages",
+     *      operationId="getLanguages",
      *      path="/languages",
      *
      *      @OA\Parameter(ref="#/components/parameters/languageFilter"),

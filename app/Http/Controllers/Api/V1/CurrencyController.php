@@ -16,6 +16,7 @@ class CurrencyController extends Controller
      * @OA\Get(
      *      tags={"Currencies"},
      *      summary="Returns a list of paginated currencies",
+     *      operationId="getCurrencies",
      *      path="/currencies",
      *
      *      @OA\Parameter(ref="#/components/parameters/currencyFilter"),

@@ -19,7 +19,7 @@ class PlaceAlternateNameController extends Controller
      * @OA\Get(
      *      tags={"Places"},
      *      path="/places/{geonameId}/alternateNames",
-     *      operationId="getAlternateNamesForPlace",
+     *      operationId="getAlternateNamesByPlace",
      *
      *      @OA\Property(ref="#/components/schemas/AlternateName"),
      *

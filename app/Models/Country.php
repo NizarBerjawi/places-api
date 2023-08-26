@@ -13,11 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  *      type="object",
  *      title="Country",
  *      description="A country is a distinct part of the world, such as a state, nation, or other political entity. It may be a sovereign state or make up one part of a larger state.",
- *      x={
- *          "tagGroups"=
- *              {{"name"="Schemas"}
- *          }
- *      },
  *
  *      @OA\Property(
  *           property="name",

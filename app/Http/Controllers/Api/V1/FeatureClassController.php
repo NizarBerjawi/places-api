@@ -16,6 +16,7 @@ class FeatureClassController extends Controller
      * @OA\Get(
      *      tags={"Feature Classes"},
      *      summary="Returns a list of paginated feature classes",
+     *      operationId="getFeatureClasses",
      *      path="/featureClasses",
      *
      *      @OA\Parameter(ref="#/components/parameters/featureClassFilter"),

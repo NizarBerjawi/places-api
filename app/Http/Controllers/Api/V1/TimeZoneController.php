@@ -16,6 +16,7 @@ class TimeZoneController extends Controller
      * @OA\Get(
      *      tags={"Time Zones"},
      *      summary="Returns a list of paginated time zones",
+     *      operationId="getTimeZones",
      *      path="/timeZones",
      *
      *      @OA\Parameter(ref="#/components/parameters/timeZoneFilter"),
