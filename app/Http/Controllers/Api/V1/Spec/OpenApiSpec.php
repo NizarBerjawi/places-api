@@ -134,17 +134,6 @@ namespace App\Http\Controllers\Api\V1\Spec;
  *           )
  *      }
  * )
- *
- * @OA\OpenApi(
- *   x={
- *       "tagGroups"=
- *           {
- *              {"name"="Places API", "tags"={"Continents", "Countries", "Currencies", "Feature Classes", "Feature Codes", "Flags", "Languages", "Places", "Statistics", "Time Zones"},
- *              {"name"="Schemas"}
- *           }
- *       }
- *   }
- * )
  */
 class OpenApiSpec
 {
