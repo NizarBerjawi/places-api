@@ -28,13 +28,14 @@ class StatisticsController extends Controller
      * @OA\Get(
      *      tags={"Statistics"},
      *      summary="Returns a collection of statistics",
+     *      operationId="getStatistics",
      *      path="/statistics",
      *
      *      @OA\Parameter(ref="#/components/parameters/pagination"),
      *
      *      @OA\Response(
      *          response=200,
-     *          description="Successful operation",
+     *          description="OK",
      *
      *          @OA\JsonContent(
      *              type="array",
@@ -42,6 +43,17 @@ class StatisticsController extends Controller
      *              @OA\Items(ref="#/components/schemas/timeZone")
      *          ),
      *      ),
+     *
+     *      @OA\Response(
+     *          response=401,
+     *          ref="#/components/responses/401"
+     *      ),
+     *      @OA\Response(
+     *          response=429,
+     *          ref="#/components/responses/429"
+     *      ),
+     *
+     *      security={ {"Bearer Authentication": {}} }
      * )
      *
      * @OA\Tag(

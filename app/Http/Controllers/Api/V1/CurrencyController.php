@@ -16,6 +16,7 @@ class CurrencyController extends Controller
      * @OA\Get(
      *      tags={"Currencies"},
      *      summary="Returns a list of paginated currencies",
+     *      operationId="getCurrencies",
      *      path="/currencies",
      *
      *      @OA\Parameter(ref="#/components/parameters/currencyFilter"),
@@ -25,7 +26,7 @@ class CurrencyController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="Successful operation",
+     *          description="OK",
      *
      *          @OA\JsonContent(
      *              type="array",
@@ -33,6 +34,17 @@ class CurrencyController extends Controller
      *              @OA\Items(ref="#/components/schemas/currency")
      *          ),
      *      ),
+     *
+     *      @OA\Response(
+     *          response=401,
+     *          ref="#/components/responses/401"
+     *      ),
+     *      @OA\Response(
+     *          response=429,
+     *          ref="#/components/responses/429"
+     *      ),
+     *
+     *      security={ {"Bearer Authentication": {}} }
      * )
      *
      * @OA\Tag(
@@ -64,15 +76,25 @@ class CurrencyController extends Controller
      *
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="OK",
      *
      *         @OA\JsonContent(ref="#/components/schemas/currency")
      *     ),
      *
-     *     @OA\Response(
-     *         response=404,
-     *         description="Currency not found"
-     *     )
+     *      @OA\Response(
+     *          response=404,
+     *          ref="#/components/responses/404"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          ref="#/components/responses/401"
+     *      ),
+     *      @OA\Response(
+     *          response=429,
+     *          ref="#/components/responses/429"
+     *      ),
+     *
+     *      security={ {"Bearer Authentication": {}} }
      * )
      *
      * @param  string  $code

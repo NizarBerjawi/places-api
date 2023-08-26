@@ -20,19 +20,29 @@ class PlaceLocationController extends Controller
      *     operationId="getLocationByPlace",
      *
      *     @OA\Parameter(ref="#/components/parameters/geonameId"),
-     *      @OA\Parameter(ref="#/components/parameters/pagination"),
+     *     @OA\Parameter(ref="#/components/parameters/pagination"),
      *
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="OK",
      *
      *         @OA\JsonContent(ref="#/components/schemas/location")
      *     ),
      *
      *     @OA\Response(
      *         response=404,
-     *         description="Place not found"
+     *         ref="#/components/responses/404"
      *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         ref="#/components/responses/401"
+     *     ),
+     *          *      @OA\Response(
+     *          response=429,
+     *          ref="#/components/responses/429"
+     *      ),
+     *
+     *      security={ {"Bearer Authentication": {}} }
      * )
      *
      * @param  \App\Queries\PlaceQuery  $query

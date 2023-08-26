@@ -18,6 +18,14 @@ namespace App\Http\Controllers\Api\V1\Spec;
  *     url=BASE_URL
  * )
  *
+ * @OA\SecurityScheme(
+ *     securityScheme="Bearer Authentication",
+ *     type="http",
+ *     scheme="bearer",
+ *     in="header",
+ *     bearerFormat="JWT"
+ * )
+ *
  * @OA\Schema(
  *      schema="apiCollectionResponse",
  *      type="object",

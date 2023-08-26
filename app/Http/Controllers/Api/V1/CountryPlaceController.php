@@ -18,6 +18,7 @@ class CountryPlaceController extends Controller
      * @OA\Get(
      *      tags={"Countries"},
      *      summary="Returns the places available in a specific country",
+     *      operationId="getPlacesByCountry",
      *      path="/countries/{countryCode}/places",
      *
      *      @OA\Parameter(ref="#/components/parameters/countryCode"),
@@ -28,7 +29,7 @@ class CountryPlaceController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="Successful operation",
+     *          description="OK",
      *
      *          @OA\JsonContent(
      *              type="array",
@@ -39,8 +40,18 @@ class CountryPlaceController extends Controller
      *
      *      @OA\Response(
      *          response=404,
-     *          description="Country not found"
-     *       )
+     *          ref="#/components/responses/404"
+     *      ),
+     *      @OA\Response(
+     *          response=401,
+     *          ref="#/components/responses/401"
+     *      ),
+     *      @OA\Response(
+     *          response=429,
+     *          ref="#/components/responses/429"
+     *      ),
+     *
+     *      security={ {"Bearer Authentication": {}} }
      * )
      *
      * @param  \App\Queries\FlagQuery  $query
