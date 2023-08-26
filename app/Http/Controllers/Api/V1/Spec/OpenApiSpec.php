@@ -18,6 +18,14 @@ namespace App\Http\Controllers\Api\V1\Spec;
  *     url=BASE_URL
  * )
  *
+ * @OA\SecurityScheme(
+ *     securityScheme="Bearer Authentication",
+ *     type="http",
+ *     scheme="bearer",
+ *     in="header",
+ *     bearerFormat="JWT"
+ * )
+ *
  * @OA\Schema(
  *      schema="apiCollectionResponse",
  *      type="object",
@@ -125,6 +133,17 @@ namespace App\Http\Controllers\Api\V1\Spec;
  *                )
  *           )
  *      }
+ * )
+ *
+ * @OA\OpenApi(
+ *   x={
+ *       "tagGroups"=
+ *           {
+ *              {"name"="Places API", "tags"={"Continents", "Countries", "Currencies", "Feature Classes", "Feature Codes", "Flags", "Languages", "Places", "Statistics", "Time Zones"},
+ *              {"name"="Schemas"}
+ *           }
+ *       }
+ *   }
  * )
  */
 class OpenApiSpec

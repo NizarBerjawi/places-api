@@ -16,6 +16,7 @@ class FeatureClassController extends Controller
      * @OA\Get(
      *      tags={"Feature Classes"},
      *      summary="Returns a list of paginated feature classes",
+     *      operationId="getFeatureClasses",
      *      path="/featureClasses",
      *
      *      @OA\Parameter(ref="#/components/parameters/featureClassFilter"),
@@ -25,7 +26,7 @@ class FeatureClassController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="Successful operation",
+     *          description="OK",
      *
      *          @OA\JsonContent(
      *              type="array",
@@ -33,6 +34,17 @@ class FeatureClassController extends Controller
      *              @OA\Items(ref="#/components/schemas/featureClass")
      *          ),
      *      ),
+     *
+     *      @OA\Response(
+     *          response=401,
+     *          ref="#/components/responses/401"
+     *      ),
+     *      @OA\Response(
+     *          response=429,
+     *          ref="#/components/responses/429"
+     *      ),
+     *
+     *      security={ {"Bearer Authentication": {}} }
      * )
      *
      * @OA\Tag(
@@ -64,15 +76,25 @@ class FeatureClassController extends Controller
      *
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="OK",
      *
      *         @OA\JsonContent(ref="#/components/schemas/featureClass")
      *     ),
      *
      *     @OA\Response(
      *         response=404,
-     *         description="Feature class not found"
-     *     )
+     *         ref="#/components/responses/404"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         ref="#/components/responses/401"
+     *     ),
+     *          *      @OA\Response(
+     *          response=429,
+     *          ref="#/components/responses/429"
+     *      ),
+     *
+     *      security={ {"Bearer Authentication": {}} }
      * )
      *
      * @return \Illuminate\Http\Response

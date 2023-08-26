@@ -16,6 +16,7 @@ class PlaceController extends Controller
      * @OA\Get(
      *      tags={"Places"},
      *      summary="Returns a list of paginated places",
+     *      operationId="getPlaces",
      *      path="/places",
      *
      *      @OA\Parameter(ref="#/components/parameters/placeFilter"),
@@ -25,7 +26,7 @@ class PlaceController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="Successful operation",
+     *          description="OK",
      *
      *          @OA\JsonContent(
      *              type="array",
@@ -33,6 +34,17 @@ class PlaceController extends Controller
      *              @OA\Items(ref="#/components/schemas/place")
      *          ),
      *      ),
+     *
+     *      @OA\Response(
+     *          response=401,
+     *          ref="#/components/responses/401"
+     *      ),
+     *      @OA\Response(
+     *          response=429,
+     *          ref="#/components/responses/429"
+     *      ),
+     *
+     *      security={ {"Bearer Authentication": {}} }
      * )
      *
      * @OA\Tag(
@@ -68,15 +80,25 @@ class PlaceController extends Controller
      *
      *     @OA\Response(
      *         response=200,
-     *         description="Successful operation",
+     *         description="OK",
      *
      *         @OA\JsonContent(ref="#/components/schemas/place")
      *     ),
      *
      *     @OA\Response(
      *         response=404,
-     *         description="Place not found"
-     *     )
+     *         ref="#/components/responses/404"
+     *     ),
+     *     @OA\Response(
+     *         response=401,
+     *         ref="#/components/responses/401"
+     *     ),
+     *          *      @OA\Response(
+     *          response=429,
+     *          ref="#/components/responses/429"
+     *      ),
+     *
+     *      security={ {"Bearer Authentication": {}} }
      * )
      *
      * @param  string  $uuid

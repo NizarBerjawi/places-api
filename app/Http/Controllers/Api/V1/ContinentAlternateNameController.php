@@ -18,6 +18,7 @@ class ContinentAlternateNameController extends Controller
      * @OA\Get(
      *      tags={"Continents"},
      *      summary="Returns the alternate names of a specific continent",
+     *      operationId="getAlternateNameByContinent",
      *      path="/continents/{continentCode}/alternateNames",
      *
      *      @OA\Parameter(ref="#/components/parameters/continentCode"),
@@ -28,7 +29,7 @@ class ContinentAlternateNameController extends Controller
      *
      *      @OA\Response(
      *          response=200,
-     *          description="Successful operation",
+     *          description="OK",
      *
      *          @OA\JsonContent(
      *              type="array",
@@ -38,9 +39,19 @@ class ContinentAlternateNameController extends Controller
      *      ),
      *
      *      @OA\Response(
+     *          response=401,
+     *          ref="#/components/responses/401"
+     *      ),
+     *      @OA\Response(
      *          response=404,
-     *          description="Continent not found"
-     *       ),
+     *          ref="#/components/responses/404"
+     *      ),
+     *      @OA\Response(
+     *          response=429,
+     *          ref="#/components/responses/429"
+     *      ),
+     *
+     *      security={ {"Bearer Authentication": {}} }
      * )
      *
      * @param  \App\Queries\CurrencyQuery  $query
