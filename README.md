@@ -45,6 +45,7 @@ Places API is a RESTful api based on the <a href="https://www.geonames.org/">Geo
 
 - [Laravel framework](https://laravel.com/)
 - [Bulma](https://bulma.io/)
+- [Swagger UI](https://swagger.io/tools/swagger-ui/)
 
 <!-- GETTING STARTED -->
 
