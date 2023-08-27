@@ -44,7 +44,7 @@ class ContinentController extends Controller
      *          ref="#/components/responses/429"
      *      ),
      *
-     *      security={ {"BearerAuth": {}} }
+     *      security={ {"bearerAuth": {}} }
      * )
      *
      * @OA\Tag(
@@ -96,7 +96,7 @@ class ContinentController extends Controller
      *          ref="#/components/responses/429"
      *      ),
      *
-     *      security={ {"BearerAuth": {}} }
+     *      security={ {"bearerAuth": {}} }
      * )
      *
      * @return \Illuminate\Http\Response

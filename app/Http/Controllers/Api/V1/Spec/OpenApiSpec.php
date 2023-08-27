@@ -19,10 +19,9 @@ namespace App\Http\Controllers\Api\V1\Spec;
  * )
  *
  * @OA\SecurityScheme(
- *     securityScheme="BearerAuth",
+ *     securityScheme="bearerAuth",
  *     type="http",
  *     scheme="bearer",
- *     in="header",
  *     bearerFormat="JWT"
  * )
  *

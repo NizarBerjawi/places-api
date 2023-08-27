@@ -51,7 +51,7 @@ class ContinentCountryController extends Controller
      *          ref="#/components/responses/429"
      *      ),
      *
-     *      security={ {"BearerAuth": {}} }
+     *      security={ {"bearerAuth": {}} }
      * )
      *
      * @return \Illuminate\Http\Response
