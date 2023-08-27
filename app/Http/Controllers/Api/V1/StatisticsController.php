@@ -53,7 +53,7 @@ class StatisticsController extends Controller
      *          ref="#/components/responses/429"
      *      ),
      *
-     *      security={ {"BearerAuth": {}} }
+     *      security={ {"bearerAuth": {}} }
      * )
      *
      * @OA\Tag(

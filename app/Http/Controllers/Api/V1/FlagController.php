@@ -44,7 +44,7 @@ class FlagController extends Controller
      *          ref="#/components/responses/429"
      *      ),
      *
-     *      security={ {"BearerAuth": {}} }
+     *      security={ {"bearerAuth": {}} }
      * )
      *
      * @OA\Tag(
@@ -96,7 +96,7 @@ class FlagController extends Controller
      *          ref="#/components/responses/429"
      *      ),
      *
-     *      security={ {"BearerAuth": {}} }
+     *      security={ {"bearerAuth": {}} }
      * )
      *
      * @param  string  $code

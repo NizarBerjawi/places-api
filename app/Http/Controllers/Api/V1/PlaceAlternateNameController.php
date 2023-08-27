@@ -49,7 +49,7 @@ class PlaceAlternateNameController extends Controller
      *          ref="#/components/responses/429"
      *      ),
      *
-     *      security={ {"BearerAuth": {}} }
+     *      security={ {"bearerAuth": {}} }
      * )
      *
      * @param  \App\Queries\PlaceQuery  $query
