@@ -44,7 +44,7 @@ class FeatureClassController extends Controller
      *          ref="#/components/responses/429"
      *      ),
      *
-     *      security={ {"Bearer Authentication": {}} }
+     *      security={ {"BearerAuth": {}} }
      * )
      *
      * @OA\Tag(
@@ -94,7 +94,7 @@ class FeatureClassController extends Controller
      *          ref="#/components/responses/429"
      *      ),
      *
-     *      security={ {"Bearer Authentication": {}} }
+     *      security={ {"BearerAuth": {}} }
      * )
      *
      * @return \Illuminate\Http\Response

@@ -51,7 +51,7 @@ class CountryTimeZoneController extends Controller
      *          ref="#/components/responses/429"
      *      ),
      *
-     *      security={ {"Bearer Authentication": {}} }
+     *      security={ {"BearerAuth": {}} }
      * )
      *
      * @param  string  $code

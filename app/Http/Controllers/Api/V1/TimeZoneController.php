@@ -44,7 +44,7 @@ class TimeZoneController extends Controller
      *          ref="#/components/responses/429"
      *      ),
      *
-     *      security={ {"Bearer Authentication": {}} }
+     *      security={ {"BearerAuth": {}} }
      * )
      *
      * @OA\Tag(
@@ -96,7 +96,7 @@ class TimeZoneController extends Controller
      *          ref="#/components/responses/429"
      *      ),
      *
-     *      security={ {"Bearer Authentication": {}} }
+     *      security={ {"BearerAuth": {}} }
      * )
      *
      * @param  string  $code
