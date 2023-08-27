@@ -51,7 +51,7 @@ class CountryAlternateNameController extends Controller
      *          ref="#/components/responses/429"
      *      ),
      *
-     *      security={ {"BearerAuth": {}} }
+     *      security={ {"bearerAuth": {}} }
      * )
      *
      * @param  \App\Queries\CurrencyQuery  $query
