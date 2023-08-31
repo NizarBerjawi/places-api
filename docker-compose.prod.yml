@@ -18,7 +18,7 @@ services:
       - "443:443"
     restart: always
     depends_on:
-      - php
+      - app
       - db
       - supervisor
     networks:
@@ -26,11 +26,11 @@ services:
     volumes:
       - nginx:/etc/nginx/http.d
       - certs:/etc/letsencrypt
-  php:
+  app:
     build:
       context: .
       dockerfile: .docker/Dockerfile.prod
-    container_name: php
+    container_name: app
     env_file:
       - .env
     tty: true
@@ -49,7 +49,7 @@ services:
     env_file:
       - .env
   db:
-    image: postgres:13.3-alpine3.13
+    image: postgres:15.3-alpine3.18
     restart: always
     environment:
       - POSTGRES_USER=${DB_USERNAME}

@@ -19,13 +19,21 @@ RUN apk --update add --no-cache \
     pdo_pgsql \
     zip
 
+# We copy all PHP configuration files
 COPY .docker/app /usr/local/etc
 
-COPY --from=builder --chown=www-data:www-data /app .
+# Copy application source code
+COPY . .
 
-RUN chmod -R ug+rwx ./storage && \
-  find . -type f -exec chmod 644 {} \; && \
-  find . -type d -exec chmod 755 {} \;
+# Copy vendor packages, API spec, and JS bundle
+COPY --from=builder /app/vendor ./vendor
+COPY --from=builder /app/public/dist ./public/dist
+COPY --from=builder /app/public/openApi.json ./public/openApi.json
+
+RUN chown -R www-data:www-data . \
+  && chmod -R ug+rwx ./storage \
+  && find . -type f -exec chmod 644 {} \; \
+  && find . -type d -exec chmod 755 {} \;
 
 USER www-data
 
