@@ -18,27 +18,27 @@ class TokenController extends Controller
         ]);
     }
 
-    public function show(Request $request, $id)
+    public function show(Request $request, $uuid)
     {
-        $token = $request->user()->tokens()->where('id', $id)->first();
+        $token = $request->user()->tokens()->where('uuid', $uuid)->first();
 
         return view('admin.tokens.show', [
             'token' => $token,
         ]);
     }
 
-    public function edit(Request $request, $id)
+    public function edit(Request $request, $uuid)
     {
-        $token = $request->user()->tokens()->where('id', $id)->first();
+        $token = $request->user()->tokens()->where('uuid', $uuid)->first();
 
         return view('admin.tokens.edit', [
             'token' => $token,
         ]);
     }
 
-    public function update(TokenPutRequest $request, $id)
+    public function update(TokenPutRequest $request, $uuid)
     {
-        $token = $request->user()->tokens()->where('id', $id)->first();
+        $token = $request->user()->tokens()->where('uuid', $uuid)->first();
 
         $action = $request->get('action');
 
@@ -50,7 +50,7 @@ class TokenController extends Controller
             $textToken = $newAccessToken->plainTextToken;
 
             if (strpos($textToken, '|') !== false) {
-                [$id, $textToken] = explode('|', $textToken, 2);
+                [$uuid, $textToken] = explode('|', $textToken, 2);
             }
         }
 
@@ -61,7 +61,7 @@ class TokenController extends Controller
         }
 
         return redirect()
-            ->route('admin.tokens.show', $id)
+            ->route('admin.tokens.show', $uuid)
             ->with('textToken', $textToken ?? null);
     }
 
@@ -82,24 +82,24 @@ class TokenController extends Controller
         $textToken = $token->plainTextToken;
 
         if (strpos($textToken, '|') !== false) {
-            [$id, $textToken] = explode('|', $textToken, 2);
+            [$uuid, $textToken] = explode('|', $textToken, 2);
         }
 
-        return redirect()->route('admin.tokens.show', $id)->with('textToken', $textToken);
+        return redirect()->route('admin.tokens.show', $uuid)->with('textToken', $textToken);
     }
 
-    public function destroy(Request $request, $id)
+    public function destroy(Request $request, $uuid)
     {
-        $request->user()->tokens()->where('id', $id)->delete();
+        $request->user()->tokens()->where('uuid', $uuid)->delete();
 
         return redirect()->route('admin.tokens.index');
     }
 
-    public function confirm(TokenConfirmRequest $request, $id)
+    public function confirm(TokenConfirmRequest $request, $uuid)
     {
         $action = $request->get('action');
 
-        $token = $request->user()->tokens()->where('id', $id)->first();
+        $token = $request->user()->tokens()->where('uuid', $uuid)->first();
 
         return view("admin.tokens.$action", compact('action', 'token'));
     }

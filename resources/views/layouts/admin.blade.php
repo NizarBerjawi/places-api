@@ -20,10 +20,6 @@
 
     <main>
         <div class="container">
-            <section class="section mt-2">
-                @include('partials.tabs')
-            </section>
-
             <section class="section">
                 <div class="columns">
                     <div class="column is-6 is-offset-3">

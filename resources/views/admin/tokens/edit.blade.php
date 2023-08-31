@@ -7,10 +7,10 @@
 
     <article class="message is-info">
         <div class="message-body">
-            {!! __('tokens.edit', ['regenerateLink' => route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'regenerate'])]) !!}
+            {!! __('tokens.edit', ['regenerateLink' => route('admin.tokens.confirm', ['uuid' => $token->uuid, 'action' => 'regenerate'])]) !!}
         </div>
     </article>
-    <form method="post" action="{{ route('admin.tokens.update', ['id' => $token->id, 'action' => 'update']) }}">
+    <form method="post" action="{{ route('admin.tokens.update', ['uuid' => $token->uuid, 'action' => 'update']) }}">
         @method('PUT')
         @csrf
 
