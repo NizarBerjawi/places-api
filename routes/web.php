@@ -30,6 +30,10 @@ Route::get('/languages', [WebController::class, 'languages'])->name('languages')
 Route::middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')])
     ->prefix('user')
     ->group(function () {
+
+        Route::get('/gettingStarted', [WebController::class, 'gettingStarted'])->name('admin.api.gettingStarted');
+        Route::get('/documentation', [WebController::class, 'docs'])->name('admin.api.docs');
+
         Route::get('/confirm-password', [SecurityController::class, 'confirm']);
 
         Route::get('security', [SecurityController::class, 'index'])->name('admin.security.index');
@@ -54,11 +58,11 @@ Route::middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify
             ->group(function () {
                 Route::get('/', [TokenController::class, 'index'])->name('admin.tokens.index');
                 Route::get('create', [TokenController::class, 'create'])->name('admin.tokens.create');
-                Route::get('{id}', [TokenController::class, 'show'])->name('admin.tokens.show');
-                Route::get('{id}/edit', [TokenController::class, 'edit'])->name('admin.tokens.edit');
+                Route::get('{uuid}', [TokenController::class, 'show'])->name('admin.tokens.show');
+                Route::get('{uuid}/edit', [TokenController::class, 'edit'])->name('admin.tokens.edit');
                 Route::post('/', [TokenController::class, 'store'])->name('admin.tokens.store');
-                Route::put('{id}', [TokenController::class, 'update'])->name('admin.tokens.update');
-                Route::delete('{id}', [TokenController::class, 'destroy'])->name('admin.tokens.destroy');
-                Route::get('{id}/confirm', [TokenController::class, 'confirm'])->name('admin.tokens.confirm');
+                Route::put('{uuid}', [TokenController::class, 'update'])->name('admin.tokens.update');
+                Route::delete('{uuid}', [TokenController::class, 'destroy'])->name('admin.tokens.destroy');
+                Route::get('{uuid}/confirm', [TokenController::class, 'confirm'])->name('admin.tokens.confirm');
             });
     });

@@ -11,7 +11,7 @@
         </div>
     </article>
 
-    <form method="post" action="{{ route('admin.tokens.update', ['id' => $token->id, 'action' => $action]) }}">
+    <form method="post" action="{{ route('admin.tokens.update', ['uuid' => $token->uuid, 'action' => $action]) }}">
         @csrf
         @method('PUT')
 
