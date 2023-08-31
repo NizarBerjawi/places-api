@@ -20,21 +20,21 @@
         </div>
     @else
         <div class="buttons has-addons is-centered">
-            <a href="{{ route('admin.tokens.edit', ['id' => $token->id]) }}"
+            <a href="{{ route('admin.tokens.edit', ['uuid' => $token->uuid]) }}"
                 class="button has-text-primary is-normal is-responsive">
                 <i class="icon is-small" data-feather="edit"></i>
 
                 <span class="has-text-weight-bold">Edit</span>
             </a>
 
-            <a href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'regenerate']) }}"
+            <a href="{{ route('admin.tokens.confirm', ['uuid' => $token->uuid, 'action' => 'regenerate']) }}"
                 class="button has-text-warning is-normal is-responsive">
                 <i class="icon is-small" data-feather="refresh-cw"></i>
 
                 <span>Regenerate</span>
             </a>
 
-            <a href="{{ route('admin.tokens.confirm', ['id' => $token->id, 'action' => 'delete']) }}"
+            <a href="{{ route('admin.tokens.confirm', ['uuid' => $token->uuid, 'action' => 'delete']) }}"
                 class="button has-text-danger is-normal is-responsive">
                 <i class="icon is-small" data-feather="trash-2"></i>
 

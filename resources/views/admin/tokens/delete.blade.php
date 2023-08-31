@@ -11,7 +11,7 @@
         </div>
     </article>
 
-    <form method="post" action="{{ route('admin.tokens.destroy', $token->id) }}">
+    <form method="post" action="{{ route('admin.tokens.destroy', $token->uuid) }}">
         @csrf
         @method('DELETE')
 
