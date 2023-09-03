@@ -25,18 +25,20 @@ class FlagQuery extends Query
      *     parameter="flagFilter",
      *     name="filter",
      *     in="query",
-     *     description="Sort the result set by certain properties.",
+     *     description="Filter flags by: `countryCode`.",
      *     required=false,
      *     style="deepObject",
      *
      *     @OA\Schema(
      *         type="object",
-     *         enum = {"countryCode"},
      *
      *         @OA\Property(
      *             property="countryCode",
-     *             type="string",
-     *             example="AU"
+     *             type="object",
+     *             @OA\Property(
+     *                 property="eq",
+     *                 type="string",
+     *             )
      *         )
      *     )
      * )

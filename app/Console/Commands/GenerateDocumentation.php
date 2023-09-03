@@ -49,6 +49,7 @@ class GenerateDocumentation extends Command
             app_path('Http/Controllers'),
             app_path('Models'),
             app_path('Queries'),
+            app_path('Filters'),
         ])->toJson();
 
         (new Filesystem)->put(public_path('openApi.json'), $content);
