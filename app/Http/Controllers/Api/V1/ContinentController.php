@@ -15,8 +15,8 @@ class ContinentController extends Controller
      *
      * @OA\Get(
      *      tags={"Continents"},
-     *      summary="Returns a list of paginated continents",
      *      operationId="getContinents",
+     *      summary="Returns a list of paginated continents.",
      *      path="/continents",
      *
      *      @OA\Parameter(ref="#/components/parameters/continentFilter"),
@@ -68,8 +68,9 @@ class ContinentController extends Controller
      *
      * @OA\Get(
      *     tags={"Continents"},
+     *     operationId="getContinentDetails",
+     *     summary="Returns the details of a specified continent.",
      *     path="/continents/{continentCode}",
-     *     operationId="getContinentByCode",
      *
      *     @OA\Property(ref="#/components/schemas/continent"),
      *

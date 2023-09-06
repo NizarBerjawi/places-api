@@ -25,20 +25,20 @@ class TimeZoneQuery extends Query
      *     parameter="timeZoneFilter",
      *     name="filter",
      *     in="query",
-     *     description="Filter time zones by certain criteria",
+     *     description="Filter time zones by: `code`.",
      *     required=false,
      *     style="deepObject",
      *
      *     @OA\Schema(
      *         type="object",
-     *         enum={
-     *             "code"
-     *         },
      *
      *         @OA\Property(
      *             property="code",
-     *             type="string",
-     *             example="asia_tokyo"
+     *             type="object",
+     *             @OA\Property(
+     *                 property="eq",
+     *                 type="string"
+     *             )
      *         )
      *     )
      * )

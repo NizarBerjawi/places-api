@@ -26,22 +26,12 @@ class CountryQuery extends Query
      *     parameter="countryFilter",
      *     name="filter",
      *     in="query",
-     *     description="Filter countries by certain criteria",
+     *     description="Filter countries by: `name`, `iso3166Alpha2`, `iso3166Alpha3`, `iso3166Numeric`, `population`, `phoneCode`, or `languageCodes`",
      *     required=false,
      *     style="deepObject",
      *
      *     @OA\Schema(
      *         type="object",
-     *         enum={
-     *             "name",
-     *             "iso3166Alpha2",
-     *             "iso3166Alpha3",
-     *             "iso3166Numeric",
-     *             "population",
-     *             "area",
-     *             "phoneCode",
-     *             "languageCodes"
-     *         },
      *
      *         @OA\Property(
      *             property="area",
@@ -49,7 +39,6 @@ class CountryQuery extends Query
      *             @OA\Property(
      *                 property="lt",
      *                 type="integer",
-     *                 example=10000
      *             )
      *         ),
      *         @OA\Property(
@@ -58,7 +47,6 @@ class CountryQuery extends Query
      *             @OA\Property(
      *                 property="gt",
      *                 type="integer",
-     *                 example=5000000
      *             )
      *         ),
      *     )

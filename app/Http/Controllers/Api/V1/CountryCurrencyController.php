@@ -16,8 +16,8 @@ class CountryCurrencyController extends Controller
      *
      * @OA\Get(
      *      tags={"Countries"},
-     *      summary="Returns the currency of a specific country",
-     *      operationId="getCurrencyByCountry",
+     *      operationId="getCountryCurrency",
+     *      summary="Returns the official currency of a specific country.",
      *      path="/countries/{countryCode}/currency",
      *
      *      @OA\Parameter(ref="#/components/parameters/countryCode"),

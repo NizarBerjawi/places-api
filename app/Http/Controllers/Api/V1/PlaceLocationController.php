@@ -17,7 +17,8 @@ class PlaceLocationController extends Controller
      * @OA\Get(
      *     tags={"Places"},
      *     path="/places/{geonameId}/location",
-     *     operationId="getLocationByPlace",
+     *     summary="Returns the location of a specific place.",
+     *     operationId="getPlaceLocation",
      *
      *     @OA\Parameter(ref="#/components/parameters/geonameId"),
      *     @OA\Parameter(ref="#/components/parameters/pagination"),
@@ -37,7 +38,7 @@ class PlaceLocationController extends Controller
      *         response=401,
      *         ref="#/components/responses/401"
      *     ),
-     *          *      @OA\Response(
+     *     @OA\Response(
      *          response=429,
      *          ref="#/components/responses/429"
      *      ),
