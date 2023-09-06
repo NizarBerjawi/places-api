@@ -17,8 +17,8 @@ class CountryNeighbourController extends Controller
      *
      * @OA\Get(
      *      tags={"Countries"},
-     *      summary="Returns the neighbouring countries of a specific country",
-     *      operationId="getNeighborsByCountry",
+     *      operationId="getCountryNeighbours",
+     *      summary="Returns the neighbouring countries of a specific country.",
      *      path="/countries/{countryCode}/neighbours",
      *
      *      @OA\Parameter(ref="#/components/parameters/countryCode"),

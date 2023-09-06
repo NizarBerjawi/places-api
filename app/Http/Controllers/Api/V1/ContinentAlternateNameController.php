@@ -17,8 +17,8 @@ class ContinentAlternateNameController extends Controller
      *
      * @OA\Get(
      *      tags={"Continents"},
-     *      summary="Returns the alternate names of a specific continent",
-     *      operationId="getAlternateNameByContinent",
+     *      operationId="getContinentAlternateNames",
+     *      summary="Returns the alternate names of a specific continent.",
      *      path="/continents/{continentCode}/alternateNames",
      *
      *      @OA\Parameter(ref="#/components/parameters/continentCode"),

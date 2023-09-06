@@ -27,7 +27,7 @@ class StatisticsController extends Controller
      *
      * @OA\Get(
      *      tags={"Statistics"},
-     *      summary="Returns a collection of statistics",
+     *      summary="Returns a collection of statistics.",
      *      operationId="getStatistics",
      *      path="/statistics",
      *

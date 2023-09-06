@@ -14,8 +14,8 @@ class ContinentGeometryController extends Controller
      *
      * @OA\Get(
      *      tags={"Continents"},
-     *      summary="Returns the geometry of a specific continent",
-     *      operationId="getGeometryByContinent",
+     *      operationId="getContinentGeoJson",
+     *      summary="Returns the GeoJSON object for a specific continent.",
      *      path="/continents/{continentCode}/geometry",
      *
      *      @OA\Parameter(ref="#/components/parameters/continentCode"),

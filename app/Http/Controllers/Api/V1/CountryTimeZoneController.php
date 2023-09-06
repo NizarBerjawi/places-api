@@ -17,8 +17,8 @@ class CountryTimeZoneController extends Controller
      *
      * @OA\Get(
      *      tags={"Countries"},
-     *      summary="Returns the Time Zones available in a specific country",
-     *      operationId="getTimeZonesByCountry",
+     *      operationId="getCountryTimeZones",
+     *      summary="Returns the Time Zones available in a specific country.",
      *      path="/countries/{countryCode}/timeZones",
      *
      *      @OA\Parameter(ref="#/components/parameters/countryCode"),

@@ -17,8 +17,8 @@ class CountryPlaceController extends Controller
      *
      * @OA\Get(
      *      tags={"Countries"},
-     *      summary="Returns the places available in a specific country",
-     *      operationId="getPlacesByCountry",
+     *      operationId="getCountryPlaces",
+     *      summary="Returns the places available in a specific country.",
      *      path="/countries/{countryCode}/places",
      *
      *      @OA\Parameter(ref="#/components/parameters/countryCode"),
