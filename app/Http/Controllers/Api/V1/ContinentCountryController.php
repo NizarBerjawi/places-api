@@ -17,8 +17,8 @@ class ContinentCountryController extends Controller
      *
      * @OA\Get(
      *      tags={"Continents"},
-     *      summary="Returns a list of paginated countries in a specific continent",
-     *      operationId="getCountriesByContinent",
+     *      summary="Returns a list of paginated countries in a specific continent.",
+     *      operationId="getContinentCountries",
      *      path="/continents/{continentCode}/countries",
      *
      *      @OA\Parameter(ref="#/components/parameters/continentCode"),

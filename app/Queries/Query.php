@@ -106,7 +106,6 @@ abstract class Query
      *
      *     @OA\Schema(
      *         type="object",
-     *         enum = {"number", "size"},
      *
      *         @OA\Property(
      *             property="cursor",

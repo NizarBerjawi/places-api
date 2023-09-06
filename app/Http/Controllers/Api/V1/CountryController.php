@@ -15,8 +15,8 @@ class CountryController extends Controller
      *
      * @OA\Get(
      *      tags={"Countries"},
-     *      summary="Returns a list of paginated countries",
      *      operationId="getCountries",
+     *      summary="Returns a list of paginated countries.",
      *      path="/countries",
      *
      *      @OA\Parameter(ref="#/components/parameters/countryFilter"),
@@ -68,8 +68,9 @@ class CountryController extends Controller
      *
      * @OA\Get(
      *     tags={"Countries"},
+     *     operationId="getCountryDetails",
+     *     summary="Returns the details of a specific country.",
      *     path="/countries/{countryCode}",
-     *     operationId="getCountryByCode",
      *
      *     @OA\Parameter(ref="#/components/parameters/countryCode"),
      *     @OA\Parameter(ref="#/components/parameters/countryInclude"),

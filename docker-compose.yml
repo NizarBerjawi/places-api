@@ -113,7 +113,7 @@ services:
         GID: ${GID}
         UID: ${UID}
         USER: ${USER}
-    container_name: artisan
+    container_name: test
     volumes:
       - .:/var/www/html
     depends_on:

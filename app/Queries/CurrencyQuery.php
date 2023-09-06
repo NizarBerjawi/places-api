@@ -25,18 +25,20 @@ class CurrencyQuery extends Query
      *     parameter="currencyFilter",
      *     name="filter",
      *     in="query",
-     *     description="Filter currencies by certain criteria",
+     *     description="Filter currencies by: `code` or `name`.",
      *     required=false,
      *     style="deepObject",
      *
      *     @OA\Schema(
      *         type="object",
-     *         enum={"code", "name"},
      *
      *         @OA\Property(
      *             property="code",
-     *             type="string",
-     *             example="AUD"
+     *             type="object",
+     *             @OA\Property(
+     *                 property="eq",
+     *                 type="string",
+     *             )
      *         )
      *     )
      * )

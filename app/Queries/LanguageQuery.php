@@ -25,18 +25,36 @@ class LanguageQuery extends Query
      *     parameter="languageFilter",
      *     name="filter",
      *     in="query",
-     *     description="Filter languages by certain criteria",
+     *     description="Filter languages by: `iso639.1`, `iso639.2`, or `iso639.3`",
      *     required=false,
      *     style="deepObject",
      *
      *     @OA\Schema(
      *         type="object",
-     *         enum={"iso639.1", "iso639.2", "iso639.3"},
      *
      *         @OA\Property(
      *             property="iso639.1",
-     *             type="string",
-     *             example="en"
+     *             type="object",
+     *             @OA\Property(
+     *                 property="eq",
+     *                 type="string"
+     *             ),
+     *         ),
+     *         @OA\Property(
+     *             property="iso639.2",
+     *             type="object",
+     *             @OA\Property(
+     *                 property="eq",
+     *                 type="string"
+     *             ),
+     *         ),
+     *         @OA\Property(
+     *             property="iso639.3",
+     *             type="object",
+     *             @OA\Property(
+     *                 property="eq",
+     *                 type="string"
+     *             ),
      *         )
      *     )
      * )

@@ -25,22 +25,28 @@ class ContinentQuery extends Query
      *     parameter="continentFilter",
      *     name="filter",
      *     in="query",
-     *     description="Filter continents by name or code",
+     *     description="Filter continents by: `name` or `code`.",
      *     required=false,
      *     style="deepObject",
      *
      *     @OA\Schema(
      *         type="object",
-     *         enum={"code", "name"},
      *
      *         @OA\Property(
      *             property="code",
      *             type="object",
      *             @OA\Property(
      *                 property="eq",
-     *                 type="string",
-     *                 example="EU"
-     *             )
+     *                 type="string"
+     *             ),
+     *         ),
+     *         @OA\Property(
+     *             property="name",
+     *             type="object",
+     *             @OA\Property(
+     *                 property="eq",
+     *                 type="string"
+     *             ),
      *         )
      *     )
      * )

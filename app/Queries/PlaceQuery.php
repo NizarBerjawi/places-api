@@ -26,20 +26,12 @@ class PlaceQuery extends Query
      *     parameter="placeFilter",
      *     name="filter",
      *     in="query",
-     *     description="Filter places by certain criteria",
+     *     description="Filter places by: `name`, `featureCode`, `featureClass`, `countryCode`, `timeZoneCode`, `elevation`, or `population`.",
      *     required=false,
      *     style="deepObject",
      *
      *     @OA\Schema(
      *         type="object",
-     *         enum={
-     *             "name",
-     *             "featureCode",
-     *             "featureClass",
-     *             "countryCode",
-     *             "elevation",
-     *             "population",
-     *         },
      *
      *         @OA\Property(
      *             property="population",
@@ -47,7 +39,7 @@ class PlaceQuery extends Query
      *             @OA\Property(
      *                 property="gt",
      *                 type="integer",
-     *                 example=5000000
+     *                 example=10000
      *             )
      *         ),
      *     )

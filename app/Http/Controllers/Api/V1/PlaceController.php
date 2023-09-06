@@ -15,8 +15,8 @@ class PlaceController extends Controller
      *
      * @OA\Get(
      *      tags={"Places"},
-     *      summary="Returns a list of paginated places",
      *      operationId="getPlaces",
+     *      summary="Returns a list of paginated places.",
      *      path="/places",
      *
      *      @OA\Parameter(ref="#/components/parameters/placeFilter"),
@@ -68,8 +68,9 @@ class PlaceController extends Controller
      *
      * @OA\Get(
      *     tags={"Places"},
+     *     operationId="getPlaceDetails",
+     *     summary="Returns the details of a specific place.",
      *     path="/places/{geonameId}",
-     *     operationId="getPlaceByGeonameId",
      *
      *     @OA\Property(ref="#/components/schemas/Place"),
      *

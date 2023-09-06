@@ -17,8 +17,8 @@ class CountryAlternateNameController extends Controller
      *
      * @OA\Get(
      *      tags={"Countries"},
-     *      summary="Returns the alternate names of a specific country",
-     *      operationId="getAlternateNameByCountry",
+     *      operationId="getCountryAlternateNames",
+     *      summary="Returns the alternate names of a specific country.",
      *      path="/countries/{countryCode}/alternateNames",
      *
      *      @OA\Parameter(ref="#/components/parameters/countryCode"),

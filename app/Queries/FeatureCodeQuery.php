@@ -25,18 +25,20 @@ class FeatureCodeQuery extends Query
      *     parameter="featureCodeFilter",
      *     name="filter",
      *     in="query",
-     *     description="Filter feature codes by certain criteria",
+     *     description="Filter feature codes by: `code` or `featureClassCode`.",
      *     required=false,
      *     style="deepObject",
      *
      *     @OA\Schema(
      *         type="object",
-     *         enum={"code", "featureClassCode"},
      *
      *         @OA\Property(
      *             property="code",
-     *             type="string",
-     *             example="ADM1"
+     *             type="object",
+     *             @OA\Property(
+     *                 property="eq",
+     *                 type="string",
+     *             )
      *         )
      *     )
      * )
