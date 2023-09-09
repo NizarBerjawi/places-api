@@ -109,21 +109,13 @@ abstract class Query
      *
      *         @OA\Property(
      *             property="cursor",
-     *             type="object",
+     *             type="string",
      *             description="The cursor is an encoded string containing the location that the next paginated query should start paginating and the direction that it should paginate.",
-     *             @OA\Property(
-     *                  property="eq",
-     *                  type="string"
-     *             ),
      *         ),
      *         @OA\Property(
      *             property="size",
-     *             type="object",
+     *             type="integer",
      *             description="The size is an integer that determines the number of results to return per page.",
-     *             @OA\Property(
-     *                  property="eq",
-     *                  type="integer"
-     *             ),
      *         ),
      *     )
      * )
@@ -137,7 +129,7 @@ abstract class Query
         $defaultSize = config('paginate.default_size');
         $maxResults = config('paginate.max_results');
 
-        $size = (int) request()->input('page.size.eq', $defaultSize);
+        $size = (int) request()->input('page.size', $defaultSize);
 
         if ($size <= 0) {
             $size = $defaultSize;
@@ -147,11 +139,11 @@ abstract class Query
             $size = $maxResults;
         }
 
-        $cursor = (string) request()->input('page.cursor.eq');
+        $cursor = (string) request()->input('page.cursor');
 
         return $this->getBuilder()
-            ->cursorPaginate($size, ['*'], 'page[cursor][eq]', $cursor)
-            ->appends(Arr::except(request()->input(), 'page.cursor.eq'));
+            ->cursorPaginate($size, ['*'], 'page[cursor]', $cursor)
+            ->appends(Arr::except(request()->input(), 'page.cursor'));
     }
 
     /**
