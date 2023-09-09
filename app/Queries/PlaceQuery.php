@@ -65,24 +65,14 @@ class PlaceQuery extends Query
      *     parameter="placeInclude",
      *     name="include",
      *     in="query",
-     *     description="Include related resources",
+     *     description="Include related resources with every Place. Possible values: `country`, `location`, `alternateNames`, `featureClass`, `featureCode`, and `timeZone`.",
      *     required=false,
      *     explode=false,
      *
      *     @OA\Schema(
-     *         type="array",
-     *
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {
-     *                  "country",
-     *                  "location",
-     *                  "alternateNames",
-     *                  "featureClass",
-     *                  "featureCode",
-     *                  "timeZone",
-     *             },
-     *         )
+     *         type="string",
+     *         format="csv",
+     *         example="country,location"
      *     )
      * )
      */
@@ -105,30 +95,14 @@ class PlaceQuery extends Query
      *     parameter="placeSort",
      *     name="sort",
      *     in="query",
-     *     description="Sort the result set by certain properties.",
+     *     description="Sort the result set by one or more properties: `name`,`featureCode`,`countryCode`,`timeZoneCode`,`population`, and `elevation`.",
      *     required=false,
      *     explode=false,
      *
      *     @OA\Schema(
-     *         type="array",
-     *
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {
-     *                 "name",
-     *                 "featureCode",
-     *                 "countryCode",
-     *                 "timeZoneCode",
-     *                 "population",
-     *                 "elevation",
-     *                 "-name",
-     *                 "-featureCode",
-     *                 "-countryCode",
-     *                 "-timeZoneCode",
-     *                 "-population",
-     *                 "-elevation"
-     *             },
-     *         )
+     *         type="string",
+     *         format="csv",
+     *         example="-elevation"
      *     )
      * )
      */

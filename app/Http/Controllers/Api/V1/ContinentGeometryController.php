@@ -24,11 +24,7 @@ class ContinentGeometryController extends Controller
      *          response=200,
      *          description="OK",
      *
-     *          @OA\JsonContent(
-     *              type="array",
-     *
-     *              @OA\Items(ref="#/components/schemas/featureCollection")
-     *          ),
+     *          @OA\JsonContent(ref="#/components/schemas/featureCollection")
      *      ),
      *
      *      @OA\Response(

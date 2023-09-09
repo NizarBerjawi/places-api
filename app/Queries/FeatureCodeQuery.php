@@ -25,7 +25,7 @@ class FeatureCodeQuery extends Query
      *     parameter="featureCodeFilter",
      *     name="filter",
      *     in="query",
-     *     description="Filter feature codes by: `code` or `featureClassCode`.",
+     *     description="Filter Feature Codes by: `code` or `featureClassCode`.",
      *     required=false,
      *     style="deepObject",
      *
@@ -58,17 +58,14 @@ class FeatureCodeQuery extends Query
      *     parameter="featureCodeInclude",
      *     name="include",
      *     in="query",
-     *     description="Include related resources",
+     *     description="Include related resources with every Feature Code. Possible values: `featureClass`.",
      *     required=false,
      *     explode=false,
      *
      *     @OA\Schema(
-     *         type="array",
-     *
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {"featureClass"},
-     *         )
+     *         type="string",
+     *         format="csv",
+     *         example="featureClass"
      *     )
      * )
      */
@@ -86,17 +83,14 @@ class FeatureCodeQuery extends Query
      *     parameter="featureCodeSort",
      *     name="sort",
      *     in="query",
-     *     description="Sort the result set by certain properties.",
+     *     description="Sort the result set by one or more properties: `code`.",
      *     required=false,
      *     explode=false,
      *
      *     @OA\Schema(
-     *         type="array",
-     *
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {"code", "-code"},
-     *         )
+     *         type="string",
+     *         format="csv",
+     *         example="code"
      *     )
      * )
      */

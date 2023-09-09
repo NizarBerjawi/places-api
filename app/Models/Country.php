@@ -46,13 +46,15 @@ use Illuminate\Database\Eloquent\Model;
  *      ),
  *      @OA\Property(
  *           property="area",
- *           type="integer",
+ *           type="number",
+ *           format="float",
  *           example="7686850",
  *           description="The total area of the country"
  *      ),
  *      @OA\Property(
  *           property="phoneCode",
  *           type="string",
+ *           nullable=true,
  *           example="61",
  *           description="The country calling code"
  *      )
@@ -120,7 +122,7 @@ class Country extends Model
     protected $casts = [
         'iso3166_numeric' => 'integer',
         'population' => 'integer',
-        'area' => 'integer',
+        'area' => 'float',
     ];
 
     /**

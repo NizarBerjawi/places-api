@@ -26,7 +26,7 @@ class AlternateNameQuery extends Query
      *     parameter="alternateNameFilter",
      *     name="filter",
      *     in="query",
-     *     description="Filter alternate names by: `name`, `isPreferredName`, `isShortName`, `isHistoric`, `isColloquial`, or `languageCode`",
+     *     description="Filter Alternate Names by: `name`, `isPreferredName`, `isShortName`, `isHistoric`, `isColloquial`, or `languageCode`.",
      *     required=false,
      *     style="deepObject",
      *
@@ -63,20 +63,14 @@ class AlternateNameQuery extends Query
      *     parameter="alternateNameInclude",
      *     name="include",
      *     in="query",
-     *     description="Include resources related to the specified alternate name.",
+     *     description="Include resources related to the specified Alternate Name. Possible values: `language` and `place`.",
      *     required=false,
      *     explode=false,
      *
      *     @OA\Schema(
-     *         type="array",
-     *
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {
-     *                 "language",
-     *                 "place"
-     *             },
-     *         )
+     *         type="string",
+     *         format="csv",
+     *         example="language,place"
      *     )
      * )
      */
@@ -95,28 +89,14 @@ class AlternateNameQuery extends Query
      *     parameter="alternateNameSort",
      *     name="sort",
      *     in="query",
-     *     description="Sort the result set by certain properties.",
+     *     description="Sort the result set by one or more properties: `name`, `isPreferredName`, `isShortName`, `isHistoric`, `isColloquial`, and `languageCode`.",
      *     required=false,
      *     explode=false,
      *
      *     @OA\Schema(
-     *         type="array",
-     *
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {
-     *                  "name",
-     *                  "isPreferredName",
-     *                  "isShortName",
-     *                  "isHistoric",
-     *                  "isColloquial",
-     *                  "-name",
-     *                  "-isPreferredName",
-     *                  "-isShortName",
-     *                  "-isHistoric",
-     *                  "-isColloquial",
-     *             },
-     *         )
+     *         type="string",
+     *         format="csv",
+     *         example="languageCode"
      *     )
      * )
      */

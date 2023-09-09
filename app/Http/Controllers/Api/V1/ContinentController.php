@@ -29,9 +29,23 @@ class ContinentController extends Controller
      *          description="OK",
      *
      *          @OA\JsonContent(
-     *              type="array",
+     *              type="object",
      *
-     *              @OA\Items(ref="#/components/schemas/continent")
+     *              @OA\Property(
+     *                   property="data",
+     *                   type="array",
+     *
+     *                   @OA\Items(ref="#/components/schemas/continent")
+     *              ),
+     *
+     *              @OA\Property(
+     *                   property="links",
+     *                   ref="#/components/schemas/collectionLinks",
+     *              ),
+     *              @OA\Property(
+     *                   property="meta",
+     *                   ref="#/components/schemas/collectionMeta",
+     *              )
      *          ),
      *      ),
      *
@@ -81,7 +95,15 @@ class ContinentController extends Controller
      *         response=200,
      *         description="OK",
      *
-     *         @OA\JsonContent(ref="#/components/schemas/continent")
+     *          @OA\JsonContent(
+     *              type="object",
+     *
+     *              @OA\Property(
+     *                   property="data",
+     *                   type="object",
+     *                   ref="#/components/schemas/continent"
+     *              ),
+     *          ),
      *     ),
      *
      *      @OA\Response(

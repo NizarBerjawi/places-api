@@ -75,17 +75,14 @@ class LanguageQuery extends Query
      *     parameter="languageInclude",
      *     name="include",
      *     in="query",
-     *     description="Include related resources",
+     *     description="Include related resources with every Language. Possible values: `countries`.",
      *     required=false,
      *     explode=false,
      *
      *     @OA\Schema(
-     *         type="array",
-     *
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {"countries"},
-     *         )
+     *         type="string",
+     *         format="csv",
+     *         example="countries"
      *     )
      * )
      */
@@ -103,26 +100,14 @@ class LanguageQuery extends Query
      *     parameter="languageSort",
      *     name="sort",
      *     in="query",
-     *     description="Sort the result set by certain properties.",
+     *     description="Sort the result set by one or more properties:`name`,`iso639.1`,`iso639.2`, and `iso639.3`.",
      *     required=false,
      *     explode=false,
      *
      *     @OA\Schema(
-     *         type="array",
-     *
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {
-     *                 "name",
-     *                 "iso639.1",
-     *                 "iso639.2",
-     *                 "iso639.3",
-     *                 "-name",
-     *                 "-iso639.1",
-     *                 "-iso639.2",
-     *                 "-iso639.3",
-     *             },
-     *         )
+     *         type="string",
+     *         format="csv",
+     *         example="-iso639.1"
      *     )
      * )
      */

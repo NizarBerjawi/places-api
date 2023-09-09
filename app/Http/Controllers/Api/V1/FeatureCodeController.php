@@ -29,10 +29,24 @@ class FeatureCodeController extends Controller
      *          description="OK",
      *
      *          @OA\JsonContent(
-     *              type="array",
+     *              type="object",
      *
-     *              @OA\Items(ref="#/components/schemas/featureCode")
-     *          ),
+     *              @OA\Property(
+     *                   property="data",
+     *                   type="array",
+     *
+     *                   @OA\Items(ref="#/components/schemas/featureCode")
+     *              ),
+     *
+     *              @OA\Property(
+     *                   property="links",
+     *                   ref="#/components/schemas/collectionLinks",
+     *              ),
+     *              @OA\Property(
+     *                   property="meta",
+     *                   ref="#/components/schemas/collectionMeta",
+     *              )
+     *          )
      *      ),
      *
      *      @OA\Response(
@@ -89,7 +103,15 @@ class FeatureCodeController extends Controller
      *          response=200,
      *          description="OK",
      *
-     *          @OA\JsonContent(ref="#/components/schemas/featureCode")
+     *          @OA\JsonContent(
+     *              type="object",
+     *
+     *              @OA\Property(
+     *                   property="data",
+     *                   type="object",
+     *                   ref="#/components/schemas/featureCode"
+     *              ),
+     *          ),
      *       ),
      *
      *      @OA\Response(

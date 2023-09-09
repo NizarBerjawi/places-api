@@ -25,7 +25,7 @@ class TimeZoneQuery extends Query
      *     parameter="timeZoneFilter",
      *     name="filter",
      *     in="query",
-     *     description="Filter time zones by: `code`.",
+     *     description="Filter Time Zones by: `code`.",
      *     required=false,
      *     style="deepObject",
      *
@@ -57,17 +57,14 @@ class TimeZoneQuery extends Query
      *     parameter="timeZoneInclude",
      *     name="include",
      *     in="query",
-     *     description="Include related resources",
+     *     description="Include related resources with every Time Zone. Possible values: `country`.",
      *     required=false,
      *     explode=false,
      *
      *     @OA\Schema(
-     *         type="array",
-     *
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {"country"},
-     *         )
+     *         type="string",
+     *         format="csv",
+     *         example="country"
      *     )
      * )
      */
@@ -85,25 +82,14 @@ class TimeZoneQuery extends Query
      *     parameter="timeZoneSort",
      *     name="sort",
      *     in="query",
-     *     description="Sort the result set by certain properties.",
+     *     description="Sort the result set by one or more properties: `gmtOffset`,`code`, and `timeZone`.",
      *     required=false,
      *     explode=false,
      *
      *     @OA\Schema(
-     *         type="array",
-     *
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {
-     *                 "gmtOffset",
-     *                 "code",
-     *                 "timeZone",
-     *                 "-gmtOffset",
-     *                 "-code",
-     *                 "-timeZone"
-
-     *             },
-     *         )
+     *         type="string",
+     *         format="csv",
+     *         example="code"
      *     )
      * )
      */
