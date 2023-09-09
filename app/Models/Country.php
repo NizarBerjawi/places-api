@@ -57,6 +57,13 @@ use Illuminate\Database\Eloquent\Model;
  *           nullable=true,
  *           example="61",
  *           description="The country calling code"
+ *      ),
+ *      @OA\Property(
+ *           property="topLevelDomain",
+ *           type="string",
+ *           nullable=true,
+ *           example=".au",
+ *           description="The top level domain of the country"
  *      )
  * )
  */
@@ -112,6 +119,7 @@ class Country extends Model
         'area',
         'phone_code',
         'continent_code',
+        'top_level_domain',
     ];
 
     /**

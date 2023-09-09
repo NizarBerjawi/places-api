@@ -6,6 +6,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.7",
         "laravel/fortify": "^1.17",
         "laravel/framework": "^10.0",
