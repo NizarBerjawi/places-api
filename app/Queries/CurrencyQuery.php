@@ -25,7 +25,7 @@ class CurrencyQuery extends Query
      *     parameter="currencyFilter",
      *     name="filter",
      *     in="query",
-     *     description="Filter currencies by: `code` or `name`.",
+     *     description="Filter Currencies by: `code` and `name`.",
      *     required=false,
      *     style="deepObject",
      *
@@ -58,17 +58,14 @@ class CurrencyQuery extends Query
      *     parameter="currencyInclude",
      *     name="include",
      *     in="query",
-     *     description="Include related resources",
+     *     description="Include related resources with every Currency. Possible values: `countries`.",
      *     required=false,
      *     explode=false,
      *
      *     @OA\Schema(
-     *         type="array",
-     *
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {"countries"},
-     *         )
+     *         type="string",
+     *         format="csv",
+     *         example="countries"
      *     )
      * )
      */
@@ -86,17 +83,14 @@ class CurrencyQuery extends Query
      *     parameter="currencySort",
      *     name="sort",
      *     in="query",
-     *     description="Sort the result set by certain properties.",
+     *     description="Sort the result set by one or more properties: `name` and `code`.",
      *     required=false,
      *     explode=false,
      *
      *     @OA\Schema(
-     *         type="array",
-     *
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {"code", "name", "-code", "-name"},
-     *         )
+     *         type="string",
+     *         format="csv",
+     *         example="code"
      *     )
      * )
      */

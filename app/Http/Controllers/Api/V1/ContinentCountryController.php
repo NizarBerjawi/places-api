@@ -32,9 +32,23 @@ class ContinentCountryController extends Controller
      *          description="OK",
      *
      *          @OA\JsonContent(
-     *              type="array",
+     *              type="object",
      *
-     *              @OA\Items(ref="#/components/schemas/country")
+     *              @OA\Property(
+     *                   property="data",
+     *                   type="array",
+     *
+     *                   @OA\Items(ref="#/components/schemas/country")
+     *              ),
+     *
+     *              @OA\Property(
+     *                   property="links",
+     *                   ref="#/components/schemas/collectionLinks",
+     *              ),
+     *              @OA\Property(
+     *                   property="meta",
+     *                   ref="#/components/schemas/collectionMeta",
+     *              )
      *          ),
      *      ),
      *

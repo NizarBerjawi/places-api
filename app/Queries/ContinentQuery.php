@@ -25,9 +25,10 @@ class ContinentQuery extends Query
      *     parameter="continentFilter",
      *     name="filter",
      *     in="query",
-     *     description="Filter continents by: `name` or `code`.",
+     *     description="Filter Continents by: `name` or `code`.",
      *     required=false,
      *     style="deepObject",
+
      *
      *     @OA\Schema(
      *         type="object",
@@ -66,17 +67,14 @@ class ContinentQuery extends Query
      *     parameter="continentInclude",
      *     name="include",
      *     in="query",
-     *     description="Include related resources with every continent.",
+     *     description="Include related resources with every Continent. Possible values: `countries` and `alternateNames`.",
      *     required=false,
      *     explode=false,
      *
      *     @OA\Schema(
-     *         type="array",
-     *
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {"countries", "alternateNames"},
-     *         )
+     *         type="string",
+     *         format="csv",
+     *         example="countries"
      *     )
      * )
      */
@@ -95,17 +93,14 @@ class ContinentQuery extends Query
      *     parameter="continentSort",
      *     name="sort",
      *     in="query",
-     *     description="Sort the result set by certain properties.",
+     *     description="Sort the result set by one or more properties: `name` and `code`.",
      *     required=false,
      *     explode=false,
      *
      *     @OA\Schema(
-     *         type="array",
-     *
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {"name", "code", "-name", "-code"},
-     *         )
+     *         type="string",
+     *         format="csv",
+     *         example="-code"
      *     )
      * )
      */

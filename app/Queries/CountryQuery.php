@@ -26,7 +26,7 @@ class CountryQuery extends Query
      *     parameter="countryFilter",
      *     name="filter",
      *     in="query",
-     *     description="Filter countries by: `name`, `iso3166Alpha2`, `iso3166Alpha3`, `iso3166Numeric`, `population`, `phoneCode`, or `languageCodes`",
+     *     description="Filter Countries by: `name`, `iso3166Alpha2`, `iso3166Alpha3`, `iso3166Numeric`, `population`, `phoneCode`, and `languageCodes`.",
      *     required=false,
      *     style="deepObject",
      *
@@ -73,26 +73,14 @@ class CountryQuery extends Query
      *     parameter="countryInclude",
      *     name="include",
      *     in="query",
-     *     description="Include related resources with every country.",
+     *     description="Include related resources with every Country. Possible values: `continent`, `timeZones`, `flag`, `neighbours`, `languages`, `currency`, `alternateNames`, and `location`.",
      *     required=false,
      *     explode=false,
      *
      *     @OA\Schema(
-     *         type="array",
-     *
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {
-     *                 "continent",
-     *                 "timeZones",
-     *                 "flag",
-     *                 "neighbours",
-     *                 "languages",
-     *                 "currency",
-     *                 "alternateNames",
-     *                 "location"
-     *             },
-     *         )
+     *         type="string",
+     *         format="csv",
+     *         example="continent,currency"
      *     )
      * )
      */
@@ -117,32 +105,14 @@ class CountryQuery extends Query
      *     parameter="countrySort",
      *     name="sort",
      *     in="query",
-     *     description="Sort the result set by certain properties.",
+     *     description="Sort the result set by one or more properties: `name`, `iso3166Alpha2`, `iso3166Alpha3`, `iso3166Numeric`, `population`, `area`, and `phoneCode`.",
      *     required=false,
      *     explode=false,
      *
      *     @OA\Schema(
-     *         type="array",
-     *
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {
-     *                 "name",
-     *                 "iso3166Alpha2",
-     *                 "iso3166Alpha3",
-     *                 "iso3166Numeric",
-     *                 "population",
-     *                 "area",
-     *                 "phoneCode",
-     *                 "-name",
-     *                 "-iso3166Alpha2",
-     *                 "-iso3166Alpha3",
-     *                 "-iso3166Numeric",
-     *                 "-population",
-     *                 "-area",
-     *                 "-phoneCode"
-     *             },
-     *         )
+     *         type="string",
+     *         format="csv",
+     *         example="-population"
      *     )
      * )
      */

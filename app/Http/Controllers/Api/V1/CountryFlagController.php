@@ -30,9 +30,13 @@ class CountryFlagController extends Controller
      *          description="OK",
      *
      *          @OA\JsonContent(
-     *              type="array",
+     *              type="object",
      *
-     *              @OA\Items(ref="#/components/schemas/flag")
+     *              @OA\Property(
+     *                   property="data",
+     *                   type="object",
+     *                   ref="#/components/schemas/flag"
+     *              ),
      *          ),
      *      ),
      *

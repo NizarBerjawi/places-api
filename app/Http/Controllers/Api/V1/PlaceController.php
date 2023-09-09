@@ -29,10 +29,24 @@ class PlaceController extends Controller
      *          description="OK",
      *
      *          @OA\JsonContent(
-     *              type="array",
+     *              type="object",
      *
-     *              @OA\Items(ref="#/components/schemas/place")
-     *          ),
+     *              @OA\Property(
+     *                   property="data",
+     *                   type="array",
+     *
+     *                   @OA\Items(ref="#/components/schemas/place")
+     *              ),
+     *
+     *              @OA\Property(
+     *                   property="links",
+     *                   ref="#/components/schemas/collectionLinks",
+     *              ),
+     *              @OA\Property(
+     *                   property="meta",
+     *                   ref="#/components/schemas/collectionMeta",
+     *              )
+     *          )
      *      ),
      *
      *      @OA\Response(
@@ -83,7 +97,15 @@ class PlaceController extends Controller
      *         response=200,
      *         description="OK",
      *
-     *         @OA\JsonContent(ref="#/components/schemas/place")
+     *         @OA\JsonContent(
+     *             type="object",
+     *
+     *             @OA\Property(
+     *                  property="data",
+     *                  type="object",
+     *                  ref="#/components/schemas/place"
+     *             ),
+     *         ),
      *     ),
      *
      *     @OA\Response(
