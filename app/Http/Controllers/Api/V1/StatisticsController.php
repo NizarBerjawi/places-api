@@ -14,7 +14,7 @@ use App\Models\Language;
 use App\Models\Place;
 use App\Models\TimeZone;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Pluralizer;
 use Ramsey\Uuid\Uuid;
 
@@ -38,10 +38,24 @@ class StatisticsController extends Controller
      *          description="OK",
      *
      *          @OA\JsonContent(
-     *              type="array",
+     *              type="object",
      *
-     *              @OA\Items(ref="#/components/schemas/timeZone")
-     *          ),
+     *              @OA\Property(
+     *                   property="data",
+     *                   type="array",
+     *
+     *                   @OA\Items(ref="#/components/schemas/statistics")
+     *              ),
+     *
+     *              @OA\Property(
+     *                   property="links",
+     *                   ref="#/components/schemas/collectionLinks",
+     *              ),
+     *              @OA\Property(
+     *                   property="meta",
+     *                   ref="#/components/schemas/collectionMeta",
+     *              )
+     *          )
      *      ),
      *
      *      @OA\Response(
@@ -66,7 +80,7 @@ class StatisticsController extends Controller
      */
     public function index(Request $request)
     {
-        $classes = [
+        $classes = Collection::make([
             Continent::class,
             Country::class,
             Currency::class,
@@ -77,21 +91,33 @@ class StatisticsController extends Controller
             Place::class,
             TimeZone::class,
             AlternateName::class,
+        ]);
+
+        $statistics = $classes->map(function ($class) {
+            $uuid = Uuid::uuid5(self::NAMESPACE, $class);
+            $className = class_basename($class);
+            $plural = Pluralizer::plural($className);
+
+            return [
+                'id' => $uuid,
+                'type' => 'count',
+                'label' => "{$plural}",
+                'value' => $class::count(),
+            ];
+        });
+
+        return [
+            'data' => $statistics,
+            'links' => [
+                'prev' => null,
+                'next' => null,
+            ],
+            'meta' => [
+                'nextCursor' => null,
+                'path' => $request->fullUrl(),
+                'perPage' => $classes->count(),
+                'prevCursor' => null,
+            ],
         ];
-
-        return new JsonResource(
-            array_map(function ($class) {
-                $uuid = Uuid::uuid5(self::NAMESPACE, $class);
-                $className = class_basename($class);
-                $plural = Pluralizer::plural($className);
-
-                return [
-                    'id' => $uuid,
-                    'type' => 'count',
-                    'label' => "{$plural}",
-                    'value' => $class::count(),
-                ];
-            }, $classes)
-        );
     }
 }

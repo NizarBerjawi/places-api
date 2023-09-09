@@ -42,7 +42,7 @@ class CountriesImport extends CountriesFileIterator implements ShouldQueue
                 'iso3166_alpha3' => $item[1],
                 'iso3166_numeric' => $item[2],
                 'fips' => $item[3],
-                'topLevelDomain' => $item[9],
+                'top_level_domain' => $item[9],
                 'population' => $item[7],
                 'area' => $item[6],
                 'phone_code' => $item[12],

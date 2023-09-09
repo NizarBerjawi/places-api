@@ -57,17 +57,14 @@ class FlagQuery extends Query
      *     parameter="flagInclude",
      *     name="include",
      *     in="query",
-     *     description="Include resources related to the specified flag.",
+     *     description="Include resources related to the specified flag. Possible values: `country`",
      *     required=false,
      *     explode=false,
      *
      *     @OA\Schema(
-     *         type="array",
-     *
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {"country"},
-     *         )
+     *         type="string",
+     *         format="csv",
+     *         example="countrys"
      *     )
      * )
      */
@@ -86,17 +83,14 @@ class FlagQuery extends Query
      *     parameter="flagSort",
      *     name="sort",
      *     in="query",
-     *     description="Sort the result set by certain properties.",
+     *     description="Sort the result set by one or more properties: `countryCode`",
      *     required=false,
      *     explode=false,
      *
      *     @OA\Schema(
-     *         type="array",
-     *
-     *         @OA\Items(
-     *             type="string",
-     *             enum = {"countryCode", "-countryCode"},
-     *         )
+     *         type="string",
+     *         format="csv",
+     *         example="countryCode"
      *     )
      * )
      */

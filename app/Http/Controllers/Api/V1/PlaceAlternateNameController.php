@@ -33,7 +33,25 @@ class PlaceAlternateNameController extends Controller
      *          response=200,
      *          description="OK",
      *
-     *          @OA\JsonContent(ref="#/components/schemas/location")
+     *          @OA\JsonContent(
+     *              type="object",
+     *
+     *              @OA\Property(
+     *                   property="data",
+     *                   type="array",
+     *
+     *                   @OA\Items(ref="#/components/schemas/alternateName")
+     *              ),
+     *
+     *              @OA\Property(
+     *                   property="links",
+     *                   ref="#/components/schemas/collectionLinks",
+     *              ),
+     *              @OA\Property(
+     *                   property="meta",
+     *                   ref="#/components/schemas/collectionMeta",
+     *              )
+     *          )
      *      ),
      *
      *      @OA\Response(

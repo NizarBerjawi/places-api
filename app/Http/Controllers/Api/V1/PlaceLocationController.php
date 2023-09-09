@@ -27,7 +27,15 @@ class PlaceLocationController extends Controller
      *         response=200,
      *         description="OK",
      *
-     *         @OA\JsonContent(ref="#/components/schemas/location")
+     *          @OA\JsonContent(
+     *              type="object",
+     *
+     *              @OA\Property(
+     *                   property="data",
+     *                   type="object",
+     *                   ref="#/components/schemas/location"
+     *              ),
+     *          ),
      *     ),
      *
      *     @OA\Response(
