@@ -242,18 +242,18 @@
                     </p>
 
                     <p>
-                        You can fetch the data on different pages by adding the <code>page[cursor][eq]</code> query parameter to
+                        You can fetch the data on different pages by adding the <code>page[cursor]</code> query parameter to
                         the request.
                     </p>
-                    <pre>GET /api/v1/featureCodes?page[cursor][eq]=eyJpc28zMTY2X2FscGhhMiI6IkFXIiwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ</pre>
+                    <pre>GET /api/v1/featureCodes?page[cursor]=eyJpc28zMTY2X2FscGhhMiI6IkFXIiwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ</pre>
 
                     <p>
                         By default, all API results are paginated with a total of 10 results per page. However, you are free
-                        to change the number of items per page using the <code>page[size][eq]</code> query
+                        to change the number of items per page using the <code>page[size]</code> query
                         parameter.
                     </p>
 
-                    <pre>GET /api/v1/featureCodes?page[size][eq]=5&page[cursor][eq]=eyJpc28zMTY2X2FscGhhMiI6IkFXIiwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ</pre>
+                    <pre>GET /api/v1/featureCodes?page[size]=5&page[cursor]=eyJpc28zMTY2X2FscGhhMiI6IkFXIiwiX3BvaW50c1RvTmV4dEl0ZW1zIjp0cnVlfQ</pre>
 
                     <article class="message is-warning">
                         <div class="message-body">
@@ -307,7 +307,7 @@
                     <p>Then, we filter by <code>featureCode</code> equal to <code>ADM1</code> which represents a "First-order administrative division" (i.e. state). </p>
 
                     <h5 id="example-populated-capitals">Top-5 most populated capitals of the world</h5>
-                    <pre>GET /api/v1/places?filter[featureClass][eq]=P&filter[featureCode][eq]=PPLC&sort=-population&page[size][eq]=5</pre>
+                    <pre>GET /api/v1/places?filter[featureClass][eq]=P&filter[featureCode][eq]=PPLC&sort=-population&page[size]=5</pre>
 
                     <p>First, we begin by filtering all places to only those having <code>featureClass</code> equal to
                         <code>P</code>. This limits our result set to places that are: "City, village...".
@@ -315,7 +315,7 @@
 
                     <p>To get the capitals in the correct order, we sort by <code>population</code> in descending order.</p>
 
-                    <p>Finally, we limit the result set to only the top 5 capitals using <code>page[size][eq]=5</code>.</p>
+                    <p>Finally, we limit the result set to only the top 5 capitals using <code>page[size]=5</code>.</p>
 
                     <h5 id="example-portuguese-language">Portuguese-speaking countries</h5>
                     <pre>GET /api/v1/countries?filter[languageCodes][eq]=por&include=languages</pre>
