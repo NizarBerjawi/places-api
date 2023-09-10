@@ -26,14 +26,10 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $isProduction = app()->isProduction();
+        $this->configureRateLimiting();
 
-        if ($isProduction) {
-            $this->configureRateLimiting();
-        }
-
-        $this->routes(function () use ($isProduction) {
-            Route::middleware(($isProduction ? ['auth:sanctum', 'api'] : []) + ['api-version:v1'])
+        $this->routes(function () {
+            Route::middleware(['auth:sanctum', 'api', 'api-version:v1'])
                 ->prefix('api/v1')
                 ->group(base_path('routes/api.v1.php'));
 
