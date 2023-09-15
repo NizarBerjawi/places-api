@@ -4,7 +4,6 @@ namespace App\Queries;
 
 use Illuminate\Contracts\Pagination\CursorPaginator;
 use Illuminate\Support\Arr;
-use Spatie\QueryBuilder\QueryBuilder;
 
 abstract class Query
 {
@@ -129,7 +128,19 @@ abstract class Query
         $defaultSize = config('paginate.default_size');
         $maxResults = config('paginate.max_results');
 
-        $size = (int) request()->input('page.size', $defaultSize);
+        $paginationData = request()->get('page');
+
+        if (is_string($paginationData)) {
+            $paginationData = json_decode($paginationData, true);
+
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                return $this->getBuilder()
+                    ->appends(Arr::except(request()->input(), 'page'));
+            }
+        }
+
+        $size = (int) Arr::get($paginationData, 'size', $defaultSize);
+        $cursor = (string) Arr::get($paginationData, 'cursor');
 
         if ($size <= 0) {
             $size = $defaultSize;
@@ -139,10 +150,8 @@ abstract class Query
             $size = $maxResults;
         }
 
-        $cursor = (string) request()->input('page.cursor');
-
         return $this->getBuilder()
-            ->cursorPaginate($size, ['*'], 'page[cursor]', $cursor)
+            ->cursorPaginate($size, ['*'], json_encode(['page' => ['cursor' => $cursor]]), $cursor)
             ->appends(Arr::except(request()->input(), 'page.cursor'));
     }
 
@@ -151,7 +160,7 @@ abstract class Query
      */
     protected function initializeBuilder(): void
     {
-        $this->builder = QueryBuilder::for($this->modelClass());
+        $this->builder = QueryBuilder::for($this->modelClass(), request());
 
         $this->isInitialized = $this->builder instanceof QueryBuilder;
     }
