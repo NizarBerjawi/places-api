@@ -11,10 +11,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
+use Laravel\Cashier\Billable;
 
 class User extends Authenticatable implements CanResetPassword
 {
-    use HasApiTokens, HasFactory, Notifiable, CanResetPasswordTrait, TwoFactorAuthenticatable;
+    use HasApiTokens, HasFactory, Notifiable, CanResetPasswordTrait, TwoFactorAuthenticatable, Billable;
 
     /**
      * The attributes that are mass assignable.
