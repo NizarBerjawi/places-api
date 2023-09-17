@@ -29,7 +29,7 @@ class TokenPostRequest extends FormRequest
                 'string',
                 'max:255',
             ],
-            'expires_at' => ['nullable', 'date', 'after_or_equal:tomorrow'],
+            'product_id' => ['required', 'string', 'max:255'],
         ];
     }
 

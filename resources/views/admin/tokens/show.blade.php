@@ -6,11 +6,11 @@
     </h1>
 
     @if (session()->has('textToken'))
-    <article class="message is-warning">
-        <div class="message-body">
-            {!! __('tokens.copy') !!}
-        </div>
-    </article>
+        <article class="message is-warning">
+            <div class="message-body">
+                {!! __('tokens.copy') !!}
+            </div>
+        </article>
 
         <div class="block has-background-white-ter is-flex is-justify-content-space-between is-align-items-center">
             <pre id="token" class="has-text-weight-bold is-size-6-widescreen is-size-6-desktop is-size-7-mobile">{{ session('textToken') }}</pre>

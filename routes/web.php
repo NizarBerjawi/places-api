@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Dashboard\AccountController;
 use App\Http\Controllers\Dashboard\SecurityController;
+use App\Http\Controllers\Dashboard\StripeController;
 use App\Http\Controllers\Dashboard\TokenController;
 use App\Http\Controllers\WebController;
 use Illuminate\Support\Facades\Route;
@@ -27,10 +28,12 @@ Route::get('/featureCodes', [WebController::class, 'featureCodes'])->name('featu
 Route::get('/timeZones', [WebController::class, 'timeZones'])->name('timeZones');
 Route::get('/languages', [WebController::class, 'languages'])->name('languages');
 
-Route::middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')])
+Route::middleware([
+    config('fortify.auth_middleware', 'auth').':'.config('fortify.guard'),
+    'verified',
+])
     ->prefix('user')
     ->group(function () {
-
         Route::get('/gettingStarted', [WebController::class, 'gettingStarted'])->name('admin.api.gettingStarted');
         Route::get('/documentation', [WebController::class, 'docs'])->name('admin.api.docs');
 
@@ -64,5 +67,10 @@ Route::middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify
                 Route::put('{uuid}', [TokenController::class, 'update'])->name('admin.tokens.update');
                 Route::delete('{uuid}', [TokenController::class, 'destroy'])->name('admin.tokens.destroy');
                 Route::get('{uuid}/confirm', [TokenController::class, 'confirm'])->name('admin.tokens.confirm');
+            });
+
+        Route::prefix('stripe')
+            ->group(function () {
+                Route::get('{uuid}/checkout', [StripeController::class, 'checkout'])->name('admin.stripe.checkout');
             });
     });

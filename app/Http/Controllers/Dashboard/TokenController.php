@@ -11,6 +11,13 @@ use Illuminate\Support\Carbon;
 
 class TokenController extends Controller
 {
+    public $stripe;
+
+    public function __construct()
+    {
+        $this->stripe = new \Stripe\StripeClient(env('STRIPE_SECRET'));
+    }
+
     public function index(Request $request)
     {
         return view('admin.tokens.index', [
@@ -20,7 +27,11 @@ class TokenController extends Controller
 
     public function show(Request $request, $uuid)
     {
-        $token = $request->user()->tokens()->where('uuid', $uuid)->first();
+        $token = $request
+            ->user()
+            ->tokens()
+            ->where('uuid', $uuid)
+            ->firstOrFail();
 
         return view('admin.tokens.show', [
             'token' => $token,
@@ -29,7 +40,11 @@ class TokenController extends Controller
 
     public function edit(Request $request, $uuid)
     {
-        $token = $request->user()->tokens()->where('uuid', $uuid)->first();
+        $token = $request
+            ->user()
+            ->tokens()
+            ->where('uuid', $uuid)
+            ->firstOrFail();
 
         return view('admin.tokens.edit', [
             'token' => $token,
@@ -38,14 +53,16 @@ class TokenController extends Controller
 
     public function update(TokenPutRequest $request, $uuid)
     {
-        $token = $request->user()->tokens()->where('uuid', $uuid)->first();
+        $token = $request
+            ->user()
+            ->tokens()
+            ->where('uuid', $uuid)
+            ->firstOrFail();
 
         $action = $request->get('action');
 
         if ($action === 'regenerate') {
-            $newAccessToken = $token->regenerateToken(
-                Carbon::make($request->expires_at)
-            );
+            $newAccessToken = $token->regenerate();
 
             $textToken = $newAccessToken->plainTextToken;
 
@@ -67,25 +84,57 @@ class TokenController extends Controller
 
     public function create(Request $request)
     {
-        return view('admin.tokens.create');
+        $products = $this
+            ->stripe
+            ->products
+            ->all(['expand' => ['data.default_price']]);
+
+        return view('admin.tokens.create', ['products' => $products->data]);
     }
 
     public function store(TokenPostRequest $request)
     {
-        $token = $request->user()
-            ->createToken(
-                $request->token_name,
-                ['*'],
-                Carbon::make($request->expires_at)
-            );
+        $product = $this
+            ->stripe
+            ->products
+            ->retrieve($request->product_id, [
+                'expand' => ['default_price'],
+            ]);
 
-        $textToken = $token->plainTextToken;
+        $expiresAt = Carbon::now()->add('days', (int) $product->metadata->expiry)->endOfDay();
 
-        if (strpos($textToken, '|') !== false) {
-            [$uuid, $textToken] = explode('|', $textToken, 2);
-        }
+        // We create an inactive Token because payment is not complete.
+        $token = $request->user()->createToken(
+            $request->token_name,
+            ['*'],
+            $expiresAt
+        );
 
-        return redirect()->route('admin.tokens.show', $uuid)->with('textToken', $textToken);
+        $link = $this
+            ->stripe
+            ->paymentLinks
+            ->create([
+                'line_items' => [
+                    [
+                        'price' => $product->default_price->id,
+                        'quantity' => 1,
+                    ],
+                ],
+                'after_completion' => [
+                    'type' => 'redirect',
+                    'redirect' => [
+                        'url' => route('admin.stripe.checkout', [
+                            'uuid' => $token->accessToken->uuid,
+                        ]).'?sessionId={CHECKOUT_SESSION_ID}',
+                    ],
+                ],
+                'metadata' => [
+                    'userId' => $request->user()->id,
+                    'tokenUuid' => $token->accessToken->uuid,
+                ],
+            ]);
+
+        return redirect($link->url);
     }
 
     public function destroy(Request $request, $uuid)
