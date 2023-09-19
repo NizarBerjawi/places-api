@@ -13,13 +13,6 @@
                                         href="{{ route('register') }}">Create an
                                         account</a></p>
 
-                                @if (session('status'))
-                                    <article class="message is-success mt-4">
-                                        <div class="message-body">
-                                            {{ session('status') }}
-                                        </div>
-                                    </article>
-                                @endif
                                 <form method="post" action="{{ route('login') }}">
                                     @csrf
 

@@ -27,7 +27,10 @@ Route::get('/featureCodes', [WebController::class, 'featureCodes'])->name('featu
 Route::get('/timeZones', [WebController::class, 'timeZones'])->name('timeZones');
 Route::get('/languages', [WebController::class, 'languages'])->name('languages');
 
-Route::middleware([config('fortify.auth_middleware', 'auth').':'.config('fortify.guard')])
+Route::middleware([
+    config('fortify.auth_middleware', 'auth').':'.config('fortify.guard'),
+    'verified',
+])
     ->prefix('user')
     ->group(function () {
 
