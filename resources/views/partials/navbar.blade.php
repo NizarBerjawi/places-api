@@ -83,7 +83,7 @@
             <div class="navbar-item">
                 <div class="buttons">
                     @auth
-                        @if (
+                        @if (request()->user()->hasVerifiedEmail() &&
                             !request()->routeIs('admin.*') &&
                                 request()->route()->uri() !== 'user/confirm-password')
                             <a href="{{ home() }}" class="button is-small is-rounded">Dashboard</a>
