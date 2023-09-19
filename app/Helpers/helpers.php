@@ -40,6 +40,6 @@ if (! function_exists('home')) {
      */
     function home()
     {
-        return RouteServiceProvider::HOME;
+        return url(RouteServiceProvider::HOME);
     }
 }
