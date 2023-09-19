@@ -105,6 +105,7 @@ return [
     'limiters' => [
         'login' => 'login',
         'two-factor' => 'two-factor',
+        'verification' => '6,1',
     ],
 
     /*
@@ -142,6 +143,15 @@ return [
             'confirmPassword' => true,
             // 'window' => 0,
         ]),
+    ],
+
+    'redirects' => [
+        'login' => null,
+        'logout' => null,
+        'password-confirmation' => null,
+        'register' => '/login',
+        'email-verification' => null,
+        'password-reset' => null,
     ],
 
 ];
