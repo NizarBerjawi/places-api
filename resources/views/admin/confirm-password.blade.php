@@ -48,7 +48,11 @@
                     @endif
                 </p>
                 <p class="control">
-                    <button class="button is-primary is-medium is-responsive" type="submit">Confirm</button>
+                    @include('component.button', [
+                        'classes' => ['button', 'is-primary', 'is-medium', 'is-responsive'],
+                        'type' => 'submit',
+                        'label' => 'Confirm'
+                    ])
                 </p>
             </div>
         </div>

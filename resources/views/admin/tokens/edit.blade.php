@@ -5,11 +5,11 @@
         Edit Access Token
     </h1>
 
-    <article class="message is-info">
+    {{-- <article class="message is-info">
         <div class="message-body">
             {!! __('tokens.edit', ['regenerateLink' => route('admin.tokens.confirm', ['uuid' => $token->uuid, 'action' => 'regenerate'])]) !!}
         </div>
-    </article>
+    </article> --}}
     <form method="post" action="{{ route('admin.tokens.update', ['uuid' => $token->uuid, 'action' => 'update']) }}">
         @method('PUT')
         @csrf
@@ -31,7 +31,7 @@
             <label class="label">Expiration date</label>
             <div class="control">
                 <input @class(['input', 'is-medium']) type="text"
-                    value="{{ $token->expires_at?->isoFormat('MMMM Do, YYYY') ?? 'No Expiry' }}"
+                    value="{{ $token->expires_at?->isoFormat('MMMM Do, YYYY, h:mm:ss a') ?? 'No Expiry' }}"
                     disabled>
             </div>
         </div>
@@ -42,7 +42,11 @@
                     <a href={{ route('admin.tokens.index') }} class="button is-medium is-responsive">Back</a>
                 </p>
                 <p class="control">
-                    <button class="button is-primary is-medium is-responsive" type="submit">Update token</button>
+                    @include('component.button', [
+                        'classes' => ['button', 'is-primary', 'is-medium', 'is-responsive'],
+                        'type' => 'submit',
+                        'label' => 'Update token'
+                    ])
                 </p>
             </div>
         </div>

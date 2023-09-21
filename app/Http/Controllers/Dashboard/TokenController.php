@@ -101,7 +101,9 @@ class TokenController extends Controller
                 'expand' => ['default_price'],
             ]);
 
-        $expiresAt = Carbon::now()->add('days', (int) $product->metadata->expiry)->endOfDay();
+        $expiresAt = Carbon::now()
+            ->add('days', (int) $product->metadata->expiry)
+            ->endOfDay();
 
         // We create an inactive Token because payment is not complete.
         $token = $request->user()->createToken(
@@ -148,7 +150,11 @@ class TokenController extends Controller
     {
         $action = $request->get('action');
 
-        $token = $request->user()->tokens()->where('uuid', $uuid)->first();
+        $token = $request
+            ->user()
+            ->tokens()
+            ->where('uuid', $uuid)
+            ->firstOrFail();
 
         return view("admin.tokens.$action", compact('action', 'token'));
     }

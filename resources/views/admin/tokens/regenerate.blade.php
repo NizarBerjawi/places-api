@@ -21,7 +21,11 @@
                     <a href={{ route('admin.tokens.index') }} class="button is-medium is-responsive">Cancel</a>
                 </p>
                 <p class="control">
-                    <button class="button is-warning is-medium is-responsive" type="submit">Regenerate token</button>
+                    @include('component.button', [
+                        'classes' => ['button', 'is-warning', 'is-medium', 'is-responsive'],
+                        'type' => 'submit',
+                        'label' => 'Regenerate token'
+                    ])
                 </p>
             </div>
         </div>

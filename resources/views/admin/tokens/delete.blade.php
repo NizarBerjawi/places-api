@@ -21,7 +21,11 @@
                     <a href={{ route('admin.tokens.index') }} class="button is-medium is-responsive">Cancel</a>
                 </p>
                 <p class="control">
-                    <button class="button is-danger is-medium is-responsive" type="submit">Delete token</button>
+                    @include('component.button', [
+                        'classes' => ['button', 'is-danger', 'is-medium', 'is-responsive'],
+                        'type' => 'submit',
+                        'label' => 'Delete token'
+                    ])
                 </p>
             </div>
         </div>

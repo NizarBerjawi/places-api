@@ -34,9 +34,11 @@
         @csrf
         <input type="hidden" name="two-factor">
         <div class="is-flex is-justify-content-flex-end">
-            <button class="button is-primary is-medium is-responsive">
-                {{ session()->has('auth.password_confirmed_at') ? 'Enable 2FA' : 'Confirm password' }}
-            </button>
+            @include('component.button', [
+                'classes' => ['button', 'is-primary', 'is-medium', 'is-responsive'],
+                'type' => 'submit',
+                'label' => session()->has('auth.password_confirmed_at') ? 'Enable 2FA' : 'Confirm password',
+            ])
         </div>
     </form>
 @endif
@@ -77,7 +79,11 @@
             <div class="is-flex is-justify-content-flex-end">
                 <div class="field is-grouped">
                     <p class="control">
-                        <button class="button is-primary is-medium is-responsive" type="submit">Verify</button>
+                        @include('component.button', [
+                            'classes' => ['button', 'is-primary', 'is-medium', 'is-responsive'],
+                            'type' => 'submit',
+                            'label' => 'Verify',
+                        ])
                     </p>
                 </div>
             </div>
@@ -109,15 +115,17 @@
             @method('DELETE')
 
             <div class="is-flex is-justify-content-flex-end">
-                <button @class([
-                    'button',
-                    'is-medium',
-                    'is-responsive',
-                    'is-danger' => session()->has('auth.password_confirmed_at'),
-                    'is-primary' => !session()->has('auth.password_confirmed_at'),
-                ])>
-                    {{ session()->has('auth.password_confirmed_at') ? 'Disable 2FA' : 'Confirm password' }}
-                </button>
+                @include('component.button', [
+                    'classes' => [
+                        'button',
+                        'is-medium',
+                        'is-responsive',
+                        'is-danger' => session()->has('auth.password_confirmed_at'),
+                        'is-primary' => !session()->has('auth.password_confirmed_at'),
+                    ],
+                    'type' => 'submit',
+                    'label' => session()->has('auth.password_confirmed_at') ? 'Disable 2FA' : 'Confirm password'
+                ])
             </div>
         </form>
     </div>

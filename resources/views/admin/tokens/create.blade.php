@@ -57,7 +57,10 @@
                     <a href={{ route('admin.tokens.index') }} class="button is-medium is-responsive">Cancel</a>
                 </p>
                 <p class="control">
-                    <button class="button is-primary is-medium is-responsive" onClick="this.form.submit(); this.disabled=true;">Continue</button>
+                    @include('component.button', [
+                        'classes' => ['button', 'is-primary', 'is-medium', 'is-responsive'],
+                        'label' => 'Continue' 
+                    ])
                 </p>
             </div>
         </div>

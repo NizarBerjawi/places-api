@@ -28,7 +28,7 @@ class TokenPutRequest extends FormRequest
             'token_name' => [
                 'exclude_unless:action,update',
                 'required',
-                Rule::unique('personal_access_tokens', 'name')->ignore($this->id),
+                Rule::unique('personal_access_tokens', 'name')->ignore($this->uuid, 'uuid'),
                 'string',
                 'max:255',
             ],

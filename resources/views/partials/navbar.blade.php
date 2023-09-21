@@ -91,7 +91,11 @@
 
                         <form method="post" action="/logout">
                             @csrf
-                            <button class="button is-primary is-small is-rounded">Log out</button>
+                            @include('component.button', [
+                                'classes' => ['button', 'is-primary', 'is-small', 'is-responsive', 'is-rounded'],
+                                'type' => 'submit',
+                                'label' => 'Log out'
+                            ])
                         </form>
                     @endauth
 
