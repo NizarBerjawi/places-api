@@ -38,6 +38,9 @@ services:
       - api_network
     volumes:
       - storage:/var/www/html/storage
+    depends_on:
+      - builder
+      - db
   supervisor:
     build:
       context: .
