@@ -32,7 +32,7 @@ abstract class GeonamesJob implements ShouldQueue
      *
      * @var int
      */
-    const TIMEOUT = 300;
+    const TIMEOUT = 500;
 
     /**
      * @var \Illuminate\Filesystem\Filesystem
