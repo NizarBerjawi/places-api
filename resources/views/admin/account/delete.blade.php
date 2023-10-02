@@ -22,7 +22,11 @@
                     <a href={{ route('admin.account.index') }} class="button is-medium is-responsive">Cancel</a>
                 </p>
                 <p class="control">
-                    <button class="button is-danger is-medium is-responsive" type="submit">Yes, delete my account</button>
+                    @include('component.button', [
+                        'classes' => ['button', 'is-danger', 'is-medium', 'is-responsive'],
+                        'type' => 'submit',
+                        'label' => 'Yes, delete my account'
+                    ])
                 </p>
             </div>
         </div>

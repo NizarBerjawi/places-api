@@ -27,7 +27,11 @@
                 <div class="is-flex is-justify-content-flex-end">
                     <div class="field is-grouped">
                         <p class="control">
-                            <button class="button is-primary is-medium is-responsive" onClick="this.form.submit(); this.disabled=true;">Resend email</button>
+                            @include('component.button', [
+                                'classes' => ['button', 'is-primary', 'is-medium', 'is-responsive'],
+                                'type' => 'submit',
+                                'label' => 'Resend email'
+                            ])
                         </p>
                     </div>
                 </div>

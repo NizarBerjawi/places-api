@@ -2,14 +2,18 @@
 
 @section('content')
     <h1 class="title is-size-3-desktop is-size-4-tablet is-size-5-mobile">
-        Tokens
+        {{ __('tokens.headers.index') }}
     </h1>
 
-    <article class="message is-info">
-        <div class="message-body">
-            {!! __('tokens.index') !!}
-        </div>
-    </article>
+    @includeWhen(!request()->user()->hasWarning(), 'partials.message', [
+        'classes' => ['is-info'],
+        'message' => __('tokens.index')
+    ])
+    
+    @includeWhen(request()->user()->hasWarning(), 'partials.message', [
+        'classes' => ['is-danger'],
+        'message' => __('tokens.limit')
+    ])
 
     <div class="block">
         @if (count($tokens) === 0)
@@ -23,13 +27,6 @@
                                 <div>
                                     <div class="title is-size-4">
                                         <a href="{{ route('admin.tokens.show', $token->uuid) }}">{{ $token->name }}</a>
-
-                                        <a href="{{ route('admin.tokens.confirm', ['uuid' => $token->uuid, 'action' => 'regenerate']) }}"
-                                            title="Regenerate token">
-                                            <span class="icon is-clickable">
-                                                <i class="icon is-small" data-feather="refresh-cw"></i>
-                                            </span>
-                                        </a>
                                     </div>
                                     @if ($token->last_used_at)
                                         <div class="subtitle is-size-6">
@@ -40,12 +37,27 @@
                                     @endif
                                 </div>
 
-                                <div class="is-flex is-align-content-center is-flex-wrap-wrap">
-                                    <a href="{{ route('admin.tokens.confirm', ['uuid' => $token->uuid, 'action' => 'delete']) }}"
-                                        class="button is-small is-danger is-light" title="Delete token">
-                                        <i class="icon is-small" data-feather="trash-2"></i>
-                                    </a>
-                                </div>
+
+                                @if (!$token->trashed())
+                                    @if ($token->expired())
+                                        <div class="ml-1">
+                                            <span class="tag is-danger">Expired</span>
+                                        </div>
+                                    @elseif($token->forever())
+                                        <div class="ml-1">
+                                            <span class="tag is-warning">No expiry</span>
+                                        </div>
+                                    @elseif ($token->active())
+                                        <div class="ml-1">
+                                            <span class="tag is-success">Expires
+                                                {{ $token->expires_at->diffForHumans() }}</span>
+                                        </div>
+                                    @endif
+                                @else
+                                    <div class="ml-1">
+                                        <span class="tag is-danger">Deleted</span>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -58,9 +70,12 @@
     <div class="is-flex is-justify-content-flex-end">
         <div class="field is-grouped">
             <div class="control">
-                <a href="{{ route('admin.tokens.create') }}" class="button is-primary is-medium is-responsive">
-                    Generate access token
-                </a>
+                @include('component.link', [
+                    'classes' => ['button', 'is-primary', 'is-medium', 'is-responsive'],
+                    'href' => !request()->user()->hasWarning() ? route('admin.tokens.create') : null,
+                    'label' => 'Generate access token',
+                    'disabled' => request()->user()->hasWarning()
+                ])
             </div>
         </div>
     </div>

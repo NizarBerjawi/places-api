@@ -39,7 +39,11 @@
                                                 <a href="{{ route('home') }}" class="button is-medium is-responsive">Back</a>
                                             </div>
                                             <div class="control">
-                                                <button class="button is-primary is-medium is-responsive" type="submit">Verify</button>
+                                                @include('component.button', [
+                                                    'classes' => ['button', 'is-primary', 'is-medium', 'is-responsive'],
+                                                    'type' => 'submit',
+                                                    'label' => 'Verify'
+                                                ])
                                             </div>
                                         </div>
                                     </div>

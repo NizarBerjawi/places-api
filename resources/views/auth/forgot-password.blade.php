@@ -40,8 +40,16 @@
                                                     class="button is-medium is-responsive">Back</a>
                                             </p>
                                             <p class="control">
-                                                <button class="button is-primary is-medium is-responsive">Send reset
-                                                    link</button>
+                                                @include('component.button', [
+                                                    'classes' => [
+                                                        'button',
+                                                        'is-primary',
+                                                        'is-medium',
+                                                        'is-responsive',
+                                                    ],
+                                                    'type' => 'submit',
+                                                    'label' => 'Send reset link',
+                                                ])
                                             </p>
                                         </div>
                                     </div>

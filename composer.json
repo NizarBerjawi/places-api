@@ -8,6 +8,7 @@
         "php": "^8.2",
         "doctrine/dbal": "^3.6",
         "guzzlehttp/guzzle": "^7.7",
+        "laravel/cashier": "^13.17",
         "laravel/fortify": "^1.17",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",

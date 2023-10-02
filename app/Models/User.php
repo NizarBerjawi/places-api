@@ -8,12 +8,13 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Cashier\Billable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements CanResetPassword, MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, CanResetPasswordTrait, TwoFactorAuthenticatable;
+    use Billable, HasApiTokens, HasFactory, Notifiable, CanResetPasswordTrait, TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +25,9 @@ class User extends Authenticatable implements CanResetPassword, MustVerifyEmail
         'name',
         'email',
         'password',
+        'account_warning',
+        'pm_type',
+        'pm_last_four',
     ];
 
     /**
@@ -45,4 +49,14 @@ class User extends Authenticatable implements CanResetPassword, MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class, 'token_uuid', 'uuid');
+    }
+
+    public function hasWarning()
+    {
+        return (bool) $this->account_warning;
+    }
 }

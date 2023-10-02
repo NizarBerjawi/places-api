@@ -8,7 +8,8 @@ module.exports = {
     entry: {
         app: path.resolve('./resources/src/app'),
         vendor: path.resolve('./resources/src/vendor'),
-        documentation: path.resolve('./resources/src/docs')
+        documentation: path.resolve('./resources/src/docs'),
+        // checkout: path.resolve('./resources/src/checkout')
     },
     output: {
         path: path.resolve(__dirname, 'public/dist'),
