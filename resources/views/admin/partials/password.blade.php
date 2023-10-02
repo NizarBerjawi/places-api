@@ -17,8 +17,7 @@
     <div class="field">
         <label class="label">Email</label>
         <div class="control">
-            <input @class(['input', 'is-danger' => $errors->has('email'), 'is-medium']) type="email" name="email" value={{ auth()->user()->email }}
-                disabled>
+            <input @class(['input', 'is-danger' => $errors->has('email'), 'is-medium']) type="email" name="email" value={{ auth()->user()->email }} disabled>
         </div>
         <p class="help is-danger">{{ $errors->first('email') }}</p>
     </div>
@@ -60,7 +59,10 @@
     </div>
 
     <div class="is-flex is-justify-content-flex-end">
-        <button class="button is-primary is-medium is-responsive">Update
-            password</button>
+        @include('component.button', [
+            'classes' => ['button', 'is-primary', 'is-medium', 'is-responsive'],
+            'type' => 'submit',
+            'label' => 'Update password',
+        ])
     </div>
 </form>

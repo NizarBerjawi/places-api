@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Validation\ValidateFreeTokenExpiry;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -12,7 +13,7 @@ class TokenPutRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return ! $this->user()->hasWarning() && $this->user()->subscribed('default');
     }
 
     /**
@@ -28,10 +29,29 @@ class TokenPutRequest extends FormRequest
             'token_name' => [
                 'exclude_unless:action,update',
                 'required',
-                Rule::unique('personal_access_tokens', 'name')->ignore($this->id),
+                Rule::unique('personal_access_tokens', 'name')->ignore($this->uuid, 'uuid')->whereNull('deleted_at'),
                 'string',
                 'max:255',
             ],
         ];
+    }
+
+    public function after(): array
+    {
+        if ($this->get('action') !== 'regenerate') {
+            return [];
+        }
+
+        $after = [];
+        $user = request()->user();
+        $subscription = $user->subscriptions()->first();
+
+        $isFree = $subscription->tokens_allowed === 1;
+
+        if ($isFree) {
+            $after[] = new ValidateFreeTokenExpiry;
+        }
+
+        return $after;
     }
 }

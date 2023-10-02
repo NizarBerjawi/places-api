@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Sanctum\PersonalAccessToken;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -33,11 +34,11 @@ class RouteServiceProvider extends ServiceProvider
         }
 
         $this->routes(function () use ($isProduction) {
-            Route::middleware(($isProduction ? ['auth:sanctum', 'api'] : []) + ['api-version:v1'])
+            Route::middleware(($isProduction ? ['auth:sanctum', 'api'] : []) + ['api.version:v1'])
                 ->prefix('api/v1')
                 ->group(base_path('routes/api.v1.php'));
 
-            Route::middleware('web')
+            Route::middleware(['web', 'cache.headers:no_store'])
                 ->group(base_path('routes/web.php'));
         });
     }
@@ -50,7 +51,19 @@ class RouteServiceProvider extends ServiceProvider
     protected function configureRateLimiting()
     {
         RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(25)->by($request->bearerToken() ?: $request->ip());
+            $token = PersonalAccessToken::query()
+                ->byToken($request->bearerToken())
+                ->with('tokenable.subscriptions')
+                ->first();
+
+            $rateLimit = $token
+                ->tokenable
+                ->subscriptions
+                ->first()
+                ->requests_per_minute;
+
+            return Limit::perMinute($rateLimit)
+                ->by($token->uuid ?: $request->ip());
         });
     }
 }

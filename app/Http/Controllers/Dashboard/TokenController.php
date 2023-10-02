@@ -14,13 +14,21 @@ class TokenController extends Controller
     public function index(Request $request)
     {
         return view('admin.tokens.index', [
-            'tokens' => $request->user()->tokens()->simplePaginate(3),
+            'tokens' => $request
+                ->user()
+                ->tokens()
+                ->orderBy('last_used_at')
+                ->simplePaginate(5),
         ]);
     }
 
     public function show(Request $request, $uuid)
     {
-        $token = $request->user()->tokens()->where('uuid', $uuid)->first();
+        $token = $request
+            ->user()
+            ->tokens()
+            ->where('uuid', $uuid)
+            ->firstOrFail();
 
         return view('admin.tokens.show', [
             'token' => $token,
@@ -29,7 +37,11 @@ class TokenController extends Controller
 
     public function edit(Request $request, $uuid)
     {
-        $token = $request->user()->tokens()->where('uuid', $uuid)->first();
+        $token = $request
+            ->user()
+            ->tokens()
+            ->where('uuid', $uuid)
+            ->firstOrFail();
 
         return view('admin.tokens.edit', [
             'token' => $token,
@@ -38,14 +50,18 @@ class TokenController extends Controller
 
     public function update(TokenPutRequest $request, $uuid)
     {
-        $token = $request->user()->tokens()->where('uuid', $uuid)->first();
+        $token = $request
+            ->user()
+            ->tokens()
+            ->where('uuid', $uuid)
+            ->firstOrFail();
 
         $action = $request->get('action');
 
         if ($action === 'regenerate') {
-            $newAccessToken = $token->regenerateToken(
-                Carbon::make($request->expires_at)
-            );
+            $newAccessToken = $token->regenerate([
+                'expires_at' => $request->input('expires_at'),
+            ]);
 
             $textToken = $newAccessToken->plainTextToken;
 
@@ -67,7 +83,11 @@ class TokenController extends Controller
 
     public function create(Request $request)
     {
-        return view('admin.tokens.create');
+        if ($request->user()->subscribed('default')) {
+            return view('admin.tokens.create');
+        }
+
+        return redirect()->route('admin.stripe.plans');
     }
 
     public function store(TokenPostRequest $request)
@@ -85,12 +105,24 @@ class TokenController extends Controller
             [$uuid, $textToken] = explode('|', $textToken, 2);
         }
 
-        return redirect()->route('admin.tokens.show', $uuid)->with('textToken', $textToken);
+        return redirect()
+            ->route('admin.tokens.show', $uuid)
+            ->with('textToken', $textToken);
     }
 
     public function destroy(Request $request, $uuid)
     {
-        $request->user()->tokens()->where('uuid', $uuid)->delete();
+        $user = $request->user();
+
+        $user->tokens()->where('uuid', $uuid)->delete();
+
+        if ($user->hasWarning()) {
+            $subscription = $user->subscription('default');
+
+            $hasWarning = $user->tokens()->count() > $subscription->tokens_allowed;
+
+            $request->user()->update(['account_warning' => $hasWarning]);
+        }
 
         return redirect()->route('admin.tokens.index');
     }
@@ -99,7 +131,11 @@ class TokenController extends Controller
     {
         $action = $request->get('action');
 
-        $token = $request->user()->tokens()->where('uuid', $uuid)->first();
+        $token = $request
+            ->user()
+            ->tokens()
+            ->where('uuid', $uuid)
+            ->firstOrFail();
 
         return view("admin.tokens.$action", compact('action', 'token'));
     }

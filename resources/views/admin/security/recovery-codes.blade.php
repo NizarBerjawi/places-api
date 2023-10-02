@@ -15,7 +15,7 @@
 
     <div class="has-text-centered m-4">
         @foreach (request()->user()->recoveryCodes() as $code)
-            <li class='is-size-5'><code>{{ $code }}</code></li>
+            <pre class='is-size-5 m-0 p-2'>{{ $code }}</pre>
         @endforeach
     </div>
 
@@ -28,7 +28,11 @@
                     <a href="{{ route('admin.security.index') }}" class="button is-medium is-responsive">Back</a>
                 </div>
                 <div class="control">
-                    <button class="button is-primary is-medium is-responsive">Regenerate codes</button>
+                    @include('component.button', [
+                        'classes' => ['button', 'is-primary', 'is-medium', 'is-responsive'],
+                        'type' => 'submit',
+                        'label' => 'Regenerate codes'
+                    ])
                 </div>
             </div>
         </div>

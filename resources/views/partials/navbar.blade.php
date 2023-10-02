@@ -28,34 +28,42 @@
                     <span>Tokens</span>
                 </a>
 
-                <a href="{{ route('admin.security.index') }}" @class([
-                    'is-active' =>
-                        Route::is('admin.security.*') ||
-                        (isset($intended) && $intended === route('admin.security.index')),
-                    'navbar-item',
-                    'icon-text',
-                ])>
-                    <span>Security</span>
-                </a>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Account
+                    </a>
 
-                <a href="{{ route('admin.account.index') }}" @class([
-                    'is-active' =>
-                        Route::is('admin.account.*') ||
-                        (isset($intended) &&
-                            $intended ===
-                                route('admin.account.confirm', [
-                                    'id' => request()->user()->id,
-                                    'action' => 'delete',
-                                ])),
-                    'navbar-item',
-                    'icon-text',
-                ])>
-                    <span>Account</span>
-                </a>
+                    <div class="navbar-dropdown">
+                        <a href="{{ route('admin.security.index') }}" @class([
+                            'is-active' =>
+                                Route::is('admin.security.*') ||
+                                (isset($intended) && $intended === route('admin.security.index')),
+                            'navbar-item',
+                            'icon-text',
+                        ])>
+                            <span>Security</span>
+                        </a>
+
+                        <a href="{{ route('admin.account.index') }}" @class([
+                            'is-active' =>
+                                Route::is('admin.account.*') ||
+                                (isset($intended) &&
+                                    $intended ===
+                                        route('admin.account.confirm', [
+                                            'id' => request()->user()->id,
+                                            'action' => 'delete',
+                                        ])),
+                            'navbar-item',
+                            'icon-text',
+                        ])>
+                            <span>Settings</span>
+                        </a>
+                    </div>
+                </div>
 
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">
-                        API
+                        Developers
                     </a>
 
                     <div class="navbar-dropdown">
@@ -76,6 +84,14 @@
                         </a>
                     </div>
                 </div>
+
+                <a href="{{ route('admin.stripe.billing') }}" @class([
+                    'is-active' => Route::is('admin.stripe.billing'),
+                    'navbar-item',
+                    'icon-text',
+                ])>
+                    <span>Billing</span>
+                </a>
             </div>
         @endif
 
@@ -84,14 +100,18 @@
                 <div class="buttons">
                     @auth
                         @if (request()->user()->hasVerifiedEmail() &&
-                            !request()->routeIs('admin.*') &&
+                                !request()->routeIs('admin.*') &&
                                 request()->route()->uri() !== 'user/confirm-password')
                             <a href="{{ home() }}" class="button is-small is-rounded">Dashboard</a>
                         @endif
 
                         <form method="post" action="/logout">
                             @csrf
-                            <button class="button is-primary is-small is-rounded">Log out</button>
+                            @include('component.button', [
+                                'classes' => ['button', 'is-primary', 'is-small', 'is-responsive', 'is-rounded'],
+                                'type' => 'submit',
+                                'label' => 'Log out',
+                            ])
                         </form>
                     @endauth
 

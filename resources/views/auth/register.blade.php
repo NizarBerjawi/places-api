@@ -76,7 +76,16 @@
                                                     class="button is-medium is-responsive">Back</a>
                                             </p>
                                             <p class="control">
-                                                <button class="button is-primary is-medium is-responsive">Register</button>
+                                                @include('component.button', [
+                                                    'classes' => [
+                                                        'button',
+                                                        'is-primary',
+                                                        'is-medium',
+                                                        'is-responsive',
+                                                    ],
+                                                    'type' => 'submit',
+                                                    'label' => 'Register',
+                                                ])
                                             </p>
                                         </div>
                                     </div>
