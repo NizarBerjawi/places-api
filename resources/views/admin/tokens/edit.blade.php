@@ -2,15 +2,29 @@
 
 @section('content')
     <h1 class="title is-size-3-desktop is-size-4-tablet is-size-5-mobile">
-        Edit Access Token
+        {{ __('tokens.headers.edit') }}
     </h1>
 
-    {{-- <article class="message is-info">
-        <div class="message-body">
-            {!! __('tokens.edit', ['regenerateLink' => route('admin.tokens.confirm', ['uuid' => $token->uuid, 'action' => 'regenerate'])]) !!}
-        </div>
-    </article> --}}
-    <form method="post" action="{{ route('admin.tokens.update', ['uuid' => $token->uuid, 'action' => 'update']) }}">
+    @includeWhen(!request()->user()->hasWarning(), 'partials.message', [
+        'classes' => ['is-info'],
+        'message' => __('tokens.edit', [
+            'regenerateLink' => route('admin.tokens.confirm', [
+                'uuid' => $token->uuid,
+                'action' => 'regenerate',
+            ]),
+        ]),
+    ])
+
+    @includeWhen(request()->user()->hasWarning(), 'partials.message', [
+        'classes' => ['is-danger'],
+        'message' => __('tokens.limit'),
+    ])
+
+    <form method="post"
+        action="{{ route('admin.tokens.update', [
+            'uuid' => $token->uuid,
+            'action' => 'update',
+        ]) }}">
         @method('PUT')
         @csrf
 
@@ -22,7 +36,7 @@
                     'is-danger' => $errors->has('token_name'),
                     'is-medium',
                 ]) type="token_name" name="token_name" placeholder="My token"
-                    value="{{ $token->name }}" autofocus>
+                    value="{{ $token->name }}" @disabled(request()->user()->hasWarning()) autofocus>
             </div>
             <p class="help is-danger">{{ $errors->first('token_name') }}</p>
         </div>
@@ -31,8 +45,7 @@
             <label class="label">Expiration date</label>
             <div class="control">
                 <input @class(['input', 'is-medium']) type="text"
-                    value="{{ $token->expires_at?->isoFormat('MMMM Do, YYYY, h:mm:ss a') ?? 'No Expiry' }}"
-                    disabled>
+                    value="{{ $token->expires_at?->isoFormat('MMMM Do, YYYY') ?? 'No Expiry' }}" disabled>
             </div>
         </div>
 
@@ -45,7 +58,8 @@
                     @include('component.button', [
                         'classes' => ['button', 'is-primary', 'is-medium', 'is-responsive'],
                         'type' => 'submit',
-                        'label' => 'Update token'
+                        'label' => 'Update token',
+                        'disabled' => request()->user()->hasWarning()
                     ])
                 </p>
             </div>

@@ -19,46 +19,62 @@
             </div>
         </div>
     @else
-        <div class="buttons has-addons is-centered">
-            <a href="{{ route('admin.tokens.edit', ['uuid' => $token->uuid]) }}"
-                class="button has-text-primary is-normal is-responsive">
-                <i class="icon is-small" data-feather="edit"></i>
+        @if (!$token->trashed())
+            <div class="buttons has-addons is-centered">
 
-                <span class="has-text-weight-bold">Edit</span>
-            </a>
+                @if (!$token->expired())
+                    <a href="{{ route('admin.tokens.edit', ['uuid' => $token->uuid]) }}"
+                        class="button has-text-primary is-normal is-responsive">
+                        <i class="icon is-small" data-feather="edit"></i>
 
-            <a href="{{ route('admin.tokens.confirm', ['uuid' => $token->uuid, 'action' => 'regenerate']) }}"
-                class="button has-text-warning is-normal is-responsive">
-                <i class="icon is-small" data-feather="refresh-cw"></i>
+                        <span class="has-text-weight-bold">Edit</span>
+                    </a>
 
-                <span>Regenerate</span>
-            </a>
+                    <a href="{{ route('admin.tokens.confirm', ['uuid' => $token->uuid, 'action' => 'regenerate']) }}"
+                        class="button has-text-warning is-normal is-responsive">
+                        <i class="icon is-small" data-feather="refresh-cw"></i>
 
-            <a href="{{ route('admin.tokens.confirm', ['uuid' => $token->uuid, 'action' => 'delete']) }}"
-                class="button has-text-danger is-normal is-responsive">
-                <i class="icon is-small" data-feather="trash-2"></i>
+                        <span>Regenerate</span>
+                    </a>
+                @endif
 
-                <span>Delete</span>
-            </a>
-        </div>
+                <a href="{{ route('admin.tokens.confirm', ['uuid' => $token->uuid, 'action' => 'delete']) }}"
+                    class="button has-text-danger is-normal is-responsive">
+                    <i class="icon is-small" data-feather="trash-2"></i>
 
+                    <span>Delete</span>
+                </a>
+            </div>
+        @endif
+
+        @includeWhen(request()->user()->hasWarning(), 'partials.message', [
+            'classes' => ['is-danger'],
+            'message' => __('tokens.limit')
+        ])
+        
         <div class="block box">
             <div class="is-flex is-justify-content-space-between is-align-items-center">
                 <div class="is-size-4-tablet mr-1">
                     {{ $token->name }}
                 </div>
 
-                @if ($token->expires_at && $token->expires_at->isBefore(now()))
-                    <div class="ml-1">
-                        <span class="tag is-danger">Expired {{ $token->expires_at->diffForHumans() }}</span>
-                    </div>
-                @elseif ($token->expires_at && $token->expires_at->isAfter(now()))
-                    <div class="ml-1">
-                        <span class="tag is-success">Expires {{ $token->expires_at->diffForHumans() }}</span>
-                    </div>
+                @if (!$token->trashed())
+                    @if ($token->expires_at && $token->expires_at->isBefore(now()))
+                        <div class="ml-1">
+                            <span class="tag is-danger">Expired {{ $token->expires_at->diffForHumans() }}</span>
+                        </div>
+                    @elseif ($token->expires_at && $token->expires_at->isAfter(now()))
+                        <div class="ml-1">
+                            <span class="tag is-success">Expires {{ $token->expires_at->diffForHumans() }}</span>
+                        </div>
+                    @else
+                        <div class="ml-1">
+                            <span class="tag is-warning">No expiry</span>
+                        </div>
+                    @endif
                 @else
                     <div class="ml-1">
-                        <span class="tag is-warning">No expiry</span>
+                        <span class="tag is-danger">Deleted</span>
                     </div>
                 @endif
 
@@ -69,13 +85,21 @@
                     <span class="has-text-weight-bold">Created at: </span>
                     {{ $token->created_at->isoFormat('MMMM Do, YYYY') }} at {{ $token->created_at->format('g:i A') }}
                 </div>
+
                 <div class="is-size-7"><span class="has-text-weight-bold">Expires on: </span>
                     @if ($token->expires_at)
                         {{ $token->expires_at->isoFormat('MMMM Do, YYYY') }}
                     @else
-                        This token has no expiration date.
+                        Never
                     @endif
                 </div>
+
+                @if ($token->trashed())
+                    <div class="is-size-7"><span class="has-text-weight-bold">Deleted on: </span>
+                        {{ $token->deleted_at->isoFormat('MMMM Do, YYYY') }}
+                    </div>
+                @endif
+
                 <div class="is-size-7"><span class="has-text-weight-bold">Last used: </span>
                     @if ($token->last_used_at)
                         Last used {{ $token->last_used_at->diffForHumans() }}

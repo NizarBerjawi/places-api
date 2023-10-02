@@ -14,7 +14,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements CanResetPassword, MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, CanResetPasswordTrait, TwoFactorAuthenticatable, Billable;
+    use Billable, HasApiTokens, HasFactory, Notifiable, CanResetPasswordTrait, TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -25,6 +25,9 @@ class User extends Authenticatable implements CanResetPassword, MustVerifyEmail
         'name',
         'email',
         'password',
+        'account_warning',
+        'pm_type',
+        'pm_last_four',
     ];
 
     /**
@@ -46,4 +49,14 @@ class User extends Authenticatable implements CanResetPassword, MustVerifyEmail
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class, 'token_uuid', 'uuid');
+    }
+
+    public function hasWarning()
+    {
+        return (bool) $this->account_warning;
+    }
 }

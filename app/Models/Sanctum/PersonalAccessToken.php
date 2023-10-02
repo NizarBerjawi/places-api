@@ -2,14 +2,17 @@
 
 namespace App\Models\Sanctum;
 
-use App\Models\Scopes\PaidTokenScope;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\NewAccessToken;
 use Laravel\Sanctum\PersonalAccessToken as SanctumPersonalAccessToken;
 
 class PersonalAccessToken extends SanctumPersonalAccessToken
 {
+    use SoftDeletes;
+
     /**
      * The primary key for the model.
      *
@@ -41,7 +44,6 @@ class PersonalAccessToken extends SanctumPersonalAccessToken
         'token',
         'abilities',
         'expires_at',
-        'is_paid',
     ];
 
     /**
@@ -61,39 +63,63 @@ class PersonalAccessToken extends SanctumPersonalAccessToken
     }
 
     /**
-     * The "booted" method of the model.
-     */
-    protected static function booted(): void
-    {
-        // static::addGlobalScope(new PaidTokenScope);
-    }
-
-    /**
      * Regenerates the current access token.
      *
      * @return \Laravel\Sanctum\NewAccessToken
      */
-    public function regenerate()
+    public function regenerate($options = [])
     {
         $this->update([
             'token' => hash('sha256', $plainTextToken = Str::random(40)),
-        ]);
+        ] + $options);
 
         return new NewAccessToken($this, $this->getKey().'|'.$plainTextToken);
     }
 
     /**
-     * Activates the current access token when payment is successful.
-     *
-     * @return bool
+     * Determines if a Token is active or not
      */
-    public function pay()
+    public function active(): bool
     {
-        $this->update([
-            'is_paid' => true,
-            'token' => hash('sha256', $plainTextToken = Str::random(40)),
-        ]);
+        return ! $this->trashed() && ($this->forever() || ! $this->expired());
+    }
 
-        return new NewAccessToken($this, $this->getKey().'|'.$plainTextToken);
+    /**
+     * Determines if a Token is expired or not
+     */
+    public function expired(): bool
+    {
+        return $this->isExpirable() && $this->expires_at->isBefore(now());
+    }
+
+    /**
+     * Determines if a Token is lasts forever or not
+     */
+    public function forever()
+    {
+        return ! $this->isExpirable();
+    }
+
+    /**
+     * Determines if a Token has an expiry date
+     */
+    public function isExpirable()
+    {
+        return ! is_null($this->expires_at);
+    }
+
+    /**
+     * Scope a query to only include a token model matching the
+     * provided token
+     *
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByToken(Builder $query, string $token)
+    {
+        if (strpos($token, '|') === false) {
+            return $query->where('token', hash('sha256', $token));
+        }
     }
 }

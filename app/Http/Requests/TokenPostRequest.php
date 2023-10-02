@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Validation\ValidateFreeTokenExpiry;
+use App\Validation\ValidateTokenLimits;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Validator;
+use Illuminate\Validation\Rule;
 
 class TokenPostRequest extends FormRequest
 {
@@ -12,7 +14,7 @@ class TokenPostRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return ! $this->user()->hasWarning() && $this->user()->subscribed('default');
     }
 
     /**
@@ -25,28 +27,27 @@ class TokenPostRequest extends FormRequest
         return [
             'token_name' => [
                 'required',
-                'unique:personal_access_tokens,name',
+                Rule::unique('personal_access_tokens', 'name')->whereNull('deleted_at'),
                 'string',
                 'max:255',
             ],
-            'product_id' => ['required', 'string', 'max:255'],
+            'expires_at' => ['nullable', 'date', 'after_or_equal:tomorrow'],
         ];
     }
 
     public function after(): array
     {
+        $user = request()->user();
+        $subscription = $user->subscriptions()->first();
 
-        return [
-            function (Validator $validator) {
-                $count = $this->user()->tokens()->count();
+        $isFree = $subscription->tokens_allowed === 1;
 
-                if ($count === 3) {
-                    $validator->errors()->add(
-                        'token_count',
-                        '<span class="has-text-weight-bold">Token limit reached.</span> Your account can only have up to 3 tokens.'
-                    );
-                }
-            },
-        ];
+        if ($isFree) {
+            $after[] = new ValidateFreeTokenExpiry;
+        }
+
+        $after[] = new ValidateTokenLimits;
+
+        return $after;
     }
 }
