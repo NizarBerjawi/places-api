@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\Api\V1\CityAlternateNameController;
+use App\Http\Controllers\Api\V1\CityController;
+use App\Http\Controllers\Api\V1\CityLocationController;
 use App\Http\Controllers\Api\V1\ContinentAlternateNameController;
 use App\Http\Controllers\Api\V1\ContinentController;
 use App\Http\Controllers\Api\V1\ContinentCountryController;
@@ -95,6 +98,14 @@ Route::prefix('places')->group(function () {
 
     Route::get('/{geonameId}/alternateNames', [PlaceAlternateNameController::class, 'index']);
     Route::get('/{geonameId}/location', [PlaceLocationController::class, 'index']);
+});
+
+Route::prefix('cities')->group(function () {
+    Route::get('/', [CityController::class, 'index']);
+    Route::get('/{geonameId}', [CityController::class, 'show']);
+
+    Route::get('/{geonameId}/alternateNames', [CityAlternateNameController::class, 'index']);
+    Route::get('/{geonameId}/location', [CityLocationController::class, 'index']);
 });
 
 Route::prefix('statistics')->group(function () {

@@ -196,4 +196,16 @@ class Place extends Model
     {
         return $query->where('country_code', $countryCode);
     }
+
+    /**
+     * Get places scoped by cities.
+     *
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeByCities(Builder $query)
+    {
+        return $query->whereHas('featureClass', function (Builder $query) {
+            $query->where('feature_classes.code', 'P');
+        });
+    }
 }
