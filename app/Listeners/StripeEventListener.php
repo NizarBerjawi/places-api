@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Laravel\Cashier\Cashier;
-use Laravel\Cashier\Events\WebhookReceived;
+use Laravel\Cashier\Events\WebhookHandled;
 use Laravel\Cashier\Subscription;
 
 class StripeEventListener
@@ -15,7 +15,7 @@ class StripeEventListener
     /**
      * Handle received Stripe webhooks.
      */
-    public function handle(WebhookReceived $event): void
+    public function handle(WebhookHandled $event): void
     {
         if (in_array($event->payload['type'], [
             'customer.subscription.created',
@@ -36,7 +36,7 @@ class StripeEventListener
     /**
      * Update the subscription with the Product's metadata
      */
-    private function updateMetadata(WebhookReceived $event): void
+    private function updateMetadata(WebhookHandled $event): void
     {
         $productId = Arr::get($event->payload, 'data.object.plan.product');
         $subscriptionId = Arr::get($event->payload, 'data.object.id');
@@ -57,7 +57,7 @@ class StripeEventListener
     /**
      * A user's token expiry when their subscription has been canceled.
      */
-    private function updateTokenExpiry(WebhookReceived $event): void
+    private function updateTokenExpiry(WebhookHandled $event): void
     {
         $subscriptionId = Arr::get($event->payload, 'data.object.id');
 
@@ -75,7 +75,7 @@ class StripeEventListener
         $user->tokens()->update(['expires_at' => now()]);
     }
 
-    private function handleChangePlan(WebhookReceived $event): void
+    private function handleChangePlan(WebhookHandled $event): void
     {
         $subscriptionId = Arr::get($event->payload, 'data.object.id');
 
