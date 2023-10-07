@@ -12,7 +12,7 @@ return [
     |
     */
     'index' => '<span class="has-text-weight-bold">Personal access tokens function like ordinary OAuth access tokens.</span> They can be used to authenticate to the API over Basic Authentication.',
-    'expiry' => 'We strongly recommend that you set an expiration date for your token to help keep your information secure.',
+    'expiry' => 'Your subscription allows a maximum token expiry of up to :expiryDuration.',
     'delete' => 'You are permenantly deleting this API access token. Any scripts or applications using this token will stop working. <div class="has-text-weight-bold block">This action is irreversible!</div>',
     'regenerate' => 'If you\'ve lost or forgotten this token, you can regenerate it, but be aware that any scripts or applications using this token will need to be updated.<span class="has-text-weight-bold block">This action is irreversible!</span><div class="mt-2 has-text-weight-bold block">Your expiry for this token will remain the same.</div>',
     'edit' => 'To set a new expiration date, you must <a class="has-text-weight-bold" href=":regenerateLink">regenerate</a> the token.',
@@ -27,10 +27,10 @@ return [
         'regenerate' => 'Are you sure you want to regenerate ":name"?',
     ],
     'validation' => [
-        'limit' => '<span class="has-text-weight-bold">Your subscription can only have up to :tokensAllowed tokens.</span> If you need more tokens, please upgrade your plan through the billing portal.',
+        'limit' => '<span class="has-text-weight-bold">Your subscription can only have up to :tokensAllowed tokens.</span> If you need more tokens, please upgrade your plan through the <a href=":billing">billing portal.</a>',
         'expiry' => [
             'required' => 'The expiration date field is required.',
-            'limit' => 'Your subscription does not allow tokens with expiry longer than 7 days.',
+            'limit' => 'Your subscription does not allow tokens with expiry longer than :expiryAllowed.',
         ],
     ],
 ];

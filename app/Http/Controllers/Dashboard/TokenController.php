@@ -83,8 +83,10 @@ class TokenController extends Controller
 
     public function create(Request $request)
     {
-        if ($request->user()->subscribed('default')) {
-            return view('admin.tokens.create');
+        $subscription = $request->user()->subscription('default');
+
+        if ($subscription && $subscription->valid()) {
+            return view('admin.tokens.create')->with(compact('subscription'));
         }
 
         return redirect()->route('admin.stripe.plans');
@@ -137,6 +139,8 @@ class TokenController extends Controller
             ->where('uuid', $uuid)
             ->firstOrFail();
 
-        return view("admin.tokens.$action", compact('action', 'token'));
+        $subscription = $request->user()->subscription('default');
+
+        return view("admin.tokens.$action", compact('action', 'token', 'subscription'));
     }
 }

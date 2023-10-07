@@ -50,7 +50,8 @@
                                     @elseif ($token->active())
                                         <div class="ml-1">
                                             <span class="tag is-success">Expires
-                                                {{ $token->expires_at->diffForHumans() }}</span>
+                                                {{ $token->expires_at->diffForHumans(['parts' => 2]) }}
+                                            </span>
                                         </div>
                                     @endif
                                 @else

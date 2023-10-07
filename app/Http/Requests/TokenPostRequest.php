@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Validation\ValidateFreeTokenExpiry;
+use App\Validation\ValidateTokenExpiry;
 use App\Validation\ValidateTokenLimits;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -31,23 +31,15 @@ class TokenPostRequest extends FormRequest
                 'string',
                 'max:255',
             ],
-            'expires_at' => ['nullable', 'date', 'after_or_equal:tomorrow'],
+            'expires_at' => ['required', 'date', 'after_or_equal:tomorrow'],
         ];
     }
 
     public function after(): array
     {
-        $user = request()->user();
-        $subscription = $user->subscriptions()->first();
-
-        $isFree = $subscription->tokens_allowed === 1;
-
-        if ($isFree) {
-            $after[] = new ValidateFreeTokenExpiry;
-        }
-
-        $after[] = new ValidateTokenLimits;
-
-        return $after;
+        return [
+            new ValidateTokenExpiry,
+            new ValidateTokenLimits,
+        ];
     }
 }
