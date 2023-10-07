@@ -1,7 +1,6 @@
 import * as feather from 'feather-icons';
 import './styles/app.scss';
 import ClipboardJS from 'clipboard';
-import '@stripe/stripe-js';
 
 // Instantiate the nav bar menu
 document.addEventListener('DOMContentLoaded', () => {

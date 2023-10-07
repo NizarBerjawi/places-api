@@ -34,6 +34,14 @@
                     </a>
 
                     <div class="navbar-dropdown">
+                        <a href="{{ route('admin.stripe.billing') }}" @class([
+                            'is-active' => Route::is('admin.stripe.billing'),
+                            'navbar-item',
+                            'icon-text',
+                        ])>
+                            <span>Billing</span>
+                        </a>
+
                         <a href="{{ route('admin.security.index') }}" @class([
                             'is-active' =>
                                 Route::is('admin.security.*') ||
@@ -84,14 +92,6 @@
                         </a>
                     </div>
                 </div>
-
-                <a href="{{ route('admin.stripe.billing') }}" @class([
-                    'is-active' => Route::is('admin.stripe.billing'),
-                    'navbar-item',
-                    'icon-text',
-                ])>
-                    <span>Billing</span>
-                </a>
             </div>
         @endif
 

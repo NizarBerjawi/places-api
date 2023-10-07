@@ -51,6 +51,7 @@ class StripeEventListener
                 'is_free' => filter_var($product->metadata->is_free, FILTER_VALIDATE_BOOLEAN),
                 'tokens_allowed' => (int) $product->metadata->tokens_allowed,
                 'requests_per_minute' => (int) $product->metadata->requests_per_minute,
+                'expiry_period' => $product->metadata->expiry_period,
             ]);
     }
 
@@ -95,24 +96,14 @@ class StripeEventListener
                 'account_warning' => $tokenQuery->count() > $subscription->tokens_allowed,
             ]);
 
-        // Next, we handle sitations where the user has downgraded from
-        // a paying plan a free plan
-        if (! $subscription->is_free) {
-            return;
-        }
+        // Next, we handle sitations where the user downgraded from a
+        // higher-paying tier to a lower-paying tier. We make their token
+        // expiry dates compliant with their subscription.
+        $allowedExpiry = PersonalAccessToken::maxExpiry($subscription);
 
-        $invalidExpiryQuery = $tokenQuery
-            ->whereDate('expires_at', '>', now()->endOfDay()->addDays(7))
-            ->orWhereNull('expires_at');
-
-        if (! $invalidExpiryQuery->exists()) {
-            return;
-        }
-
-        // If we got this far, then the user went from a paying plan
-        // to a free plan. We force, their tokens to expire within
-        // 7 days.
-        $invalidExpiryQuery
-            ->update(['expires_at' => now()->endOfDay()->addDays(7)]);
+        $tokenQuery
+            ->whereDate('expires_at', '>', $allowedExpiry)
+            ->orWhereNull('expires_at')
+            ->update(['expires_at' => $allowedExpiry]);
     }
 }

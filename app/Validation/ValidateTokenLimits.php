@@ -20,10 +20,11 @@ class ValidateTokenLimits
         $tokensAllowed = $subscription->tokens_allowed;
         $count = $user->tokens()->count();
 
+        $billing = route('admin.stripe.billing');
         if ($count >= $tokensAllowed) {
             $validator->errors()->add(
                 'token_count',
-                __('tokens.validation.limit', compact('tokensAllowed'))
+                __('tokens.validation.limit', compact('tokensAllowed', 'billing'))
             );
         }
     }

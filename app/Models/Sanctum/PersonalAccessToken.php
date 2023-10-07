@@ -2,10 +2,14 @@
 
 namespace App\Models\Sanctum;
 
+use App\Models\User;
+use Carbon\Carbon;
+use Carbon\CarbonInterval;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Str;
+use Laravel\Cashier\Subscription;
 use Laravel\Sanctum\NewAccessToken;
 use Laravel\Sanctum\PersonalAccessToken as SanctumPersonalAccessToken;
 
@@ -60,6 +64,17 @@ class PersonalAccessToken extends SanctumPersonalAccessToken
                 $model->{$model->getKeyName()} = Str::uuid()->toString();
             }
         });
+    }
+
+    public function subscription()
+    {
+        return $this->hasOneThrough(
+            Subscription::class,
+            User::class,
+            'id',
+            'user_id',
+            'tokenable_id'
+        );
     }
 
     /**
@@ -121,5 +136,25 @@ class PersonalAccessToken extends SanctumPersonalAccessToken
         if (strpos($token, '|') === false) {
             return $query->where('token', hash('sha256', $token));
         }
+    }
+
+    public static function minExpiry()
+    {
+        return Carbon::now()->tomorrow();
+    }
+
+    public static function maxExpiry(Subscription $subscription)
+    {
+        $interval = CarbonInterval::create($subscription->expiry_period);
+
+        if ($subscription->is_free) {
+            $days = $interval->totalDays;
+
+            return Carbon::now()->endOfDay()->addDays($days);
+        }
+
+        $years = $interval->totalYears;
+
+        return Carbon::now()->endOfDay()->addYears($years);
     }
 }

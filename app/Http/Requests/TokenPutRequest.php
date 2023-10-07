@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Validation\ValidateFreeTokenExpiry;
+use App\Validation\ValidateTokenExpiry;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -42,16 +42,8 @@ class TokenPutRequest extends FormRequest
             return [];
         }
 
-        $after = [];
-        $user = request()->user();
-        $subscription = $user->subscriptions()->first();
-
-        $isFree = $subscription->tokens_allowed === 1;
-
-        if ($isFree) {
-            $after[] = new ValidateFreeTokenExpiry;
-        }
-
-        return $after;
+        return [
+            new ValidateTokenExpiry,
+        ];
     }
 }
