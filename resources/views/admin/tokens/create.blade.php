@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 
-@inject('carbon', '\Illuminate\Support\Carbon')
-
 @section('content')
     <h1 class="title is-size-3-desktop is-size-4-tablet is-size-5-mobile">
         {{ __('tokens.headers.create') }}
@@ -26,7 +24,7 @@
         )
     @endif
 
-    <form method="post" action="{{ route('admin.tokens.store') }}">
+    <form method="post" action="{{ route('admin.tokens.store') }}" novalidate>
         @csrf
         <div class="block">
             <div class="field">
@@ -44,16 +42,21 @@
 
 
             <div class="field">
+                @php
+                    $min = \App\Models\Sanctum\PersonalAccessToken::minExpiry();
+                    $max = \App\Models\Sanctum\PersonalAccessToken::maxExpiry($subscription);
+                @endphp
                 <label class="label">Expiration date
-                    <span title="{{ __('tokens.expiry') }}"><i class="icon is-small" data-feather="info"></i></span>
+                    <span title="{{ __('tokens.expiry', ['expiryDuration' => $max->diffForHumans()]) }}"><i
+                            class="icon is-small" data-feather="info"></i></span>
                 </label>
                 <div class="control">
                     <input @class([
                         'input',
                         'is-danger' => $errors->has('expires_at'),
                         'is-medium',
-                    ]) min="{{ $carbon->tomorrow()->format('Y-m-d') }}" type="date"
-                        name="expires_at" value="{{ old('expires_at') }}" @disabled(request()->user()->hasWarning())>
+                    ]) min="{{ $min->format('Y-m-d') }}" max="{{ $max->format('Y-m-d') }}"
+                        type="date" name="expires_at" value="{{ old('expires_at') }}" @disabled(request()->user()->hasWarning())>
                 </div>
                 <p class="help is-danger">{{ $errors->first('expires_at') }}</p>
             </div>
@@ -68,7 +71,7 @@
                     @include('component.button', [
                         'classes' => ['button', 'is-primary', 'is-medium', 'is-responsive'],
                         'label' => 'Continue',
-                        'disabled' => request()->user()->hasWarning()
+                        'disabled' => request()->user()->hasWarning(),
                     ])
                 </p>
             </div>

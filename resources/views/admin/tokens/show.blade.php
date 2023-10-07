@@ -65,7 +65,7 @@
                         </div>
                     @elseif ($token->expires_at && $token->expires_at->isAfter(now()))
                         <div class="ml-1">
-                            <span class="tag is-success">Expires {{ $token->expires_at->diffForHumans() }}</span>
+                            <span class="tag is-success">Expires {{ $token->expires_at->diffForHumans(['parts' => 2]) }}</span>
                         </div>
                     @else
                         <div class="ml-1">

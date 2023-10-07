@@ -5,17 +5,25 @@
         {{ __('tokens.headers.regenerate', ['name' => $token->name]) }}
     </h1>
 
-    @includeWhen(!request()->user()->hasWarning(), 'partials.message', [
-        'classes' => ['is-warning'],
-        'message' => __('tokens.regenerate')
-    ])
+    @includeWhen(
+        !request()->user()->hasWarning(),
+        'partials.message',
+        [
+            'classes' => ['is-warning'],
+            'message' => __('tokens.regenerate'),
+        ]
+    )
 
-    @includeWhen(request()->user()->hasWarning(), 'partials.message', [
-        'classes' => ['is-danger'],
-        'message' => __('tokens.limit')
-    ])
+    @includeWhen(request()->user()->hasWarning(),
+        'partials.message',
+        [
+            'classes' => ['is-danger'],
+            'message' => __('tokens.limit'),
+        ]
+    )
 
-    <form method="post" action="{{ route('admin.tokens.update', ['uuid' => $token->uuid, 'action' => $action]) }}">
+    <form method="post" action="{{ route('admin.tokens.update', ['uuid' => $token->uuid, 'action' => $action]) }}"
+        novalidate>
         @csrf
         @method('PUT')
 
@@ -33,21 +41,22 @@
         </div>
 
         <div class="field">
+            @php
+                $min = \App\Models\Sanctum\PersonalAccessToken::minExpiry();
+                $max = \App\Models\Sanctum\PersonalAccessToken::maxExpiry($subscription);
+            @endphp
             <label class="label">Expiration date
-                <span title="{{ __('tokens.expiry') }}"><i class="icon is-small" data-feather="info"></i></span></label>
+                <span title="{{ __('tokens.expiry', ['expiryDuration' => $max->diffForHumans()]) }}"><i
+                        class="icon is-small" data-feather="info"></i></span>
+            </label>
             <div class="control">
                 <input @class([
                     'input',
                     'is-danger' => $errors->has('expires_at'),
                     'is-medium',
-                ]) min="{{ \Illuminate\Support\Carbon::tomorrow()->format('Y-m-d') }}"
-                    @if (session('isFree'))
-                max="{{ \Illuminate\Support\Carbon::now()->add('days', 7)->format('Y-m-d') }}"
-                @endif
-                value="{{ $token->expires_at?->format('Y-m-d') }}"
-                type="date"
-                name="expires_at" value="{{ old('expires_at') }}"
-                @disabled(request()->user()->hasWarning())>
+                ]) min="{{ $min->format('Y-m-d') }}" max="{{ $max->format('Y-m-d') }}"
+                    value="{{ old('expires_at', $token->expires_at?->format('Y-m-d')) }}" type="date" name="expires_at"
+                    @disabled(request()->user()->hasWarning())>
             </div>
             <p class="help is-danger">{{ $errors->first('expires_at') }}</p>
         </div>
@@ -62,7 +71,7 @@
                         'classes' => ['button', 'is-warning', 'is-medium', 'is-responsive'],
                         'type' => 'submit',
                         'label' => 'Regenerate token',
-                        'disabled' => request()->user()->hasWarning()
+                        'disabled' => request()->user()->hasWarning(),
                     ])
                 </p>
             </div>
