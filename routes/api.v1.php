@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\ContinentController;
 use App\Http\Controllers\Api\V1\ContinentCountryController;
 use App\Http\Controllers\Api\V1\ContinentGeometryController;
 use App\Http\Controllers\Api\V1\CountryAlternateNameController;
+use App\Http\Controllers\Api\V1\CountryCityController;
 use App\Http\Controllers\Api\V1\CountryController;
 use App\Http\Controllers\Api\V1\CountryCurrencyController;
 use App\Http\Controllers\Api\V1\CountryFlagController;
@@ -51,6 +52,8 @@ Route::prefix('countries')->group(function () {
     Route::get('/{countryCode}/neighbours', [CountryNeighbourController::class, 'index']);
     Route::get('/{countryCode}/alternateNames', [CountryAlternateNameController::class, 'index']);
     Route::get('/{countryCode}/geometry', [CountryGeometryController::class, 'index']);
+    Route::get('/{countryCode}/cities', [CountryCityController::class, 'index']);
+
 });
 
 Route::prefix('continents')->group(function () {
