@@ -16,7 +16,6 @@ class FileNotDownloadedException extends Exception
     /**
      * Instantiate the exception.
      *
-     * @param  string  $location
      * @return void
      */
     public function __construct(string $location = null)

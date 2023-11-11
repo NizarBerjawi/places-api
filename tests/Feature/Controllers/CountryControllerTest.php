@@ -6,6 +6,7 @@ use App\Pagination\PaginatedResourceResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Arr;
+
 use function Pest\Laravel\getJson;
 
 test('returns 200 response on GET countries', function () {
