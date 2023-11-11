@@ -14,7 +14,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable implements CanResetPassword, MustVerifyEmail
 {
-    use Billable, HasApiTokens, HasFactory, Notifiable, CanResetPasswordTrait, TwoFactorAuthenticatable;
+    use Billable, CanResetPasswordTrait, HasApiTokens, HasFactory, Notifiable, TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.

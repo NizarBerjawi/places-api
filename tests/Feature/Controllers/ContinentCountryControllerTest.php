@@ -4,8 +4,9 @@ use App\Http\Resources\V1\CountryResource;
 use App\Models\Continent;
 use App\Models\Country;
 use App\Pagination\PaginatedResourceResponse;
-use function Pest\Laravel\getJson;
 use Symfony\Component\HttpFoundation\Response;
+
+use function Pest\Laravel\getJson;
 
 test('returns 200 response on GET countries', function () {
     $continent = Continent::query()
