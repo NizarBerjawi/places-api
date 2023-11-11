@@ -129,7 +129,7 @@ abstract class Query
         $defaultSize = config('paginate.default_size');
         $maxResults = config('paginate.max_results');
 
-        $size = (int) request()->input('page.size', $defaultSize);
+        $size = (int) request()->get('page.size', $defaultSize);
 
         if ($size <= 0) {
             $size = $defaultSize;
@@ -139,7 +139,7 @@ abstract class Query
             $size = $maxResults;
         }
 
-        $cursor = (string) request()->input('page.cursor');
+        $cursor = (string) request()->get('page.cursor');
 
         return $this->getBuilder()
             ->cursorPaginate($size, ['*'], 'page[cursor]', $cursor)
