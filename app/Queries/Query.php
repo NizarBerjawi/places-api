@@ -2,6 +2,7 @@
 
 namespace App\Queries;
 
+use App\Exceptions\InvalidCursorException;
 use Illuminate\Contracts\Pagination\CursorPaginator;
 use Illuminate\Support\Arr;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -129,9 +130,9 @@ abstract class Query
         $defaultSize = config('paginate.default_size');
         $maxResults = config('paginate.max_results');
 
-        $size = (int) request()->get('page.size', $defaultSize);
+        $size = filter_var(request()->input('page.size'), FILTER_VALIDATE_INT);
 
-        if ($size <= 0) {
+        if (! $size || $size <= 0) {
             $size = $defaultSize;
         }
 
@@ -139,11 +140,15 @@ abstract class Query
             $size = $maxResults;
         }
 
-        $cursor = (string) request()->get('page.cursor');
+        $cursor = request()->input('page.cursor');
 
-        return $this->getBuilder()
-            ->cursorPaginate($size, ['*'], 'page[cursor]', $cursor)
-            ->appends(Arr::except(request()->input(), 'page.cursor'));
+        try {
+            return $this->getBuilder()
+                ->cursorPaginate($size, ['*'], 'page[cursor]', $cursor)
+                ->appends(Arr::except(request()->input(), 'page.cursor'));
+        } catch (\UnexpectedValueException $e) {
+            throw new InvalidCursorException();
+        }
     }
 
     /**
